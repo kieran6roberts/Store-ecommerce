@@ -1,30 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# YourCoffeeShop-ecommerce
+
+This is an ecommerce store built for a fictional coffee company that require a new online presence to be able to sell their coffee related products such as coffee beans, portable mugs and other miscellaneous items.
+
+## Table of contents
+* [Project Objectives](#project-objectives)
+* [Main Features](#main-features)
+* [Primary Technologies](#primary-technologies)
+* [Getting Started](#getting-started)
+* [Running Tests](#running-tests)
+* [Author](#author)
+
+<br />
+
+## Main Features
+* e-commerce product store
+* persistent cart
+* user saved products
+* checkout proccess
+* payment
+* user product reviews
+
+## Project Objectives
+The objective of this project is to build a fully functional e-commerce store that allows the company to be able sell their products online. Users should be able to browse the companies products, add them to a persistent cart and remove them if they are no longer needed.
+<br />
+They will also be able to save products in a saved for later component and go through the checkout process to pay for the contents of their cart. The site should also support multiple languages other than english to appeal to international buyers.
+<br />
+Finally it is required to be responsive and accessible as all modern sites should be.
+
+## Primary Technologies
+Next.js allows us to use SSG to build the site for speed while its image optimization is perfect for the many product images the site requires. The UI will be built using Chakra UI to quickly build accessible and composable components and typescript provides type safety to the app.
+
+* next 10.0.5
+* react 17.0.1
+* typescript 4.1.3
+* aws amplify
+* @chakra-ui/react 1.1.2
+* @stripe/react-stripe-js
+* jest 26.6.3
+* @testing-library/react 11.2.3
+
+<br />
 
 ## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
+To run in development:
+```
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To run in production:
+```
+yarn build
+```
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+To run eslint with fixes:
+```
+yarn lint-fix
+```
 
-## Learn More
+<br />
 
-To learn more about Next.js, take a look at the following resources:
+## Running Tests
+To run tests:
+```
+yarn test
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<br />
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Author
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+* Kieran Roberts
