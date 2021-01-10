@@ -33,7 +33,6 @@ Next.js allows us to use SSG to build the site for speed while its image optimiz
 * next 10.0.5
 * react 17.0.1
 * typescript 4.1.3
-* aws amplify
 * @chakra-ui/react 1.1.2
 * @stripe/react-stripe-js
 * jest 26.6.3
