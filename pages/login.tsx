@@ -2,7 +2,7 @@ import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
 
-const Home = (): React.ReactElement => {
+const Login = (): React.ReactElement => {
   return (
     <Layout>
       
@@ -10,4 +10,4 @@ const Home = (): React.ReactElement => {
   );
 };
 
-export default Home;
+export default Login;

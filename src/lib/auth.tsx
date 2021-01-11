@@ -1,6 +1,6 @@
 import { initAuth0 } from "@auth0/nextjs-auth0";
 
-import config from "@/lib/config";
+import config from "src/lib/config";
 
 const initAuth = initAuth0({
     audience: config.AUTH0_AUDIENCE,
