@@ -3,11 +3,11 @@ import {   Box,
   FormControl,  
   FormHelperText, 
   FormLabel,
+  Heading,
   VStack } from "@chakra-ui/react";
 import * as React from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { BsBook, BsPerson } from "react-icons/bs";
-import { RiLockPasswordLine } from "react-icons/ri";
 
 import CustomInput from "@/components/Input/Input";
 import Layout from "@/components/Layout/Layout";
@@ -15,6 +15,9 @@ import Layout from "@/components/Layout/Layout";
 function Register(): React.ReactElement {
   return (
     <Layout>
+      <Heading as="h2" textAlign="center">
+        Login
+      </Heading>
       <Box 
       as="form" 
       margin="auto"
@@ -75,7 +78,11 @@ function Register(): React.ReactElement {
             type="password" 
             />
           </FormControl>
-          <Button variant="outline">
+          <Button 
+          type="submit" 
+          variant="outline"
+          width="50%"
+          >
             Register
           </Button>
         </VStack>
