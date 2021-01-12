@@ -1,8 +1,7 @@
 import { Button, 
     Input, 
     InputGroup, 
-    InputRightElement,
-    Text } from "@chakra-ui/react";
+    InputRightElement } from "@chakra-ui/react";
 import * as React from "react";
 
 interface INPUT {
