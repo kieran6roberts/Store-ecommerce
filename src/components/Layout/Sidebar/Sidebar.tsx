@@ -20,10 +20,9 @@ interface SIDEBAR {
     onClose: () => void;
 }
 
-const Sidebar = ({ isOpen, onClose }: SIDEBAR): React.ReactElement => {
+function Sidebar({ isOpen, onClose }: SIDEBAR): React.ReactElement {
     return (
-        <Drawer
-        isOpen={isOpen}
+        <Drawer isOpen={isOpen}
         onClose={onClose}
         placement="left">
             <DrawerOverlay>
@@ -34,14 +33,14 @@ const Sidebar = ({ isOpen, onClose }: SIDEBAR): React.ReactElement => {
                     </DrawerHeader>
                     <DrawerBody>
                         <Heading as="h4" size="md">
-                            Search for products
+                            Looking for something?
                         </Heading>
-                        <Input placeholder="search for products" my={4} />
+                        <Input placeholder="coffee beans..." my={4} />
                         <Heading as="h4" 
                         size="md"
                         mb={4}
                         >
-                            Products
+                            Categories
                         </Heading>
                         <List>
                             <VStack divider={<StackDivider borderColor="brand.200" />}
@@ -83,7 +82,6 @@ const Sidebar = ({ isOpen, onClose }: SIDEBAR): React.ReactElement => {
                                         </Link>
                                     </NextLink>
                                 </ListItem>
-
                             </VStack>
                         </List>
                     </DrawerBody>
@@ -94,6 +92,6 @@ const Sidebar = ({ isOpen, onClose }: SIDEBAR): React.ReactElement => {
             </DrawerOverlay>
         </Drawer>
     );
-};
+}
 
 export default Sidebar;

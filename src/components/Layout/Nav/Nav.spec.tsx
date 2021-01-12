@@ -7,10 +7,12 @@ let documentBody: RenderResult;
 
 describe("<Nav />", () => {
     test("renders", () => {
-        documentBody = render(<Nav />);
+        const mockOpen = jest.fn();
+        documentBody = render(<Nav onOpen={mockOpen}/>);
 
         expect(documentBody.getByRole("navigation")).toBeInTheDocument();
         expect(documentBody.getByRole("heading", { name: /YourCoffeeShop/i})).toBeInTheDocument();
-        expect(documentBody.getByRole("list")).toBeInTheDocument();
+        expect(documentBody.getAllByRole("list")[0]).toBeInTheDocument();
+        expect(documentBody.getAllByRole("list")[1]).toBeInTheDocument();
     });
 });

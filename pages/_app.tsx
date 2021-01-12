@@ -1,27 +1,29 @@
-import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset, extendTheme, theme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import * as React from "react";
 
 const SITE_THEME = {
+  ...theme,
   colors: {
+    ...theme.colors,
     brand: {
-      300: "#2B5BB0",
-      900: "#050B10",
+      100: "#E8D0BF",
       200: "#91ABC2",
-      100: "#E8D0BF"
+      300: "#2B5BB0",
+      400: "#050B10",
     }
   }
 };
 
-const theme = extendTheme({ SITE_THEME });
+const CustomTheme = extendTheme({ SITE_THEME });
 
-const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => {
+function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={CustomTheme}>
       <CSSReset />
       <Component {...pageProps} />
     </ChakraProvider>
   );
-};
+}
 
 export default MyApp;

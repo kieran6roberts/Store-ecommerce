@@ -10,6 +10,11 @@ describe("<Nav />", () => {
         documentBody = render(<Footer />);
 
         expect(documentBody.getByText(/YourCoffeeShop/i)).toBeInTheDocument();
-        expect(documentBody.getByRole("list")).toBeInTheDocument();
+        expect(documentBody.getAllByRole("list")[0]).toBeInTheDocument();
+        expect(documentBody.getAllByRole("list")[1]).toBeInTheDocument();
+        expect(documentBody.getAllByRole("listitem")[0]).toBeInTheDocument();
+        expect(documentBody.getAllByRole("listitem")[1]).toBeInTheDocument();
+        expect(documentBody.getAllByRole("listitem")[2]).toBeInTheDocument();
+        expect(documentBody.getAllByRole("listitem")[3]).toBeInTheDocument();
     });
 });

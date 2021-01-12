@@ -5,11 +5,8 @@ import Footer from "@/components/Layout/Footer/Footer";
 import Nav from "@/components/Layout/Nav/Nav";
 import Sidebar from "@/components/Layout/Sidebar/Sidebar";
 
-export type REF_BUTTON = React.MutableRefObject<HTMLElement>;
-
-const Layout = ({ children }: { children: React.ReactNode }): React.ReactElement => {
+function Layout({ children }: { children: React.ReactNode }): React.ReactElement {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const btnRef = React.useRef<HTMLButtonElement>();
 
     return (
         <Flex as="div"
@@ -25,6 +22,6 @@ const Layout = ({ children }: { children: React.ReactNode }): React.ReactElement
             <Footer />
         </Flex>
     );
-};
+}
 
 export default Layout;

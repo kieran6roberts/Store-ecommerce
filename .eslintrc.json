@@ -40,7 +40,8 @@
         "simple-import-sort/exports": "error",
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
-        "func-style": ["error", "expression"]
+        "func-style": ["error", "declaration"],
+        "no-inner-declarations": "off"
     },
     "ignorePatterns": "node_modules/"
 }

@@ -4,20 +4,20 @@ enum ENV {
     TEST = "test"
 }
 
-if (typeof window === "undefined") {
-    const findURL = <T extends unknown>(local: T, prod: T, branch: T): T => {
-        switch(process.env.NODE_ENV) {
-            case ENV.DEV: 
-                return local;
-            case ENV.PROD:
-                return prod;
-            case ENV.TEST:
-                return branch;
-            default:
-                return local;
-        }
-    };
+function findURL<T>(local: T, prod: T, branch: T): T {
+    switch(process.env.NODE_ENV) {
+        case ENV.DEV: 
+            return local;
+        case ENV.PROD:
+            return prod;
+        case ENV.TEST:
+            return branch;
+        default:
+            return local;
+    }
+}
 
+if (typeof window === "undefined") {
     const baseURLForEnv = findURL("http://localhost:9000", "https://LIVE_VERCEL_ALIAS", "https://VERCEL_URL");
     
     module.exports = {

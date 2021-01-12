@@ -12,14 +12,14 @@ import { Button,
     Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import * as React from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { IoCartOutline, 
+import { GiHamburgerMenu, GiRayGun } from "react-icons/gi";
+import { IoBluetooth, IoCartOutline, 
     IoChevronDownOutline,    
     IoHelpCircleOutline } from "react-icons/io5";
 
 interface NAV { onOpen: () => void }
 
-const Nav = ({ onOpen }: NAV): React.ReactElement => {
+function Nav({ onOpen }: NAV): React.ReactElement {
     return (
         <Flex as="nav"
         align="center"
@@ -84,19 +84,18 @@ const Nav = ({ onOpen }: NAV): React.ReactElement => {
                         </MenuItem>
                     </MenuList>
                 </Menu>
-                <Button
-                onClick={onOpen}
+                <Button onClick={onOpen}
                 ml={8}
                 variant="ghost" 
                 >
                     <GiHamburgerMenu style={{ marginRight: "6px" }} />
-                    <Text>
+                    <Text color="brand.300">
                         Menu
                     </Text>
                 </Button>
             </List>
         </Flex>
     );
-};
+}
 
 export default Nav;
