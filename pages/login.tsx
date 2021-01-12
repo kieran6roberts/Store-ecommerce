@@ -1,6 +1,7 @@
 import {   Box, 
   Button, 
-  FormControl,  
+  FormControl,
+  FormHelperText,
   FormLabel, 
   Heading, 
   Spinner,
@@ -17,35 +18,74 @@ import isObjectEmpty from "@/utils/isObjectEmpty";
 const Error = dynamic(import("@/components/Error/Error"));
 
 function Login(): React.ReactElement {
-  const { errors, handleSubmit, loading } = useForm({ email: "", password: ""});
+  const initValues = {
+    email: "", 
+    password: ""
+  };
+
+  const { errors, 
+    handleInputChange,
+    handleSubmit, 
+    loading } = useForm({ initValues });
 
   return (
     <Layout>
-      <Heading as="h2" textAlign="center">
+      <Heading 
+      as="h2" 
+      mb={[4, 4, 4, 8, 12]}
+      textAlign="center"
+      >
         Login
       </Heading>
-      <Box margin="auto"   width={["90%", "80%", "75%", "50%"]}>
+      <Box 
+      border="2px"
+      borderColor="gray.200"
+      borderRadius="md"
+      p={4}
+      margin="auto" 
+      width={["90%", "80%", "75%", "50%"]}
+      >
         <form onSubmit={handleSubmit}>
-          {isObjectEmpty(errors) ? <Error title="Error" description="Problem with username or password" /> : null}
+          {!isObjectEmpty(errors) && !loading
+          ? <Error 
+          description="Problem with username or password" 
+          title="Error" 
+          /> : null}
           <VStack spacing="4">
             <FormControl>
               <FormLabel>
                 Email
               </FormLabel>
               <CustomInput 
+              handleInputChange={handleInputChange}
               icon={<AiOutlineMail />} 
+              name="email"
               placeholder="email..." 
               type="email" 
               />
+              <FormHelperText 
+              color={`${errors.email ? "red.300" : "black"}`}
+              fontSize="xs" 
+              >
+                {errors.email ?? null}
+              </FormHelperText>
             </FormControl>
             <FormControl>
               <FormLabel>
                 Password
               </FormLabel>
               <CustomInput 
+              handleInputChange={handleInputChange}
+              name="password"
               placeholder="password..." 
               type="password" 
               />
+              <FormHelperText 
+              color={`${errors.password ? "red.300" : "gray.500"}`}
+              fontSize="xs" 
+              >
+                {errors.password ?? null}
+              </FormHelperText>
             </FormControl>
             <Button 
             type="submit" 

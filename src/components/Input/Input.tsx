@@ -1,21 +1,26 @@
-import { Button, 
+import { IconButton, 
     Input, 
     InputGroup, 
     InputRightElement } from "@chakra-ui/react";
 import * as React from "react";
+import { BiHide, BiShowAlt } from "react-icons/bi";
 
 interface INPUT {
-    icon?: React.ReactElement,
-    placeholder?: string,
-    type: string,
+    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    icon?: React.ReactElement;
+    name: string;
+    placeholder?: string;
+    type: string;
 }
 
-function CustomInput({ placeholder, icon, type }: INPUT): React.ReactElement {
+function CustomInput({ handleInputChange, 
+    name,
+    placeholder, 
+    icon, 
+    type }: INPUT): React.ReactElement {
     const [ show, setShow ] = React.useState(false);
 
-    function handlePasswordShow() {
-        setShow(!show);
-    }
+    const handlePasswordShow = () => setShow(!show);
 
     return (
         <InputGroup size="md">
@@ -23,25 +28,29 @@ function CustomInput({ placeholder, icon, type }: INPUT): React.ReactElement {
             <>
             <Input focusBorderColor="blue.400"
             errorBorderColor="red.300"
+            name={name}
+            onChange={handleInputChange}
             placeholder={placeholder} 
             pr="4.5rem"
             variant="outline"
             type={show ? "text" : "password"}
             />
-            <InputRightElement width="4.5rem">
+            <InputRightElement>
                 {icon}
-                <Button height="1.5rem"
+                <IconButton aria-label="toggle show password"
+                height="1.5rem"
+                icon={show ? <BiHide /> : <BiShowAlt />}
                 size="sm"
                 onClick={handlePasswordShow}
-                >
-                    {show ? "Hide" : "Show"}
-                </Button>
+                />
             </InputRightElement>
             </>
             :
             <>
             <Input focusBorderColor="blue.400"
             errorBorderColor="red.300"
+            name={name}
+            onChange={handleInputChange}
             placeholder={placeholder} 
             variant="outline"
             type={type}

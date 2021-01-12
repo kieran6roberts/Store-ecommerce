@@ -1,8 +1,7 @@
 import { Alert, 
     AlertDescription,
     AlertIcon, 
-    AlertTitle, 
-    CloseButton } from "@chakra-ui/react";
+    AlertTitle } from "@chakra-ui/react";
 import * as React from "react";
 
 interface ERROR {
@@ -24,7 +23,6 @@ function Error({ title, description }: ERROR): React.ReactElement {
             <AlertDescription>
                 {description}
             </AlertDescription>
-            <CloseButton position="absolute" top="8px" right="8px" />
         </Alert>
     );
 }
