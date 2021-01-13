@@ -11,7 +11,7 @@ const initAuth = initAuth0({
     redirectUri: config.REDIRECT_URI,
     postLogoutRedirectUri: config.POST_LOGOUT_REDIRECT,
     session: {
-        cookieSecret: "<RANDOMLY_GENERATED_SECRET>",
+        cookieSecret: config.SESSION_COOKIE_SECRET,
         cookieLifetime: 60 * 60 * 8,
         storeIdToken: true,
         storeRefreshToken: true,
