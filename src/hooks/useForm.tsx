@@ -46,7 +46,7 @@ function useForm({ initValues }: { initValues: INPUTS }): USE_FORM_RETURN {
             try {
                 await callUserApi(errors);
             } catch(error) {
-                setInputValues(initValues);
+                console.log(error);
             }
             setLoading(false);
         };

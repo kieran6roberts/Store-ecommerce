@@ -1,10 +1,11 @@
-import {   Box, 
+import { Box, 
   Button, 
   FormControl,  
   FormHelperText, 
   FormLabel,
   Heading,
   Spinner,
+  Text,
   VStack } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import * as React from "react";
@@ -38,13 +39,6 @@ function Register(): React.ReactElement {
 
   return (
     <Layout>
-      <Heading 
-      as="h2" 
-      textAlign="center"
-      mb={[4, 4, 4, 8, 12]}
-      >
-        Register
-      </Heading>
       <Box 
       border="2px"
       borderColor="gray.200"
@@ -53,14 +47,26 @@ function Register(): React.ReactElement {
       p={4}
       width={["90%", "80%", "75%", "50%"]}
       >
+        <Heading 
+        as="h2" 
+        mb={[4, 4, 4, 8, 12]}
+        textAlign="center"
+        >
+          Register
+        </Heading>
+        <Text 
+        fontSize="sm"
+        mb={8}
+        textAlign="center"
+        >
+          Address details are optional and can be completed after you create your account.
+          These details allow us to speed up the checkout proccess for future purchases.
+        </Text>
         <form onSubmit={handleSubmit}>
-          {!isObjectEmpty(errors) && !loading 
-          ? <Error title="Register error" description="Please fill out all required fields correctly!" /> 
-          : null}
           <VStack spacing="4">
-            <FormControl isRequired>
+            <FormControl>
               <FormLabel>
-                Name
+                Name *
               </FormLabel>
               <CustomInput 
               handleInputChange={handleInputChange}
@@ -69,13 +75,16 @@ function Register(): React.ReactElement {
               placeholder="name..." 
               type="text" 
               />
-              <FormHelperText fontSize="xs" color={`${errors.name ? "red.300" : "black"}`}>
-                {errors.name ?? null}
+              <FormHelperText 
+              color={`${errors.name ? "red.300" : "black"}`}
+              fontSize="xs" 
+              >
+                {errors.name && !loading ? errors.name : null}
               </FormHelperText>
             </FormControl>
-            <FormControl isRequired>
+            <FormControl>
               <FormLabel>
-                Email
+                Email *
               </FormLabel>
               <CustomInput 
               handleInputChange={handleInputChange}
@@ -84,8 +93,11 @@ function Register(): React.ReactElement {
               placeholder="email..." 
               type="email" 
               />
-              <FormHelperText fontSize="xs" color={`${errors.email ? "red.300" : "black"}`}>
-                {errors.email ?? null}
+              <FormHelperText 
+              fontSize="xs" 
+              color={`${errors.email ? "red.300" : "black"}`}
+              >
+                {errors.email && !loading ? errors.email : null}
               </FormHelperText>
             </FormControl>
             <FormControl>
@@ -99,8 +111,11 @@ function Register(): React.ReactElement {
               placeholder="address line 1..." 
               type="text" 
               />
-              <FormHelperText fontSize="xs" color={`${errors.addressLine1 ? "red.300" : "black"}`}>
-                {errors.addressLine1 ?? null}
+              <FormHelperText 
+              color={`${errors.addressLine1 ? "red.300" : "black"}`}
+              fontSize="xs" 
+              >
+                {errors.addressLine1 && !loading ? errors.addressLine1 : null}
               </FormHelperText>
             </FormControl>
             <FormControl>
@@ -114,8 +129,11 @@ function Register(): React.ReactElement {
               placeholder="address line 2..." 
               type="text" 
               />
-              <FormHelperText fontSize="xs" color={`${errors.addressLine2 ? "red.300" : "black"}`}>
-                {errors.addressLine2 ?? null}
+              <FormHelperText 
+              color={`${errors.addressLine2 ? "red.300" : "black"}`}
+              fontSize="xs" 
+              >
+                {errors.addressLine2 && !loading ? errors.addressLine2 : null}
               </FormHelperText>
             </FormControl>
             <FormControl>
@@ -129,8 +147,11 @@ function Register(): React.ReactElement {
               placeholder="state/province/region..." 
               type="text" 
               />
-              <FormHelperText fontSize="xs" color={`${errors.state ? "red.300" : "black"}`}>
-                {errors.state ?? null}
+              <FormHelperText 
+              color={`${errors.state ? "red.300" : "black"}`}
+              fontSize="xs" 
+              >
+                {errors.state && !loading ? errors.state : null}
               </FormHelperText>
             </FormControl>
             <FormControl>
@@ -144,13 +165,16 @@ function Register(): React.ReactElement {
               placeholder="postcode..." 
               type="text" 
               />
-              <FormHelperText fontSize="xs" color={`${errors.postcode ? "red.300" : "black"}`}>
-                {errors.postcode ?? null}
+              <FormHelperText 
+              color={`${errors.postcode ? "red.300" : "black"}`}
+              fontSize="xs" 
+              >
+                {errors.postcode && !loading ? errors.postcode : null}
               </FormHelperText>
             </FormControl>
-            <FormControl isRequired>
+            <FormControl>
               <FormLabel>
-                Password
+                Password *
               </FormLabel>
               <CustomInput 
               handleInputChange={handleInputChange}
@@ -158,13 +182,16 @@ function Register(): React.ReactElement {
               placeholder="password..." 
               type="password" 
               />
-              <FormHelperText fontSize="xs" color={`${errors.password ? "red.300" : "black"}`}>
-                {errors.password ?? null}
+              <FormHelperText 
+              color={`${errors.password ? "red.300" : "black"}`}
+              fontSize="xs" 
+              >
+                {errors.password && !loading ? errors.password : null}
               </FormHelperText>
             </FormControl>
-            <FormControl isRequired>
+            <FormControl>
               <FormLabel>
-                Confirm Password
+                Confirm Password *
               </FormLabel>
               <CustomInput 
               handleInputChange={handleInputChange}
@@ -172,12 +199,16 @@ function Register(): React.ReactElement {
               placeholder="confirm password..." 
               type="password" 
               />
-              <FormHelperText fontSize="xs" color={`${errors.confirm ? "red.300" : "black"}`}>
-                {errors.confirm ?? null}
+              <FormHelperText 
+              color={`${errors.confirm ? "red.300" : "black"}`}
+              fontSize="xs" 
+              >
+                {errors.confirm && !loading ? errors.confirm : null}
               </FormHelperText>
             </FormControl>
             <Button 
             type="submit" 
+            mb={8}
             variant="outline"
             width="50%"
             >
@@ -188,6 +219,12 @@ function Register(): React.ReactElement {
               /> : "Register"}
             </Button>
           </VStack>
+          {!isObjectEmpty(errors) && !loading 
+          ? <Error 
+          title="Register error" 
+          description="Please fill out all required fields correctly!" 
+          /> 
+          : null}
         </form>
       </Box>
     </Layout>

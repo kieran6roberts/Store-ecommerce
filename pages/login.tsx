@@ -30,13 +30,6 @@ function Login(): React.ReactElement {
 
   return (
     <Layout>
-      <Heading 
-      as="h2" 
-      mb={[4, 4, 4, 8, 12]}
-      textAlign="center"
-      >
-        Login
-      </Heading>
       <Box 
       border="2px"
       borderColor="gray.200"
@@ -45,6 +38,13 @@ function Login(): React.ReactElement {
       margin="auto" 
       width={["90%", "80%", "75%", "50%"]}
       >
+        <Heading 
+        as="h2" 
+        mb={[4, 4, 4, 8, 12]}
+        textAlign="center"
+        >
+          Login
+        </Heading>
         <form onSubmit={handleSubmit}>
           {!isObjectEmpty(errors) && !loading
           ? <Error 
@@ -67,7 +67,7 @@ function Login(): React.ReactElement {
               color={`${errors.email ? "red.300" : "black"}`}
               fontSize="xs" 
               >
-                {errors.email ?? null}
+                {errors.email && !loading ? errors.email : null}
               </FormHelperText>
             </FormControl>
             <FormControl>
@@ -84,7 +84,7 @@ function Login(): React.ReactElement {
               color={`${errors.password ? "red.300" : "gray.500"}`}
               fontSize="xs" 
               >
-                {errors.password ?? null}
+                {errors.password && !loading ? errors.email : null}
               </FormHelperText>
             </FormControl>
             <Button 

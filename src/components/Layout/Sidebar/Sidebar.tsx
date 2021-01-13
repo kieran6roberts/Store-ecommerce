@@ -15,6 +15,8 @@ import { Drawer,
 import NextLink from "next/link";
 import * as React from "react";
 
+import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
+
 interface SIDEBAR {
     isOpen: boolean;
     onClose: () => void;
@@ -28,11 +30,16 @@ function Sidebar({ isOpen, onClose }: SIDEBAR): React.ReactElement {
             <DrawerOverlay>
                 <DrawerContent>
                     <DrawerCloseButton />
-                    <DrawerHeader mb={8}>
+                    <DrawerHeader mb={2}>
                         YourCoffeeShop
                     </DrawerHeader>
                     <DrawerBody>
-                        <Heading as="h4" size="md">
+                        <AccountMenu display={["flex", "flex", "none"]} />
+                        <Heading 
+                        as="h4" 
+                        size="md"
+                        mt={4}
+                        >
                             Looking for something?
                         </Heading>
                         <Input placeholder="coffee beans..." my={4} />

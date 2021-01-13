@@ -1,11 +1,9 @@
-import { ERRORS } from "@/hooks/useForm";
+import { INPUTS } from "@/hooks/useForm";
 
-function formValidation(inputs: ERRORS): ERRORS {
-    const errors: ERRORS = {};
+function formValidation(inputs: INPUTS): INPUTS {
+    const errors: INPUTS = {};
     const emailExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/u;
     const passwordExp = /^(?=.*\d)()(?=.*[A-Z]).{8,24}$/u;
-
-    console.log(inputs);
     
     if ("name" in inputs) {
         if (!inputs.name || typeof inputs.name !== "string") {
@@ -20,16 +18,27 @@ function formValidation(inputs: ERRORS): ERRORS {
         }
     }
     if ("addressLine1" in inputs) {
-        
+        if (typeof inputs.addressLine1 !== "string") {
+            errors.addressLine1 = "AddressLine1 must be of type text";
+        }
     }
+
     if ("addressLine2" in inputs) {
-
+        if (typeof inputs.addressLine2 !== "string") {
+            errors.addressLine2 = "AddressLine2 must be of type text";
+        }
     }
+
     if ("state" in inputs) {
-
+        if (typeof inputs.state !== "string") {
+            errors.state = "State/province must be of type text";
+        }
     }
-    if ("postcode" in inputs) {
 
+    if ("postcode" in inputs) {
+        if (typeof inputs.postcode !== "string") {
+            errors.postcode = "Postcode must be of type text";
+        }
     }
 
     if ("password" in inputs) {
@@ -41,13 +50,12 @@ function formValidation(inputs: ERRORS): ERRORS {
     }
     if ("confirm" in inputs) {
         if (!inputs.confirm || typeof inputs.confirm !== "string") {
-            errors.confirm = "Password required!";
+            errors.confirm = "Password is required!";
         } else if (inputs.password !== inputs.confirm) {
             errors.confirm = "Passwords do not match!";
         }
     }
-
-    console.log(errors);
+    
     return errors;
 }
 

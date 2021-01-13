@@ -4,18 +4,15 @@ import { Button,
     Link, 
     List, 
     ListItem, 
-    Menu,
-    MenuButton,
-    MenuDivider,
-    MenuItem,    
-    MenuList,
     Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import * as React from "react";
-import { GiHamburgerMenu, GiRayGun } from "react-icons/gi";
-import { IoBluetooth, IoCartOutline, 
-    IoChevronDownOutline,    
-    IoHelpCircleOutline } from "react-icons/io5";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { IoCartOutline,     
+    IoHelpCircleOutline,
+    IoPersonOutline } from "react-icons/io5";
+
+import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
 
 interface NAV { onOpen: () => void }
 
@@ -58,33 +55,10 @@ function Nav({ onOpen }: NAV): React.ReactElement {
                         </Link>
                     </NextLink>
                 </ListItem>
-                <Menu>
-                    <MenuButton as={Button} 
-                    display={["none", "none", "flex"]}
-                    rightIcon={<IoChevronDownOutline />}
-                    variant="solid"
-                    >
-                        Account
-                    </MenuButton>
-                    <MenuList>
-                        <MenuItem>
-                            <NextLink href="/login">
-                                <Link>
-                                    Login
-                                </Link>
-                            </NextLink>
-                        </MenuItem>
-                        <MenuDivider />
-                        <MenuItem>
-                            <NextLink href="/register">
-                                <Link>
-                                    Register
-                                </Link>
-                            </NextLink>
-                        </MenuItem>
-                    </MenuList>
-                </Menu>
-                <Button onClick={onOpen}
+                <AccountMenu display={["none", "none", "flex"]}/>
+                <Button 
+                fontSize="sm"
+                onClick={onOpen}
                 ml={8}
                 variant="ghost" 
                 >

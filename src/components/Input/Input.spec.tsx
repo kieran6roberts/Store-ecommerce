@@ -8,15 +8,19 @@ let documentBody: RenderResult;
 
 describe("<Nav />", () => {
     const textProps = {
+        handleInputChange: () => jest.fn(),
+        icon: <button>icon</button>,
+        name: "name",
         placeholder: "name...",
         type: "text",
-        icon: <button>icon</button>
     };
 
     const passwordProps = {
+        handleInputChange: () => jest.fn(),
+        icon: <button>icon</button>,
+        name: "password",
         placeholder: "password...",
         type: "password",
-        icon: <button>icon</button>
     };
 
     test("renders text input", () => {
@@ -33,16 +37,16 @@ describe("<Nav />", () => {
         expect(documentBody.getByRole("button", { name: /icon/ })).toBeInTheDocument();
     });
     
-    test("toggle passwors visiblity", () => {
+    test("toggle password visiblity", () => {
         documentBody = render(<Input {...passwordProps}/>);
 
         expect(documentBody.queryByRole("textbox")).not.toBeInTheDocument();
 
-        userEvent.click(documentBody.getByRole("button", { name: /show/i}));
+        userEvent.click(documentBody.getByRole("button", { name: /toggle show password/i }));
         
         expect(documentBody.getByRole("textbox")).toBeInTheDocument();
         
-        userEvent.click(documentBody.getByRole("button", { name: /hide/i}));
+        userEvent.click(documentBody.getByRole("button", { name: /toggle show password/i }));
 
         expect(documentBody.queryByRole("textbox")).not.toBeInTheDocument();
     });
