@@ -12,6 +12,7 @@ import { IoCartOutline,
     IoHelpCircleOutline } from "react-icons/io5";
 
 import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
+import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
 import { IUser } from "@/pages/index";
 
 interface INav { 
@@ -19,73 +20,78 @@ interface INav {
     user: IUser
 }
 
-const Nav = ({ onOpen, user }: INav): React.ReactElement => {
+const Nav: React.FC<INav> = ({ onOpen, user }) => {
     return (
-        <Flex 
-        as="nav"
-        align="center"
-        justify="space-between"
-        p={[2, 4, 6, 8]}
+        <Flex
+        direction="column"
         >
-            <Heading 
-            as="h1" 
-            fontSize="lg"
+            <Flex 
+            as="nav"
+            align="center"
+            justify="space-between"
+            p={[2, 4, 6, 8]}
             >
-                <NextLink href="/">
-                    <Link>
-                        YourCoffeeShop
-                    </Link>
-                </NextLink>
-            </Heading>
-            <List 
-            alignItems="center"
-            display="flex" 
-            flex="1"
-            fontSize="lg"
-            justifyContent="flex-end"
-            >
-                <ListItem mx={[1, 2, 4]}>
-                    <NextLink href="/cart">
-                        <Link 
-                        alignItems="center" 
-                        display="flex"
-                        >
-                            <IoCartOutline style={{ marginRight: "8px" }} />
-                            Cart
+                <Heading 
+                as="h1" 
+                fontSize="lg"
+                >
+                    <NextLink href="/">
+                        <Link>
+                            YourCoffeeShop
                         </Link>
                     </NextLink>
-                </ListItem>
-                <ListItem 
-                display={["none", "none", "block"]} 
-                mr={12} 
-                ml={4}
+                </Heading>
+                <List 
+                alignItems="center"
+                display="flex" 
+                flex="1"
+                fontSize="lg"
+                justifyContent="flex-end"
                 >
-                    <NextLink href="/help">
-                        <Link 
-                        alignItems="center" 
-                        display="flex"
-                        >
-                            <IoHelpCircleOutline style={{ marginRight: "8px" }} />
-                            Help
-                        </Link>
-                    </NextLink>
-                </ListItem>
-                <AccountMenu 
-                display={["none", "none", "flex"]}
-                user={user} 
-                />
-                <Button 
-                fontSize="sm"
-                onClick={onOpen}
-                ml={8}
-                variant="ghost" 
-                >
-                    <GiHamburgerMenu style={{ marginRight: "6px" }} />
-                    <Text color="brand.300">
-                        Menu
-                    </Text>
-                </Button>
-            </List>
+                    <ListItem mx={[1, 2, 4]}>
+                        <NextLink href="/cart">
+                            <Link 
+                            alignItems="center" 
+                            display="flex"
+                            >
+                                <IoCartOutline style={{ marginRight: "8px" }} />
+                                Cart
+                            </Link>
+                        </NextLink>
+                    </ListItem>
+                    <ListItem 
+                    display={["none", "none", "block"]} 
+                    mr={12} 
+                    ml={4}
+                    >
+                        <NextLink href="/help">
+                            <Link 
+                            alignItems="center" 
+                            display="flex"
+                            >
+                                <IoHelpCircleOutline style={{ marginRight: "8px" }} />
+                                Help
+                            </Link>
+                        </NextLink>
+                    </ListItem>
+                    <AccountMenu 
+                    display={["none", "none", "flex"]}
+                    user={user} 
+                    />
+                    <Button 
+                    fontSize="sm"
+                    onClick={onOpen}
+                    ml={8}
+                    variant="outline" 
+                    >
+                        <GiHamburgerMenu style={{ marginRight: "6px" }} />
+                        <Text color="brand.300">
+                            Menu
+                        </Text>
+                    </Button>
+                </List>
+            </Flex>
+            <CurrentUser user={user} />
         </Flex>
     );
 };

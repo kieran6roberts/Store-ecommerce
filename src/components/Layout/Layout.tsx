@@ -11,7 +11,7 @@ interface ILayout {
     user: IUser;
 }
 
-const Layout = ({ children, user }: ILayout): React.ReactElement => {
+const Layout: React.FC<ILayout> = ({ children, user }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (

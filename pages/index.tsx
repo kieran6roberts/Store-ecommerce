@@ -10,8 +10,8 @@ export interface IUser {
     name?: string,
     nickname?: string,
     picture?: string,
-    updated_at: string,
-    email: string,
+    updated_at?: string,
+    email?: string,
     email_verified?: string,
     sub?: string
   }

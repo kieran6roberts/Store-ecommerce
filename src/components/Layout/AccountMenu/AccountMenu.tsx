@@ -15,7 +15,7 @@ interface IAccountMenu {
     user: IUser
 }
 
-const AccountMenu = ({ display, user }: IAccountMenu): React.ReactElement => {
+const AccountMenu: React.FC<IAccountMenu> = ({ display, user }) => {
     return (
         <Menu>
             <MenuButton 
