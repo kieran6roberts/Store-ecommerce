@@ -9,7 +9,8 @@ import { Button,
 import * as React from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
 
-function AccountMenu({ display }: { display: string[]}): React.ReactElement {
+function AccountMenu({ user, display }: { display: string[]}): React.ReactElement {
+    console.log(user);
     return (
         <Menu>
             <MenuButton as={Button} 
@@ -22,23 +23,34 @@ function AccountMenu({ display }: { display: string[]}): React.ReactElement {
                 Account
             </MenuButton>
             <MenuList>
+                {user ? 
                 <MenuItem>
-                    <NextLink href="/login">
+                   <NextLink href="/api/logout">
+                       <Link>
+                           Logout
+                       </Link>
+                   </NextLink>
+               </MenuItem>
+               :
+                <>
+                <MenuItem>
+                    <NextLink href="/api/login">
                         <Link>
                             Login
                         </Link>
                     </NextLink>
-                    </MenuItem>
+                </MenuItem>
 
-                    <MenuDivider />
+                <MenuDivider />
 
                 <MenuItem>
-                    <NextLink href="/register">
+                    <NextLink href="/api/login">
                         <Link>
                             Register
                         </Link>
                     </NextLink>
                 </MenuItem>
+                </>}
             </MenuList>
         </Menu>
     );

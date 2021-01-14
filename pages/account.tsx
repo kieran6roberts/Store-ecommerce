@@ -5,7 +5,7 @@ import Layout from "@/components/Layout/Layout";
 function Account(): React.ReactElement {
   return (
     <Layout>
-      
+
     </Layout>
   );
 }

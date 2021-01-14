@@ -18,7 +18,7 @@ function findURL<T>(local: T, prod: T, branch: T): T {
 }
 
 if (typeof window === "undefined") {
-    const baseURLForEnv = findURL("http://localhost:9000", "https://LIVE_VERCEL_ALIAS", "https://VERCEL_URL");
+    const baseURLForEnv = findURL("http://localhost:3000", "https://LIVE_VERCEL_ALIAS", "https://VERCEL_URL");
     
     module.exports = {
         GRAPHCMS_API: process.env.GRAPHCMS_API,
@@ -26,17 +26,17 @@ if (typeof window === "undefined") {
         AUTH0_CLIENT_SECRET: process.env.AUTH0_CLIENT_SECRET,
         AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
         AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE,
-        AUTH0_SCOPE: "openid%20profile",
+        AUTH0_SCOPE: "openid profile",
         REDIRECT_URI: `${baseURLForEnv}/api/callback`,
         SESSION_COOKIE_SECRET: process.env.SESSION_COOKIE_SECRET,
-        POST_LOGOUT_REDIRECT: baseURLForEnv,
+        POST_LOGOUT_REDIRECT: `${baseURLForEnv}/`,
     };
 } else {
     module.exports = {
         AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
         AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
         AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE,
-        AUTH0_SCOPE: "openid%20profile",
+        AUTH0_SCOPE: "openid profile",
         REDIRECT_URI: `${window.location.origin}/api/callback`,
         SESSION_COOKIE_SECRET: process.env.SESSION_COOKIE_SECRET,
         POST_LOGOUT_REDIRECT: window.location.origin,

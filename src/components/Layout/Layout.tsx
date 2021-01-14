@@ -5,7 +5,7 @@ import Footer from "@/components/Layout/Footer/Footer";
 import Nav from "@/components/Layout/Nav/Nav";
 import Sidebar from "@/components/Layout/Sidebar/Sidebar";
 
-function Layout({ children }: { children: React.ReactNode }): React.ReactElement {
+function Layout({ user, children }: { children: React.ReactNode }): React.ReactElement {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
@@ -14,8 +14,8 @@ function Layout({ children }: { children: React.ReactNode }): React.ReactElement
         justify="space-between"
         minH="100vh"
         >
-            <Nav onOpen={onOpen} />
-            <Sidebar isOpen={isOpen}
+            <Nav user={user} onOpen={onOpen} />
+            <Sidebar user={user} isOpen={isOpen}
             onClose={onClose}
             />
             {children}

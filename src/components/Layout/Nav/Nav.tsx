@@ -16,7 +16,7 @@ import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
 
 interface NAV { onOpen: () => void }
 
-function Nav({ onOpen }: NAV): React.ReactElement {
+function Nav({ user, onOpen }: NAV): React.ReactElement {
     return (
         <Flex as="nav"
         align="center"
@@ -55,7 +55,7 @@ function Nav({ onOpen }: NAV): React.ReactElement {
                         </Link>
                     </NextLink>
                 </ListItem>
-                <AccountMenu display={["none", "none", "flex"]}/>
+                <AccountMenu user={user} display={["none", "none", "flex"]}/>
                 <Button 
                 fontSize="sm"
                 onClick={onOpen}

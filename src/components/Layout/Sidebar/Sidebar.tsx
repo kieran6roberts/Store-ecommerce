@@ -22,7 +22,7 @@ interface SIDEBAR {
     onClose: () => void;
 }
 
-function Sidebar({ isOpen, onClose }: SIDEBAR): React.ReactElement {
+function Sidebar({ user, isOpen, onClose }: SIDEBAR): React.ReactElement {
     return (
         <Drawer isOpen={isOpen}
         onClose={onClose}
@@ -34,7 +34,7 @@ function Sidebar({ isOpen, onClose }: SIDEBAR): React.ReactElement {
                         YourCoffeeShop
                     </DrawerHeader>
                     <DrawerBody>
-                        <AccountMenu display={["flex", "flex", "none"]} />
+                        <AccountMenu user={user} display={["flex", "flex", "none"]} />
                         <Heading 
                         as="h4" 
                         size="md"
