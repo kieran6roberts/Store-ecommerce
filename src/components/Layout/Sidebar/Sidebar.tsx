@@ -24,7 +24,7 @@ interface ISidebar {
     user: IUser;
 }
 
-function Sidebar({ isOpen, onClose, user }: ISidebar): React.ReactElement {
+const Sidebar = ({ isOpen, onClose, user }: ISidebar): React.ReactElement => {
     return (
         <Drawer isOpen={isOpen}
         onClose={onClose}
@@ -109,6 +109,6 @@ function Sidebar({ isOpen, onClose, user }: ISidebar): React.ReactElement {
             </DrawerOverlay>
         </Drawer>
     );
-}
+};
 
 export default Sidebar;

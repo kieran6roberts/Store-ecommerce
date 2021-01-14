@@ -19,7 +19,7 @@ interface INav {
     user: IUser
 }
 
-function Nav({ onOpen, user }: INav): React.ReactElement {
+const Nav = ({ onOpen, user }: INav): React.ReactElement => {
     return (
         <Flex 
         as="nav"
@@ -42,7 +42,7 @@ function Nav({ onOpen, user }: INav): React.ReactElement {
             display="flex" 
             flex="1"
             fontSize="lg"
-            justifyContent="end"
+            justifyContent="flex-end"
             >
                 <ListItem mx={[1, 2, 4]}>
                     <NextLink href="/cart">
@@ -88,6 +88,6 @@ function Nav({ onOpen, user }: INav): React.ReactElement {
             </List>
         </Flex>
     );
-}
+};
 
 export default Nav;

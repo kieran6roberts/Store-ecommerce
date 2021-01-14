@@ -2,7 +2,6 @@ import { Button,
     Link,    
     Menu,
     MenuButton,
-    MenuDivider,
     MenuItem,    
     MenuList } from "@chakra-ui/react";
     import NextLink from "next/link";
@@ -16,8 +15,7 @@ interface IAccountMenu {
     user: IUser
 }
 
-function AccountMenu({ display, user }: IAccountMenu): React.ReactElement {
-    console.log(user);
+const AccountMenu = ({ display, user }: IAccountMenu): React.ReactElement => {
     return (
         <Menu>
             <MenuButton 
@@ -40,28 +38,16 @@ function AccountMenu({ display, user }: IAccountMenu): React.ReactElement {
                    </NextLink>
                </MenuItem>
                :
-                <>
                 <MenuItem>
                     <NextLink href="/api/login">
                         <Link>
-                            Login
+                            Login/Register
                         </Link>
                     </NextLink>
-                </MenuItem>
-
-                <MenuDivider />
-
-                <MenuItem>
-                    <NextLink href="/api/login">
-                        <Link>
-                            Register
-                        </Link>
-                    </NextLink>
-                </MenuItem>
-                </>}
+                </MenuItem>}
             </MenuList>
         </Menu>
     );
-}
+};
 
 export default AccountMenu;

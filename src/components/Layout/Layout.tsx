@@ -11,7 +11,7 @@ interface ILayout {
     user: IUser;
 }
 
-function Layout({ children, user }: ILayout): React.ReactElement {
+const Layout = ({ children, user }: ILayout): React.ReactElement => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
@@ -34,6 +34,6 @@ function Layout({ children, user }: ILayout): React.ReactElement {
             <Footer />
         </Flex>
     );
-}
+};
 
 export default Layout;

@@ -1,9 +1,10 @@
+import { NextPage } from "next";
 import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
 import NextHead from "@/components/NextHead/NextHead";
 
-function Login(): React.ReactElement {
+const Login: NextPage = () => {
   return (
     <>
     <NextHead 
@@ -16,6 +17,6 @@ function Login(): React.ReactElement {
     </Layout>
     </>
   );
-}
+};
 
 export default Login;

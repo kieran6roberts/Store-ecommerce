@@ -1,3 +1,4 @@
+import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
@@ -5,16 +6,18 @@ import NextHead from "@/components/NextHead/NextHead";
 import auth0 from "@/lib/auth";
 
 export interface IUser {
-  name?: string,
-  nickname?: string,
-  picture?: string,
-  updated_at: string,
-  email: string,
-  email_verified?: string,
-  sub?: string
-};
+  user: {
+    name?: string,
+    nickname?: string,
+    picture?: string,
+    updated_at: string,
+    email: string,
+    email_verified?: string,
+    sub?: string
+  }
+}
 
-function Home({ user }: { user: IUser }): React.ReactElement {
+const Home: NextPage<IUser> = ({ user }) => {
   return (
     <>
     <NextHead 
@@ -27,15 +30,15 @@ function Home({ user }: { user: IUser }): React.ReactElement {
     </Layout>
     </>
   );
-}
+};
 
-export async function getServerSideProps(ctx) {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const session = await auth0.getSession(ctx.req);
   return {
     props: {
       user: session?.user ?? null
     }
   };
-}
+};
 
 export default Home;

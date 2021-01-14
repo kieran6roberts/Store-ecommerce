@@ -7,7 +7,7 @@ import { Flex,
 import NextLink from "next/link";
 import * as React from "react";
 
-function Footer(): React.ReactElement {
+const Footer = (): React.ReactElement => {
     return (
         <Flex 
         as="footer" 
@@ -59,6 +59,6 @@ function Footer(): React.ReactElement {
             </List>
         </Flex>
     );
-}
+};
 
 export default Footer;
