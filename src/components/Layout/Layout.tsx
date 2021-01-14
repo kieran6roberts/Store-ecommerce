@@ -4,21 +4,33 @@ import * as React from "react";
 import Footer from "@/components/Layout/Footer/Footer";
 import Nav from "@/components/Layout/Nav/Nav";
 import Sidebar from "@/components/Layout/Sidebar/Sidebar";
+import { IUser } from "@/pages/index";
 
-function Layout({ user, children }: { children: React.ReactNode }): React.ReactElement {
+interface ILayout {
+    children: React.ReactNode;
+    user: IUser;
+}
+
+function Layout({ children, user }: ILayout): React.ReactElement {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
-        <Flex as="div"
+        <Flex 
+        as="div"
         direction="column"
         justify="space-between"
         minH="100vh"
         >
-            <Nav user={user} onOpen={onOpen} />
-            <Sidebar user={user} isOpen={isOpen}
-            onClose={onClose}
+            <Nav 
+            onOpen={onOpen} 
+            user={user} 
             />
-            {children}
+            <Sidebar 
+            isOpen={isOpen}
+            onClose={onClose}
+            user={user} 
+            />
+                {children}
             <Footer />
         </Flex>
     );

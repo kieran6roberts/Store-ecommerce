@@ -9,16 +9,23 @@ import * as React from "react";
 
 function Footer(): React.ReactElement {
     return (
-        <Flex as="footer" 
+        <Flex 
+        as="footer" 
         alignItems="center"
         direction="column"
         justifyContent="center"
         p={[4, 4, 6, 8]}
         >
-            <Text fontSize="md" mb={6}>
+            <Text 
+            fontSize="md" 
+            mb={6}
+            >
                 YourCoffeeShop @2021
             </Text>
-            <List display="flex" fontSize="sm">
+            <List 
+            display="flex" 
+            fontSize="sm"
+            >
                 <HStack spacing="12">
                     <ListItem>
                         <NextLink href="/products">

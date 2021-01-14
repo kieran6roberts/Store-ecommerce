@@ -16,13 +16,15 @@ import NextLink from "next/link";
 import * as React from "react";
 
 import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
+import { IUser } from "@/pages/index";
 
-interface SIDEBAR {
+interface ISidebar {
     isOpen: boolean;
     onClose: () => void;
+    user: IUser;
 }
 
-function Sidebar({ user, isOpen, onClose }: SIDEBAR): React.ReactElement {
+function Sidebar({ isOpen, onClose, user }: ISidebar): React.ReactElement {
     return (
         <Drawer isOpen={isOpen}
         onClose={onClose}
@@ -34,7 +36,10 @@ function Sidebar({ user, isOpen, onClose }: SIDEBAR): React.ReactElement {
                         YourCoffeeShop
                     </DrawerHeader>
                     <DrawerBody>
-                        <AccountMenu user={user} display={["flex", "flex", "none"]} />
+                        <AccountMenu 
+                        display={["flex", "flex", "none"]} 
+                        user={user} 
+                        />
                         <Heading 
                         as="h4" 
                         size="md"
@@ -42,17 +47,22 @@ function Sidebar({ user, isOpen, onClose }: SIDEBAR): React.ReactElement {
                         >
                             Looking for something?
                         </Heading>
-                        <Input placeholder="coffee beans..." my={4} />
-                        <Heading as="h4" 
-                        size="md"
+                        <Input 
+                        my={4} 
+                        placeholder="coffee beans..." 
+                        />
+                        <Heading 
+                        as="h4" 
                         mb={4}
+                        size="md"
                         >
                             Categories
                         </Heading>
                         <List>
-                            <VStack divider={<StackDivider borderColor="brand.200" />}
-                            spacing={[1, 2, 3]}
+                            <VStack 
                             align="left"
+                            divider={<StackDivider borderColor="brand.200" />}
+                            spacing={[1, 2, 3]}
                             >
                                 <ListItem>
                                     <NextLink href="/">

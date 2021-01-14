@@ -4,7 +4,17 @@ import Layout from "@/components/Layout/Layout";
 import NextHead from "@/components/NextHead/NextHead";
 import auth0 from "@/lib/auth";
 
-function Home({ user }): React.ReactElement {
+export interface IUser {
+  name?: string,
+  nickname?: string,
+  picture?: string,
+  updated_at: string,
+  email: string,
+  email_verified?: string,
+  sub?: string
+};
+
+function Home({ user }: { user: IUser }): React.ReactElement {
   return (
     <>
     <NextHead 

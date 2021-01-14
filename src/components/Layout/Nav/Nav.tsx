@@ -9,28 +9,36 @@ import NextLink from "next/link";
 import * as React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCartOutline,     
-    IoHelpCircleOutline,
-    IoPersonOutline } from "react-icons/io5";
+    IoHelpCircleOutline } from "react-icons/io5";
 
 import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
+import { IUser } from "@/pages/index";
 
-interface NAV { onOpen: () => void }
+interface INav { 
+    onOpen: () => void,
+    user: IUser
+}
 
-function Nav({ user, onOpen }: NAV): React.ReactElement {
+function Nav({ onOpen, user }: INav): React.ReactElement {
     return (
-        <Flex as="nav"
+        <Flex 
+        as="nav"
         align="center"
         justify="space-between"
         p={[2, 4, 6, 8]}
         >
-            <Heading as="h1" fontSize="lg">
+            <Heading 
+            as="h1" 
+            fontSize="lg"
+            >
                 <NextLink href="/">
                     <Link>
                         YourCoffeeShop
                     </Link>
                 </NextLink>
             </Heading>
-            <List alignItems="center"
+            <List 
+            alignItems="center"
             display="flex" 
             flex="1"
             fontSize="lg"
@@ -38,24 +46,34 @@ function Nav({ user, onOpen }: NAV): React.ReactElement {
             >
                 <ListItem mx={[1, 2, 4]}>
                     <NextLink href="/cart">
-                        <Link alignItems="center" display="flex">
+                        <Link 
+                        alignItems="center" 
+                        display="flex"
+                        >
                             <IoCartOutline style={{ marginRight: "8px" }} />
                             Cart
                         </Link>
                     </NextLink>
                 </ListItem>
-                <ListItem display={["none", "none", "block"]} 
+                <ListItem 
+                display={["none", "none", "block"]} 
                 mr={12} 
                 ml={4}
                 >
                     <NextLink href="/help">
-                        <Link alignItems="center" display="flex">
+                        <Link 
+                        alignItems="center" 
+                        display="flex"
+                        >
                             <IoHelpCircleOutline style={{ marginRight: "8px" }} />
                             Help
                         </Link>
                     </NextLink>
                 </ListItem>
-                <AccountMenu user={user} display={["none", "none", "flex"]}/>
+                <AccountMenu 
+                display={["none", "none", "flex"]}
+                user={user} 
+                />
                 <Button 
                 fontSize="sm"
                 onClick={onOpen}

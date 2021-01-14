@@ -9,11 +9,19 @@ import { Button,
 import * as React from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
 
-function AccountMenu({ user, display }: { display: string[]}): React.ReactElement {
+import { IUser } from "@/pages/index";
+
+interface IAccountMenu {
+    display: string[],
+    user: IUser
+}
+
+function AccountMenu({ display, user }: IAccountMenu): React.ReactElement {
     console.log(user);
     return (
         <Menu>
-            <MenuButton as={Button} 
+            <MenuButton 
+            as={Button} 
             display={display}
             fontSize="sm"
             rightIcon={<IoChevronDownOutline />}

@@ -5,7 +5,7 @@ import { IconButton,
 import * as React from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
 
-interface INPUT {
+interface IInput {
     handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     icon?: React.ReactElement;
     name: string;
@@ -13,11 +13,12 @@ interface INPUT {
     type: string;
 }
 
-function CustomInput({ handleInputChange, 
+function CustomInput({ 
+    handleInputChange, 
+    icon, 
     name,
     placeholder, 
-    icon, 
-    type }: INPUT): React.ReactElement {
+    type }: IInput): React.ReactElement {
     const [ show, setShow ] = React.useState(false);
 
     const handlePasswordShow = () => setShow(!show);
@@ -26,28 +27,31 @@ function CustomInput({ handleInputChange,
         <InputGroup size="md">
             {type === "password" ?
             <>
-            <Input focusBorderColor="blue.400"
+            <Input 
+            focusBorderColor="blue.400"
             errorBorderColor="red.300"
             name={name}
             onChange={handleInputChange}
             placeholder={placeholder} 
             pr="4.5rem"
-            variant="outline"
             type={show ? "text" : "password"}
+            variant="outline"
             />
             <InputRightElement>
                 {icon}
-                <IconButton aria-label="toggle show password"
+                <IconButton 
+                aria-label="toggle show password"
                 height="1.5rem"
                 icon={show ? <BiHide /> : <BiShowAlt />}
-                size="sm"
                 onClick={handlePasswordShow}
+                size="sm"
                 />
             </InputRightElement>
             </>
             :
             <>
-            <Input focusBorderColor="blue.400"
+            <Input 
+            focusBorderColor="blue.400"
             errorBorderColor="red.300"
             name={name}
             onChange={handleInputChange}
