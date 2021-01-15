@@ -109,7 +109,7 @@ const Nav: React.FC<INav> = ({ onOpen, user }) => {
             >
                 <Box>
                     <Text>
-                        Home {`> ${router.pathname.substring(1)}`}
+                        Home {router.asPath.split("/").join(" > ").toLowerCase()}
                     </Text>
                 </Box>
                 <CurrentUser user={user} />
