@@ -1,32 +1,20 @@
-import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
+import { ApolloProvider } from "@apollo/client";
+import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import * as React from "react";
 
-const theme = extendTheme({
-  components: {
-    Button: {
-      variants: {
-        baseStyle: {
-          fontWeight: "bold"
-        }
-      }
-    }
-  },
-  styles: {
-    global: {
-      a: {
-        color: "blue.300"
-      }
-    }
-  }
-});
+import { useApollo } from "@/lib/apolloClient";
 
 const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => {
+  const apolloClient = useApollo(pageProps.initialApolloState);
+  
   return (
-    <ChakraProvider theme={theme}>
-      <CSSReset />
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <ApolloProvider client={apolloClient}>
+      <ChakraProvider>
+        <CSSReset />
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </ApolloProvider>
   );
 };
 
