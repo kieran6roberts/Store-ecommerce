@@ -13,12 +13,14 @@ import { AiOutlineHeart } from "react-icons/ai";
 import Rating from "@/components/Products/Rating/Rating";
 
 export interface IProduct {
-    image: string,
-    title: string,
-    price: string
+    id?: string;
+    image: string[];
+    name: string;
+    price: number;
+    __typename?: string;
 }
 
-const Product: React.FC<IProduct> = ({ image, title, price }) => {
+const Product: React.FC<IProduct> = ({ image = "/img.webp", name, price }) => {
     return (
         <Flex
         flexDirection="column"
@@ -69,7 +71,7 @@ const Product: React.FC<IProduct> = ({ image, title, price }) => {
 
             </Box>
             <Text>
-                {title}
+                {name}
             </Text>
             <Flex 
             alignItems="center"

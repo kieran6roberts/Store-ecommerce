@@ -1,9 +1,11 @@
+import { Heading, VStack } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
 
 import Hero from "@/components/Hero/Hero";
 import Layout from "@/components/Layout/Layout";
 import NextHead from "@/components/NextHead/NextHead";
+import Products from "@/components/Products/Products";
 import auth0 from "@/lib/auth";
 
 export interface IUser {
@@ -27,7 +29,15 @@ const Home: NextPage<IUser> = ({ user }) => {
     title="Home" 
     />
     <Layout user={user ?? null}>
-      <Hero />
+      <VStack spacing="24">
+        <Hero />
+        <Heading
+        as="h3"
+        >
+          Newest Products
+        </Heading>
+        <Products />
+      </VStack>
     </Layout>
     </>
   );
