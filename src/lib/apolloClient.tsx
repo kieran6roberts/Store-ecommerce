@@ -2,6 +2,7 @@ import { ApolloClient,
     HttpLink, 
     InMemoryCache, 
     NormalizedCacheObject } from "@apollo/client";
+import { offsetLimitPagination } from "@apollo/client/utilities";
 import * as React from "react";
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
@@ -12,7 +13,20 @@ const createApolloClient = () => {
         link: new HttpLink({
             uri: process.env.NEXT_PUBLIC_GRAPHCMS_API
         }),
-        cache: new InMemoryCache()
+        cache: new InMemoryCache({
+            typePolicies: {
+                Query: {
+                    fields: {
+                        products: {
+                            keyArgs: false,
+                            merge(existing = [], incoming) {
+                                return [...existing, ...incoming];
+                            }
+                        }
+                    }
+                }
+            }
+        })
     });
 };
 

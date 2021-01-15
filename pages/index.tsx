@@ -8,6 +8,7 @@ import Layout from "@/components/Layout/Layout";
 import NextHead from "@/components/NextHead/NextHead";
 import Products from "@/components/Products/Products";
 import auth0 from "@/lib/auth";
+import { PRODUCT_NEW } from "@/queries/products";
 
 export interface IUser {
   user: {
@@ -43,7 +44,7 @@ const Home: NextPage<IUser> = ({ user }) => {
         >
           Newest Products
         </Heading>
-        <Products />
+        <Products query={PRODUCT_NEW} loadMore={false} />
         <NextLink 
         href="/store" 
         >
