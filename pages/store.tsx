@@ -1,13 +1,18 @@
+import { Flex } from "@chakra-ui/react";
 import { NextPage } from "next";
 import * as React from "react";
 
+import Filter from "@/components/Filter/Filter";
 import Layout from "@/components/Layout/Layout";
-import Product from "@/components/Products/Product/Product";
+import Sort from "@/components/Sort/Sort";
 
 const Store: NextPage = () => {
   return (
     <Layout user={null}>
-      <Product title="title" image="/image.png" price="£19.99" />
+      <Flex justify="center">
+        <Sort />
+        <Filter />
+      </Flex>
     </Layout>
   );
 };
