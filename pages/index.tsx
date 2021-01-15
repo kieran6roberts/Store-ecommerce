@@ -1,6 +1,7 @@
 import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
 
+import Hero from "@/components/Hero/Hero";
 import Layout from "@/components/Layout/Layout";
 import NextHead from "@/components/NextHead/NextHead";
 import auth0 from "@/lib/auth";
@@ -26,7 +27,7 @@ const Home: NextPage<IUser> = ({ user }) => {
     title="Home" 
     />
     <Layout user={user ?? null}>
-      
+      <Hero />
     </Layout>
     </>
   );

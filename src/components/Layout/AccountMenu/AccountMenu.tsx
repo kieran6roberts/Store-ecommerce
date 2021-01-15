@@ -21,14 +21,15 @@ const AccountMenu: React.FC<IAccountMenu> = ({ display, user }) => {
             <MenuButton 
             as={Button} 
             display={display}
-            fontSize="sm"
+            fontSize="xs"
             rightIcon={<IoChevronDownOutline />}
             transition="all 200ms"
             variant="outline"
             >
                 Account
             </MenuButton>
-            <MenuList>
+            <MenuList 
+            fontSize="xs">
                 {user ? 
                 <MenuItem>
                    <NextLink href="/api/logout">

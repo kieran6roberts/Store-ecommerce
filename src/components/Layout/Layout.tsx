@@ -1,4 +1,4 @@
-import { Flex, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import * as React from "react";
 
 import Footer from "@/components/Layout/Footer/Footer";
@@ -30,7 +30,12 @@ const Layout: React.FC<ILayout> = ({ children, user }) => {
             onClose={onClose}
             user={user} 
             />
+            <Box 
+            as="main"
+            flex="1"
+            >
                 {children}
+            </Box>
             <Footer />
         </Flex>
     );

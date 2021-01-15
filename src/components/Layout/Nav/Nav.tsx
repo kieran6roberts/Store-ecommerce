@@ -24,12 +24,14 @@ const Nav: React.FC<INav> = ({ onOpen, user }) => {
     return (
         <Flex
         direction="column"
+        position="relative"
+        pb={4}
         >
             <Flex 
             as="nav"
             align="center"
             justify="space-between"
-            p={[2, 4, 6, 8]}
+            p={[2, 3, 4, 6]}
             >
                 <Heading 
                 as="h1" 
@@ -45,7 +47,7 @@ const Nav: React.FC<INav> = ({ onOpen, user }) => {
                 alignItems="center"
                 display="flex" 
                 flex="1"
-                fontSize="lg"
+                fontSize="sm"
                 justifyContent="flex-end"
                 >
                     <ListItem mx={[1, 2, 4]}>
@@ -79,7 +81,7 @@ const Nav: React.FC<INav> = ({ onOpen, user }) => {
                     user={user} 
                     />
                     <Button 
-                    fontSize="sm"
+                    fontSize="xs"
                     onClick={onOpen}
                     ml={8}
                     variant="outline" 

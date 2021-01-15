@@ -12,6 +12,7 @@ const CurrentUser: React.FC<ICurrentUser> = ({ user }) => {
         <Flex
         alignItems="center"
         justifyContent="flex-end"
+        mt={4}
         >
             <Text
             fontSize="sm"

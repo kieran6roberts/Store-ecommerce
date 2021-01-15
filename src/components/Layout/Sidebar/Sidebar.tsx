@@ -35,26 +35,28 @@ const Sidebar = ({ isOpen, onClose, user }: ISidebar): React.ReactElement => {
                     <DrawerHeader mb={2}>
                         YourCoffeeShop
                     </DrawerHeader>
-                    <DrawerBody>
+                    <DrawerBody fontSize="sm">
                         <AccountMenu 
                         display={["flex", "flex", "none"]} 
                         user={user} 
                         />
                         <Heading 
                         as="h4" 
-                        size="md"
+                        size="sm"
                         mt={4}
                         >
                             Looking for something?
                         </Heading>
                         <Input 
-                        my={4} 
+                        size="sm"
+                        my={6} 
                         placeholder="coffee beans..." 
+                        variant="flushed"
                         />
                         <Heading 
                         as="h4" 
                         mb={4}
-                        size="md"
+                        size="sm"
                         >
                             Categories
                         </Heading>
@@ -102,7 +104,7 @@ const Sidebar = ({ isOpen, onClose, user }: ISidebar): React.ReactElement => {
                             </VStack>
                         </List>
                     </DrawerBody>
-                    <DrawerFooter>
+                    <DrawerFooter fontSize="xs">
                         YourCoffeeShop @2021
                     </DrawerFooter>
                 </DrawerContent>

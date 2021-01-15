@@ -14,7 +14,7 @@ const Footer = (): React.ReactElement => {
         alignItems="center"
         direction="column"
         justifyContent="center"
-        p={[4, 4, 6, 8]}
+        p={[6, 6, 8, 12]}
         >
             <Text 
             fontSize="md" 

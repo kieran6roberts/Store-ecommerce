@@ -18,6 +18,7 @@ const Product = () => {
         <Flex
         flexDirection="column"
         alignItems="flex-end"
+        fontSize="sm"
         h="380px"
         overflow="hidden"
         position="relative"
@@ -31,7 +32,7 @@ const Product = () => {
             <Box 
             border="1px solid black"
             h="60%"
-            mb={8}
+            mb={4}
             w="100%"
             >
                 <Center>
@@ -39,7 +40,7 @@ const Product = () => {
                 </Center>
             </Box>
             <Box 
-            bg="red.200"
+            borderTop="1px solid gray"
             position="absolute"
             top="50%"
             left="0%"
@@ -50,10 +51,13 @@ const Product = () => {
             >
 
             </Box>
+            <Text>
+                Product Title
+            </Text>
             <Flex 
             alignItems="center"
             justifyContent="space-between"
-            mb={4}
+            mb={2}
             px={2}
             width="100%"
             >
