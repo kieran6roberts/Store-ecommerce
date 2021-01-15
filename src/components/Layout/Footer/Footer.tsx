@@ -28,9 +28,9 @@ const Footer = (): React.ReactElement => {
             >
                 <HStack spacing="12">
                     <ListItem>
-                        <NextLink href="/products">
+                        <NextLink href="/store">
                             <Link>
-                                Products
+                                Store
                             </Link>
                         </NextLink>
                     </ListItem>
