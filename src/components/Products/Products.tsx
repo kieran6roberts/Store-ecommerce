@@ -55,7 +55,7 @@ const Products = (): React.ReactElement => {
         as="ul"
         columns={[1, 1, 2, 2, 3, 4]} 
         listStyleType="none"
-        spacing="8px"
+        spacing="3rem"
         >
             {mapProducts()}
         </SimpleGrid>

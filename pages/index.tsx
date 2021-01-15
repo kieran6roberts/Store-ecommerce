@@ -1,4 +1,4 @@
-import { Heading, VStack } from "@chakra-ui/react";
+import { Button, Heading, SimpleGrid, VStack } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
 
@@ -31,12 +31,18 @@ const Home: NextPage<IUser> = ({ user }) => {
     <Layout user={user ?? null}>
       <VStack spacing="24">
         <Hero />
+        <SimpleGrid columns={[]} spacing="">
+          
+        </SimpleGrid>
         <Heading
         as="h3"
         >
           Newest Products
         </Heading>
         <Products />
+        <Button variant="outline">
+          To The Shop
+        </Button>
       </VStack>
     </Layout>
     </>
