@@ -20,13 +20,13 @@ const Hero = () => {
         as="h2"
         textAlign="center"
         mx="auto"
-        w="75vw"
+        w="90vw"
         >
         Bringing you the best coffee from all over the world
         </Heading>
             <List 
             textAlign="center"
-            mt={["2", "4", "6", "8"]}
+            mt={8}
             w="75vw"
             >
                 <Flex
@@ -36,10 +36,12 @@ const Hero = () => {
                 >
                     <ListItem 
                     border="2px solid black"
+                    mb={[2, 2, 0]}
                     py={1}
                     px={2}
+                    w="10rem"
                     >
-                        <NextLink href="/">
+                        <NextLink href="/store">
                             <Link>
                                 Coffee Beans
                             </Link>
@@ -47,10 +49,12 @@ const Hero = () => {
                     </ListItem>
                     <ListItem
                     border="2px solid black"
+                    mb={[2, 2, 0]}
                     py={1}
                     px={2}
+                    w="10rem"
                     >
-                        <NextLink href="/">
+                        <NextLink href="/store">
                             <Link>
                                 Ground Coffee
                             </Link>
@@ -58,10 +62,12 @@ const Hero = () => {
                     </ListItem>
                     <ListItem
                     border="2px solid black"
+                    mb={[2, 2, 0]}
                     py={1}
                     px={2}
+                    w="10rem"
                     >
-                        <NextLink href="/">
+                        <NextLink href="/store">
                             <Link>
                                 Mugs & Cups
                             </Link>
@@ -69,8 +75,7 @@ const Hero = () => {
                     </ListItem>
                 </Flex>
             </List>
-    </Center>
-
+        </Center>
     </Box>
  );
 };

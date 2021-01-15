@@ -9,20 +9,11 @@ interface ICurrentUser {
 
 const CurrentUser: React.FC<ICurrentUser> = ({ user }) => {
     return (
-        <Flex
-        alignItems="center"
-        justifyContent="flex-end"
-        mt={4}
-        >
-            <Text
-            fontSize="sm"
-            mr={[2, 4, 6, 8]}
-            >
+        <Flex alignItems="center">
+            <Text>
                 {user?.nickname ?? "Logged in as: Guest"}
             </Text>
-            <Box
-            mr={[2, 4, 6, 8]}
-            >
+            <Box>
                 {user?.picture ?
                 <Image 
                 alt="user profile pic"

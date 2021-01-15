@@ -1,4 +1,5 @@
-import { Button, 
+import { Box,
+    Button, 
     Flex,
     Heading, 
     Link, 
@@ -6,6 +7,7 @@ import { Button,
     ListItem, 
     Text } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCartOutline,     
@@ -21,17 +23,19 @@ interface INav {
 }
 
 const Nav: React.FC<INav> = ({ onOpen, user }) => {
+    const router = useRouter();
+
     return (
         <Flex
         direction="column"
         position="relative"
         pb={4}
+        p={[2, 3, 4, 6]}
         >
             <Flex 
             as="nav"
             align="center"
             justify="space-between"
-            p={[2, 3, 4, 6]}
             >
                 <Heading 
                 as="h1" 
@@ -93,7 +97,23 @@ const Nav: React.FC<INav> = ({ onOpen, user }) => {
                     </Button>
                 </List>
             </Flex>
-            <CurrentUser user={user} />
+            <Flex 
+            alignItems="center"
+            fontSize="sm"
+            justify="space-between"
+            borderTop="1px solid gray"
+            borderBottom="1px solid gray"
+            mt={4}
+            mb={8}
+            py={4}
+            >
+                <Box>
+                    <Text>
+                        Home {`> ${router.pathname.substring(1)}`}
+                    </Text>
+                </Box>
+                <CurrentUser user={user} />
+            </Flex>
         </Flex>
     );
 };

@@ -1,6 +1,7 @@
-import { Button, Heading, SimpleGrid, VStack } from "@chakra-ui/react";
+import { Button, Heading, Link, SimpleGrid, VStack } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
+import NextLink from "next/link";
 
 import Hero from "@/components/Hero/Hero";
 import Layout from "@/components/Layout/Layout";
@@ -31,7 +32,10 @@ const Home: NextPage<IUser> = ({ user }) => {
     <Layout user={user ?? null}>
       <VStack spacing="24">
         <Hero />
-        <SimpleGrid columns={[]} spacing="">
+        <SimpleGrid 
+        columns={[]} 
+        spacing=""
+        >
           
         </SimpleGrid>
         <Heading
@@ -40,9 +44,13 @@ const Home: NextPage<IUser> = ({ user }) => {
           Newest Products
         </Heading>
         <Products />
-        <Button variant="outline">
-          To The Shop
-        </Button>
+        <NextLink 
+        href="/store" 
+        >
+          <Link>
+            To The Shop
+          </Link>
+        </NextLink>
       </VStack>
     </Layout>
     </>
