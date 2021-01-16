@@ -10,8 +10,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { IoCartOutline,     
-    IoHelpCircleOutline } from "react-icons/io5";
+import { IoCartOutline, IoHelpCircleOutline } from "react-icons/io5";
 
 import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
 import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
@@ -109,7 +108,14 @@ const Nav: React.FC<INav> = ({ onOpen, user }) => {
             >
                 <Box>
                     <Text>
-                        Home {router.asPath.split("/").join(" > ").toLowerCase()}
+                        <NextLink href="/">
+                            <Link>
+                                Home 
+                            </Link>
+                        </NextLink>
+                        <span>
+                            {router.asPath.split("/").join(" > ").toLowerCase()}
+                        </span>
                     </Text>
                 </Box>
                 <CurrentUser user={user} />

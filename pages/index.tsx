@@ -44,7 +44,10 @@ const Home: NextPage<IUser> = ({ user }) => {
         >
           Newest Products
         </Heading>
-        <Products query={PRODUCT_NEW} loadMore={false} />
+        <Products 
+        loadMore={false} 
+        query={PRODUCT_NEW} 
+        />
         <NextLink 
         href="/store" 
         >

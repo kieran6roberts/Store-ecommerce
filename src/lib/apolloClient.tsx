@@ -2,7 +2,6 @@ import { ApolloClient,
     HttpLink, 
     InMemoryCache, 
     NormalizedCacheObject } from "@apollo/client";
-import { offsetLimitPagination } from "@apollo/client/utilities";
 import * as React from "react";
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;

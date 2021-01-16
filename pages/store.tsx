@@ -18,7 +18,10 @@ const Store: NextPage = () => {
         <Sort />
         <Filter />
       </Flex>
-      <Products query={PRODUCT_ALL} loadMore={true} />
+      <Products 
+      loadMore={true} 
+      query={PRODUCT_ALL} 
+      />
     </Layout>
   );
 };

@@ -20,61 +20,67 @@ const Hero = () => {
         as="h2"
         textAlign="center"
         mx="auto"
+        mb={8}
         w="90vw"
         >
         Bringing you the best coffee from all over the world
         </Heading>
             <List 
+            alignItems="center"
+            display={["none", "none", "flex"]}
+            flexDirection="row"
+            justifyContent="space-evenly"
             textAlign="center"
-            mt={8}
+            my={8}
             w="75vw"
             >
-                <Flex
-                alignItems="center"
-                flexDirection={["column", "column", "row"]}
-                justifyContent="space-evenly"
+                <ListItem 
+                border="2px solid black"
+                py={1}
+                px={2}
+                w="10rem"
                 >
-                    <ListItem 
-                    border="2px solid black"
-                    mb={[2, 2, 0]}
-                    py={1}
-                    px={2}
-                    w="10rem"
-                    >
-                        <NextLink href="/store">
-                            <Link>
-                                Coffee Beans
-                            </Link>
-                        </NextLink>
-                    </ListItem>
-                    <ListItem
-                    border="2px solid black"
-                    mb={[2, 2, 0]}
-                    py={1}
-                    px={2}
-                    w="10rem"
-                    >
-                        <NextLink href="/store">
-                            <Link>
-                                Ground Coffee
-                            </Link>
-                        </NextLink>
-                    </ListItem>
-                    <ListItem
-                    border="2px solid black"
-                    mb={[2, 2, 0]}
-                    py={1}
-                    px={2}
-                    w="10rem"
-                    >
-                        <NextLink href="/store">
-                            <Link>
-                                Mugs & Cups
-                            </Link>
-                        </NextLink>
-                    </ListItem>
-                </Flex>
+                    <NextLink href="/store">
+                        <Link>
+                            Coffee Beans
+                        </Link>
+                    </NextLink>
+                </ListItem>
+                <ListItem
+                border="2px solid black"
+                py={1}
+                px={2}
+                w="10rem"
+                >
+                    <NextLink href="/store">
+                        <Link>
+                            Ground Coffee
+                        </Link>
+                    </NextLink>
+                </ListItem>
+                <ListItem
+                border="2px solid black"
+                py={1}
+                px={2}
+                w="10rem"
+                >
+                    <NextLink href="/store">
+                        <Link>
+                            Mugs & Cups
+                        </Link>
+                    </NextLink>
+                </ListItem>
             </List>
+            <NextLink href="/store">
+                <Link
+                border="2px solid black"
+                py={2}
+                px={4}
+                textAlign="center"
+                w="12rem">
+                    Shop All Items
+                </Link>
+            </NextLink>
         </Center>
     </Box>
  );

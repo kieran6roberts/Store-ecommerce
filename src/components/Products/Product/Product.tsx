@@ -37,7 +37,7 @@ const Product: React.FC<IProduct> = ({ image = "/img.webp", name, price }) => {
             bg="transparent"
             icon={<AiOutlineHeart />} />
 
-            <NextLink href="/">
+            <NextLink href={`/store/products/${name.split(" ").join("-")}`}>
                 <Link 
                 height="60%"
                 mb={2}

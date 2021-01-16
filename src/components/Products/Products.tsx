@@ -9,10 +9,10 @@ interface IProducts {
     loadMore: boolean;
 }
 
-const Products: React.FC<IProducts> = ({ query, loadMore }): React.ReactElement => {
+const Products: React.FC<IProducts> = ({ query, loadMore }) => {
     const [ offset, setOffset ] = React.useState(10);
 
-    const { loading, data, error, fetchMore } = useQuery(query, {
+    const { data, error, fetchMore, loading } = useQuery(query, {
         variables: {
             offset: 0,
             limit: 10
@@ -27,9 +27,8 @@ const Products: React.FC<IProducts> = ({ query, loadMore }): React.ReactElement 
         return <Box>Loading prodcuts...</Box>;
     }
 
+    console.log(data);
     const { products } = data;
-
-    console.log(products)
 
     const mapProducts = products.map((product: IProduct) => 
             <li 
@@ -46,9 +45,12 @@ const Products: React.FC<IProducts> = ({ query, loadMore }): React.ReactElement 
 
     const checkForMoreProducts = () => {
         const productElements = document.querySelectorAll(".product");
+        if (!productElements) {
+            return null;
+        }
+        
         const products = Array.from(productElements);
 
-        console.log(products.length % 10);
         return !(products.length % 10) ? true: false;
     };
 
@@ -60,7 +62,7 @@ const Products: React.FC<IProducts> = ({ query, loadMore }): React.ReactElement 
             listStyleType="none"
             spacing="3rem"
             >
-                {mapProducts}
+                {mapProducts ?? null}
             </SimpleGrid>
             {loadMore && checkForMoreProducts() ? 
             <Button onClick={() => { 

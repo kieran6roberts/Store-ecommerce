@@ -22,11 +22,6 @@ export const PRODUCT_NEW = gql`
         id
         name
         price
-        images {
-            fileName
-            url
-            size
-        }
     }
 }`;
 
