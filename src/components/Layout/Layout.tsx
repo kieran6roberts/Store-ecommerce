@@ -13,7 +13,6 @@ interface ILayout {
 const Layout: React.FC<ILayout> = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { profile, loading } = useGetUser();
-    console.log(profile);
 
     return (
         <Flex 
@@ -25,6 +24,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
             <Nav 
             onOpen={onOpen} 
             user={profile} 
+            userLoading={loading}
             />
             <Sidebar 
             isOpen={isOpen}
