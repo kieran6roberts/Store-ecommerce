@@ -4,15 +4,16 @@ import * as React from "react";
 import Footer from "@/components/Layout/Footer/Footer";
 import Nav from "@/components/Layout/Nav/Nav";
 import Sidebar from "@/components/Layout/Sidebar/Sidebar";
-import { IUser } from "@/pages/index";
+import { useGetUser } from "@/lib/user";
 
 interface ILayout {
     children: React.ReactNode;
-    user: IUser;
 }
 
-const Layout: React.FC<ILayout> = ({ children, user }) => {
+const Layout: React.FC<ILayout> = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { profile, loading } = useGetUser();
+    console.log(profile);
 
     return (
         <Flex 
@@ -23,12 +24,12 @@ const Layout: React.FC<ILayout> = ({ children, user }) => {
         >
             <Nav 
             onOpen={onOpen} 
-            user={user} 
+            user={profile} 
             />
             <Sidebar 
             isOpen={isOpen}
             onClose={onClose}
-            user={user} 
+            user={profile} 
             />
             <Box 
             as="main"

@@ -38,7 +38,7 @@ const Sidebar = ({ isOpen, onClose, user }: ISidebar): React.ReactElement => {
                     <DrawerBody fontSize="sm">
                         <AccountMenu 
                         display={["flex", "flex", "none"]} 
-                        user={user} 
+                        user={user}
                         />
                         <Heading 
                         as="h4" 

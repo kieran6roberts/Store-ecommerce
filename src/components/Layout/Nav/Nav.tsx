@@ -17,11 +17,12 @@ import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
 import { IUser } from "@/pages/index";
 
 interface INav { 
-    onOpen: () => void,
-    user: IUser
+    onOpen: () => void;
+    user: IUser;
+    userLoading: boolean;
 }
 
-const Nav: React.FC<INav> = ({ onOpen, user }) => {
+const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
     const router = useRouter();
 
     return (
@@ -118,7 +119,10 @@ const Nav: React.FC<INav> = ({ onOpen, user }) => {
                         </span>
                     </Text>
                 </Box>
-                <CurrentUser user={user} />
+                <CurrentUser 
+                user={user} 
+                userLoading={userLoading} 
+                />
             </Flex>
         </Flex>
     );
