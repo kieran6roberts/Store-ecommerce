@@ -21,6 +21,7 @@ const Store: NextPage = () => {
       <Products 
       loadMore={true} 
       query={PRODUCT_ALL} 
+      variables={{ variables: { offset: 0, limit: 0}}}
       />
     </Layout>
   );

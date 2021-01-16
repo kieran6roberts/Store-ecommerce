@@ -25,9 +25,13 @@ export interface ISavedProduct {
     id: string
 }
 
+interface IMouseEventOnHTMLElement extends React.MouseEvent {
+    currentTarget: HTMLElement
+}
+
 const Product: React.FC<IProduct> = ({ id, image = "/img.webp", name, price }) => {
 
-    const handleSaveClick = (event) => {
+    const handleSaveClick = (event: IMouseEventOnHTMLElement) => {
         const ID = id;
         const KEY = "saved-products";
 

@@ -7,24 +7,29 @@ import Product, { IProduct } from "@/components/Products/Product/Product";
 interface IProducts {
     query: DocumentNode;
     loadMore: boolean;
+    variables?: {
+        variables: {
+            offset?: number,
+            limit?: number,
+            id?: string
+            ids?: string[]
+        }
+    };
 }
 
-const Products: React.FC<IProducts> = ({ query, loadMore }) => {
+const Products: React.FC<IProducts> = ({ query, loadMore, variables = undefined }) => {
     const [ offset, setOffset ] = React.useState(10);
 
-    const { data, error, fetchMore, loading } = useQuery(query, {
-        variables: {
-            offset: 0,
-            limit: 10
-        }
-    });
+    console.log(variables);
+
+    const { data, error, fetchMore, loading } = useQuery(query, variables);
 
     if (error) {
-        return <Box>Error loading products</Box>;
+        return <Box h="75vh">Error loading products</Box>;
     }
 
     if (loading) {
-        return <Box>Loading prodcuts...</Box>;
+        return <Box h="75vh">Loading prodcuts...</Box>;
     }
 
     const mapProducts = data?.products.map((product: IProduct) => 

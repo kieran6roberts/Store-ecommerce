@@ -3,6 +3,10 @@ export const setStorage = (key: string, value: unknown): void => {
 };
 
 export const getStorage = (key: string): unknown[] | null => {
+    if (typeof window === "undefined") {
+        return null;
+    }
+    
     const storedItems = window.localStorage.getItem(key);
     
     if (!storedItems) {
