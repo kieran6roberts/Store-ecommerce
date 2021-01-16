@@ -27,15 +27,13 @@ const Products: React.FC<IProducts> = ({ query, loadMore }) => {
         return <Box>Loading prodcuts...</Box>;
     }
 
-    console.log(data);
-    const { products } = data;
-
-    const mapProducts = products.map((product: IProduct) => 
+    const mapProducts = data?.products.map((product: IProduct) => 
             <li 
             className="product"
             key={product.id}
             >
                 <Product 
+                id={product.id}
                 image={product.image}
                 name={product.name} 
                 price={product.price} 
@@ -45,6 +43,7 @@ const Products: React.FC<IProducts> = ({ query, loadMore }) => {
 
     const checkForMoreProducts = () => {
         const productElements = document.querySelectorAll(".product");
+
         if (!productElements) {
             return null;
         }

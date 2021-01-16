@@ -1,16 +1,13 @@
-export const setStorage = (key: string, value: string) => {
-    try {
-        window.localStorage.setItem(key, value);
-    } catch (error) {
-        console.error(error);
-    }
+export const setStorage = (key: string, value: unknown): void => {
+        window.localStorage.setItem(key, JSON.stringify(value));
 };
 
-export const getStorage = (key: string) => {
-    try {
-        return window.localStorage.getItem(key);
-    } catch (error) {
-        console.error(error);
+export const getStorage = (key: string): unknown[] | null => {
+    const storedItems = window.localStorage.getItem(key);
+    
+    if (!storedItems) {
         return null;
     }
+
+    return JSON.parse(storedItems);
 };

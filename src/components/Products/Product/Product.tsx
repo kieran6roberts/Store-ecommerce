@@ -1,10 +1,10 @@
 import { Box, 
     Button,
-    Center,
     Flex, 
     IconButton, 
     Link, 
-    Text } from "@chakra-ui/react";
+    Text,
+    Tooltip } from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
 import * as React from "react";
@@ -14,16 +14,46 @@ import Rating from "@/components/Products/Rating/Rating";
 import { getStorage, setStorage } from "@/utils/storage";
 
 export interface IProduct {
-    id?: string;
+    id: string;
     image: string[];
     name: string;
     price: number;
     __typename?: string;
 }
 
-const Product: React.FC<IProduct> = ({ image = "/img.webp", name, price }) => {
-    const getProductID = () => {
-        console.log("save");
+export interface ISavedProduct {
+    id: string
+}
+
+const Product: React.FC<IProduct> = ({ id, image = "/img.webp", name, price }) => {
+
+    const handleSaveClick = (event) => {
+        const ID = id;
+        const KEY = "saved-products";
+
+        const products = getStorage(KEY);
+
+        if (!products) {
+            setStorage(KEY, [{ id: ID }]);
+            event.currentTarget.style.color = "pink";
+            return;
+        }
+        
+        if (Array.isArray(products)) {
+            
+            const filterDuplicateItems = products.filter(product => product.id !== ID);
+            
+            if (filterDuplicateItems.length < products.length) {
+                setStorage(KEY, filterDuplicateItems);
+                event.currentTarget.style.color = "black";
+                return;
+            }
+            
+            const addNewItems = [...products, { id: ID }];
+            
+            setStorage(KEY, addNewItems);
+            event.currentTarget.style.color = "pink";
+        }
     };
 
     return (
@@ -37,12 +67,23 @@ const Product: React.FC<IProduct> = ({ image = "/img.webp", name, price }) => {
         shadow="base"
         w="300px"
         >
-            <IconButton 
-            aria-label="save item"
-            bg="transparent"
-            icon={<AiOutlineHeart />} />
-
-            <NextLink href={`/store/products/${name.split(" ").join("-")}`}>
+            <Tooltip
+            label="save product"
+            fontSize="xs"
+            hasArrow
+            placement="top"
+            >
+                <span>
+                    <IconButton 
+                    aria-label="save item"
+                    onClick={(event) => handleSaveClick(event)}
+                    icon={<AiOutlineHeart />} />
+                </span>
+            </Tooltip>
+            <NextLink 
+            href={`/store/products/${name.split(" ").join("-")}`}
+            passHref
+            >
                 <Link 
                 height="60%"
                 mb={2}
@@ -57,8 +98,8 @@ const Product: React.FC<IProduct> = ({ image = "/img.webp", name, price }) => {
                         <Image
                         alt="product image"
                         src={image}
-                        layout="fill"
-                        objectFit="cover"
+                        height={200}
+                        width={300}
                         />
                     </Box>
                 </Link>
