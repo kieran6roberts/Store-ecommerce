@@ -11,6 +11,7 @@ import * as React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 
 import Rating from "@/components/Products/Rating/Rating";
+import { getStorage, setStorage } from "@/utils/storage";
 
 export interface IProduct {
     id?: string;
@@ -21,6 +22,10 @@ export interface IProduct {
 }
 
 const Product: React.FC<IProduct> = ({ image = "/img.webp", name, price }) => {
+    const getProductID = () => {
+        console.log("save");
+    };
+
     return (
         <Flex
         flexDirection="column"

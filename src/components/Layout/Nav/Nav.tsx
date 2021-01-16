@@ -5,10 +5,12 @@ import { Box,
     Link, 
     List, 
     ListItem, 
-    Text } from "@chakra-ui/react";
+    Text,    
+    Tooltip } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
+import { AiOutlineHeart } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCartOutline, IoHelpCircleOutline } from "react-icons/io5";
 
@@ -54,29 +56,72 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                 fontSize="sm"
                 justifyContent="flex-end"
                 >
-                    <ListItem mx={[1, 2, 4]}>
-                        <NextLink href="/cart">
+                    <ListItem>
+                        <NextLink 
+                        href="/cart" 
+                        passHref
+                        >
                             <Link 
                             alignItems="center" 
                             display="flex"
+                            fontSize="lg"
                             >
-                                <IoCartOutline style={{ marginRight: "8px" }} />
-                                Cart
+                                <Tooltip 
+                                fontSize="sm"
+                                label="Cart" 
+                                >
+                                    <span>
+                                        <IoCartOutline />
+                                    </span>
+                                </Tooltip>
                             </Link>
                         </NextLink>
                     </ListItem>
                     <ListItem 
                     display={["none", "none", "block"]} 
-                    mr={12} 
-                    ml={4}
+                    ml={12}
                     >
-                        <NextLink href="/help">
+                        <NextLink 
+                        href="/help" 
+                        passHref
+                        >
                             <Link 
                             alignItems="center" 
                             display="flex"
+                            fontSize="lg"
                             >
-                                <IoHelpCircleOutline style={{ marginRight: "8px" }} />
-                                Help
+                                <Tooltip 
+                                fontSize="sm"
+                                label="Help" 
+                                >
+                                    <span>
+                                        <IoHelpCircleOutline />
+                                    </span>
+                                </Tooltip>
+                            </Link>
+                        </NextLink>
+                    </ListItem>
+                    <ListItem 
+                    display={["none", "none", "block"]} 
+                    mx={12} 
+                    >
+                        <NextLink 
+                        href="/saved-products" 
+                        passHref
+                        >
+                            <Link 
+                            alignItems="center" 
+                            display="flex"
+                            fontSize="lg"
+                            >
+                                <Tooltip 
+                                fontSize="sm"
+                                label="Saved" 
+                                >
+                                    <span>
+                                        <AiOutlineHeart />
+                                    </span>
+                                </Tooltip>
                             </Link>
                         </NextLink>
                     </ListItem>
@@ -87,7 +132,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     <Button 
                     fontSize="xs"
                     onClick={onOpen}
-                    ml={8}
+                    ml={12}
                     variant="outline" 
                     >
                         <GiHamburgerMenu style={{ marginRight: "6px" }} />
@@ -109,7 +154,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
             >
                 <Box>
                     <Text>
-                        <NextLink href="/">
+                        <NextLink href="/" passHref>
                             <Link>
                                 Home 
                             </Link>
