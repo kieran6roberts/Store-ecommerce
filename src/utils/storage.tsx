@@ -4,6 +4,7 @@ export const setStorage = (key: string, value: unknown): void => {
 
 export const getStorage = (key: string): unknown[] | null => {
     if (typeof window === "undefined") {
+        console.log("returning because of running on server");
         return null;
     }
     

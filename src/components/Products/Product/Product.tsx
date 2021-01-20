@@ -7,8 +7,10 @@ import { Box,
     Tooltip } from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
+import { TiDeleteOutline } from "react-icons/ti";
 
 import Rating from "@/components/Products/Rating/Rating";
 import { getStorage, setStorage } from "@/utils/storage";
@@ -31,7 +33,9 @@ interface IMouseEventOnHTMLElement extends React.MouseEvent {
 
 const Product: React.FC<IProduct> = ({ id, image = "/img.webp", name, price }) => {
 
-    const handleSaveClick = (event: IMouseEventOnHTMLElement) => {
+    const router = useRouter();
+
+    const toggleProductInStorage = (event: IMouseEventOnHTMLElement) => {
         const ID = id;
         const KEY = "saved-products";
 
@@ -72,7 +76,7 @@ const Product: React.FC<IProduct> = ({ id, image = "/img.webp", name, price }) =
         w="300px"
         >
             <Tooltip
-            label="save product"
+            label={router.pathname === "/saved-products" ? "remove product" : "save product"}
             fontSize="xs"
             hasArrow
             placement="top"
@@ -80,8 +84,10 @@ const Product: React.FC<IProduct> = ({ id, image = "/img.webp", name, price }) =
                 <span>
                     <IconButton 
                     aria-label="save item"
-                    onClick={(event) => handleSaveClick(event)}
-                    icon={<AiOutlineHeart />} />
+                    onClick={(event) => toggleProductInStorage(event)}
+                    icon={router.pathname === "/saved-products" ?
+                    <TiDeleteOutline /> 
+                    : <AiOutlineHeart /> } />
                 </span>
             </Tooltip>
             <NextLink 

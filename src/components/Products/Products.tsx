@@ -20,8 +20,6 @@ interface IProducts {
 const Products: React.FC<IProducts> = ({ query, loadMore, variables = undefined }) => {
     const [ offset, setOffset ] = React.useState(10);
 
-    console.log(variables);
-
     const { data, error, fetchMore, loading } = useQuery(query, variables);
 
     if (error) {

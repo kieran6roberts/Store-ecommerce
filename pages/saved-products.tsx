@@ -1,3 +1,4 @@
+import { Heading, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import * as React from "react";
 
@@ -16,11 +17,25 @@ const savedProducts: NextPage = () => {
 
     return (
         <Layout>
+            {queryVariables ? 
             <Products 
             loadMore={false}
             query={PRODUCT_STORAGE}
-            variables={{ variables: { ids: queryVariables}}}
+            variables={{ variables: { ids: queryVariables }}}
             />
+            :
+            <header>
+                <Heading 
+                fontSize="lg"
+                mb={12}
+                >
+                    Empty
+                </Heading>
+                <Text fontSize="sm">
+                    Saved products will appear here
+                </Text>
+            </header>
+            }
         </Layout>
     );
 };

@@ -38,9 +38,12 @@ export const PRODUCT_ALL = gql`
 export const PRODUCT_STORAGE = gql`
     query GetStorageProducts($ids: [ID!]!) {
         products(where: { id_in: $ids }) {
-            id
-            name
-            price
+            ... on Product {
+                id
+                name
+                price
+
+            }
         }
     }
 `;
