@@ -12,57 +12,29 @@ import * as React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { TiDeleteOutline } from "react-icons/ti";
 
+import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
 import Rating from "@/components/Products/Rating/Rating";
-import { getStorage, setStorage } from "@/utils/storage";
 
 export interface IProduct {
-    id: string;
+    clickSave: (event: IMouseEventOnHTMLElement) => void;
     image: string[];
     name: string;
     price: number;
     __typename?: string;
 }
 
-export interface ISavedProduct {
+export interface IProductWithId extends IProduct {
     id: string
 }
 
-interface IMouseEventOnHTMLElement extends React.MouseEvent {
-    currentTarget: HTMLElement
-}
-
-const Product: React.FC<IProduct> = ({ id, image = "/img.webp", name, price }) => {
+const Product: React.FC<IProduct> = ({ 
+    clickSave,
+    image = "/img.webp", 
+    name, 
+    price
+ }) => {
 
     const router = useRouter();
-
-    const toggleProductInStorage = (event: IMouseEventOnHTMLElement) => {
-        const ID = id;
-        const KEY = "saved-products";
-
-        const products = getStorage(KEY);
-
-        if (!products) {
-            setStorage(KEY, [{ id: ID }]);
-            event.currentTarget.style.color = "pink";
-            return;
-        }
-        
-        if (Array.isArray(products)) {
-            
-            const filterDuplicateItems = products.filter(product => product.id !== ID);
-            
-            if (filterDuplicateItems.length < products.length) {
-                setStorage(KEY, filterDuplicateItems);
-                event.currentTarget.style.color = "black";
-                return;
-            }
-            
-            const addNewItems = [...products, { id: ID }];
-            
-            setStorage(KEY, addNewItems);
-            event.currentTarget.style.color = "pink";
-        }
-    };
 
     return (
         <Flex
@@ -84,7 +56,7 @@ const Product: React.FC<IProduct> = ({ id, image = "/img.webp", name, price }) =
                 <span>
                     <IconButton 
                     aria-label="save item"
-                    onClick={(event) => toggleProductInStorage(event)}
+                    onClick={clickSave}
                     icon={router.pathname === "/saved-products" ?
                     <TiDeleteOutline /> 
                     : <AiOutlineHeart /> } />

@@ -17,7 +17,7 @@ const savedProducts: NextPage = () => {
 
     return (
         <Layout>
-            {queryVariables ? 
+            {queryVariables?.length ? 
             <Products 
             loadMore={false}
             query={PRODUCT_STORAGE}

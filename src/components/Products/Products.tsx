@@ -1,8 +1,10 @@
 import { DocumentNode, useQuery } from "@apollo/client";
 import { Box, Button, SimpleGrid, VStack } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import * as React from "react";
 
-import Product, { IProduct } from "@/components/Products/Product/Product";
+import Product, { IProductWithId } from "@/components/Products/Product/Product";
+import { getStorage, setStorage } from "@/utils/storage";
 
 interface IProducts {
     query: DocumentNode;
@@ -17,8 +19,16 @@ interface IProducts {
     };
 }
 
+export interface IMouseEventOnHTMLElement extends React.MouseEvent {
+    currentTarget: HTMLElement
+}
+
 const Products: React.FC<IProducts> = ({ query, loadMore, variables = undefined }) => {
     const [ offset, setOffset ] = React.useState(10);
+    const [ count, setCount ] = React.useState(0);
+
+
+    const router = useRouter();
 
     const { data, error, fetchMore, loading } = useQuery(query, variables);
 
@@ -30,13 +40,41 @@ const Products: React.FC<IProducts> = ({ query, loadMore, variables = undefined 
         return <Box h="75vh">Loading prodcuts...</Box>;
     }
 
-    const mapProducts = data?.products.map((product: IProduct) => 
+    const toggleProductInStorage = (event: IMouseEventOnHTMLElement, id: string) => {
+        const KEY = "saved-products";
+
+        const products = getStorage(KEY);
+
+        if (!products) {
+            setStorage(KEY, [{ id: id }]);
+            event.currentTarget.style.color = "pink";
+            return;
+        }
+        
+        if (Array.isArray(products)) {
+            
+            const filterDuplicateItems = products.filter(product => product.id !== id);
+            
+            if (filterDuplicateItems.length < products.length) {
+                setStorage(KEY, filterDuplicateItems);
+                event.currentTarget.style.color = "black";
+                return;
+            }
+            
+            const addNewItems = [...products, { id: id }];
+            
+            setStorage(KEY, addNewItems);
+            event.currentTarget.style.color = "pink";
+        }
+    };
+
+    const mapProducts = data?.products.map((product: IProductWithId) => 
             <li 
             className="product"
             key={product.id}
             >
-                <Product 
-                id={product.id}
+                <Product
+                clickSave={(event) => toggleProductInStorage(event, product.id)}
                 image={product.image}
                 name={product.name} 
                 price={product.price} 

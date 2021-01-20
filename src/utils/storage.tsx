@@ -2,7 +2,7 @@ export const setStorage = (key: string, value: unknown): void => {
         window.localStorage.setItem(key, JSON.stringify(value));
 };
 
-export const getStorage = (key: string): unknown[] | null => {
+export const getStorage = (key: string): { id: string}[] | null => {
     if (typeof window === "undefined") {
         console.log("returning because of running on server");
         return null;
