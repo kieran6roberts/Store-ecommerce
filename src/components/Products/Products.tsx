@@ -7,8 +7,8 @@ import Product, { IProductWithId } from "@/components/Products/Product/Product";
 import { getStorage, setStorage } from "@/utils/storage";
 
 interface IProducts {
-    query: DocumentNode;
     loadMore: boolean;
+    query: DocumentNode;
     variables?: {
         variables: {
             offset?: number,
@@ -23,10 +23,11 @@ export interface IMouseEventOnHTMLElement extends React.MouseEvent {
     currentTarget: HTMLElement
 }
 
-const Products: React.FC<IProducts> = ({ query, loadMore, variables = undefined }) => {
+const Products: React.FC<IProducts> = ({ 
+    loadMore,
+    query, 
+    variables = undefined }) => {
     const [ offset, setOffset ] = React.useState(10);
-    const [ count, setCount ] = React.useState(0);
-
 
     const router = useRouter();
 
@@ -39,6 +40,13 @@ const Products: React.FC<IProducts> = ({ query, loadMore, variables = undefined 
     if (loading) {
         return <Box h="75vh">Loading prodcuts...</Box>;
     }
+
+    const removeProductFromDOM = (id: string) => {
+        if (router.pathname !== "/saved-products") {
+            return;
+        }
+        document.querySelector(`#${id}`)?.remove();
+    };
 
     const toggleProductInStorage = (event: IMouseEventOnHTMLElement, id: string) => {
         const KEY = "saved-products";
@@ -65,12 +73,15 @@ const Products: React.FC<IProducts> = ({ query, loadMore, variables = undefined 
             
             setStorage(KEY, addNewItems);
             event.currentTarget.style.color = "pink";
+
+            removeProductFromDOM(id);
         }
     };
 
     const mapProducts = data?.products.map((product: IProductWithId) => 
             <li 
             className="product"
+            id={product.id}
             key={product.id}
             >
                 <Product
