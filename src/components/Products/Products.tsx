@@ -53,6 +53,8 @@ const Products: React.FC<IProducts> = ({
 
         const products = getStorage(KEY);
 
+        removeProductFromDOM(id);
+
         if (!products) {
             setStorage(KEY, [{ id: id }]);
             event.currentTarget.style.color = "pink";
@@ -73,8 +75,6 @@ const Products: React.FC<IProducts> = ({
             
             setStorage(KEY, addNewItems);
             event.currentTarget.style.color = "pink";
-
-            removeProductFromDOM(id);
         }
     };
 
