@@ -2,7 +2,6 @@ import { Box,
   Divider, 
   Flex,
   Heading, 
-  ListItem,
   Stack,  
   StackDivider,  Text  } from "@chakra-ui/react";
 import { NextPage } from "next";
@@ -12,7 +11,7 @@ import CartItem from "@/components/Cart/CartItem/CartItem";
 import CheckoutCard from "@/components/Cart/CheckoutCard/CheckoutCard";
 import Layout from "@/components/Layout/Layout";
 import { generateItemKey } from "@/utils/generateItemKey";
-import { getStorage, ICartStorage } from "@/utils/storage";
+import { getStorage } from "@/utils/storage";
 
 const Cart: NextPage = () => {
 
@@ -34,6 +33,8 @@ const Cart: NextPage = () => {
     return products.map((product: any) => 
       <li key={`${generateItemKey(product.name)}`}>
         <CartItem 
+        category={product.category}
+        description={product.description}
         name={product.name}
         price={product.price}
         />
@@ -49,7 +50,7 @@ const Cart: NextPage = () => {
       >
         <Heading 
         as="h1"
-        fontSize="md"
+        fontSize="lg"
         pb={4}
         >
           Items in Your Bag

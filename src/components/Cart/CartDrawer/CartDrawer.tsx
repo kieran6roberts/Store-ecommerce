@@ -25,6 +25,7 @@ const CartDrawer = (): React.ReactElement => {
         footer="Footer"
         isOpen={isOpen}
         onClose={onClose}
+        overlay={false}
         size="md"
         >
             Cart

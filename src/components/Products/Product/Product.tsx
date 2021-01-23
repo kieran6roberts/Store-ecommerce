@@ -17,9 +17,12 @@ import Rating from "@/components/Products/Rating/Rating";
 import { getStorage, setStorage} from "@/utils/storage";
 
 export interface IProduct {
+    category: {
+        name: string;
+    };
     clickSave: (event: IMouseEventOnHTMLElement) => void;
     description: {
-        text: string
+        text: string;
     };
     image: string[];
     name: string;
@@ -32,6 +35,7 @@ export interface IProductWithId extends IProduct {
 }
 
 const Product: React.FC<IProductWithId> = ({ 
+    category,
     clickSave,
     description,
     image = "/img.webp", 
@@ -48,6 +52,7 @@ const Product: React.FC<IProductWithId> = ({
         const userCart = getStorage(cartKey);
 
         const product = {
+            category,
             id,
             name,
             price,

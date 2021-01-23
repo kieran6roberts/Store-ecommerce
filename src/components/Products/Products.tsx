@@ -86,6 +86,7 @@ const Products: React.FC<IProducts> = ({
             key={product.id}
             >
                 <Product
+                category={product.category.name}
                 clickSave={(event) => toggleProductInStorage(event, product.id)}
                 description={product.description.text}
                 id={product.id}

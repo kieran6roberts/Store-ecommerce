@@ -13,6 +13,7 @@ interface ICartDrawer {
     footer: string;
     isOpen: boolean;
     onClose: () => void;
+    overlay: boolean;
     size?: string;
 }
 
@@ -22,15 +23,18 @@ const DrawerTemplate = ({
     footer,
     isOpen,
     onClose,
+    overlay = true,
     size = "sm" }: ICartDrawer): React.ReactElement => {
 
     return (
         <Drawer 
+        blockScrollOnMount={false}
         isOpen={isOpen}
         onClose={onClose}
         placement="right"
         size={size}
         >
+            {overlay ? 
             <DrawerOverlay>
                 <DrawerContent>
                     <DrawerCloseButton />
@@ -45,6 +49,19 @@ const DrawerTemplate = ({
                     </DrawerFooter>
                 </DrawerContent>
             </DrawerOverlay>
+            : 
+            <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>
+                    {header}
+                </DrawerHeader>
+                <DrawerBody>
+                    {children}
+                </DrawerBody>
+                <DrawerFooter>
+                    {footer}
+                </DrawerFooter>
+            </DrawerContent>}
         </Drawer>
     );
 };

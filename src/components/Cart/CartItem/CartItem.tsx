@@ -11,7 +11,23 @@ import { ImCancelCircle } from "react-icons/im";
 
 import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
 
-const CartItem = ({ name, price }): React.ReactElement => {
+interface ICartItem {
+    category: {
+        name: string;
+    };
+    description: {
+        text: string;
+    };
+    name: string;
+    price: number;
+}
+
+const CartItem = ({ 
+    category,
+    description, 
+    name, 
+    price }: ICartItem): React.ReactElement => {
+
     return (
         <Stack
         border="1px solid gray"
@@ -41,10 +57,10 @@ const CartItem = ({ name, price }): React.ReactElement => {
                     {name}
                 </Text>
                 <Text fontSize="sm">
-                    Product Category
+                    {category}
                 </Text>
                 <Text fontSize="xs">
-                    Product Description
+                    {description}
                 </Text>
             </VStack>
             <Flex 

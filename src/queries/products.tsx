@@ -19,6 +19,9 @@ export const PRODUCT_INFO = gql`
 export const PRODUCT_NEW = gql`
     query GetNewProducts {
         products(first: 3, orderBy: createdAt_DESC) {
+            category {
+                name
+            }
             description {
                 text
             }
@@ -31,6 +34,9 @@ export const PRODUCT_NEW = gql`
 export const PRODUCT_ALL = gql`
     query GetAllProducts($offset: Int, $limit: Int) {
         products(first: $limit, skip: $offset ) {
+            category {
+                name
+            }
             description {
                 text
             }
@@ -45,6 +51,9 @@ export const PRODUCT_STORAGE = gql`
     query GetStorageProducts($ids: [ID!]!) {
         products(where: { id_in: $ids }) {
             ... on Product {
+                category {
+                    name
+                }
                 description {
                     text
                 }
