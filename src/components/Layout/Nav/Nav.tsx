@@ -31,8 +31,8 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
         <Flex
         direction="column"
         position="relative"
-        pb={4}
-        p={[2, 3, 4, 6]}
+        pt={[2, 3, 4, 6]}
+        px={[2, 3, 4, 6]}
         >
             <Flex 
             as="nav"
