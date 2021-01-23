@@ -12,7 +12,7 @@ import CartItem from "@/components/Cart/CartItem/CartItem";
 import CheckoutCard from "@/components/Cart/CheckoutCard/CheckoutCard";
 import Layout from "@/components/Layout/Layout";
 import { generateItemKey } from "@/utils/generateItemKey";
-import { getStorage } from "@/utils/storage";
+import { getStorage, ICartStorage } from "@/utils/storage";
 
 const Cart: NextPage = () => {
 
@@ -31,7 +31,7 @@ const Cart: NextPage = () => {
       );
     }
 
-    return products.map((product) => 
+    return products.map((product: any) => 
       <li key={`${generateItemKey(product.name)}`}>
         <CartItem 
         name={product.name}
@@ -39,7 +39,6 @@ const Cart: NextPage = () => {
         />
       </li>
     );
-
   };
 
   return (

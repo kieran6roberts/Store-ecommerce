@@ -1,6 +1,7 @@
 import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import * as React from "react";
 
+import CartDrawer from "@/components/Cart/CartDrawer/CartDrawer";
 import Footer from "@/components/Layout/Footer/Footer";
 import Nav from "@/components/Layout/Nav/Nav";
 import Sidebar from "@/components/Layout/Sidebar/Sidebar";
@@ -26,6 +27,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
             user={profile} 
             userLoading={loading}
             />
+            <CartDrawer />
             <Sidebar 
             isOpen={isOpen}
             onClose={onClose}

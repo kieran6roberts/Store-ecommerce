@@ -18,6 +18,9 @@ import { getStorage, setStorage} from "@/utils/storage";
 
 export interface IProduct {
     clickSave: (event: IMouseEventOnHTMLElement) => void;
+    description: {
+        text: string
+    };
     image: string[];
     name: string;
     price: number;
@@ -28,9 +31,11 @@ export interface IProductWithId extends IProduct {
     id: string
 }
 
-const Product: React.FC<IProduct> = ({ 
+const Product: React.FC<IProductWithId> = ({ 
     clickSave,
+    description,
     image = "/img.webp", 
+    id,
     name, 
     price
  }) => {
@@ -43,8 +48,10 @@ const Product: React.FC<IProduct> = ({
         const userCart = getStorage(cartKey);
 
         const product = {
+            id,
             name,
-            price
+            price,
+            description
         };
 
         event.target.textContent = "Added";
