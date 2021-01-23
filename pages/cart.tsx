@@ -2,8 +2,8 @@ import { Box,
   Divider, 
   Flex,
   Heading, 
-  StackDivider,
-  VStack  } from "@chakra-ui/react";
+  Stack,  
+  StackDivider  } from "@chakra-ui/react";
 import { NextPage } from "next";
 import * as React from "react";
 
@@ -27,16 +27,20 @@ const Cart: NextPage = () => {
         </Heading>
         <Divider />
         <Flex 
-        direction={["column", "column", "column", "row"]}
+        direction={["column-reverse", "column-reverse", "column-reverse", "row"]}
         pt={2}
         >
-          <VStack 
+          <Stack 
           as="ul"
           divider={<StackDivider borderColor="blue.200" />}
-          flex="2"
+          flex="3"
+          mr={["0px", "0px", "0px", "0.5rem"]}
           >
             <CartItem />
-          </VStack>
+            <CartItem />
+            <CartItem />
+            <CartItem />
+          </Stack>
           <CheckoutCard />
         </Flex>
       </Box>

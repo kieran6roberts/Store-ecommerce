@@ -14,8 +14,14 @@ const CheckoutCard = (): React.ReactElement => {
         as="article"
         border="1px solid black"
         flex="1"
+        fontSize="xs"
+        maxW="500px"
+        maxH="400px"
+        mb={["4rem", "4rem", "4rem", "0px"]}
+        mx="auto"
         spacing="20px"
-        p={6}
+        p={3}
+        w="full"
         >
             <Heading 
             as="h3"

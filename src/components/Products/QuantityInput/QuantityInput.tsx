@@ -22,7 +22,7 @@ const QuantityInput = (): React.ReactElement => {
     const input = getInputProps();
 
     return (
-        <HStack maxW="300px">
+        <HStack maxW="225px" mx="auto">
             <p>
                 Qty
             </p>
