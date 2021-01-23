@@ -14,6 +14,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 
 import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
 import Rating from "@/components/Products/Rating/Rating";
+import { getStorage, setStorage} from "@/utils/storage";
 
 export interface IProduct {
     clickSave: (event: IMouseEventOnHTMLElement) => void;
@@ -36,6 +37,27 @@ const Product: React.FC<IProduct> = ({
 
     const router = useRouter();
 
+    const addProductToCart = (event: IMouseEventOnHTMLElement) => {
+        const cartKey = "cart";
+
+        const userCart = getStorage(cartKey);
+
+        const product = {
+            name,
+            price
+        };
+
+        event.target.textContent = "Added";
+
+        if (!userCart) {
+            setStorage(cartKey, [product]);
+            return;
+        }
+
+        userCart.push(product);
+        setStorage(cartKey, userCart);
+    };
+
     return (
         <Flex
         flexDirection="column"
@@ -44,6 +66,7 @@ const Product: React.FC<IProduct> = ({
         h="380px"
         overflow="hidden"
         position="relative"
+        p={2}
         shadow="base"
         w="300px"
         >
@@ -74,7 +97,7 @@ const Product: React.FC<IProduct> = ({
                     <Box 
                     border="1px solid black"
                     h="100%"
-                    mb={4}
+                    mt={2}
                     w="100%"
                     >   
                         <Image
@@ -98,7 +121,7 @@ const Product: React.FC<IProduct> = ({
             >
 
             </Box>
-            <Text>
+            <Text my={4}>
                 {name}
             </Text>
             <Flex 
@@ -108,13 +131,17 @@ const Product: React.FC<IProduct> = ({
             px={2}
             width="100%"
             >
-                <Button size="sm">
+                <Button 
+                colorScheme="blue"
+                onClick={addProductToCart}
+                size="sm"
+                >
                     Add to Cart 
                 </Button>
                 <Text 
                 fontWeight="bold"
                 >
-                    {price}
+                    £{price}
                 </Text>
             </Flex>
             <Rating />

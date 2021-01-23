@@ -20,7 +20,8 @@ interface IProducts {
 }
 
 export interface IMouseEventOnHTMLElement extends React.MouseEvent {
-    currentTarget: HTMLElement
+    currentTarget: HTMLElement;
+    target: HTMLElement;
 }
 
 const Products: React.FC<IProducts> = ({ 
