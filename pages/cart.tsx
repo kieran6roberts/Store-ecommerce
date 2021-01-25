@@ -20,26 +20,18 @@ const Cart: NextPage = () => {
 
     const products = getStorage(cartKey);
 
-    if (!products) {
-      return (
-        <Box h="75vh">
-          <Text fontSize="lg">
-            Cart is Empty
-          </Text>
-        </Box>
+    if (products) {
+      return products.map((product: any) => 
+        <li key={`${generateItemKey(product.name)}`}>
+          <CartItem 
+          category={product.category}
+          description={product.description}
+          name={product.name}
+          price={product.price}
+          />
+        </li>
       );
     }
-
-    return products.map((product: any) => 
-      <li key={`${generateItemKey(product.name)}`}>
-        <CartItem 
-        category={product.category}
-        description={product.description}
-        name={product.name}
-        price={product.price}
-        />
-      </li>
-    );
   };
 
   return (

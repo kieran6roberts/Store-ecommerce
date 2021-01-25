@@ -4,15 +4,19 @@ import { Button,
     useNumberInput } from "@chakra-ui/react";
 import * as React from "react";
 
-const QuantityInput = (): React.ReactElement => {
+interface IQuantityInput {
+    updatePrice: () => void;
+}
+
+const QuantityInput = ({ updatePrice }: IQuantityInput): React.ReactElement => {
     const {
         getInputProps,
         getIncrementButtonProps,
         getDecrementButtonProps,
       } = useNumberInput({
         step: 1,
-        defaultValue: 0,
-        min: 0,
+        defaultValue: 1,
+        min: -1,
         max: 30,
         precision: 0,
       });
@@ -22,15 +26,25 @@ const QuantityInput = (): React.ReactElement => {
     const input = getInputProps();
 
     return (
-        <HStack maxW="225px" mx="auto">
+        <HStack maxW="250px" mx="auto">
             <p>
                 Qty
             </p>
-            <Button {...dec}>
+            <Button 
+            {...dec}
+            onClick={(event) => updatePrice(event)}
+            >
                 -
             </Button>
-            <Input {...input} />
-            <Button {...inc}>
+            <Input 
+            {...input} 
+            id="quantity" 
+            width="4rem" 
+            />
+            <Button 
+            onClick={(event) => updatePrice(event)}
+            {...inc}
+            >
                 +
             </Button>
         </HStack>

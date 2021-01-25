@@ -9,6 +9,7 @@ import Image from "next/image";
 import * as React from "react";
 import { ImCancelCircle } from "react-icons/im";
 
+import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
 import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
 
 interface ICartItem {
@@ -27,6 +28,22 @@ const CartItem = ({
     description, 
     name, 
     price }: ICartItem): React.ReactElement => {
+
+    const [ itemPrice, setItemPrice ] = React.useState(0);
+
+    const calculateItemPrice = (event: IMouseEventOnHTMLElement) => {
+        let productQuantityInput: HTMLInputElement | null;
+
+        if (event.target.nextElementSibling instanceof HTMLInputElement) {
+            productQuantityInput = event.target.nextElementSibling as HTMLInputElement;
+        } else {
+            productQuantityInput = event.target.previousElementSibling as HTMLInputElement;
+        }
+
+        const inputAsNumber = productQuantityInput.value ? parseInt(productQuantityInput.value) : 0;
+
+        setItemPrice(inputAsNumber * price);
+    };
 
     return (
         <Stack
@@ -67,7 +84,7 @@ const CartItem = ({
             align="center"
             justify="center"
             direction="column">
-                <QuantityInput />  
+                <QuantityInput updatePrice={calculateItemPrice}/>  
                 <Button 
                 color="red.300"
                 fontSize="xs"
@@ -83,7 +100,7 @@ const CartItem = ({
             flex="0.5"
             textAlign="center"
             >
-                Total: £{price}
+                Total: £{itemPrice}
             </Text>
         </Stack>
     );
