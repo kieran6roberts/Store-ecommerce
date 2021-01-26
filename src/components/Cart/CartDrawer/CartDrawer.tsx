@@ -10,22 +10,42 @@ import { Box,
 import Image from "next/image";
 import * as React from "react";
 import { BsArrowBarLeft } from "react-icons/bs";
-import { ImCancelCircle } from "react-icons/im";
 
+import RemoveButton from "@/components/Cart/RemoveButton/RemoveButton"
 import DrawerTemplate from "@/components/DrawerTemplate/DrawerTemplate";
+import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
 import { generateItemKey } from "@/utils/generateItemKey";
-import { getStorage } from "@/utils/storage";
+import { getStorage, setStorage } from "@/utils/storage";
 
 const CartDrawer = (): React.ReactElement => {
 
     const { isOpen, onOpen, onClose} = useDisclosure();
 
+    const removeItemFromCart = (event: IMouseEventOnHTMLElement) => {
+        const cartKey = "cart";
+        const productElementId = event.target.closest("li")?.id;
+        const products = getStorage(cartKey);
+
+        
+        if (products && productElementId) {
+            document.querySelector(`#${productElementId}`)?.remove();
+
+            const ids = products.map(product => product.id);
+            const removeIndex = ids.indexOf(productElementId);
+
+            products.splice(removeIndex, 1);
+
+            setStorage(cartKey, products);
+        }
+    };
+
     const mapProductsToDom = (): React.ReactNode => {
         const products = getStorage("cart");
 
-        if (products) {
+        if (products?.length) {
             return products.map((product) => 
                 <ListItem 
+                id={product.id}
                 key={generateItemKey(product.id)}
                 >
                     <Box 
@@ -55,14 +75,7 @@ const CartDrawer = (): React.ReactElement => {
                                 £{product.price}
                             </Text>
                         </Box>
-                        <Button 
-                        color="red.300"
-                        fontSize="xs"
-                        leftIcon={<ImCancelCircle />}
-                        variant="outline"
-                        >
-                            Remove
-                        </Button>
+                        <RemoveButton callback={removeItemFromCart} />
                     </Flex>
                     <Divider my={8} />
                 </ListItem>

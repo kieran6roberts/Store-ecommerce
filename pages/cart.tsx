@@ -3,7 +3,8 @@ import { Box,
   Flex,
   Heading, 
   Stack,  
-  StackDivider } from "@chakra-ui/react";
+  StackDivider,
+  Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import * as React from "react";
 
@@ -19,7 +20,7 @@ const Cart: NextPage = () => {
 
     const products = getStorage("cart");
 
-    if (products) {
+    if (products?.length) {
       return products.map((product: any) => 
         <li key={`${generateItemKey(product.name)}`}>
           <CartItem 
@@ -30,6 +31,8 @@ const Cart: NextPage = () => {
           />
         </li>
       );
+    } else {
+      return <Text fontSize="sm">No items in bag. Get shopping</Text>;
     }
   };
 
