@@ -1,4 +1,5 @@
 export interface ICartStorage {
+    id: string;
     name: string;
     price: number;
     description: {
@@ -7,7 +8,7 @@ export interface ICartStorage {
 }
 
 export interface ISavedStorage {
-    id: string
+    id: string;
 }
 
 type storageTypes = ICartStorage | ISavedStorage;

@@ -3,7 +3,7 @@ import { Box,
   Flex,
   Heading, 
   Stack,  
-  StackDivider,  Text  } from "@chakra-ui/react";
+  StackDivider } from "@chakra-ui/react";
 import { NextPage } from "next";
 import * as React from "react";
 
@@ -16,9 +16,8 @@ import { getStorage } from "@/utils/storage";
 const Cart: NextPage = () => {
 
   const mapCartProductstoDOM = () => {
-    const cartKey = "cart";
 
-    const products = getStorage(cartKey);
+    const products = getStorage("cart");
 
     if (products) {
       return products.map((product: any) => 

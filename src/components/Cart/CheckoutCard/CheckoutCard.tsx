@@ -2,7 +2,6 @@ import { Button,
     Divider, 
     Flex,
     Heading, 
-    StackDivider, 
     Text, 
     VStack } from "@chakra-ui/react";
 import * as React from "react";
