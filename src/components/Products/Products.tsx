@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import * as React from "react";
 
 import Product, { IProductWithId } from "@/components/Products/Product/Product";
+import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 import { getStorage, setStorage } from "@/utils/storage";
 
 interface IProducts {
@@ -41,6 +42,8 @@ const Products: React.FC<IProducts> = ({
     if (loading) {
         return <Box h="75vh">Loading prodcuts...</Box>;
     }
+
+    const { savedValue, toggleSavedValue } = useStoreUpdate();
 
     const removeProductFromDOM = (id: string) => {
         if (router.pathname !== "/saved-products") {
