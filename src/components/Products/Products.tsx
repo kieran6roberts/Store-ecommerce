@@ -1,6 +1,5 @@
 import { DocumentNode, useQuery } from "@apollo/client";
 import { Box, Button, SimpleGrid, VStack } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import * as React from "react";
 
 import Product, { IProductWithId } from "@/components/Products/Product/Product";
@@ -29,8 +28,6 @@ const Products: React.FC<IProducts> = ({
     variables = undefined }) => {
     const [ offset, setOffset ] = React.useState(10);
 
-    const router = useRouter();
-
     const { data, error, fetchMore, loading } = useQuery(query, variables);
 
     if (error) {
@@ -40,15 +37,6 @@ const Products: React.FC<IProducts> = ({
     if (loading) {
         return <Box h="75vh">Loading prodcuts...</Box>;
     }
-
-    const removeProductFromDOM = (id: string) => {
-        if (router.pathname !== "/saved-products") {
-            return;
-        }
-        document.querySelector(`#${id}`)?.remove();
-    };
-
-  
 
     const mapProducts = data?.products.map((product: IProductWithId) => 
             <li 

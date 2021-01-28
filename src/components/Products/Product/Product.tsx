@@ -14,14 +14,12 @@ import { TiDeleteOutline } from "react-icons/ti";
 
 import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
 import Rating from "@/components/Products/Rating/Rating";
-import { useStore, useStoreUpdate } from "@/hooks/useStorage";
-import { getStorage, setStorage} from "@/utils/storage";
+import { useStoreUpdate } from "@/hooks/useStorage";
 
 export interface IProduct {
     category: {
         name: string;
     };
-    clickSave: (event: IMouseEventOnHTMLElement) => void;
     description: {
         text: string;
     };
@@ -37,7 +35,6 @@ export interface IProductWithId extends IProduct {
 
 const Product: React.FC<IProductWithId> = ({ 
     category,
-    clickSave,
     description,
     image = "/img.webp", 
     id,
@@ -49,15 +46,17 @@ const Product: React.FC<IProductWithId> = ({
 
     const { addCartValue, toggleSavedValue } = useStoreUpdate();
 
-    const addProductToCart = (event: IMouseEventOnHTMLElement) => {
-        const product = {
-            category,
-            id,
-            name,
-            price,
-            description
-        };
+    const product = {
+        category,
+        description,
+        image, 
+        id,
+        name, 
+        price,
+        quantity: 1
+    };
 
+    const addProductToCart = (event: IMouseEventOnHTMLElement) => {
         addCartValue(product);
 
         event.target.textContent = "Added";
@@ -85,7 +84,7 @@ const Product: React.FC<IProductWithId> = ({
                 <span>
                     <IconButton 
                     aria-label="save item"
-                    onClick={() => toggleSavedValue("saved-products", id)}
+                    onClick={() => toggleSavedValue("saved-products", product)}
                     icon={router.pathname === "/saved-products" ?
                     <TiDeleteOutline /> 
                     : <AiOutlineHeart /> } />

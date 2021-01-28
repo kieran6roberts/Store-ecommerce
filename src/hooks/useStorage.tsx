@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
 import { getStorage, setStorage } from "@/utils/storage";
 
 const StorageContext = React.createContext<unknown | undefined>(undefined);
@@ -20,11 +21,11 @@ const useStorage = (key: string) => {
         let stateItems;
 
         if (!items) {
-            setStorage(key, [{ "id": value }]);
+            setStorage(key, [value]);
         }
 
         if (Array.isArray(items)) {
-            const filterDuplicateItems = items.filter(item => item.id !== value);
+            const filterDuplicateItems = items.filter(item => item.id !== value.id);
             
             if (filterDuplicateItems.length < items.length) {
                 stateItems = [...filterDuplicateItems];
@@ -32,7 +33,7 @@ const useStorage = (key: string) => {
                 setStorage(key, stateItems);
             } else {
 
-                const addNewItems = [...items, { "id": value }];
+                const addNewItems = [...items, value];
                 
                 stateItems = addNewItems;
     
@@ -63,22 +64,33 @@ const useStorage = (key: string) => {
         setCartStorage(items);
     };
 
+    const removeCartValue = (event: IMouseEventOnHTMLElement) => {
+        const items = getStorage(key);
+
+        const productElementId = event.target.closest("li")?.id;
+
+        const newStorage = items?.filter(item => item.id !== productElementId);
+
+        setStorage(key, newStorage);
+        setCartStorage(newStorage);
+    };
 
     return {
         addCartValue,
         cartStorage,
+        removeCartValue,
         savedStorage,
         toggleSavedValue
     };
 };
 
 const StorageProvider = ({ children }: { children: React.ReactNode}): React.ReactElement  => {
-    const { cartStorage, addCartValue } = useStorage("cart-products");
+    const { cartStorage, addCartValue, removeCartValue } = useStorage("cart-products");
     const { savedStorage, toggleSavedValue } = useStorage("saved-products");
 
     return (
         <StorageContext.Provider value={{ cartStorage, savedStorage, }} >
-            <StorageDispatchContext.Provider value={{ addCartValue, toggleSavedValue}}>
+            <StorageDispatchContext.Provider value={{ addCartValue, removeCartValue, toggleSavedValue}}>
                 {children} 
             </StorageDispatchContext.Provider>
         </StorageContext.Provider>

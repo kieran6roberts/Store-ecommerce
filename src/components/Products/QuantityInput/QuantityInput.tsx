@@ -38,7 +38,6 @@ const QuantityInput = ({ updatePrice }: IQuantityInput): React.ReactElement => {
             </Button>
             <Input 
             {...input} 
-            id="quantity" 
             width="4rem" 
             />
             <Button 

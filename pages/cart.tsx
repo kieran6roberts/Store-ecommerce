@@ -11,18 +11,18 @@ import * as React from "react";
 import CartItem from "@/components/Cart/CartItem/CartItem";
 import CheckoutCard from "@/components/Cart/CheckoutCard/CheckoutCard";
 import Layout from "@/components/Layout/Layout";
+import { useStore } from "@/hooks/useStorage";
 import { generateItemKey } from "@/utils/generateItemKey";
-import { getStorage } from "@/utils/storage";
 
 const Cart: NextPage = () => {
+  const { cartStorage } = useStore();
 
   const mapCartProductstoDOM = () => {
-
-    const products = getStorage("cart");
-
-    if (products?.length) {
-      return products.map((product: any) => 
-        <li key={`${generateItemKey(product.name)}`}>
+    if (cartStorage) {
+      return cartStorage.map((product: any) => 
+        <li 
+        id={product.id}
+        key={`${generateItemKey(product.id)}`}>
           <CartItem 
           category={product.category}
           description={product.description}

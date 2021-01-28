@@ -7,7 +7,12 @@ import { Button,
 import * as React from "react";
 import { BiLockAlt } from "react-icons/bi";
 
+import { useStore } from "@/hooks/useStorage";
+
 const CheckoutCard = (): React.ReactElement => {
+
+    const { cartStorage } = useStore();
+
     return (
         <VStack 
         as="article"
@@ -38,7 +43,7 @@ const CheckoutCard = (): React.ReactElement => {
                     Subtotal
                 </Text>
                 <Text>
-                    £19.99
+                    
                 </Text>
             </Flex>
             <Flex 

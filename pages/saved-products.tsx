@@ -1,28 +1,37 @@
-import { Heading, Text } from "@chakra-ui/react";
+import { Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
-import Products from "@/components/Products/Products";
-import { PRODUCT_STORAGE } from "@/queries/products";
-import { getStorage } from "@/utils/storage";
-
-const mapQuery = () => {
-    const storage = getStorage("saved-products");
-    return storage?.map(product => product.id);
-};
+import Product from "@/components/Products/Product/Product";
+import { useStore } from "@/hooks/useStorage";
+import { generateItemKey } from "@/utils/generateItemKey";
 
 const savedProducts: NextPage = () => {
-    const queryVariables = mapQuery();
+    const { savedStorage } = useStore();
 
     return (
         <Layout>
-            {queryVariables?.length ? 
-            <Products 
-            loadMore={false}
-            query={PRODUCT_STORAGE}
-            variables={{ variables: { ids: queryVariables }}}
-            />
+            <SimpleGrid 
+            as="ul"
+            columns={[1, 1, 2, 2, 3, 4]} 
+            listStyleType="none"
+            mx={8}
+            spacing="3rem"
+            >
+                {savedStorage ?
+                savedStorage.map((product) => 
+                <li key={generateItemKey(product.id)}>
+                    <Product 
+                    category={product.category}
+                    description={product.description} 
+                    image={product.image}
+                    id={product.id}
+                    name={product.name}
+                    price={product.price}
+                    />
+                </li>
+                )
             :
             <header>
                 <Heading 
@@ -36,6 +45,7 @@ const savedProducts: NextPage = () => {
                 </Text>
             </header>
             }
+            </SimpleGrid>
         </Layout>
     );
 };

@@ -11,6 +11,7 @@ import { ImCancelCircle } from "react-icons/im";
 
 import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
 import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
+import { useStoreUpdate } from "@/hooks/useStorage";
 
 interface ICartItem {
     category: {
@@ -29,7 +30,9 @@ const CartItem = ({
     name, 
     price }: ICartItem): React.ReactElement => {
 
-    const [ itemPrice, setItemPrice ] = React.useState(0);
+    const [ itemPrice, setItemPrice ] = React.useState(price);
+
+    const { removeCartValue } = useStoreUpdate();
 
     const calculateItemPrice = (event: IMouseEventOnHTMLElement) => {
         let productQuantityInput: HTMLInputElement | null;
@@ -52,7 +55,7 @@ const CartItem = ({
         display="flex"
         divider={<StackDivider borderColor="blue.100" />}
         fontSize="xs"
-        maxW={["500px", "500px", "500px", "none"]}
+        maxW={[ "500px", "500px", "500px", "none" ]}
         mx="auto"
         p={4}
         spacing="20px"
@@ -83,12 +86,14 @@ const CartItem = ({
             <Flex 
             align="center"
             justify="center"
-            direction="column">
-                <QuantityInput updatePrice={calculateItemPrice}/>  
+            direction="column"
+            >
+                <QuantityInput updatePrice={calculateItemPrice} />  
                 <Button 
                 color="red.300"
                 fontSize="xs"
                 leftIcon={<ImCancelCircle />}
+                onClick={(event) => removeCartValue(event)}
                 mt={4}
                 mx="auto"
                 variant="outline"
