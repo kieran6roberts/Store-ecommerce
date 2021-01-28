@@ -4,8 +4,6 @@ import { useRouter } from "next/router";
 import * as React from "react";
 
 import Product, { IProductWithId } from "@/components/Products/Product/Product";
-import { useStore, useStoreUpdate } from "@/hooks/useStorage";
-import { getStorage, setStorage } from "@/utils/storage";
 
 interface IProducts {
     loadMore: boolean;
@@ -43,8 +41,6 @@ const Products: React.FC<IProducts> = ({
         return <Box h="75vh">Loading prodcuts...</Box>;
     }
 
-    const { savedValue, toggleSavedValue } = useStoreUpdate();
-
     const removeProductFromDOM = (id: string) => {
         if (router.pathname !== "/saved-products") {
             return;
@@ -52,35 +48,7 @@ const Products: React.FC<IProducts> = ({
         document.querySelector(`#${id}`)?.remove();
     };
 
-    const toggleProductInStorage = (event: IMouseEventOnHTMLElement, id: string) => {
-        const KEY = "saved-products";
-
-        const products = getStorage(KEY);
-
-        removeProductFromDOM(id);
-
-        if (!products) {
-            setStorage(KEY, [{ id: id }]);
-            event.currentTarget.style.color = "pink";
-            return;
-        }
-        
-        if (Array.isArray(products)) {
-            
-            const filterDuplicateItems = products.filter(product => product.id !== id);
-            
-            if (filterDuplicateItems.length < products.length) {
-                setStorage(KEY, filterDuplicateItems);
-                event.currentTarget.style.color = "black";
-                return;
-            }
-            
-            const addNewItems = [...products, { id: id }];
-            
-            setStorage(KEY, addNewItems);
-            event.currentTarget.style.color = "pink";
-        }
-    };
+  
 
     const mapProducts = data?.products.map((product: IProductWithId) => 
             <li 
@@ -90,12 +58,11 @@ const Products: React.FC<IProducts> = ({
             >
                 <Product
                 category={product.category.name}
-                clickSave={(event) => toggleProductInStorage(event, product.id)}
                 description={product.description.text}
                 id={product.id}
                 image={product.image}
-                name={product.name} 
-                price={product.price} 
+                name={product.name}
+                price={product.price}
                 />
             </li>
     );
@@ -109,7 +76,7 @@ const Products: React.FC<IProducts> = ({
         
         const products = Array.from(productElements);
 
-        return !(products.length % 10) ? true: false;
+        return !(products.length % 10) ? true : false;
     };
 
     return (

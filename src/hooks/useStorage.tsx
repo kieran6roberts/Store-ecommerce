@@ -9,35 +9,35 @@ export const useStore = () => React.useContext(StorageContext);
 export const useStoreUpdate = () => React.useContext(StorageDispatchContext);
 
 const useStorage = (key: string) => {
-    const CART_KEY = "cart";
-    const SAVED_KEY = "saved";
+    const CART_KEY = "cart-products";
+    const SAVED_KEY = "saved-products";
 
     const [ cartStorage, setCartStorage ] = React.useState(getStorage(CART_KEY));
     const [ savedStorage, setSavedStorage ] = React.useState(getStorage(SAVED_KEY));
 
-    const toggleSavedValue = (subKey: string, value: string) => {
+    const toggleSavedValue = (key, value) => {
         const items = getStorage(key);
         let stateItems;
 
         if (!items) {
-            setStorage(key, [{ subKey, value }]);
+            setStorage(key, [{ "id": value }]);
         }
 
         if (Array.isArray(items)) {
-            const filterDuplicateItems = items.filter(product => product.id !== subKey);
+            const filterDuplicateItems = items.filter(item => item.id !== value);
             
             if (filterDuplicateItems.length < items.length) {
                 stateItems = [...filterDuplicateItems];
 
-                setStorage(key, filterDuplicateItems);
-            }
-            
-            const addNewItems = [...items, { subKey: value }];
-            
-            stateItems = addNewItems;
+                setStorage(key, stateItems);
+            } else {
 
-            setStorage(key, addNewItems);
-            setSavedStorage(addNewItems);
+                const addNewItems = [...items, { "id": value }];
+                
+                stateItems = addNewItems;
+    
+                setStorage(key, stateItems);
+            }
         }
 
         setSavedStorage(stateItems);
@@ -47,12 +47,11 @@ const useStorage = (key: string) => {
         const items = getStorage(key);
 
         if (!items) {
-            setStorage(key, value);
+            setStorage(key, [value]);
+        } else {
+            items.push(value);
+            setStorage(key, items);
         }
-
-        items.push(value);
-
-        setStorage(key, items);
 
         setCartStorage(items);
     };
@@ -67,7 +66,7 @@ const useStorage = (key: string) => {
 };
 
 const StorageProvider = ({ children }: { children: React.ReactNode}): React.ReactElement  => {
-    const { cartStorage, addCartValue } = useStorage("cart");
+    const { cartStorage, addCartValue } = useStorage("cart-products");
     const { savedStorage, toggleSavedValue } = useStorage("saved-products");
 
     return (

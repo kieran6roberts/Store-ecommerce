@@ -14,6 +14,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 
 import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
 import Rating from "@/components/Products/Rating/Rating";
+import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 import { getStorage, setStorage} from "@/utils/storage";
 
 export interface IProduct {
@@ -46,11 +47,9 @@ const Product: React.FC<IProductWithId> = ({
 
     const router = useRouter();
 
+    const { addCartValue, toggleSavedValue } = useStoreUpdate();
+
     const addProductToCart = (event: IMouseEventOnHTMLElement) => {
-        const cartKey = "cart";
-
-        const userCart = getStorage(cartKey);
-
         const product = {
             category,
             id,
@@ -59,15 +58,10 @@ const Product: React.FC<IProductWithId> = ({
             description
         };
 
+        addCartValue(product);
+
         event.target.textContent = "Added";
 
-        if (!userCart) {
-            setStorage(cartKey, [product]);
-            return;
-        }
-
-        userCart.push(product);
-        setStorage(cartKey, userCart);
     };
 
     return (
@@ -91,7 +85,7 @@ const Product: React.FC<IProductWithId> = ({
                 <span>
                     <IconButton 
                     aria-label="save item"
-                    onClick={clickSave}
+                    onClick={() => toggleSavedValue("saved-products", id)}
                     icon={router.pathname === "/saved-products" ?
                     <TiDeleteOutline /> 
                     : <AiOutlineHeart /> } />
