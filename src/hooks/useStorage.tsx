@@ -49,8 +49,15 @@ const useStorage = (key: string) => {
         if (!items) {
             setStorage(key, [value]);
         } else {
-            items.push(value);
-            setStorage(key, items);
+
+            const isItemDuplicate = items.some(item => item.id === value.id);
+
+            if (!isItemDuplicate) {
+                items.push(value);
+                setStorage(key, items);
+            } else {
+                return;
+            }
         }
 
         setCartStorage(items);
