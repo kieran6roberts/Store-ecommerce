@@ -15,6 +15,16 @@ const useStorage = (key: string) => {
 
     const [ cartStorage, setCartStorage ] = React.useState(getStorage(CART_KEY));
     const [ savedStorage, setSavedStorage ] = React.useState(getStorage(SAVED_KEY));
+    const [ subTotal, setSubTotal ] = React.useState(() => {
+        const products = getStorage(CART_KEY);
+
+        if (products) {
+            return products.map(product => product.price)
+                    .reduce((accum, curValue) => accum + curValue);
+        } else {
+            return 0;
+        }
+    });
 
     const toggleSavedValue = (key, value) => {
         const items = getStorage(key);
@@ -75,22 +85,44 @@ const useStorage = (key: string) => {
         setCartStorage(newStorage);
     };
 
+    const updatePriceValue = (products: any) => {
+        if (!products) {
+            return;
+        }
+
+        const total = products.map(product => product.price)
+                        ?.reduce((accum, curValue) => accum + curValue, 0);
+
+        setSubTotal(total);
+    };
+
     return {
         addCartValue,
         cartStorage,
         removeCartValue,
         savedStorage,
-        toggleSavedValue
+        subTotal,
+        toggleSavedValue,
+        updatePriceValue
     };
 };
 
 const StorageProvider = ({ children }: { children: React.ReactNode}): React.ReactElement  => {
-    const { cartStorage, addCartValue, removeCartValue } = useStorage("cart-products");
+    const { cartStorage, 
+        addCartValue, 
+        removeCartValue,
+        subTotal, 
+        updatePriceValue } = useStorage("cart-products");
+
     const { savedStorage, toggleSavedValue } = useStorage("saved-products");
 
     return (
-        <StorageContext.Provider value={{ cartStorage, savedStorage, }} >
-            <StorageDispatchContext.Provider value={{ addCartValue, removeCartValue, toggleSavedValue}}>
+        <StorageContext.Provider value={{ cartStorage, savedStorage, subTotal }} >
+            <StorageDispatchContext.Provider value={{ addCartValue, 
+                removeCartValue, 
+                toggleSavedValue,
+                updatePriceValue
+                }}>
                 {children} 
             </StorageDispatchContext.Provider>
         </StorageContext.Provider>

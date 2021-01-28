@@ -19,11 +19,16 @@ import { generateItemKey } from "@/utils/generateItemKey";
 const CartDrawer = (): React.ReactElement => {
     const { isOpen, onOpen, onClose} = useDisclosure();
 
-    const { cartStorage } = useStore();
-    const { removeCartValue } = useStoreUpdate();
+    const { cartStorage, subTotal } = useStore();
+    const { removeCartValue, updatePriceValue } = useStoreUpdate();
+
+    React.useEffect(() => {
+        console.log("update total in cart drawer");
+        updatePriceValue(cartStorage);
+    }, [ cartStorage ]);
 
     const mapProductsToDom = (): React.ReactNode => {
-        if (cartStorage) {
+        if (cartStorage.length) {
             return cartStorage.map((product) => 
                 <ListItem 
                 id={product.id}
@@ -80,7 +85,7 @@ const CartDrawer = (): React.ReactElement => {
         </Button>
         <DrawerTemplate
         header="What's in your bag"
-        footer="Total: £..."
+        footer={`Total: £${subTotal}`}
         isOpen={isOpen}
         onClose={onClose}
         overlay={false}

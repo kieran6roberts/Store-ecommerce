@@ -18,7 +18,7 @@ const Cart: NextPage = () => {
   const { cartStorage } = useStore();
 
   const mapCartProductstoDOM = () => {
-    if (cartStorage) {
+    if (cartStorage.length) {
       return cartStorage.map((product: any) => 
         <li 
         id={product.id}

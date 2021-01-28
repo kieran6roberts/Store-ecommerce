@@ -7,11 +7,17 @@ import { Button,
 import * as React from "react";
 import { BiLockAlt } from "react-icons/bi";
 
-import { useStore } from "@/hooks/useStorage";
+import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 
 const CheckoutCard = (): React.ReactElement => {
 
-    const { cartStorage } = useStore();
+    const { cartStorage, subTotal } = useStore();
+    const { updatePriceValue } = useStoreUpdate();
+
+    React.useEffect(() => {
+        console.log("update total on cart page");
+        updatePriceValue(cartStorage);
+    }, [ cartStorage ]);
 
     return (
         <VStack 
@@ -40,21 +46,10 @@ const CheckoutCard = (): React.ReactElement => {
             w="full"
             >
                 <Text>
-                    Subtotal
+                    Subtotal:
                 </Text>
                 <Text>
-                    
-                </Text>
-            </Flex>
-            <Flex 
-            justify="space-between"
-            w="full"
-            >
-                <Text>
-                    Shipping Costs
-                </Text>
-                <Text>
-                    £4.99
+                    £{subTotal}
                 </Text>
             </Flex>
             <Flex 
@@ -62,10 +57,21 @@ const CheckoutCard = (): React.ReactElement => {
             w="full"
             >
                 <Text>
-                    Total
+                    Shipping Costs:
+                </Text>
+                <Text id="shipping-costs">
+                    £{subTotal > 30 ? "0" : "4.99"}
+                </Text>
+            </Flex>
+            <Flex 
+            justify="space-between"
+            w="full"
+            >
+                <Text>
+                    Total:
                 </Text>
                 <Text>
-                    £24.98
+                    £{subTotal < 30 ? subTotal + 4.99 : subTotal}
                 </Text>
             </Flex>
             <Divider />
@@ -73,6 +79,7 @@ const CheckoutCard = (): React.ReactElement => {
             colorScheme="blue"
             leftIcon={<BiLockAlt />}
             variant="solid"
+            isDisabled={subTotal === 0 ? true : false}
             >
                 Proceed to Checkout
             </Button>
