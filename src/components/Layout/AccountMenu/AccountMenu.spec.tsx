@@ -6,12 +6,25 @@ import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
 let documentBody: RenderResult;
 
 describe("<AccountMenu {...props} />", () => {
-    test("renders", () => {
-        documentBody = render(<AccountMenu display={["flex"]}/>);
+    const user = {
+        user: {
+            nickname: "Kieran"
+        }
+    };
 
+    test("renders with user", () => {
+        documentBody = render(<AccountMenu display={["flex"]} user={user} />);
+        
         expect(documentBody.getByRole("button")).toBeInTheDocument();
         expect(documentBody.getByText(/account/i)).toBeInTheDocument();
-        expect(documentBody.getByText(/login/i)).toBeInTheDocument();
-        expect(documentBody.getByText(/register/i)).toBeInTheDocument();
+        expect(documentBody.getByText("Logout")).toBeInTheDocument();
+    });
+    
+    test("renders without user", () => {
+        documentBody = render(<AccountMenu display={["flex"]} user={null} />);
+        
+        expect(documentBody.getByRole("button")).toBeInTheDocument();
+        expect(documentBody.getByText(/account/i)).toBeInTheDocument();
+        expect(documentBody.getByText("Login/Register")).toBeInTheDocument();
     });
 });

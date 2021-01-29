@@ -1,14 +1,32 @@
 import { render, RenderResult } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useRouter } from "next/router";
 import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
 
 let documentBody: RenderResult;
 
-describe("<Nav />", () => {
+jest.mock("next/router");
+
+describe("<Layout />", () => {
+    let expectedAsPath;
+
+    const user = {
+        user: {
+            nickname: "Kieran"
+        }
+    };
+
+    beforeEach(() => {
+        expectedAsPath = "Home/store";
+        (useRouter as jest.Mock).mockReturnValue({
+            asPath: expectedAsPath
+        });
+    });
+
     test("renders", () => {
-        documentBody = render(<Layout ><h1>Header</h1></Layout>);
+        documentBody = render(<Layout user={user} ><h1>Header</h1></Layout>);
         
         expect(documentBody.getByRole("navigation")).toBeInTheDocument();
         expect(documentBody.getByRole("heading", { name: /header/i})).toBeInTheDocument();
@@ -16,7 +34,7 @@ describe("<Nav />", () => {
     });
     
     test("toggle sidebar state", () => {
-        documentBody = render(<Layout ><h1>Header</h1></Layout>);
+        documentBody = render(<Layout user={user} ><h1>Header</h1></Layout>);
 
 
         expect(documentBody.queryByPlaceholderText("coffee beans...")).not.toBeInTheDocument();

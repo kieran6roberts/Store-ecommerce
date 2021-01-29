@@ -2,27 +2,34 @@ import { Button,
     Link,    
     Menu,
     MenuButton,
-    MenuDivider,
     MenuItem,    
     MenuList } from "@chakra-ui/react";
     import NextLink from "next/link";
 import * as React from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
 
-function AccountMenu({ user, display }: { display: string[]}): React.ReactElement {
-    console.log(user);
+import { IUser } from "@/pages/index";
+
+interface IAccountMenu {
+    display: string[],
+    user: IUser
+}
+
+const AccountMenu: React.FC<IAccountMenu> = ({ display, user }) => {
     return (
         <Menu>
-            <MenuButton as={Button} 
+            <MenuButton 
+            as={Button} 
             display={display}
-            fontSize="sm"
+            fontSize="xs"
             rightIcon={<IoChevronDownOutline />}
             transition="all 200ms"
             variant="outline"
             >
                 Account
             </MenuButton>
-            <MenuList>
+            <MenuList 
+            fontSize="xs">
                 {user ? 
                 <MenuItem>
                    <NextLink href="/api/logout">
@@ -32,28 +39,16 @@ function AccountMenu({ user, display }: { display: string[]}): React.ReactElemen
                    </NextLink>
                </MenuItem>
                :
-                <>
                 <MenuItem>
                     <NextLink href="/api/login">
                         <Link>
-                            Login
+                            Login/Register
                         </Link>
                     </NextLink>
-                </MenuItem>
-
-                <MenuDivider />
-
-                <MenuItem>
-                    <NextLink href="/api/login">
-                        <Link>
-                            Register
-                        </Link>
-                    </NextLink>
-                </MenuItem>
-                </>}
+                </MenuItem>}
             </MenuList>
         </Menu>
     );
-}
+};
 
 export default AccountMenu;

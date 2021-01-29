@@ -10,11 +10,11 @@
       "@/components/*": [
         "src/components/*"
       ],
-      "@/containers/*": [
-        "src/containers/*"
-      ],
       "@/pages/*": [
         "pages/*"
+      ],
+      "@/queries/*": [
+        "src/queries/*"
       ],
       "@/lib/*": [
         "src/lib/*"

@@ -1,10 +1,27 @@
+import { Heading, Link, SimpleGrid, VStack } from "@chakra-ui/react";
+import { NextPage } from "next";
+import NextLink from "next/link";
 import * as React from "react";
 
+import Hero from "@/components/Hero/Hero";
 import Layout from "@/components/Layout/Layout";
 import NextHead from "@/components/NextHead/NextHead";
-import auth0 from "@/lib/auth";
+import Products from "@/components/Products/Products";
+import { PRODUCT_NEW } from "@/queries/products";
 
-function Home({ user }): React.ReactElement {
+export interface IUser {
+  user: {
+    name?: string,
+    nickname?: string,
+    picture?: string,
+    updated_at?: string,
+    email?: string,
+    email_verified?: string,
+    sub?: string
+  }
+}
+
+const Home: NextPage<IUser> = ({ user }) => {
   return (
     <>
     <NextHead 
@@ -12,20 +29,35 @@ function Home({ user }): React.ReactElement {
     description="home page" 
     title="Home" 
     />
-    <Layout user={user ?? null}>
-      
+    <Layout>
+      <VStack spacing="24">
+        <Hero />
+        <SimpleGrid 
+        columns={[]} 
+        spacing=""
+        >
+          
+        </SimpleGrid>
+        <Heading
+        as="h3"
+        >
+          Newest Products
+        </Heading>
+        <Products 
+        loadMore={false} 
+        query={PRODUCT_NEW} 
+        />
+        <NextLink 
+        href="/store" 
+        >
+          <Link>
+            To The Shop
+          </Link>
+        </NextLink>
+      </VStack>
     </Layout>
     </>
   );
-}
-
-export async function getServerSideProps(ctx) {
-  const session = await auth0.getSession(ctx.req);
-  return {
-    props: {
-      user: session?.user ?? null
-    }
-  };
-}
+};
 
 export default Home;

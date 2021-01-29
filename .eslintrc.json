@@ -41,7 +41,8 @@
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
         "no-inner-declarations": "off",
-        "import/no-unresolved": "off"
+        "import/no-unresolved": "off",
+        "react/prop-types": [0]
     },
     "ignorePatterns": "node_modules/"
 }

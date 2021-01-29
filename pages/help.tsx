@@ -1,13 +1,14 @@
+import { NextPage } from "next";
 import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
 
-function Help(): React.ReactElement {
+const Help: NextPage = () => {
   return (
     <Layout>
       
     </Layout>
   );
-}
+};
 
 export default Help;

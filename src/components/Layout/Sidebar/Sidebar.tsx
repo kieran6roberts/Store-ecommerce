@@ -16,13 +16,15 @@ import NextLink from "next/link";
 import * as React from "react";
 
 import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
+import { IUser } from "@/pages/index";
 
-interface SIDEBAR {
+interface ISidebar {
     isOpen: boolean;
     onClose: () => void;
+    user: IUser;
 }
 
-function Sidebar({ user, isOpen, onClose }: SIDEBAR): React.ReactElement {
+const Sidebar = ({ isOpen, onClose, user }: ISidebar): React.ReactElement => {
     return (
         <Drawer isOpen={isOpen}
         onClose={onClose}
@@ -33,26 +35,36 @@ function Sidebar({ user, isOpen, onClose }: SIDEBAR): React.ReactElement {
                     <DrawerHeader mb={2}>
                         YourCoffeeShop
                     </DrawerHeader>
-                    <DrawerBody>
-                        <AccountMenu user={user} display={["flex", "flex", "none"]} />
+                    <DrawerBody fontSize="sm">
+                        <AccountMenu 
+                        display={["flex", "flex", "none"]} 
+                        user={user}
+                        />
                         <Heading 
                         as="h4" 
-                        size="md"
+                        size="sm"
                         mt={4}
                         >
                             Looking for something?
                         </Heading>
-                        <Input placeholder="coffee beans..." my={4} />
-                        <Heading as="h4" 
-                        size="md"
+                        <Input 
+                        size="sm"
+                        my={6} 
+                        placeholder="coffee beans..." 
+                        variant="flushed"
+                        />
+                        <Heading 
+                        as="h4" 
                         mb={4}
+                        size="sm"
                         >
                             Categories
                         </Heading>
                         <List>
-                            <VStack divider={<StackDivider borderColor="brand.200" />}
-                            spacing={[1, 2, 3]}
+                            <VStack 
                             align="left"
+                            divider={<StackDivider borderColor="brand.200" />}
+                            spacing={[1, 2, 3]}
                             >
                                 <ListItem>
                                     <NextLink href="/">
@@ -92,13 +104,13 @@ function Sidebar({ user, isOpen, onClose }: SIDEBAR): React.ReactElement {
                             </VStack>
                         </List>
                     </DrawerBody>
-                    <DrawerFooter>
+                    <DrawerFooter fontSize="xs">
                         YourCoffeeShop @2021
                     </DrawerFooter>
                 </DrawerContent>
             </DrawerOverlay>
         </Drawer>
     );
-}
+};
 
 export default Sidebar;

@@ -1,75 +1,176 @@
-import { Button, 
+import { Box,
+    Button, 
     Flex,
     Heading, 
     Link, 
     List, 
     ListItem, 
-    Text } from "@chakra-ui/react";
+    Text,    
+    Tooltip } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import * as React from "react";
+import { AiOutlineHeart } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { IoCartOutline,     
-    IoHelpCircleOutline,
-    IoPersonOutline } from "react-icons/io5";
+import { IoCartOutline, IoHelpCircleOutline } from "react-icons/io5";
 
 import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
+import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
+import { IUser } from "@/pages/index";
 
-interface NAV { onOpen: () => void }
+interface INav { 
+    onOpen: () => void;
+    user: IUser;
+    userLoading: boolean;
+}
 
-function Nav({ user, onOpen }: NAV): React.ReactElement {
+const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
+    const router = useRouter();
+
     return (
-        <Flex as="nav"
-        align="center"
-        justify="space-between"
-        p={[2, 4, 6, 8]}
+        <Flex
+        direction="column"
+        position="relative"
+        pt={[2, 3, 4, 6]}
+        px={[2, 3, 4, 6]}
         >
-            <Heading as="h1" fontSize="lg">
-                <NextLink href="/">
-                    <Link>
-                        YourCoffeeShop
-                    </Link>
-                </NextLink>
-            </Heading>
-            <List alignItems="center"
-            display="flex" 
-            flex="1"
-            fontSize="lg"
-            justifyContent="end"
+            <Flex 
+            as="nav"
+            align="center"
+            justify="space-between"
             >
-                <ListItem mx={[1, 2, 4]}>
-                    <NextLink href="/cart">
-                        <Link alignItems="center" display="flex">
-                            <IoCartOutline style={{ marginRight: "8px" }} />
-                            Cart
-                        </Link>
-                    </NextLink>
-                </ListItem>
-                <ListItem display={["none", "none", "block"]} 
-                mr={12} 
-                ml={4}
+                <Heading 
+                as="h1" 
+                fontSize="lg"
                 >
-                    <NextLink href="/help">
-                        <Link alignItems="center" display="flex">
-                            <IoHelpCircleOutline style={{ marginRight: "8px" }} />
-                            Help
+                    <NextLink href="/">
+                        <Link>
+                            YourCoffeeShop
                         </Link>
                     </NextLink>
-                </ListItem>
-                <AccountMenu user={user} display={["none", "none", "flex"]}/>
-                <Button 
+                </Heading>
+                <List 
+                alignItems="center"
+                display="flex" 
+                flex="1"
                 fontSize="sm"
-                onClick={onOpen}
-                ml={8}
-                variant="ghost" 
+                justifyContent="flex-end"
                 >
-                    <GiHamburgerMenu style={{ marginRight: "6px" }} />
-                    <Text color="brand.300">
-                        Menu
+                    <ListItem>
+                        <NextLink 
+                        href="/cart" 
+                        passHref
+                        >
+                            <Link 
+                            alignItems="center" 
+                            display="flex"
+                            fontSize="lg"
+                            >
+                                <Tooltip 
+                                fontSize="sm"
+                                label="Cart" 
+                                >
+                                    <span>
+                                        <IoCartOutline />
+                                    </span>
+                                </Tooltip>
+                            </Link>
+                        </NextLink>
+                    </ListItem>
+                    <ListItem 
+                    display={["none", "none", "block"]} 
+                    ml={12}
+                    >
+                        <NextLink 
+                        href="/help" 
+                        passHref
+                        >
+                            <Link 
+                            alignItems="center" 
+                            display="flex"
+                            fontSize="lg"
+                            >
+                                <Tooltip 
+                                fontSize="sm"
+                                label="Help" 
+                                >
+                                    <span>
+                                        <IoHelpCircleOutline />
+                                    </span>
+                                </Tooltip>
+                            </Link>
+                        </NextLink>
+                    </ListItem>
+                    <ListItem 
+                    display={["none", "none", "block"]} 
+                    mx={12} 
+                    >
+                        <NextLink 
+                        href="/saved-products" 
+                        passHref
+                        >
+                            <Link 
+                            alignItems="center" 
+                            display="flex"
+                            fontSize="lg"
+                            >
+                                <Tooltip 
+                                fontSize="sm"
+                                label="Saved" 
+                                >
+                                    <span>
+                                        <AiOutlineHeart />
+                                    </span>
+                                </Tooltip>
+                            </Link>
+                        </NextLink>
+                    </ListItem>
+                    <AccountMenu 
+                    display={["none", "none", "flex"]}
+                    user={user} 
+                    />
+                    <Button 
+                    fontSize="xs"
+                    onClick={onOpen}
+                    ml={12}
+                    variant="outline" 
+                    >
+                        <GiHamburgerMenu style={{ marginRight: "6px" }} />
+                        <Text color="brand.300">
+                            Menu
+                        </Text>
+                    </Button>
+                </List>
+            </Flex>
+            <Flex 
+            alignItems="center"
+            fontSize="sm"
+            justify="space-between"
+            borderTop="1px solid gray"
+            borderBottom="1px solid gray"
+            mt={4}
+            mb={8}
+            py={4}
+            >
+                <Box>
+                    <Text>
+                        <NextLink href="/" passHref>
+                            <Link>
+                                Home 
+                            </Link>
+                        </NextLink>
+                        <span>
+                            {router.asPath.split("/").join(" > ").toLowerCase()}
+                        </span>
                     </Text>
-                </Button>
-            </List>
+                </Box>
+                <CurrentUser 
+                user={user} 
+                userLoading={userLoading} 
+                />
+            </Flex>
         </Flex>
     );
-}
+};
 
 export default Nav;

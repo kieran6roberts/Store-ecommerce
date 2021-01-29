@@ -7,23 +7,30 @@ import { Flex,
 import NextLink from "next/link";
 import * as React from "react";
 
-function Footer(): React.ReactElement {
+const Footer = (): React.ReactElement => {
     return (
-        <Flex as="footer" 
+        <Flex 
+        as="footer" 
         alignItems="center"
         direction="column"
         justifyContent="center"
-        p={[4, 4, 6, 8]}
+        p={[6, 6, 8, 12]}
         >
-            <Text fontSize="md" mb={6}>
+            <Text 
+            fontSize="md" 
+            mb={6}
+            >
                 YourCoffeeShop @2021
             </Text>
-            <List display="flex" fontSize="sm">
+            <List 
+            display="flex" 
+            fontSize="sm"
+            >
                 <HStack spacing="12">
                     <ListItem>
-                        <NextLink href="/products">
+                        <NextLink href="/store">
                             <Link>
-                                Products
+                                Store
                             </Link>
                         </NextLink>
                     </ListItem>
@@ -52,6 +59,6 @@ function Footer(): React.ReactElement {
             </List>
         </Flex>
     );
-}
+};
 
 export default Footer;
