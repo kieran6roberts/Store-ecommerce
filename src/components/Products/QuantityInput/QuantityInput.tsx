@@ -5,7 +5,7 @@ import { Button,
 import * as React from "react";
 
 interface IQuantityInput {
-    updatePrice: () => void;
+    updatePrice: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const QuantityInput = ({ updatePrice }: IQuantityInput): React.ReactElement => {

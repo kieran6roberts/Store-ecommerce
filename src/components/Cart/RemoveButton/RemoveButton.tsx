@@ -2,10 +2,8 @@ import { Button } from "@chakra-ui/react";
 import * as React from "react";
 import { ImCancelCircle } from "react-icons/im";
 
-import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
-
 interface IRemoveButton {
-    callback: (event: IMouseEventOnHTMLElement) => void;
+    callback: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const RemoveButton: React.FC<IRemoveButton> = ({ callback }) => {

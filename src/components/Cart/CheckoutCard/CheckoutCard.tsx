@@ -11,8 +11,8 @@ import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 
 const CheckoutCard = (): React.ReactElement => {
 
-    const { cartStorage, subTotal } = useStore();
-    const { updatePriceValue } = useStoreUpdate();
+    const { cartStorage, subTotal } = useStore()!;
+    const { updatePriceValue } = useStoreUpdate()!;
 
     React.useEffect(() => {
         console.log("update total on cart page");

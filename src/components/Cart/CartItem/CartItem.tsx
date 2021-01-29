@@ -32,9 +32,10 @@ const CartItem = ({
 
     const [ itemPrice, setItemPrice ] = React.useState(price);
 
-    const { removeCartValue } = useStoreUpdate();
+    const { removeCartValue } = useStoreUpdate()!;
 
     const calculateItemPrice = (event: IMouseEventOnHTMLElement) => {
+
         let productQuantityInput: HTMLInputElement | null;
 
         if (event.target.nextElementSibling instanceof HTMLInputElement) {
@@ -93,7 +94,7 @@ const CartItem = ({
                 color="red.300"
                 fontSize="xs"
                 leftIcon={<ImCancelCircle />}
-                onClick={(event) => removeCartValue(event)}
+                onClick={(event: React.MouseEvent<HTMLButtonElement>) => removeCartValue(event)}
                 mt={4}
                 mx="auto"
                 variant="outline"
