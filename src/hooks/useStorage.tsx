@@ -1,13 +1,26 @@
 import * as React from "react";
 
 import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
-import { getStorage, setStorage } from "@/utils/storage";
+import { getStorage, IProductStorage, setStorage } from "@/utils/storage";
 
-const StorageContext = React.createContext<unknown | undefined>(undefined);
-const StorageDispatchContext = React.createContext<unknown | undefined>(undefined);
+type StorageContextType = {
+    cartStorage: Array<IProductStorage> | null;
+    savedStorage: Array<IProductStorage> | null;
+    subTotal: number;
+}
 
-export const useStore = () => React.useContext(StorageContext);
-export const useStoreUpdate = () => React.useContext(StorageDispatchContext);
+type StorageUpdateContextType = {
+    toggleSavedValue: (key: string, value: IProductStorage) => void;
+    addCartValue: (value: IProductStorage) => void;
+    removeCartValue: (event: IMouseEventOnHTMLElement) => void;
+    updatePriceValue: (products: Array<IProductStorage>) => void;
+}
+
+const StorageContext = React.createContext<StorageContextType | undefined>(undefined);
+const StorageDispatchContext = React.createContext<StorageUpdateContextType | undefined>(undefined);
+
+export const useStore = (): StorageContextType | undefined => React.useContext(StorageContext);
+export const useStoreUpdate = (): StorageUpdateContextType | undefined => React.useContext(StorageDispatchContext);
 
 const useStorage = (key: string) => {
     const CART_KEY = "cart-products";
@@ -26,7 +39,7 @@ const useStorage = (key: string) => {
         }
     });
 
-    const toggleSavedValue = (key, value) => {
+    const toggleSavedValue = (key: string, value: IProductStorage) => {
         const items = getStorage(key);
         let stateItems;
 
@@ -51,10 +64,10 @@ const useStorage = (key: string) => {
             }
         }
 
-        setSavedStorage(stateItems);
+        setSavedStorage(stateItems ?? null);
     };
 
-    const addCartValue = (value) => {
+    const addCartValue = (value: IProductStorage) => {
         const items = getStorage(key);
 
         if (!items) {
@@ -75,17 +88,17 @@ const useStorage = (key: string) => {
     };
 
     const removeCartValue = (event: IMouseEventOnHTMLElement) => {
-        const items = getStorage(key);
+        const items = getStorage(key)!;
 
         const productElementId = event.target.closest("li")?.id;
 
-        const newStorage = items?.filter(item => item.id !== productElementId);
+        const newStorage = items.filter(item => item.id !== productElementId);
 
         setStorage(key, newStorage);
         setCartStorage(newStorage);
     };
 
-    const updatePriceValue = (products: any) => {
+    const updatePriceValue = (products: Array<IProductStorage>) => {
         if (!products) {
             return;
         }
