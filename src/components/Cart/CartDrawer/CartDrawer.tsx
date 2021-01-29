@@ -17,10 +17,10 @@ import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 import { generateItemKey } from "@/utils/generateItemKey";
 
 const CartDrawer = (): React.ReactElement => {
-    const { isOpen, onOpen, onClose} = useDisclosure();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { cartStorage, subTotal } = useStore();
-    const { removeCartValue, updatePriceValue } = useStoreUpdate();
+    const { cartStorage, subTotal } = useStore()!;
+    const { removeCartValue, updatePriceValue } = useStoreUpdate()!;
 
     React.useEffect(() => {
         console.log("update total in cart drawer");

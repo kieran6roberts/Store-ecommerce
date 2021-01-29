@@ -13,7 +13,7 @@ type StorageUpdateContextType = {
     toggleSavedValue: (key: string, value: IProductStorage) => void;
     addCartValue: (value: IProductStorage) => void;
     removeCartValue: (event: IMouseEventOnHTMLElement) => void;
-    updatePriceValue: (products: Array<IProductStorage>) => void;
+    updatePriceValue: (products: Array<IProductStorage> | null) => void;
 }
 
 const StorageContext = React.createContext<StorageContextType | undefined>(undefined);
@@ -98,7 +98,7 @@ const useStorage = (key: string) => {
         setCartStorage(newStorage);
     };
 
-    const updatePriceValue = (products: Array<IProductStorage>) => {
+    const updatePriceValue = (products: Array<IProductStorage> | null) => {
         if (!products) {
             return;
         }
