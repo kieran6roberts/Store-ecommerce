@@ -28,7 +28,7 @@ const CartDrawer = (): React.ReactElement => {
     }, [ cartStorage ]);
 
     const mapProductsToDom = (): React.ReactNode => {
-        if (cartStorage.length) {
+        if (cartStorage?.length) {
             return cartStorage.map((product) => 
                 <ListItem 
                 id={product.id}

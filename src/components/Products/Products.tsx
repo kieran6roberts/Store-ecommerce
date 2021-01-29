@@ -26,6 +26,7 @@ const Products: React.FC<IProducts> = ({
     loadMore,
     query, 
     variables = undefined }) => {
+        
     const [ offset, setOffset ] = React.useState(10);
 
     const { data, error, fetchMore, loading } = useQuery(query, variables);
