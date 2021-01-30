@@ -13,15 +13,12 @@ export const setStorage = (key: string, value: Array<IProductStorage>): void => 
 };
 
 export const getStorage = (key: string): Array<IProductStorage> | null => {
+
     if (typeof window === "undefined") {
         return null;
     }
     
     const storedItems = window.localStorage.getItem(key);
-    
-    if (!storedItems) {
-        return null;
-    }
 
-    return JSON.parse(storedItems);
+    return storedItems ? JSON.parse(storedItems) : null;
 };

@@ -1,7 +1,7 @@
 module.exports = {
     preset: "ts-jest",
     testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
-    setupFilesAfterEnv: ["<rootDir>/setupTests.ts"],
+    setupFilesAfterEnv: ["<rootDir>/setupTests.tsx"],
     moduleNameMapper: {
       "^@/components(.*)$": "<rootDir>/src/components/$1",
       "^@/containers(.*)$": "<rootDir>/src/containers/$1",

@@ -44,7 +44,10 @@ const DrawerTemplate = ({
                     <DrawerBody>
                         {children}
                     </DrawerBody>
-                    <DrawerFooter>
+                    <DrawerFooter
+                    borderTop="1px solid gray"
+                    justifyContent="flex-start"
+                    >
                         {footer}
                     </DrawerFooter>
                 </DrawerContent>
