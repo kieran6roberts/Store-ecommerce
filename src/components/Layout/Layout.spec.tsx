@@ -1,9 +1,11 @@
-import { render, RenderResult } from "@testing-library/react";
+import { RenderResult } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/router";
 import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
+
+import { render } from "../../../test-utils";
 
 let documentBody: RenderResult;
 
@@ -11,12 +13,6 @@ jest.mock("next/router");
 
 describe("<Layout />", () => {
     let expectedAsPath;
-
-    const user = {
-        user: {
-            nickname: "Kieran"
-        }
-    };
 
     beforeEach(() => {
         expectedAsPath = "Home/store";
@@ -26,7 +22,11 @@ describe("<Layout />", () => {
     });
 
     test("renders", () => {
-        documentBody = render(<Layout user={user} ><h1>Header</h1></Layout>);
+        documentBody = render(
+            <Layout>
+                <h1>Header</h1>
+            </Layout>
+            , null);
         
         expect(documentBody.getByRole("navigation")).toBeInTheDocument();
         expect(documentBody.getByRole("heading", { name: /header/i})).toBeInTheDocument();
@@ -34,7 +34,11 @@ describe("<Layout />", () => {
     });
     
     test("toggle sidebar state", () => {
-        documentBody = render(<Layout user={user} ><h1>Header</h1></Layout>);
+        documentBody = render(
+        <Layout>
+            <h1>Header</h1>
+        </Layout>
+        , null);
 
 
         expect(documentBody.queryByPlaceholderText("coffee beans...")).not.toBeInTheDocument();

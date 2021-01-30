@@ -1,7 +1,9 @@
-import { render, RenderResult } from "@testing-library/react";
+import { RenderResult } from "@testing-library/react";
 import * as React from "react";
 
 import DrawerTemplate from "@/components/DrawerTemplate/DrawerTemplate";
+
+import { render } from "../../../test-utils";
 
 let documentBody: RenderResult;
 
@@ -16,12 +18,12 @@ describe("<DrawerTemplate {...props}/>", () => {
         };
 
         documentBody = render(
-        <DrawerTemplate {...props}>
-            <main>
-                child elements
-            </main>
-        </DrawerTemplate>
-        );
+            <DrawerTemplate {...props}>
+                <main>
+                    child elements
+                </main>
+            </DrawerTemplate>
+            , null);
 
         expect(documentBody.getByRole("dialog")).toBeInTheDocument();
         expect(documentBody.getByRole("banner")).toHaveTextContent(/cart drawer/i);
@@ -44,7 +46,7 @@ describe("<DrawerTemplate {...props}/>", () => {
                     child elements
                 </main>
             </DrawerTemplate>
-            );
+            , null);
             
             expect(documentBody.queryByRole("dialog")).not.toBeInTheDocument();
             expect(documentBody.queryByRole("heading")).not.toBeInTheDocument();

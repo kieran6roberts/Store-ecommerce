@@ -19,7 +19,7 @@ import { generateItemKey } from "@/utils/generateItemKey";
 const CartDrawer = (): React.ReactElement => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { subTotal } = useStore()!;
+    const { cartStorage, subTotal } = useStore()!;
     const { removeCartValue, updatePriceValue } = useStoreUpdate()!;
 
     React.useEffect(() => {
