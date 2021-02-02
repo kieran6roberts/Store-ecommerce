@@ -12,18 +12,16 @@ import * as React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { TiDeleteOutline } from "react-icons/ti";
 
-import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
 import Rating from "@/components/Products/Rating/Rating";
 import { useStoreUpdate } from "@/hooks/useStorage";
+import { IProductStorage } from "@/utils/storage";
 
+/*
 export interface IProduct {
-    category: {
-        name: string;
-    };
-    description: {
+    category: string;    description: {
         text: string;
     };
-    image: string[];
+    image: string | string[];
     name: string;
     price: number;
     __typename?: string;
@@ -31,9 +29,9 @@ export interface IProduct {
 
 export interface IProductWithId extends IProduct {
     id: string
-}
+}*/
 
-const Product: React.FC<IProductWithId> = ({ 
+const Product: React.FC<IProductStorage> = ({ 
     category,
     description,
     image = "/img.webp", 
@@ -44,7 +42,7 @@ const Product: React.FC<IProductWithId> = ({
 
     const router = useRouter();
 
-    const { addCartValue, toggleSavedValue } = useStoreUpdate();
+    const { addCartValue, toggleSavedValue } = useStoreUpdate()!;
 
     const product = {
         category,
@@ -56,11 +54,10 @@ const Product: React.FC<IProductWithId> = ({
         quantity: 1
     };
 
-    const addProductToCart = (event: IMouseEventOnHTMLElement) => {
+    const addProductToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
+        (event.target as HTMLButtonElement).textContent = "Added";
+
         addCartValue(product);
-
-        event.target.textContent = "Added";
-
     };
 
     return (
@@ -106,7 +103,7 @@ const Product: React.FC<IProductWithId> = ({
                     w="100%"
                     >   
                         <Image
-                        alt="product image"
+                        alt={name}
                         src={image}
                         height={200}
                         width={300}

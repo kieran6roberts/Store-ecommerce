@@ -40,8 +40,8 @@ describe("<Layout />", () => {
 
 
         expect(screen.queryByPlaceholderText("coffee beans...")).not.toBeInTheDocument();
-        expect(screen.queryByRole("heading", { name: /looking for something?/i})).not.toBeInTheDocument();
-        expect(screen.queryByRole("heading", { name: /categories/i})).not.toBeInTheDocument();
+        expect(screen.queryByRole("heading", { name: /looking for something?/i })).not.toBeInTheDocument();
+        expect(screen.queryByRole("heading", { name: /categories/i })).not.toBeInTheDocument();
         
         userEvent.click(screen.getAllByRole("button")[0]);
 

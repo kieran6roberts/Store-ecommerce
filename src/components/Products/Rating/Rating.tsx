@@ -4,7 +4,7 @@ import { AiOutlineStar } from "react-icons/ai";
 
 const Rating = (): React.ReactElement => {
     return (
-        <List>
+        <List aria-label="product-rating">
             <HStack 
             display="flex"
             spacing={1}>

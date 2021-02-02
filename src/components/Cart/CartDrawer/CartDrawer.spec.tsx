@@ -1,10 +1,10 @@
 import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import * as React from "react";
 
 import CartDrawer from "@/components/Cart/CartDrawer/CartDrawer";
 
 import { render } from "../../../../test-utils";
-import userEvent from "@testing-library/user-event";
 
 describe("<CartDrawer />", () => {
 
