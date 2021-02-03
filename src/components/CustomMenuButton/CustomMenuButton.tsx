@@ -13,12 +13,13 @@ interface IMenuButton {
     listItems: string[]
 }
 
-const CustomMenuButton: React.FC<IMenuButton> = ({ title, listItems }) => {
-    const MenuItems = listItems.map((item) => 
-        <MenuItem key={generateItemKey(item)}>
+const CustomMenuButton: React.FC<IMenuButton> = ({ title, listItems = []}) => {
+
+    const MenuItems = React.useMemo(() => listItems.map((item) => 
+        <MenuItem as="li" key={generateItemKey(item)}>
             {item}
         </MenuItem>
-        );
+        ), [ listItems ]);
 
     return (
         <Menu>
@@ -28,9 +29,9 @@ const CustomMenuButton: React.FC<IMenuButton> = ({ title, listItems }) => {
             rightIcon={<BsArrowDownShort />}
             w="10rem"
             >
-                {title}
+                {title ?? "No title"}
             </MenuButton>
-            <MenuList>
+            <MenuList as="ul">
                 {MenuItems}
             </MenuList>
         </Menu>

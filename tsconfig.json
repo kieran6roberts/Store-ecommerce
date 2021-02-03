@@ -49,7 +49,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/components/CustomMenuButton"  ],
   "exclude": [
     "node_modules"
   ]

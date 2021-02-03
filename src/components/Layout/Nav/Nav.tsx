@@ -45,7 +45,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                 >
                     <NextLink href="/">
                         <Link>
-                            YourCoffeeShop
+                            Next.js e-commerce
                         </Link>
                     </NextLink>
                 </Heading>

@@ -8,7 +8,7 @@ import { useStore } from "@/hooks/useStorage";
 import { generateItemKey } from "@/utils/generateItemKey";
 
 const savedProducts: NextPage = () => {
-    const { savedStorage } = useStore();
+    const { savedStorage } = useStore()!;
 
     return (
         <Layout>

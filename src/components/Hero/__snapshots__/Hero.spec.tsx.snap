@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Hero /> snapshot 1`] = `
+<div
+  className="css-0"
+>
+  <article
+    className="css-1fksumk"
+  >
+    <h1
+      className="chakra-heading css-1ghmqg6"
+    >
+      Bringing you the best coffee from all over the world
+    </h1>
+    <ul
+      className="css-1imb5xo"
+      role="list"
+    >
+      <li
+        className="css-1m90wc1"
+      >
+        <a
+          className="chakra-link css-0"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          Coffee Beans
+        </a>
+      </li>
+      <li
+        className="css-1m90wc1"
+      >
+        <a
+          className="chakra-link css-0"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          Ground Coffee
+        </a>
+      </li>
+      <li
+        className="css-1m90wc1"
+      >
+        <a
+          className="chakra-link css-0"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          Mugs & Cups
+        </a>
+      </li>
+    </ul>
+    <a
+      className="chakra-link css-yjd4r4"
+      onClick={[Function]}
+      onMouseEnter={[Function]}
+    >
+      Shop All Items
+    </a>
+  </article>
+</div>
+`;

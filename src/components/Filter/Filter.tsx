@@ -1,7 +1,7 @@
 import { Button, Flex, useDisclosure } from "@chakra-ui/react";
 import * as React from "react";
 
-import CustomMenuButton from "@/components/CustomMenuButton.tsx/CustomMenuButton";
+import CustomMenuButton from "@/components/CustomMenuButton/CustomMenuButton";
 import DrawerTemplate from "@/components/DrawerTemplate/DrawerTemplate";
 
 const Filter = (): React.ReactElement => {

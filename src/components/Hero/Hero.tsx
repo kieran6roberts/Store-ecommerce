@@ -1,6 +1,5 @@
 import { Box,
-    Center, 
-    Flex,    
+    Center,    
     Heading, 
     Link, 
     List, 
@@ -8,16 +7,17 @@ import { Box,
 import NextLink from "next/link";
 import * as React from "react";
 
-const Hero = () => {
+const Hero = (): React.ReactElement => {
  return (
     <Box>
         <Center 
+        as="article"
         display="flex"
         flexDirection="column"
         h="45vh"
         >
         <Heading 
-        as="h2"
+        as="h1"
         textAlign="center"
         mx="auto"
         mb={8}

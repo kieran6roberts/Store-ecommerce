@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
 import { getStorage, IProductStorage, setStorage } from "@/utils/storage";
 
 type StorageContextType = {

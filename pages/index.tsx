@@ -9,19 +9,7 @@ import NextHead from "@/components/NextHead/NextHead";
 import Products from "@/components/Products/Products";
 import { PRODUCT_NEW } from "@/queries/products";
 
-export interface IUser {
-  user: {
-    name?: string,
-    nickname?: string,
-    picture?: string,
-    updated_at?: string,
-    email?: string,
-    email_verified?: string,
-    sub?: string
-  }
-}
-
-const Home: NextPage<IUser> = ({ user }) => {
+const Home: NextPage = () => {
   return (
     <>
     <NextHead 
