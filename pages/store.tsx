@@ -10,7 +10,7 @@ import { PRODUCT_ALL } from "@/queries/products";
 
 const Store: NextPage = () => {
   return (
-    <Layout user={null}>
+    <Layout>
       <Flex 
       justify="center"
       mb={12}
