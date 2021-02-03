@@ -13,13 +13,14 @@ import CheckoutCard from "@/components/Cart/CheckoutCard/CheckoutCard";
 import Layout from "@/components/Layout/Layout";
 import { useStore } from "@/hooks/useStorage";
 import { generateItemKey } from "@/utils/generateItemKey";
+import { IProductStorage } from "@/utils/storage";
 
 const Cart: NextPage = () => {
-  const { cartStorage } = useStore();
+  const { cartStorage } = useStore()!;
 
   const mapCartProductstoDOM = () => {
-    if (cartStorage.length) {
-      return cartStorage.map((product: any) => 
+    if (cartStorage && cartStorage.length) {
+      return cartStorage.map((product: IProductStorage) => 
         <li 
         id={product.id}
         key={`${generateItemKey(product.id)}`}>

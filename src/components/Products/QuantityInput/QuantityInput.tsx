@@ -26,11 +26,15 @@ const QuantityInput = ({ updatePrice }: IQuantityInput): React.ReactElement => {
     const input = getInputProps();
 
     return (
-        <HStack maxW="250px" mx="auto">
+        <HStack 
+        maxW="250px" 
+        mx="auto"
+        >
             <p>
                 Qty
             </p>
             <Button 
+            aria-label="decrease quantity"
             {...dec}
             onClick={(event) => updatePrice(event)}
             >
@@ -41,6 +45,7 @@ const QuantityInput = ({ updatePrice }: IQuantityInput): React.ReactElement => {
             width="4rem" 
             />
             <Button 
+            aria-label="increase quantity"
             onClick={(event) => updatePrice(event)}
             {...inc}
             >

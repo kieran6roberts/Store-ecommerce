@@ -16,28 +16,14 @@ import Rating from "@/components/Products/Rating/Rating";
 import { useStoreUpdate } from "@/hooks/useStorage";
 import { IProductStorage } from "@/utils/storage";
 
-/*
-export interface IProduct {
-    category: string;    description: {
-        text: string;
-    };
-    image: string | string[];
-    name: string;
-    price: number;
-    __typename?: string;
-}
-
-export interface IProductWithId extends IProduct {
-    id: string
-}*/
-
 const Product: React.FC<IProductStorage> = ({ 
     category,
     description,
     image = "/img.webp", 
     id,
     name, 
-    price
+    price,
+    quantity = 1
  }) => {
 
     const router = useRouter();
@@ -51,12 +37,11 @@ const Product: React.FC<IProductStorage> = ({
         id,
         name, 
         price,
-        quantity: 1
+        quantity
     };
 
     const addProductToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
         (event.target as HTMLButtonElement).textContent = "Added";
-
         addCartValue(product);
     };
 

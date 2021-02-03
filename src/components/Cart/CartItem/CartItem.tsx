@@ -14,12 +14,8 @@ import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
 import { useStoreUpdate } from "@/hooks/useStorage";
 
 interface ICartItem {
-    category: {
-        name: string;
-    };
-    description: {
-        text: string;
-    };
+    category: string;
+    description: string;
     name: string;
     price: number;
 }
@@ -34,14 +30,14 @@ const CartItem = ({
 
     const { removeCartValue } = useStoreUpdate()!;
 
-    const calculateItemPrice = (event: IMouseEventOnHTMLElement) => {
-
+    const calculateItemPrice = (event: React.MouseEvent<HTMLInputElement>) => {
+        const evTargetAsElement = event.target as HTMLButtonElement;
         let productQuantityInput: HTMLInputElement | null;
 
-        if (event.target.nextElementSibling instanceof HTMLInputElement) {
-            productQuantityInput = event.target.nextElementSibling as HTMLInputElement;
+        if (evTargetAsElement.nextElementSibling instanceof HTMLInputElement) {
+            productQuantityInput = evTargetAsElement.nextElementSibling as HTMLInputElement;
         } else {
-            productQuantityInput = event.target.previousElementSibling as HTMLInputElement;
+            productQuantityInput = evTargetAsElement.previousElementSibling as HTMLInputElement;
         }
 
         const inputAsNumber = productQuantityInput.value ? parseInt(productQuantityInput.value) : 0;
