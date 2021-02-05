@@ -9,41 +9,27 @@ import Image from "next/image";
 import * as React from "react";
 import { ImCancelCircle } from "react-icons/im";
 
-import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
 import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
 import { useStoreUpdate } from "@/hooks/useStorage";
 
 interface ICartItem {
     category: string;
     description: string;
+    id: string;
     name: string;
     price: number;
+    updatePrice: (event: React.MouseEvent<HTMLButtonElement>) => number;
 }
 
 const CartItem = ({ 
     category,
     description, 
+    id,
     name, 
-    price }: ICartItem): React.ReactElement => {
-
-    const [ itemPrice, setItemPrice ] = React.useState(price);
+    price,
+    updatePrice }: ICartItem): React.ReactElement => {
 
     const { removeCartValue } = useStoreUpdate()!;
-
-    const calculateItemPrice = (event: React.MouseEvent<HTMLInputElement>) => {
-        const evTargetAsElement = event.target as HTMLButtonElement;
-        let productQuantityInput: HTMLInputElement | null;
-
-        if (evTargetAsElement.nextElementSibling instanceof HTMLInputElement) {
-            productQuantityInput = evTargetAsElement.nextElementSibling as HTMLInputElement;
-        } else {
-            productQuantityInput = evTargetAsElement.previousElementSibling as HTMLInputElement;
-        }
-
-        const inputAsNumber = productQuantityInput.value ? parseInt(productQuantityInput.value) : 0;
-
-        setItemPrice(inputAsNumber * price);
-    };
 
     return (
         <Stack
@@ -85,8 +71,11 @@ const CartItem = ({
             justify="center"
             direction="column"
             >
-                <QuantityInput updatePrice={calculateItemPrice} />  
+                <QuantityInput 
+                id={id}
+                updatePrice={updatePrice} />  
                 <Button 
+                aria-label="remove cart item"
                 color="red.300"
                 fontSize="xs"
                 leftIcon={<ImCancelCircle />}
@@ -102,7 +91,7 @@ const CartItem = ({
             flex="0.5"
             textAlign="center"
             >
-                Total: £{itemPrice}
+                Total: £{price}
             </Text>
         </Stack>
     );

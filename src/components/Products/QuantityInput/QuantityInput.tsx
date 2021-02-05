@@ -5,10 +5,11 @@ import { Button,
 import * as React from "react";
 
 interface IQuantityInput {
+    id: string;
     updatePrice: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const QuantityInput = ({ updatePrice }: IQuantityInput): React.ReactElement => {
+const QuantityInput = ({ id, updatePrice }: IQuantityInput): React.ReactElement => {
     const {
         getInputProps,
         getIncrementButtonProps,
@@ -41,7 +42,8 @@ const QuantityInput = ({ updatePrice }: IQuantityInput): React.ReactElement => {
                 -
             </Button>
             <Input 
-            {...input} 
+            {...input}
+            id={`Qty-${id}`}
             width="4rem" 
             />
             <Button 

@@ -8,8 +8,9 @@ import * as React from "react";
 import { BiLockAlt } from "react-icons/bi";
 
 import { useStore, useStoreUpdate } from "@/hooks/useStorage";
+import { ItemsPrices } from "@/pages/cart";
 
-const CheckoutCard = (): React.ReactElement => {
+const CheckoutCard = ({ itemsPrices }: { itemsPrices: ItemsPrices}): React.ReactElement => {
 
     const { cartStorage, subTotal } = useStore()!;
     const { updatePriceValue } = useStoreUpdate()!;
@@ -17,7 +18,7 @@ const CheckoutCard = (): React.ReactElement => {
     React.useEffect(() => {
         console.log("update total on cart page");
         updatePriceValue(cartStorage);
-    }, [ cartStorage ]);
+    }, [ cartStorage, itemsPrices ]);
 
     return (
         <VStack 
@@ -48,7 +49,9 @@ const CheckoutCard = (): React.ReactElement => {
                 <Text>
                     Subtotal:
                 </Text>
-                <Text>
+                <Text 
+                id="cart-total"
+                >
                     £{subTotal}
                 </Text>
             </Flex>

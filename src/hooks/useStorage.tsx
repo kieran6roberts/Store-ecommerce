@@ -91,7 +91,7 @@ const useStorage = (key: string) => {
 
         const productElementId = (event.target as HTMLElement).closest("li")?.id;
 
-        const newStorage = items.filter(item => item.id !== productElementId);
+        const newStorage = items?.filter(item => item.id !== productElementId);
 
         setStorage(key, newStorage);
         setCartStorage(newStorage);

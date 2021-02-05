@@ -15,8 +15,51 @@ import { useStore } from "@/hooks/useStorage";
 import { generateItemKey } from "@/utils/generateItemKey";
 import { IProductStorage } from "@/utils/storage";
 
+export type ItemsPrices = {
+  id: string;
+  price: number;
+}[] | null;
+
 const Cart: NextPage = () => {
   const { cartStorage } = useStore()!;
+
+  const [ itemsPrices, setItemsPrices ] = React.useState<ItemsPrices>(() => {
+    if (!cartStorage) {
+      return null;
+    } else {
+      return cartStorage.map(item => ({ 
+        id: item.id, 
+        price: item.price,
+        quantity: 1
+      }));
+    }
+  });
+  
+  console.log(itemsPrices);
+
+
+  const calculateItemPrice = (event: React.MouseEvent<HTMLInputElement>): number => {
+    const evTargetAsElement = event.target as HTMLButtonElement;
+    let productQuantityInput: HTMLInputElement | null;
+
+    if (evTargetAsElement.nextElementSibling instanceof HTMLInputElement) {
+        productQuantityInput = evTargetAsElement.nextElementSibling as HTMLInputElement;
+    } else {
+        productQuantityInput = evTargetAsElement.previousElementSibling as HTMLInputElement;
+    }
+
+    return productQuantityInput.value ? parseInt(productQuantityInput.value) : 0;
+
+};
+
+    const updateItemPrice = (event: React.MouseEvent<HTMLInputElement>, id: string) => {
+      const inputAsNumber = calculateItemPrice(event);
+
+      const newQuantity = document.querySelector(`#Qty-${id}`)?.textContent;
+      
+      setItemsPrice(inputAsNumber * cost);
+    };
+
 
   const mapCartProductstoDOM = () => {
     if (cartStorage && cartStorage.length) {
@@ -27,8 +70,10 @@ const Cart: NextPage = () => {
           <CartItem 
           category={product.category}
           description={product.description}
+          id={product.id}
           name={product.name}
           price={product.price}
+          updatePrice={(event) => updateItemPrice(event, product.id)}
           />
         </li>
       );
@@ -64,7 +109,7 @@ const Cart: NextPage = () => {
           >
            {mapCartProductstoDOM()}
           </Stack>
-          <CheckoutCard />
+          <CheckoutCard itemsPrices={itemsPrices}/>
         </Flex>
       </Box>
     </Layout>
