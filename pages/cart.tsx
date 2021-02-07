@@ -27,27 +27,8 @@ const Cart: NextPage = () => {
     updatePriceValue, 
     removeCartValue } = useStoreUpdate()!;
 
+    const [ qtyChange, setQtyChange ] = React.useState(0);
 
-    const updateItemPrice = (event: React.MouseEvent<HTMLInputElement>, id: string) => {
-      //const inputAsNumber = calculateItemPrice(event);
-      
-      const newQuantity = document.querySelector(`#qty-${id}`) as HTMLInputElement;
-      const quantityAsNumber = parseInt(newQuantity.value);
-      
-      const updateStorage = cartStorage?.map(item => {
-        if (item.id === id) {
-          console.log("item match");
-          item.quantity = quantityAsNumber;
-        }
-        return item;
-      });
-
-      console.log(updateStorage);
-      //setCartStorage(updateStorage);
-      updatePriceValue(updateStorage);
-    };
-
-    
     const calculateItemPrice = (event: React.MouseEvent<HTMLInputElement>, itemPrice: number): number => {
       const evTargetAsElement = event.target as HTMLButtonElement;
       let productQuantityInput: HTMLInputElement | null;
@@ -59,6 +40,7 @@ const Cart: NextPage = () => {
       }
 
       const quantityAsNumber = productQuantityInput.value ? parseInt(productQuantityInput.value) : 0;
+
       return quantityAsNumber * itemPrice;
   };
 
@@ -74,8 +56,6 @@ const Cart: NextPage = () => {
           id={product.id}
           name={product.name}
           price={product.price}
-          removeItem={removeCartValue}
-          quantity={product.quantity}
           calculateItemPrice={(event) => calculateItemPrice(event, product.price)}
           />
         </li>

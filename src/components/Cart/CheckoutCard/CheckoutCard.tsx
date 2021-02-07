@@ -12,38 +12,13 @@ import { IProductStorage } from "@/utils/storage";
 
 const CheckoutCard = (): React.ReactElement => {
 
-    const { subTotal } = useStore()!;
+    const { cartStorage, subTotal } = useStore()!;
     const { updatePriceValue } = useStoreUpdate()!;
+    const [ update, setUpdate ] = React.useState(0);
 
+    
     React.useEffect(() => {
-        console.log("checkout use effect");
-
-        const updateCartTotal = () => {
-            const itemPriceElments = document.querySelectorAll(".cart-item__total");
-            const priceElementArray = Array.from(itemPriceElments);
-            const mapPriceAsNumber = priceElementArray.map(element => {
-                return {
-                    price: parseInt(element.textContent?.replace("Total: £", ""))
-                };
-            });
-
-            return mapPriceAsNumber.map(product => product.price)
-            ?.reduce((accum, curValue) => accum + curValue, 0);
-        };
-
-        const qtyUpdateElements = document.querySelectorAll(".qty-change");
-        const elementArray = Array.from(qtyUpdateElements);
-
-        if (elementArray) {
-            elementArray.forEach((element) => element.addEventListener("click", updateCartTotal));
-        }
-
-        return () => {
-            if (elementArray) {
-                elementArray.forEach(element => element.removeEventListener("click", updateCartTotal));
-            }
-        };
-
+        updatePriceValue(cartStorage);
     }, []);
 
     return (

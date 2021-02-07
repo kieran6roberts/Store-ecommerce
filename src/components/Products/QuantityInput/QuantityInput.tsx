@@ -6,7 +6,7 @@ import * as React from "react";
 
 interface IQuantityInput {
     id: string;
-    updatePrice: (event: React.MouseEvent<HTMLButtonElement>, id: string) => void;
+    updatePrice: (event: React.MouseEvent<HTMLButtonElement>, number: string) => void;
 }
 
 const QuantityInput = ({ id, updatePrice }: IQuantityInput): React.ReactElement => {
@@ -38,12 +38,13 @@ const QuantityInput = ({ id, updatePrice }: IQuantityInput): React.ReactElement 
             aria-label="decrease quantity"
             className="qty-change"
             {...dec}
-            onClick={(event) => updatePrice(event, id)}
+            onClick={updatePrice}
             >
                 -
             </Button>
             <Input 
             {...input}
+            className="item-qty"
             id={`qty-${id}`}
             width="4rem" 
             />
@@ -59,4 +60,4 @@ const QuantityInput = ({ id, updatePrice }: IQuantityInput): React.ReactElement 
     );
 };
 
-export default QuantityInput;
+export default React.memo(QuantityInput);

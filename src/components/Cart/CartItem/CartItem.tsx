@@ -19,7 +19,7 @@ interface ICartItem {
     name: string;
     price: number;
     quantity: number;
-    calculateItemPrice: (event: React.MouseEvent<HTMLButtonElement>) => number;
+    calculateItemPrice: (event: React.MouseEvent<HTMLButtonElement>, price: number) => number;
 }
 
 const CartItem = ({ 
@@ -28,14 +28,25 @@ const CartItem = ({
     description, 
     id,
     name, 
-    removeItem,
-    price,
-    quantity }: ICartItem): React.ReactElement => {
+    price }: ICartItem): React.ReactElement => {
 
     const [ itemPrice, setItemPrice ] = React.useState(price);
-    const { updatePriceValue } = useStoreUpdate()!;
+    const { updatePriceValue, removeCartValue } = useStoreUpdate()!;
 
-    const updateUIWithPrice = (event) => setItemPrice(() => calculateItemPrice(event, price));
+    const updateUIWithPrice = (event) => {
+        setItemPrice(() => calculateItemPrice(event, price));
+        const priceElements = Array.from(document.querySelectorAll(".cart-item__total"));
+
+        const mappedPriceElements = priceElements.map(element => {
+            return {
+                price: parseInt(element.textContent?.replace("Total: £", ""))
+            };
+        });
+
+        updatePriceValue(mappedPriceElements);
+    };
+
+    React.useEffect(() => console.log("cart item re render"), []);
 
     return (
         <Stack
@@ -85,7 +96,7 @@ const CartItem = ({
                 color="red.300"
                 fontSize="xs"
                 leftIcon={<ImCancelCircle />}
-                onClick={(event: React.MouseEvent<HTMLButtonElement>) => removeItem(event)}
+                onClick={(event: React.MouseEvent<HTMLButtonElement>) => removeCartValue(event)}
                 mt={4}
                 mx="auto"
                 variant="outline"
