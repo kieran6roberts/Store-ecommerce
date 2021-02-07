@@ -16,7 +16,18 @@ import { IoCartOutline, IoHelpCircleOutline } from "react-icons/io5";
 
 import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
 import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
-import { IUser } from "@/pages/index";
+
+interface IUser {
+    user: {
+      name?: string,
+      nickname?: string,
+      picture?: string,
+      updated_at?: string,
+      email?: string,
+      email_verified?: string,
+      sub?: string
+    }
+  }
 
 interface INav { 
     onOpen: () => void;

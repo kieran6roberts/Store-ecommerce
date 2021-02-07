@@ -5,10 +5,11 @@ import { Button,
 import * as React from "react";
 
 interface IQuantityInput {
-    updatePrice: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    id: string;
+    updatePrice: (event: React.MouseEvent<HTMLButtonElement>, number: string) => void;
 }
 
-const QuantityInput = ({ updatePrice }: IQuantityInput): React.ReactElement => {
+const QuantityInput = ({ id, updatePrice }: IQuantityInput): React.ReactElement => {
     const {
         getInputProps,
         getIncrementButtonProps,
@@ -35,18 +36,22 @@ const QuantityInput = ({ updatePrice }: IQuantityInput): React.ReactElement => {
             </p>
             <Button 
             aria-label="decrease quantity"
+            className="qty-change"
             {...dec}
-            onClick={(event) => updatePrice(event)}
+            onClick={updatePrice}
             >
                 -
             </Button>
             <Input 
-            {...input} 
+            {...input}
+            className="item-qty"
+            id={`qty-${id}`}
             width="4rem" 
             />
             <Button 
             aria-label="increase quantity"
-            onClick={(event) => updatePrice(event)}
+            className="qty-change"
+            onClick={(event) => updatePrice(event, id)}
             {...inc}
             >
                 +
@@ -55,4 +60,4 @@ const QuantityInput = ({ updatePrice }: IQuantityInput): React.ReactElement => {
     );
 };
 
-export default QuantityInput;
+export default React.memo(QuantityInput);

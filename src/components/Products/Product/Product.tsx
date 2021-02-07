@@ -36,7 +36,7 @@ const Product: React.FC<IProductStorage> = ({
         image, 
         id,
         name, 
-        price,
+        price: price * quantity,
         quantity
     };
 
@@ -128,7 +128,7 @@ const Product: React.FC<IProductStorage> = ({
                 <Text 
                 fontWeight="bold"
                 >
-                    £{price}
+                    £{price * quantity}
                 </Text>
             </Flex>
             <Rating />

@@ -9,41 +9,44 @@ import Image from "next/image";
 import * as React from "react";
 import { ImCancelCircle } from "react-icons/im";
 
-import { IMouseEventOnHTMLElement } from "@/components/Products/Products";
 import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
-import { useStoreUpdate } from "@/hooks/useStorage";
+import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 
 interface ICartItem {
     category: string;
     description: string;
+    id: string;
     name: string;
     price: number;
+    quantity: number;
+    calculateItemPrice: (event: React.MouseEvent<HTMLButtonElement>, price: number) => number;
 }
 
 const CartItem = ({ 
+    calculateItemPrice,
     category,
     description, 
+    id,
     name, 
     price }: ICartItem): React.ReactElement => {
 
     const [ itemPrice, setItemPrice ] = React.useState(price);
+    const { updatePriceValue, removeCartValue } = useStoreUpdate()!;
 
-    const { removeCartValue } = useStoreUpdate()!;
+    const updateUIWithPrice = (event) => {
+        setItemPrice(() => calculateItemPrice(event, price));
+        const priceElements = Array.from(document.querySelectorAll(".cart-item__total"));
 
-    const calculateItemPrice = (event: React.MouseEvent<HTMLInputElement>) => {
-        const evTargetAsElement = event.target as HTMLButtonElement;
-        let productQuantityInput: HTMLInputElement | null;
+        const mappedPriceElements = priceElements.map(element => {
+            return {
+                price: parseInt(element.textContent?.replace("Total: £", ""))
+            };
+        });
 
-        if (evTargetAsElement.nextElementSibling instanceof HTMLInputElement) {
-            productQuantityInput = evTargetAsElement.nextElementSibling as HTMLInputElement;
-        } else {
-            productQuantityInput = evTargetAsElement.previousElementSibling as HTMLInputElement;
-        }
-
-        const inputAsNumber = productQuantityInput.value ? parseInt(productQuantityInput.value) : 0;
-
-        setItemPrice(inputAsNumber * price);
+        updatePriceValue(mappedPriceElements);
     };
+
+    React.useEffect(() => console.log("cart item re render"), []);
 
     return (
         <Stack
@@ -85,8 +88,11 @@ const CartItem = ({
             justify="center"
             direction="column"
             >
-                <QuantityInput updatePrice={calculateItemPrice} />  
+                <QuantityInput 
+                id={id}
+                updatePrice={updateUIWithPrice} />  
                 <Button 
+                aria-label="remove cart item"
                 color="red.300"
                 fontSize="xs"
                 leftIcon={<ImCancelCircle />}
@@ -99,6 +105,7 @@ const CartItem = ({
                 </Button>
             </Flex>
             <Text 
+            className="cart-item__total"
             flex="0.5"
             textAlign="center"
             >
