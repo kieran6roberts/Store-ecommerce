@@ -10,7 +10,7 @@ import * as React from "react";
 import { ImCancelCircle } from "react-icons/im";
 
 import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
-import { useStoreUpdate } from "@/hooks/useStorage";
+import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 
 interface ICartItem {
     category: string;
@@ -18,18 +18,24 @@ interface ICartItem {
     id: string;
     name: string;
     price: number;
-    updatePrice: (event: React.MouseEvent<HTMLButtonElement>) => number;
+    quantity: number;
+    calculateItemPrice: (event: React.MouseEvent<HTMLButtonElement>) => number;
 }
 
 const CartItem = ({ 
+    calculateItemPrice,
     category,
     description, 
     id,
     name, 
+    removeItem,
     price,
-    updatePrice }: ICartItem): React.ReactElement => {
+    quantity }: ICartItem): React.ReactElement => {
 
-    const { removeCartValue } = useStoreUpdate()!;
+    const [ itemPrice, setItemPrice ] = React.useState(price);
+    const { updatePriceValue } = useStoreUpdate()!;
+
+    const updateUIWithPrice = (event) => setItemPrice(() => calculateItemPrice(event, price));
 
     return (
         <Stack
@@ -73,13 +79,13 @@ const CartItem = ({
             >
                 <QuantityInput 
                 id={id}
-                updatePrice={updatePrice} />  
+                updatePrice={updateUIWithPrice} />  
                 <Button 
                 aria-label="remove cart item"
                 color="red.300"
                 fontSize="xs"
                 leftIcon={<ImCancelCircle />}
-                onClick={(event: React.MouseEvent<HTMLButtonElement>) => removeCartValue(event)}
+                onClick={(event: React.MouseEvent<HTMLButtonElement>) => removeItem(event)}
                 mt={4}
                 mx="auto"
                 variant="outline"
@@ -88,10 +94,11 @@ const CartItem = ({
                 </Button>
             </Flex>
             <Text 
+            className="cart-item__total"
             flex="0.5"
             textAlign="center"
             >
-                Total: £{price}
+                Total: £{itemPrice}
             </Text>
         </Stack>
     );

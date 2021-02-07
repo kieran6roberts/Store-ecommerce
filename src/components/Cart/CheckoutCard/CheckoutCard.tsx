@@ -8,17 +8,43 @@ import * as React from "react";
 import { BiLockAlt } from "react-icons/bi";
 
 import { useStore, useStoreUpdate } from "@/hooks/useStorage";
-import { ItemsPrices } from "@/pages/cart";
+import { IProductStorage } from "@/utils/storage";
 
-const CheckoutCard = ({ itemsPrices }: { itemsPrices: ItemsPrices}): React.ReactElement => {
+const CheckoutCard = (): React.ReactElement => {
 
-    const { cartStorage, subTotal } = useStore()!;
+    const { subTotal } = useStore()!;
     const { updatePriceValue } = useStoreUpdate()!;
 
     React.useEffect(() => {
-        console.log("update total on cart page");
-        updatePriceValue(cartStorage);
-    }, [ cartStorage, itemsPrices ]);
+        console.log("checkout use effect");
+
+        const updateCartTotal = () => {
+            const itemPriceElments = document.querySelectorAll(".cart-item__total");
+            const priceElementArray = Array.from(itemPriceElments);
+            const mapPriceAsNumber = priceElementArray.map(element => {
+                return {
+                    price: parseInt(element.textContent?.replace("Total: £", ""))
+                };
+            });
+
+            return mapPriceAsNumber.map(product => product.price)
+            ?.reduce((accum, curValue) => accum + curValue, 0);
+        };
+
+        const qtyUpdateElements = document.querySelectorAll(".qty-change");
+        const elementArray = Array.from(qtyUpdateElements);
+
+        if (elementArray) {
+            elementArray.forEach((element) => element.addEventListener("click", updateCartTotal));
+        }
+
+        return () => {
+            if (elementArray) {
+                elementArray.forEach(element => element.removeEventListener("click", updateCartTotal));
+            }
+        };
+
+    }, []);
 
     return (
         <VStack 

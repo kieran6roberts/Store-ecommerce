@@ -12,6 +12,7 @@ type StorageUpdateContextType = {
     toggleSavedValue: (key: string, value: IProductStorage) => void;
     addCartValue: (value: IProductStorage) => void;
     removeCartValue: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    setCartStorage: React.Dispatch<React.SetStateAction<IProductStorage[] | null>>;
     updatePriceValue: (products: Array<IProductStorage> | null) => void;
 }
 
@@ -113,9 +114,10 @@ const useStorage = (key: string) => {
         cartStorage,
         removeCartValue,
         savedStorage,
+        setCartStorage,
         subTotal,
         toggleSavedValue,
-        updatePriceValue
+        updatePriceValue,
     };
 };
 
@@ -126,12 +128,13 @@ const StorageProvider = ({ children }: { children: React.ReactNode}): React.Reac
         subTotal, 
         updatePriceValue } = useStorage("cart-products");
 
-    const { savedStorage, toggleSavedValue } = useStorage("saved-products");
+    const { savedStorage, toggleSavedValue, setCartStorage } = useStorage("saved-products");
 
     return (
         <StorageContext.Provider value={{ cartStorage, savedStorage, subTotal }} >
             <StorageDispatchContext.Provider value={{ addCartValue, 
                 removeCartValue, 
+                setCartStorage,
                 toggleSavedValue,
                 updatePriceValue
                 }}>
