@@ -51,7 +51,7 @@ const QuantityInput = ({ id, updatePrice }: IQuantityInput): React.ReactElement 
             <Button 
             aria-label="increase quantity"
             className="qty-change"
-            onClick={(event) => updatePrice(event, id)}
+            onClick={updatePrice}
             {...inc}
             >
                 +

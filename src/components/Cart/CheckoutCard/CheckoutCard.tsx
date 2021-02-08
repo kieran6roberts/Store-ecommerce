@@ -7,19 +7,27 @@ import { Button,
 import * as React from "react";
 import { BiLockAlt } from "react-icons/bi";
 
-import { useStore, useStoreUpdate } from "@/hooks/useStorage";
-import { IProductStorage } from "@/utils/storage";
-
 const CheckoutCard = (): React.ReactElement => {
 
-    const { cartStorage, subTotal } = useStore()!;
-    const { updatePriceValue } = useStoreUpdate()!;
-    const [ update, setUpdate ] = React.useState(0);
-
+    const [ cartTotal, setCartTotal ] = React.useState(0);
     
     React.useEffect(() => {
-        updatePriceValue(cartStorage);
-    }, []);
+        const handleClick = () => {
+            const itemPriceElements = Array.from(document.querySelectorAll(".cart-item__total"));
+
+            const mappedPriceElements = itemPriceElements
+                .map(element => parseInt(element.textContent?.replace("Total: £", "")))
+                .reduce((accum, curValue) => accum + curValue, 0);
+    
+            setCartTotal(mappedPriceElements);
+        };
+        
+        window.addEventListener("click", handleClick);
+    
+        return () => {
+          window.removeEventListener("click", handleClick);
+        };
+    }, []); 
 
     return (
         <VStack 
@@ -48,12 +56,12 @@ const CheckoutCard = (): React.ReactElement => {
             w="full"
             >
                 <Text>
-                    Subtotal:
+                    cartTotal:
                 </Text>
                 <Text 
                 id="cart-total"
                 >
-                    £{subTotal}
+                    £{cartTotal}
                 </Text>
             </Flex>
             <Flex 
@@ -64,7 +72,7 @@ const CheckoutCard = (): React.ReactElement => {
                     Shipping Costs:
                 </Text>
                 <Text id="shipping-costs">
-                    £{subTotal > 30 ? "0" : "4.99"}
+                    £{cartTotal > 30 ? "0" : "4.99"}
                 </Text>
             </Flex>
             <Flex 
@@ -75,7 +83,7 @@ const CheckoutCard = (): React.ReactElement => {
                     Total:
                 </Text>
                 <Text>
-                    £{subTotal < 30 ? subTotal + 4.99 : subTotal}
+                    £{cartTotal < 30 ? cartTotal + 4.99 : cartTotal}
                 </Text>
             </Flex>
             <Divider />
@@ -83,7 +91,7 @@ const CheckoutCard = (): React.ReactElement => {
             colorScheme="blue"
             leftIcon={<BiLockAlt />}
             variant="solid"
-            isDisabled={subTotal === 0 ? true : false}
+            isDisabled={cartTotal === 0 ? true : false}
             >
                 Proceed to Checkout
             </Button>

@@ -33,6 +33,7 @@ const CartItem = ({
     const [ itemPrice, setItemPrice ] = React.useState(price);
     const { updatePriceValue, removeCartValue } = useStoreUpdate()!;
 
+    
     const updateUIWithPrice = (event) => {
         setItemPrice(() => calculateItemPrice(event, price));
         const priceElements = Array.from(document.querySelectorAll(".cart-item__total"));
@@ -43,7 +44,7 @@ const CartItem = ({
             };
         });
 
-        updatePriceValue(mappedPriceElements);
+        //updatePriceValue(mappedPriceElements);
     };
 
     React.useEffect(() => console.log("cart item re render"), []);
@@ -90,7 +91,8 @@ const CartItem = ({
             >
                 <QuantityInput 
                 id={id}
-                updatePrice={updateUIWithPrice} />  
+                updatePrice={updateUIWithPrice} 
+                />  
                 <Button 
                 aria-label="remove cart item"
                 color="red.300"

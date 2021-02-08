@@ -27,8 +27,6 @@ const Cart: NextPage = () => {
     updatePriceValue, 
     removeCartValue } = useStoreUpdate()!;
 
-    const [ qtyChange, setQtyChange ] = React.useState(0);
-
     const calculateItemPrice = (event: React.MouseEvent<HTMLInputElement>, itemPrice: number): number => {
       const evTargetAsElement = event.target as HTMLButtonElement;
       let productQuantityInput: HTMLInputElement | null;

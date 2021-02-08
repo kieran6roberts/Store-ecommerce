@@ -31,7 +31,7 @@ const useStorage = (key: string) => {
     const [ subTotal, setSubTotal ] = React.useState(() => {
         const products = getStorage(CART_KEY);
 
-        if (products) {
+        if (products && products.length) {
             return products.map(product => product.price)
                     .reduce((accum, curValue) => accum + curValue);
         } else {
