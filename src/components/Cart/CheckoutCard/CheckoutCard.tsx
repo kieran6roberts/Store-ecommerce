@@ -7,25 +7,41 @@ import { Button,
 import * as React from "react";
 import { BiLockAlt } from "react-icons/bi";
 
-const CheckoutCard = (): React.ReactElement => {
+import { useStore } from "@/hooks/useStorage";
 
-    const [ cartTotal, setCartTotal ] = React.useState(0);
+const CheckoutCard = (): React.ReactElement => {
+    const { subTotal } = useStore()!;
+    const [ cartTotal, setCartTotal ] = React.useState(subTotal);
+
     
     React.useEffect(() => {
-        const handleClick = () => {
-            const itemPriceElements = Array.from(document.querySelectorAll(".cart-item__total"));
+        const itemPriceElements = Array.from(document.querySelectorAll(".cart-item__total"));
 
-            const mappedPriceElements = itemPriceElements
-                .map(element => parseInt(element.textContent?.replace("Total: £", "")))
-                .reduce((accum, curValue) => accum + curValue, 0);
-    
-            setCartTotal(mappedPriceElements);
+        const updateTotal = (input: Element[]) => {
+            if (!input.length) {
+                return 0;
+            } else {
+               return input.map(element => parseInt(element.textContent!.replace("Total: £", "")))
+                    .reduce((accum, curValue) => accum + curValue, 0);
+            }
+        };
+
+        const handleUpdateTotal = (event: React.MouseEvent) => {
+            let currentTotal = 0;
+
+            if (!(event.target as HTMLButtonElement).classList.contains("qty-change")) {
+                return;
+            } else {
+                currentTotal = updateTotal(itemPriceElements);
+            }
+
+            setCartTotal(currentTotal);
         };
         
-        window.addEventListener("click", handleClick);
-    
+        window.addEventListener("click", handleUpdateTotal);
+
         return () => {
-          window.removeEventListener("click", handleClick);
+          window.removeEventListener("click", handleUpdateTotal);
         };
     }, []); 
 
