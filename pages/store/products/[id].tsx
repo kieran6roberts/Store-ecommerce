@@ -7,7 +7,8 @@ import { Button,
     TabPanel,
     TabPanels, 
     Tabs, 
-    Text, 
+    Text,
+    Textarea, 
     VStack } from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
@@ -15,7 +16,9 @@ import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
 import Products from "@/components/Products/Products";
+import { useStoreUpdate } from "@/hooks/useStorage";
 import { initApollo } from "@/lib/apolloClient";
+import { useGetUser } from "@/lib/user";
 import { PRODUCT_INFO, PRODUCT_NAMES, PRODUCT_NEW } from "@/queries/products";
 
 interface IProductName {
@@ -27,6 +30,10 @@ const Product: NextPage = ({ initialApolloState }) => {
     const ref = initialApolloState.ROOT_QUERY.products[0].__ref;
     const product = initialApolloState[ref];
 
+    const { addCartValue, toggleSavedValue } = useStoreUpdate()!;
+    const { profile, loading } = useGetUser();
+    console.log(profile)
+
     const { 
         name: productName, 
         price: productPrice, 
@@ -34,6 +41,11 @@ const Product: NextPage = ({ initialApolloState }) => {
         category: { name: productCategory },
         description: { text: productDescription }
     } = product;
+
+    const addProductToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
+        (event.target as HTMLButtonElement).textContent = "Added";
+        addCartValue(product);
+    };
 
     return (
         <Layout>
@@ -78,7 +90,7 @@ const Product: NextPage = ({ initialApolloState }) => {
                             Reviews
                         </Tab>
                     </TabList>
-                    <TabPanels>
+                    <TabPanels fontSize="sm">
                         <TabPanel>
                             <VStack 
                             h="250px"
@@ -90,7 +102,10 @@ const Product: NextPage = ({ initialApolloState }) => {
                                 <Text>
                                     £{productPrice}
                                 </Text>
-                                <Button colorScheme="blue">
+                                <Button 
+                                colorScheme="blue"
+                                onClick={(event) => addProductToCart(event)}
+                                >
                                     Add To Cart
                                 </Button>
                             </VStack>
@@ -101,9 +116,19 @@ const Product: NextPage = ({ initialApolloState }) => {
                             </Text>
                         </TabPanel>
                         <TabPanel>
-                            <Text>
-                                Reviews
+                            <Text 
+                            mb={6}
+                            >
+                                Have you used this product before. Maybe you loved it 
+                                and want to tell others about it. Even if you did not please help others
+                                and leave a review.
                             </Text>
+                            <Textarea
+                            placeholder={profile ? "Enter you review here..." : "Must be signed in to leave reviews"}
+                            isDisabled={profile == null}
+                            >
+
+                            </Textarea>
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
