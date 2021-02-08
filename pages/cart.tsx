@@ -11,7 +11,7 @@ import * as React from "react";
 import CartItem from "@/components/Cart/CartItem/CartItem";
 import CheckoutCard from "@/components/Cart/CheckoutCard/CheckoutCard";
 import Layout from "@/components/Layout/Layout";
-import { useStore, useStoreUpdate } from "@/hooks/useStorage";
+import { useStore } from "@/hooks/useStorage";
 import { generateItemKey } from "@/utils/generateItemKey";
 import { IProductStorage } from "@/utils/storage";
 
@@ -22,27 +22,6 @@ export type ItemsPrices = {
 
 const Cart: NextPage = () => {
   const { cartStorage } = useStore()!;
-  const { 
-    setCartStorage, 
-    updatePriceValue, 
-    removeCartValue } = useStoreUpdate()!;
-
-    const [ qtyChange, setQtyChange ] = React.useState(0);
-
-    const calculateItemPrice = (event: React.MouseEvent<HTMLInputElement>, itemPrice: number): number => {
-      const evTargetAsElement = event.target as HTMLButtonElement;
-      let productQuantityInput: HTMLInputElement | null;
-
-      if (evTargetAsElement.nextElementSibling instanceof HTMLInputElement) {
-          productQuantityInput = evTargetAsElement.nextElementSibling as HTMLInputElement;
-      } else {
-          productQuantityInput = evTargetAsElement.previousElementSibling as HTMLInputElement;
-      }
-
-      const quantityAsNumber = productQuantityInput.value ? parseInt(productQuantityInput.value) : 0;
-
-      return quantityAsNumber * itemPrice;
-  };
 
   const mapCartProductstoDOM = () => {
     if (cartStorage && cartStorage.length) {
@@ -56,7 +35,6 @@ const Cart: NextPage = () => {
           id={product.id}
           name={product.name}
           price={product.price}
-          calculateItemPrice={(event) => calculateItemPrice(event, product.price)}
           />
         </li>
       );

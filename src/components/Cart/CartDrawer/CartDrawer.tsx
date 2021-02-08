@@ -3,11 +3,13 @@ import { Box,
     Divider,
     Flex,
     Heading,
+    Link,
     List,
     ListItem, 
     Text,
     useDisclosure } from "@chakra-ui/react";
 import Image from "next/image";
+import NextLink from "next/link";
 import * as React from "react";
 import { BsArrowBarLeft } from "react-icons/bs";
 
@@ -19,13 +21,8 @@ import { generateItemKey } from "@/utils/generateItemKey";
 const CartDrawer = (): React.ReactElement => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { cartStorage, subTotal } = useStore()!;
-    const { removeCartValue, updatePriceValue } = useStoreUpdate()!;
-
-    React.useEffect(() => {
-        console.log("update total in cart drawer");
-        updatePriceValue(cartStorage);
-    }, [ cartStorage ]);
+    const { cartStorage } = useStore()!;
+    const { removeCartValue } = useStoreUpdate()!;
 
     const mapProductsToDom = (): React.ReactNode => {
         if (cartStorage?.length) {
@@ -57,9 +54,6 @@ const CartDrawer = (): React.ReactElement => {
                             <Text fontSize="xs">
                                 {product.name}
                             </Text>
-                            <Text fontSize="xs">
-                                £{product.price}
-                            </Text>
                         </Box>
                         <RemoveButton callback={(event) => removeCartValue(event)}/>
                     </Flex>
@@ -85,12 +79,26 @@ const CartDrawer = (): React.ReactElement => {
         </Button>
         <DrawerTemplate
         header="What's in your bag"
-        footer={`Total: £${subTotal}`}
+        footer={"@YourCoffeeShop"}
         isOpen={isOpen}
         onClose={onClose}
         overlay={false}
         size="xs"
         >
+            <NextLink 
+            href="/cart"
+            passHref
+            >
+                <Link 
+                border="1px solid black"
+                display="block"
+                p={2}
+                w="max-content"
+                >
+                    To the cart
+                </Link>
+            </NextLink>
+            <Divider my={4} />
             <List>
                 {mapProductsToDom()}
             </List>

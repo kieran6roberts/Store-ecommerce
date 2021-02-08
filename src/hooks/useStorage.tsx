@@ -5,7 +5,6 @@ import { getStorage, IProductStorage, setStorage } from "@/utils/storage";
 type StorageContextType = {
     cartStorage: Array<IProductStorage> | null;
     savedStorage: Array<IProductStorage> | null;
-    subTotal: number;
 }
 
 type StorageUpdateContextType = {
@@ -13,7 +12,6 @@ type StorageUpdateContextType = {
     addCartValue: (value: IProductStorage) => void;
     removeCartValue: (event: React.MouseEvent<HTMLButtonElement>) => void;
     setCartStorage: React.Dispatch<React.SetStateAction<IProductStorage[] | null>>;
-    updatePriceValue: (products: Array<IProductStorage> | null) => void;
 }
 
 const StorageContext = React.createContext<StorageContextType | undefined>(undefined);
@@ -28,16 +26,6 @@ const useStorage = (key: string) => {
 
     const [ cartStorage, setCartStorage ] = React.useState(getStorage(CART_KEY));
     const [ savedStorage, setSavedStorage ] = React.useState(getStorage(SAVED_KEY));
-    const [ subTotal, setSubTotal ] = React.useState(() => {
-        const products = getStorage(CART_KEY);
-
-        if (products) {
-            return products.map(product => product.price)
-                    .reduce((accum, curValue) => accum + curValue);
-        } else {
-            return 0;
-        }
-    });
 
     const toggleSavedValue = (key: string, value: IProductStorage) => {
         const items = getStorage(key);
@@ -98,45 +86,29 @@ const useStorage = (key: string) => {
         setCartStorage(newStorage);
     };
 
-    const updatePriceValue = (products: Array<IProductStorage> | null) => {
-        if (!products) {
-            return;
-        }
-
-        const total = products.map(product => product.price)
-                        ?.reduce((accum, curValue) => accum + curValue, 0);
-
-        setSubTotal(total);
-    };
-
     return {
         addCartValue,
         cartStorage,
         removeCartValue,
         savedStorage,
         setCartStorage,
-        subTotal,
         toggleSavedValue,
-        updatePriceValue,
     };
 };
 
 const StorageProvider = ({ children }: { children: React.ReactNode}): React.ReactElement  => {
     const { cartStorage, 
         addCartValue, 
-        removeCartValue,
-        subTotal, 
-        updatePriceValue } = useStorage("cart-products");
+        removeCartValue } = useStorage("cart-products");
 
     const { savedStorage, toggleSavedValue, setCartStorage } = useStorage("saved-products");
 
     return (
-        <StorageContext.Provider value={{ cartStorage, savedStorage, subTotal }} >
+        <StorageContext.Provider value={{ cartStorage, savedStorage }} >
             <StorageDispatchContext.Provider value={{ addCartValue, 
                 removeCartValue, 
                 setCartStorage,
-                toggleSavedValue,
-                updatePriceValue
+                toggleSavedValue
                 }}>
                 {children} 
             </StorageDispatchContext.Provider>
