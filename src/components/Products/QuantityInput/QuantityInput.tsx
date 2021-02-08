@@ -4,12 +4,20 @@ import { Button,
     useNumberInput } from "@chakra-ui/react";
 import * as React from "react";
 
+type handlerFunction = (event: React.MouseEvent<HTMLButtonElement>) => void;
+
 interface IQuantityInput {
+    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleQtyDecrease: handlerFunction;
+    handleQtyIncrease: handlerFunction;
     id: string;
-    updatePrice: (event: React.MouseEvent<HTMLButtonElement>, number: string) => void;
 }
 
-const QuantityInput = ({ id, updatePrice }: IQuantityInput): React.ReactElement => {
+const QuantityInput = ({ 
+    //handleInputChange,
+    handleQtyDecrease, 
+    handleQtyIncrease,
+    id }: IQuantityInput): React.ReactElement => {
     const {
         getInputProps,
         getIncrementButtonProps,
@@ -37,8 +45,8 @@ const QuantityInput = ({ id, updatePrice }: IQuantityInput): React.ReactElement 
             <Button 
             aria-label="decrease quantity"
             className="qty-change"
+            onClick={(event) => handleQtyDecrease(event)}
             {...dec}
-            onClick={updatePrice}
             >
                 -
             </Button>
@@ -46,12 +54,13 @@ const QuantityInput = ({ id, updatePrice }: IQuantityInput): React.ReactElement 
             {...input}
             className="item-qty"
             id={`qty-${id}`}
+            isDisabled={true}
             width="4rem" 
             />
             <Button 
             aria-label="increase quantity"
             className="qty-change"
-            onClick={updatePrice}
+            onClick={(event) => handleQtyIncrease(event)}
             {...inc}
             >
                 +

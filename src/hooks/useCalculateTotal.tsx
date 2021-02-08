@@ -2,10 +2,15 @@ import * as React from "react";
 
 import { getStorage } from "@/utils/storage";
 
-const useCart = () => {
+interface ICalculationReturn {
+    handleTotalCalculation: (input: Element[]) => 0 | null;
+    total: number;
+}
+
+const useCalculateTotal = (): ICalculationReturn => {
     const CART_KEY = "cart-products";
 
-    const [ total, setTotal ] = React.useState(() => {
+    const [ total, setTotal ] = React.useState<number>(() => {
         const products = getStorage(CART_KEY);
 
         if (products && products.length) {
@@ -24,6 +29,7 @@ const useCart = () => {
             .reduce((accum, curValue) => accum + curValue, 0);
 
             setTotal(currentTotal);
+            return null;
         }
     };
 
@@ -33,4 +39,4 @@ const useCart = () => {
     };
 };
 
-export default useCart;
+export default useCalculateTotal;

@@ -10,7 +10,7 @@ import * as React from "react";
 import { ImCancelCircle } from "react-icons/im";
 
 import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
-import { useStore, useStoreUpdate } from "@/hooks/useStorage";
+import { useStoreUpdate } from "@/hooks/useStorage";
 
 interface ICartItem {
     category: string;
@@ -18,12 +18,9 @@ interface ICartItem {
     id: string;
     name: string;
     price: number;
-    quantity: number;
-    calculateItemPrice: (event: React.MouseEvent<HTMLButtonElement>, price: number) => number;
 }
 
 const CartItem = ({ 
-    calculateItemPrice,
     category,
     description, 
     id,
@@ -31,23 +28,21 @@ const CartItem = ({
     price }: ICartItem): React.ReactElement => {
 
     const [ itemPrice, setItemPrice ] = React.useState(price);
-    const { updatePriceValue, removeCartValue } = useStoreUpdate()!;
+    const { removeCartValue } = useStoreUpdate()!;
 
-    
-    const updateUIWithPrice = (event) => {
-        setItemPrice(() => calculateItemPrice(event, price));
-        const priceElements = Array.from(document.querySelectorAll(".cart-item__total"));
-
-        const mappedPriceElements = priceElements.map(element => {
-            return {
-                price: parseInt(element.textContent?.replace("Total: £", ""))
-            };
-        });
-
-        //updatePriceValue(mappedPriceElements);
+    const handleQtyIncrease = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const inputElement = (event.target as HTMLButtonElement).previousElementSibling as HTMLInputElement;
+        setItemPrice(parseInt(inputElement.value) * price);
+      };
+  
+    const handleQtyDecrease = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const inputElement = (event.target as HTMLButtonElement).nextElementSibling as HTMLInputElement;
+        setItemPrice(parseInt(inputElement.value) * price);
     };
 
-    React.useEffect(() => console.log("cart item re render"), []);
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setItemPrice(parseInt((event.target as HTMLInputElement).value) * price);
+    };
 
     return (
         <Stack
@@ -91,7 +86,9 @@ const CartItem = ({
             >
                 <QuantityInput 
                 id={id}
-                updatePrice={updateUIWithPrice} 
+                handleInputChange={handleInputChange}
+                handleQtyDecrease={handleQtyDecrease}
+                handleQtyIncrease={handleQtyIncrease}
                 />  
                 <Button 
                 aria-label="remove cart item"
