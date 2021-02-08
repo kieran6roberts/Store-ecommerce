@@ -6,7 +6,8 @@ import { Button,
     TabList, 
     TabPanel,
     TabPanels, 
-    Tabs,  
+    Tabs, 
+    Text, 
     VStack } from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
@@ -14,7 +15,6 @@ import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
 import Products from "@/components/Products/Products";
-import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
 import { initApollo } from "@/lib/apolloClient";
 import { PRODUCT_INFO, PRODUCT_NAMES, PRODUCT_NEW } from "@/queries/products";
 
@@ -23,14 +23,25 @@ interface IProductName {
     __typename: string
 }
 
-const Product: NextPage = ({ initialApolloState: { ROOT_QUERY: { products }} }) => {
-    //console.log(initialApolloState);
-    console.log(products);
+const Product: NextPage = ({ initialApolloState }) => {
+    const ref = initialApolloState.ROOT_QUERY.products[0].__ref;
+    const product = initialApolloState[ref];
+
+    const { 
+        name: productName, 
+        price: productPrice, 
+        id: productId, 
+        category: { name: productCategory },
+        description: { text: productDescription }
+    } = product;
 
     return (
-        <Layout user={null}>
-            <Heading as="h3">
-
+        <Layout>
+            <Heading 
+            as="h3"
+            mb={4}
+            >
+                {productName}
             </Heading>
             <Flex 
             direction={["column", "column", "row"]}
@@ -70,27 +81,29 @@ const Product: NextPage = ({ initialApolloState: { ROOT_QUERY: { products }} }) 
                     <TabPanels>
                         <TabPanel>
                             <VStack 
-                            align="flex-start"
-                            spacing={12}
+                            h="250px"
+                            spacing={6}
                             >
-                                <p>
-                                    Purchase
-                                </p>
-                                <QuantityInput />
+                                <Text mb="auto">
+                                    {productDescription}
+                                </Text>
+                                <Text>
+                                    £{productPrice}
+                                </Text>
                                 <Button colorScheme="blue">
                                     Add To Cart
                                 </Button>
                             </VStack>
                         </TabPanel>
                         <TabPanel>
-                            <p>
-                                Details
-                            </p>
+                            <Text>
+                                {productCategory}
+                            </Text>
                         </TabPanel>
                         <TabPanel>
-                            <p>
+                            <Text>
                                 Reviews
-                            </p>
+                            </Text>
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
