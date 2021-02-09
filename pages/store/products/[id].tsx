@@ -1,25 +1,28 @@
+import { useMutation, useQuery } from "@apollo/client";
 import { Button,
     Center, 
     Flex, 
     Heading,
+    ListItem,
+    SimpleGrid,
     Tab, 
     TabList, 
     TabPanel,
     TabPanels, 
     Tabs, 
-    Text,
-    Textarea, 
-    VStack } from "@chakra-ui/react";
+    Text, 
+    VStack} from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
-import Products from "@/components/Products/Products";
+import Review from "@/components/Products/Review/Review";
 import { useStoreUpdate } from "@/hooks/useStorage";
 import { initApollo } from "@/lib/apolloClient";
-import { useGetUser } from "@/lib/user";
-import { PRODUCT_INFO, PRODUCT_NAMES, PRODUCT_NEW } from "@/queries/products";
+import { PRODUCT_INFO, PRODUCT_NAMES } from "@/queries/products";
+import { CREATE_REVIEW, GET_REVIEWS } from "@/queries/reviews";
+import { generateItemKey } from "@/utils/generateItemKey";
 
 interface IProductName {
     name: string,
@@ -30,9 +33,7 @@ const Product: NextPage = ({ initialApolloState }) => {
     const ref = initialApolloState.ROOT_QUERY.products[0].__ref;
     const product = initialApolloState[ref];
 
-    const { addCartValue, toggleSavedValue } = useStoreUpdate()!;
-    const { profile, loading } = useGetUser();
-    console.log(profile)
+    const { addCartValue } = useStoreUpdate()!;
 
     const { 
         name: productName, 
@@ -46,6 +47,33 @@ const Product: NextPage = ({ initialApolloState }) => {
         (event.target as HTMLButtonElement).textContent = "Added";
         addCartValue(product);
     };
+
+
+    const { data, error, loading } = useQuery(GET_REVIEWS);
+    const [ addReview ] = useMutation(CREATE_REVIEW);
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error :</p>;
+    }
+
+    const { reviews } = data;
+    console.log(reviews);
+
+
+    /*
+    const handleReviewSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        addReview({ variables: {
+            name: ,
+            headline: ,
+            message: ,
+            rating: ,
+        }});
+    };*/
 
     return (
         <Layout>
@@ -93,10 +121,12 @@ const Product: NextPage = ({ initialApolloState }) => {
                     <TabPanels fontSize="sm">
                         <TabPanel>
                             <VStack 
+                            display="flex"
+                            justifyContent="center"
                             h="250px"
                             spacing={6}
                             >
-                                <Text mb="auto">
+                                <Text>
                                     {productDescription}
                                 </Text>
                                 <Text>
@@ -116,23 +146,58 @@ const Product: NextPage = ({ initialApolloState }) => {
                             </Text>
                         </TabPanel>
                         <TabPanel>
-                            <Text 
-                            mb={6}
-                            >
-                                Have you used this product before. Maybe you loved it 
-                                and want to tell others about it. Even if you did not please help others
-                                and leave a review.
-                            </Text>
-                            <Textarea
-                            placeholder={profile ? "Enter you review here..." : "Must be signed in to leave reviews"}
-                            isDisabled={profile == null}
-                            >
-
-                            </Textarea>
+                            <Review />
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
             </Flex>
+            <Heading 
+            as="h3"
+            size="md"
+            my={12}
+            >
+                Current Reviews
+            </Heading>
+            <SimpleGrid
+            as="ul"
+            border="1px solid gray"
+            columns={[1, 1, 2, 2, 3, 4]} 
+            fontSize="sm"
+            listStyleType="none"
+            spacing="2rem"
+            p={4}
+            >
+                {reviews.length ? reviews.map((review) => 
+                    <li 
+                    key={generateItemKey(review.headline)}
+                    mb={4}
+                    >
+                        <Heading 
+                        as="h4"
+                        fontSize="sm"
+                        fontWeight="400"
+                        mb={2}
+                        >
+                            {review.name}
+                        </Heading>
+                        <Heading 
+                        as="h5"
+                        fontSize="md"
+                        >
+                            {review.headline}
+                        </Heading>
+                        <Text mb={6}>
+                            {`Rating: ${review.rating} out of 5`}
+                        </Text>
+                        <Text>
+                            {review.message}
+                        </Text>
+                    </li>
+                ) : <Text>
+                        No reviews yest
+                    </Text>
+                }
+            </SimpleGrid>
             <Heading 
             as="h3"
             size="md"
