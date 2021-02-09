@@ -68,7 +68,9 @@ const Product: NextPage = ({ initialApolloState }) => {
     
     const handleReviewSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        addReview();
+        addReview({
+            refetchQueries: [{ query: GET_REVIEWS }]
+        });
 
         const submitBtn = document.querySelector("#review-submit")! as HTMLButtonElement;
         
@@ -171,36 +173,7 @@ const Product: NextPage = ({ initialApolloState }) => {
             spacing="2rem"
             p={4}
             >
-                {reviews.length ? reviews.map((review) => 
-                    <li 
-                    key={generateItemKey(review.headline)}
-                    mb={4}
-                    >
-                        <Heading 
-                        as="h4"
-                        fontSize="sm"
-                        fontWeight="400"
-                        mb={2}
-                        >
-                            {review.name}
-                        </Heading>
-                        <Heading 
-                        as="h5"
-                        fontSize="md"
-                        >
-                            {review.headline}
-                        </Heading>
-                        <Text mb={6}>
-                            {`Rating: ${review.rating} out of 5`}
-                        </Text>
-                        <Text>
-                            {review.message}
-                        </Text>
-                    </li>
-                ) : <Text>
-                        No reviews yest
-                    </Text>
-                }
+                {}
             </SimpleGrid>
             <Heading 
             as="h3"
