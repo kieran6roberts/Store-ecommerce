@@ -3,7 +3,6 @@ import { Button,
     Center, 
     Flex, 
     Heading,
-    ListItem,
     SimpleGrid,
     Tab, 
     TabList, 
@@ -21,7 +20,7 @@ import Review from "@/components/Products/Review/Review";
 import { useStoreUpdate } from "@/hooks/useStorage";
 import { initApollo } from "@/lib/apolloClient";
 import { PRODUCT_INFO, PRODUCT_NAMES } from "@/queries/products";
-import { CREATE_REVIEW, GET_REVIEWS } from "@/queries/reviews";
+import { CREATE_REVIEW, GET_REVIEWS, TEST_REVIEW } from "@/queries/reviews";
 import { generateItemKey } from "@/utils/generateItemKey";
 
 interface IProductName {
@@ -48,9 +47,11 @@ const Product: NextPage = ({ initialApolloState }) => {
         addCartValue(product);
     };
 
-
     const { data, error, loading } = useQuery(GET_REVIEWS);
-    const [ addReview ] = useMutation(CREATE_REVIEW);
+    const [ addReview, { 
+        data: mutationData, 
+        loading: mutationLoading,
+        error: mutationError } ] = useMutation(TEST_REVIEW);
 
     if (loading) {
         return <p>Loading...</p>;
@@ -64,16 +65,15 @@ const Product: NextPage = ({ initialApolloState }) => {
     console.log(reviews);
 
 
-    /*
+    
     const handleReviewSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        addReview({ variables: {
-            name: ,
-            headline: ,
-            message: ,
-            rating: ,
-        }});
-    };*/
+        addReview();
+
+        const submitBtn = document.querySelector("#review-submit")! as HTMLButtonElement;
+        
+        console.log(mutationData);
+    };
 
     return (
         <Layout>
@@ -146,7 +146,11 @@ const Product: NextPage = ({ initialApolloState }) => {
                             </Text>
                         </TabPanel>
                         <TabPanel>
-                            <Review />
+                            <Review 
+                            mutationLoading={mutationLoading}
+                            mutationError={mutationError}
+                            submitHandler={handleReviewSubmit}
+                            />
                         </TabPanel>
                     </TabPanels>
                 </Tabs>

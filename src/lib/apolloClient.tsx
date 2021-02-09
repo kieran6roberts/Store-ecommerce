@@ -1,4 +1,4 @@
-import { ApolloClient, 
+import { ApolloClient,
     HttpLink, 
     InMemoryCache, 
     NormalizedCacheObject } from "@apollo/client";
@@ -10,7 +10,7 @@ const createApolloClient = () => {
     return new ApolloClient({
         ssrMode: typeof window === "undefined",
         link: new HttpLink({
-            uri: process.env.NEXT_PUBLIC_GRAPHCMS_API
+            uri: process.env.NEXT_PUBLIC_GRAPHCMS_API,
         }),
         cache: new InMemoryCache({
             typePolicies: {
