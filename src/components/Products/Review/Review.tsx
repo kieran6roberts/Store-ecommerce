@@ -9,6 +9,8 @@ import { Button,
 } from "@chakra-ui/react";
 import * as React from "react";
 
+import Rating from "@/components/Products/Rating/Rating";
+
 const Review = ({ submitHandler, 
     mutationLoading, 
     mutationError }): React.ReactElement => {
@@ -25,6 +27,7 @@ const Review = ({ submitHandler,
                     <FormLabel>
                         Review Headline
                     </FormLabel>
+                    <Rating />
                     <Input 
                     type="text"
                     isRequired 
