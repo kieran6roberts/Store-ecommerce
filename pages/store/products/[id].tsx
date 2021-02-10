@@ -19,7 +19,6 @@ import Layout from "@/components/Layout/Layout";
 import Review from "@/components/Products/Review/Review";
 import { useStoreUpdate } from "@/hooks/useStorage";
 import { initApollo } from "@/lib/apolloClient";
-import { useGetUser } from "@/lib/user";
 import { PRODUCT_INFO, PRODUCT_NAMES } from "@/queries/products";
 import { CREATE_REVIEW, GET_REVIEWS } from "@/queries/reviews";
 import { generateItemKey } from "@/utils/generateItemKey";
@@ -34,8 +33,6 @@ const Product: NextPage = ({ initialApolloState }) => {
     const product = initialApolloState[ref];
     
     const { addCartValue } = useStoreUpdate()!;
-    const { profile } = useGetUser();
-    console.log(profile);
 
     const { 
         name: productName, 
@@ -66,14 +63,9 @@ const Product: NextPage = ({ initialApolloState }) => {
 
     const { reviews } = data;
 
-    const handleReviewSubmit = () => {
+    const handleReviewSubmit = (mutationVariable) => {
         addReview({
-            variables: {
-                name: "Pud",
-                headline: "I love this coffee",
-                message: "Buy it please, it is nice",
-                rating: 5
-            },
+            mutationVariable,
             refetchQueries: [{ query: GET_REVIEWS }]
         });
     };
