@@ -54,7 +54,7 @@ const Review: React.FC<IReview> = ({ submitHandler,
         spacing={2}
         >
             <form 
-            onSubmit={() => submitHandler(inputValues)}
+            onSubmit={(event) => submitHandler(event, inputValues)}
             style={{ width: "100%" }}
             >
                 <FormControl mb={2}>

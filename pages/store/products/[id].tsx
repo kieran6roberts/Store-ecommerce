@@ -63,10 +63,22 @@ const Product: NextPage = ({ initialApolloState }) => {
 
     const { reviews } = data;
 
-    const handleReviewSubmit = (mutationVariable) => {
+    const handleReviewSubmit = (event, mutationVariable) => {
+        event.preventDefault();
         addReview({
-            mutationVariable,
-            refetchQueries: [{ query: GET_REVIEWS }]
+            variables: mutationVariable,
+            update: (store, { data }) => {
+                const reviewData = store.readQuery({
+                    query: GET_REVIEWS
+                });
+
+                store.writeQuery({
+                    query: GET_REVIEWS,
+                    data: {
+                        reviews: [...reviewData!.reviews, data!.createReview]
+                    }
+                });
+            }
         });
     };
 
