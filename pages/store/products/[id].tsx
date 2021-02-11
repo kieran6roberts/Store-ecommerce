@@ -1,36 +1,115 @@
+import { NormalizedCacheObject, useMutation, useQuery } from "@apollo/client";
 import { Button,
     Center, 
     Flex, 
     Heading,
+    SimpleGrid,
     Tab, 
     TabList, 
     TabPanel,
     TabPanels, 
-    Tabs,  
-    VStack } from "@chakra-ui/react";
+    Tabs, 
+    Text, 
+    VStack} from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
-import Products from "@/components/Products/Products";
-import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
+import Review, { IReviewInputs } from "@/components/Products/Review/Review";
+import { useStoreUpdate } from "@/hooks/useStorage";
 import { initApollo } from "@/lib/apolloClient";
-import { PRODUCT_INFO, PRODUCT_NAMES, PRODUCT_NEW } from "@/queries/products";
+import { PRODUCT_INFO, PRODUCT_NAMES } from "@/queries/products";
+import { CREATE_REVIEW, GET_REVIEWS } from "@/queries/reviews";
+import { generateItemKey } from "@/utils/generateItemKey";
 
 interface IProductName {
     name: string,
     __typename: string
 }
 
-const Product: NextPage = ({ initialApolloState: { ROOT_QUERY: { products }} }) => {
-    //console.log(initialApolloState);
-    console.log(products);
+interface IReviewData {
+    reviews: IReviewInputs
+}
+
+
+const Product: NextPage<any> = ({ initialApolloState }) => {
+    const ref = initialApolloState.ROOT_QUERY.products[0].__ref;
+    const product = initialApolloState[ref];
+
+    const { addCartValue } = useStoreUpdate()!;
+
+    const { 
+        name: productName, 
+        price: productPrice, 
+        id: productId, 
+        category: { name: productCategory },
+        description: { text: productDescription }
+    } = product;
+
+    const addProductToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
+        (event.target as HTMLButtonElement).textContent = "Added";
+        addCartValue(product);
+    };
+
+    const { data, error, loading } = useQuery<IReviewData>(GET_REVIEWS);
+    const [ addReview, { loading: mutationLoading, error: mutationError } ] = useMutation(CREATE_REVIEW);
+
+    const handleReviewSubmit = (mutationVariable: IReviewInputs) => {
+        addReview({
+            variables: mutationVariable,
+            update: (store, { data }) => {
+                const reviewData = store.readQuery({
+                    query: GET_REVIEWS
+                });
+
+                store.writeQuery({
+                    query: GET_REVIEWS,
+                    data: {
+                        reviews: [...reviewData.reviews, data.createReview]
+                    }
+                });
+            }
+        });
+    };
+
+    const mapReviewsToDom = (input: IReviewInputs[]) => {
+        return input.map(review => 
+            <li 
+            key={generateItemKey(review.headline)}
+            mb={4}
+            >
+                <Heading 
+                as="h4"
+                fontSize="sm"
+                fontWeight="400"
+                mb={2}
+                >
+                    {review.name}
+                </Heading>
+                <Heading 
+                as="h5"
+                fontSize="md"
+                >
+                    {review.headline}
+                </Heading>
+                <Text mb={6}>
+                    {`Rating: ${review.rating} out of 5`}
+                </Text>
+                <Text>
+                    {review.message}
+                </Text>
+            </li>
+        );
+    };
 
     return (
-        <Layout user={null}>
-            <Heading as="h3">
-
+        <Layout>
+            <Heading 
+            as="h3"
+            mb={4}
+            >
+                {productName}
             </Heading>
             <Flex 
             direction={["column", "column", "row"]}
@@ -49,7 +128,6 @@ const Product: NextPage = ({ initialApolloState: { ROOT_QUERY: { products }} }) 
                     />
                 </Center>
                 <Tabs 
-                defaultIndex={1}
                 flex="1"
                 isFitted
                 isLazy
@@ -67,34 +145,62 @@ const Product: NextPage = ({ initialApolloState: { ROOT_QUERY: { products }} }) 
                             Reviews
                         </Tab>
                     </TabList>
-                    <TabPanels>
+                    <TabPanels fontSize="sm">
                         <TabPanel>
                             <VStack 
-                            align="flex-start"
-                            spacing={12}
+                            display="flex"
+                            justifyContent="center"
+                            h="250px"
+                            spacing={6}
                             >
-                                <p>
-                                    Purchase
-                                </p>
-                                <QuantityInput />
-                                <Button colorScheme="blue">
+                                <Text>
+                                    {productDescription}
+                                </Text>
+                                <Text>
+                                    £{productPrice}
+                                </Text>
+                                <Button 
+                                colorScheme="blue"
+                                onClick={(event) => addProductToCart(event)}
+                                >
                                     Add To Cart
                                 </Button>
                             </VStack>
                         </TabPanel>
                         <TabPanel>
-                            <p>
-                                Details
-                            </p>
+                            <Text>
+                                {productCategory}
+                            </Text>
                         </TabPanel>
                         <TabPanel>
-                            <p>
-                                Reviews
-                            </p>
+                            <Review 
+                            productId={productId}
+                            mutationLoading={mutationLoading}
+                            mutationError={mutationError}
+                            submitHandler={handleReviewSubmit}
+                            />
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
             </Flex>
+            <Heading 
+            as="h3"
+            size="md"
+            my={12}
+            >
+                Current Reviews {loading ? " - Loading" : error ? "Unable to get reviews for this product" : null}
+            </Heading>
+            <SimpleGrid
+            as="ul"
+            border="1px solid gray"
+            columns={[1, 1, 2, 2, 3, 4]} 
+            fontSize="sm"
+            listStyleType="none"
+            spacing="2rem"
+            p={4}
+            >
+                {mapReviewsToDom(data ? data.reviews : [])}
+            </SimpleGrid>
             <Heading 
             as="h3"
             size="md"

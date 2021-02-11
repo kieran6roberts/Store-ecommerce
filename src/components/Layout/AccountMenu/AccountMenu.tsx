@@ -8,7 +8,7 @@ import { Button,
 import * as React from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
 
-import { IUser } from "@/pages/index";
+import { IUser } from "@/components/Layout/Nav/Nav";
 
 interface IAccountMenu {
     display: string[],
@@ -30,7 +30,8 @@ const AccountMenu: React.FC<IAccountMenu> = ({ display, user }) => {
             </MenuButton>
             <MenuList 
             fontSize="xs">
-                {user ? 
+            {user ? 
+                <>
                 <MenuItem>
                    <NextLink href="/api/logout">
                        <Link>
@@ -38,6 +39,14 @@ const AccountMenu: React.FC<IAccountMenu> = ({ display, user }) => {
                        </Link>
                    </NextLink>
                </MenuItem>
+                <MenuItem>
+                    <NextLink href="/account">
+                       <Link>
+                           Account
+                       </Link>
+                    </NextLink>
+               </MenuItem>
+               </>
                :
                 <MenuItem>
                     <NextLink href="/api/login">

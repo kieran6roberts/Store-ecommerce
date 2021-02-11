@@ -17,7 +17,7 @@ import { IoCartOutline, IoHelpCircleOutline } from "react-icons/io5";
 import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
 import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
 
-interface IUser {
+export interface IUser {
     user: {
       name?: string,
       nickname?: string,
@@ -54,7 +54,9 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                 as="h1" 
                 fontSize="lg"
                 >
-                    <NextLink href="/">
+                    <NextLink 
+                    href="/" 
+                    passHref>
                         <Link>
                             Next.js e-commerce
                         </Link>
@@ -73,6 +75,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                         passHref
                         >
                             <Link 
+                            aria-label="store page"
                             alignItems="center" 
                             display="flex"
                             fontSize="lg"
@@ -97,6 +100,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                         passHref
                         >
                             <Link 
+                            aria-label="help page"
                             alignItems="center" 
                             display="flex"
                             fontSize="lg"
@@ -121,6 +125,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                         passHref
                         >
                             <Link 
+                            aria-label="saved products page"
                             alignItems="center" 
                             display="flex"
                             fontSize="lg"
@@ -141,6 +146,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     user={user} 
                     />
                     <Button 
+                    aria-label="mobile navigation"
                     fontSize="xs"
                     onClick={onOpen}
                     ml={12}
@@ -165,7 +171,9 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
             >
                 <Box>
                     <Text>
-                        <NextLink href="/" passHref>
+                        <NextLink 
+                        href="/" 
+                        passHref>
                             <Link>
                                 Home 
                             </Link>

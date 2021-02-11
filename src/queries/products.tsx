@@ -11,7 +11,15 @@ export const PRODUCT_NAMES = gql`
 export const PRODUCT_INFO = gql`
     query GetSingleProduct($name: String!) {
         products(where: {name: $name}) {
+            category {
+                name
+            }
+            description {
+                text
+            }
+            id
             name
+            price
         }
     }
 `;
