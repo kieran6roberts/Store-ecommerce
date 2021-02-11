@@ -33,8 +33,6 @@ const Review: React.FC<IReview> = ({ submitHandler,
 
     const { profile, loading } = useGetUser();
 
-    console.log(profile);
-
     const initReviewInputs = {
         name: profile?.nickname ?? "Anonymous",
         headline: "",
@@ -44,7 +42,17 @@ const Review: React.FC<IReview> = ({ submitHandler,
 
     const { handleSubmit, 
             handleInputChange, 
-            inputValues } = useForm(initReviewInputs, () => submitHandler(inputValues));
+            inputValues,
+            setInputValues } = useForm(initReviewInputs, () => submitHandler(inputValues));
+
+    const handleUpdateRating = () => {
+        const rating = document.querySelectorAll("[data-rating='true']").length;
+
+        setInputValues({
+            ...inputValues,
+            rating
+        });
+    };
 
     console.log(inputValues);
 
@@ -58,8 +66,8 @@ const Review: React.FC<IReview> = ({ submitHandler,
             style={{ width: "100%" }}
             >
                 <FormControl mb={2}>
-                    <Rating />
-                    <FormLabel>
+                    <Rating updateRating={handleUpdateRating} />
+                    <FormLabel mt={4}>
                         Review Headline
                     </FormLabel>
                     <Input 

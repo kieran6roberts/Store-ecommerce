@@ -1,25 +1,42 @@
-import { HStack, IconButton,List, ListItem } from "@chakra-ui/react";
+import { 
+    HStack, 
+    IconButton,
+    List, 
+    ListItem,
+    Text } from "@chakra-ui/react";
 import * as React from "react";
 import { AiOutlineStar } from "react-icons/ai";
 
-const Rating = (): React.ReactElement => {
+const Rating = ({ updateRating }): React.ReactElement => {
 
-    const handleUpdateRating = (event) => {
-        const ratingBtns = Array.from(document.querySelectorAll(".rating-btn"));
-        console.log(ratingBtns);
-        console.log(event.currentTarget);
-        ratingBtns.forEach(btn => {
+    const handleRatingUI = (element: HTMLElement) => {
+        const activeColor = "orange";
+
+        if (!(element instanceof HTMLElement)) {
+            return;
+        }
+
+        element.style.color = activeColor;
+        element.setAttribute("data-rating", "true");
+    };
+
+    const handleUpdateRating = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const ratingBtns = Array.from(document.querySelectorAll(".rating-btn")) as HTMLElement[];
+
+        ratingBtns.forEach((btn) => {
+            btn.style.color = "black";
+            btn.setAttribute("data-rating", "false");
+        });
+
+        ratingBtns.forEach((btn, index) => {
             if (btn === event.currentTarget) {
-                console.log("matching btn");
+                for (let i = index; i >= 0; i--) {
+                    handleRatingUI(ratingBtns[i]);
+                }
             }
         });
 
-        const activeColor = "deepskyblue";
-        if (event.currentTarget.style.backgroundColor === activeColor) {
-            event.currentTarget.style.backgroundColor = "white";
-        } else {
-            event.currentTarget.style.backgroundColor = activeColor;
-        }
+        updateRating();
     };
 
     return (
@@ -27,6 +44,9 @@ const Rating = (): React.ReactElement => {
             <HStack 
             display="flex"
             spacing={1}>
+                <Text display="inline-block">
+                    Product Rating: 
+                </Text>
                 <ListItem>
                     <IconButton 
                     aria-label="rate product"

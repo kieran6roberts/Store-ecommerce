@@ -31,7 +31,7 @@ interface IProductName {
 const Product: NextPage = ({ initialApolloState }) => {
     const ref = initialApolloState.ROOT_QUERY.products[0].__ref;
     const product = initialApolloState[ref];
-    
+
     const { addCartValue } = useStoreUpdate()!;
 
     const { 
@@ -48,10 +48,7 @@ const Product: NextPage = ({ initialApolloState }) => {
     };
 
     const { data, error, loading } = useQuery(GET_REVIEWS);
-    const [ addReview, { 
-        data: mutationData, 
-        loading: mutationLoading,
-        error: mutationError } ] = useMutation(CREATE_REVIEW);
+    const [ addReview, { loading: mutationLoading, error: mutationError } ] = useMutation(CREATE_REVIEW);
 
     if (loading) {
         return <p>Loading...</p>;
@@ -75,7 +72,7 @@ const Product: NextPage = ({ initialApolloState }) => {
                 store.writeQuery({
                     query: GET_REVIEWS,
                     data: {
-                        reviews: [...reviewData!.reviews, data!.createReview]
+                        reviews: [...reviewData.reviews, data.createReview]
                     }
                 });
             }
@@ -196,7 +193,7 @@ const Product: NextPage = ({ initialApolloState }) => {
             size="md"
             my={12}
             >
-                Current Reviews
+                Current Reviews {loading ? " - Loading" : error ? "Unable to get reviews for this product" : null}
             </Heading>
             <SimpleGrid
             as="ul"

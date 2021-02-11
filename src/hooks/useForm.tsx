@@ -50,7 +50,8 @@ const useForm = (initInputs: IReviewInputs, customSubmit: SubmitProp): IUseFormO
         errors,
         handleInputChange,
         handleSubmit,
-        inputValues
+        inputValues,
+        setInputValues
     };
 };
 
