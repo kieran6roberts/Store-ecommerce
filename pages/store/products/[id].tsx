@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { NormalizedCacheObject, useMutation, useQuery } from "@apollo/client";
 import { Button,
     Center, 
     Flex, 
@@ -16,7 +16,7 @@ import Image from "next/image";
 import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
-import Review from "@/components/Products/Review/Review";
+import Review, { IReviewInputs } from "@/components/Products/Review/Review";
 import { useStoreUpdate } from "@/hooks/useStorage";
 import { initApollo } from "@/lib/apolloClient";
 import { PRODUCT_INFO, PRODUCT_NAMES } from "@/queries/products";
@@ -28,7 +28,12 @@ interface IProductName {
     __typename: string
 }
 
-const Product: NextPage = ({ initialApolloState }) => {
+interface IReviewData {
+    reviews: IReviewInputs
+}
+
+
+const Product: NextPage<any> = ({ initialApolloState }) => {
     const ref = initialApolloState.ROOT_QUERY.products[0].__ref;
     const product = initialApolloState[ref];
 
@@ -47,21 +52,11 @@ const Product: NextPage = ({ initialApolloState }) => {
         addCartValue(product);
     };
 
-    const { data, error, loading } = useQuery(GET_REVIEWS);
+    const { data, error, loading } = useQuery<IReviewData>(GET_REVIEWS);
     const [ addReview, { loading: mutationLoading, error: mutationError } ] = useMutation(CREATE_REVIEW);
 
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    if (error) {
-        return <p>Error :</p>;
-    }
-
-    const { reviews } = data;
-
-    const handleReviewSubmit = (event, mutationVariable) => {
-        event.preventDefault();
+    const handleReviewSubmit = (mutationVariable: IReviewInputs) => {
+        //event.preventDefault();
         addReview({
             variables: mutationVariable,
             update: (store, { data }) => {
@@ -79,8 +74,8 @@ const Product: NextPage = ({ initialApolloState }) => {
         });
     };
 
-    const mapReviewsToDom = (input) => {
-        return input.map((review) => 
+    const mapReviewsToDom = (input: IReviewInputs[]) => {
+        return input.map(review => 
             <li 
             key={generateItemKey(review.headline)}
             mb={4}
@@ -180,6 +175,7 @@ const Product: NextPage = ({ initialApolloState }) => {
                         </TabPanel>
                         <TabPanel>
                             <Review 
+                            productId={productId}
                             mutationLoading={mutationLoading}
                             mutationError={mutationError}
                             submitHandler={handleReviewSubmit}
@@ -204,7 +200,7 @@ const Product: NextPage = ({ initialApolloState }) => {
             spacing="2rem"
             p={4}
             >
-                {mapReviewsToDom(reviews)}
+                {mapReviewsToDom(data ? data.reviews : [])}
             </SimpleGrid>
             <Heading 
             as="h3"

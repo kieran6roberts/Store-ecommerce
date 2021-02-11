@@ -15,10 +15,15 @@ import useForm from "@/hooks/useForm";
 import { useGetUser } from "@/lib/user";
 
 export interface IReviewInputs {
+    createdAt?: string;
     headline: string;
     name: string;
     message: string;
-    rating: number
+    rating: number;
+    product: {
+        id: string;
+    }
+    __typename?: string;
 }
 
 interface IReview {
@@ -27,9 +32,11 @@ interface IReview {
     submitHandler: (mutationVariable: IReviewInputs) => Promise<void>;
 }
 
-const Review: React.FC<IReview> = ({ submitHandler, 
+const Review: React.FC<IReview> = ({ 
+    mutationError,
     mutationLoading, 
-    mutationError }) => {
+    productId,
+    submitHandler }) => {
 
     const { profile, loading } = useGetUser();
 
@@ -37,13 +44,17 @@ const Review: React.FC<IReview> = ({ submitHandler,
         name: profile?.nickname ?? "Anonymous",
         headline: "",
         message: "",
-        rating: 0
+        rating: 0,
+        product: {
+            id: productId
+        }
     };
 
-    const { handleSubmit, 
+    const { errors,
+            handleSubmit, 
             handleInputChange, 
             inputValues,
-            setInputValues } = useForm(initReviewInputs, () => submitHandler(inputValues));
+            setInputValues } = useForm(initReviewInputs, submitHandler);
 
     const handleUpdateRating = () => {
         const rating = document.querySelectorAll("[data-rating='true']").length;
@@ -54,15 +65,13 @@ const Review: React.FC<IReview> = ({ submitHandler,
         });
     };
 
-    console.log(inputValues);
-
     return (
         <VStack 
         fontSize="xs"
         spacing={2}
         >
             <form 
-            onSubmit={(event) => submitHandler(event, inputValues)}
+            onSubmit={(event) => handleSubmit(event)}
             style={{ width: "100%" }}
             >
                 <FormControl mb={2}>
@@ -78,7 +87,7 @@ const Review: React.FC<IReview> = ({ submitHandler,
                     value={inputValues.headline}
                     />
                     <FormHelperText>
-                        Maximum 30 characters
+                        {errors.headline ?? "title for your review"}
                     </FormHelperText>
                 </FormControl>
                 <FormControl mb={2}>
@@ -91,6 +100,9 @@ const Review: React.FC<IReview> = ({ submitHandler,
                     onChange={(event) => handleInputChange(event)}
                     value={inputValues.message}
                     />
+                    <FormHelperText>
+                        {errors.message ?? "what would you like to say?"}
+                    </FormHelperText>
                 </FormControl>
                 <Button 
                 colorScheme="blue"
