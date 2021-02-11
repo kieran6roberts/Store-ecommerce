@@ -7,7 +7,7 @@ import {
 import * as React from "react";
 import { AiOutlineStar } from "react-icons/ai";
 
-const Rating = ({ updateRating }): React.ReactElement => {
+const Rating = ({ updateRating }: { updateRating: () => void }): React.ReactElement => {
 
     const handleRatingUI = (element: HTMLElement) => {
         const activeColor = "orange";

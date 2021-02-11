@@ -29,7 +29,8 @@ export interface IReviewInputs {
 interface IReview {
     mutationError: ApolloError | undefined;
     mutationLoading: boolean;
-    submitHandler: (mutationVariable: IReviewInputs) => Promise<void>;
+    productId: string;
+    submitHandler: (mutationVariable: IReviewInputs) => void;
 }
 
 const Review: React.FC<IReview> = ({ 

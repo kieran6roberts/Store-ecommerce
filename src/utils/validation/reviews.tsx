@@ -1,6 +1,7 @@
 import { IReviewInputs } from "@/components/Products/Review/Review";
 
 export interface IReviewErrors {
+    errors?: string;
     headline?: string;
     message?: string;
 }

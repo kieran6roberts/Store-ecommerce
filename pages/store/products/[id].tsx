@@ -56,7 +56,6 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
     const [ addReview, { loading: mutationLoading, error: mutationError } ] = useMutation(CREATE_REVIEW);
 
     const handleReviewSubmit = (mutationVariable: IReviewInputs) => {
-        //event.preventDefault();
         addReview({
             variables: mutationVariable,
             update: (store, { data }) => {

@@ -18,7 +18,7 @@ interface IUseFormOutput {
 
 const useForm = (initInputs: IReviewInputs, customSubmit: SubmitProp): IUseFormOutput => {
     const [ inputValues, setInputValues ] = React.useState<IReviewInputs>(initInputs);
-    const [ errors, setErrors ] = React.useState({ errors: "" });
+    const [ errors, setErrors ] = React.useState<IReviewErrors>({ errors: "" });
     const [ submitDisabled, setSubmitDisabled ] = React.useState(true);
 
     const handleInputChange = <T extends InputType>(event: React.ChangeEvent<T>) => {
@@ -36,12 +36,10 @@ const useForm = (initInputs: IReviewInputs, customSubmit: SubmitProp): IUseFormO
     };
 
     React.useEffect(() => {
-        console.log(errors);
         const isError = isObjectEmpty(errors);
 
         if (isError && !submitDisabled) {
             customSubmit(inputValues);
-            //console.log(customSubmit)
         }
 
         setSubmitDisabled(false);
