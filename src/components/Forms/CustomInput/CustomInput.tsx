@@ -8,13 +8,15 @@ import * as React from "react";
 
 interface ICustomInput {
     handleInputChange: (event: React.ChangeEvent) => void;
+    helperText?: string;
     name: string;
     type: string;
     value: string;
 }
 
 const CustomInput: React.FC<ICustomInput> = ({ 
-    handleInputChange, 
+    handleInputChange,
+    helperText, 
     name,
     type,
     value }) => {
@@ -33,7 +35,11 @@ const CustomInput: React.FC<ICustomInput> = ({
             type={type} 
             value={value}
             />
-            <FormHelperText></FormHelperText>
+            {helperText ? 
+            <FormHelperText fontSize="xs">
+                {helperText}
+            </FormHelperText>
+            : null}
         </FormControl>
     );
 };

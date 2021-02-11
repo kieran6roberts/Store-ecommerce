@@ -11,7 +11,8 @@ import { Button,
 import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
 
-import CustomInput from "@/components/Forms/CustomInput/CustomInput"
+import CustomInput from "@/components/Forms/CustomInput/CustomInput";
+import CustomSelect from "@/components/Forms/CustomSelect/CustomSelect";
 import Layout from "@/components/Layout/Layout";
 import { IUser } from "@/components/Layout/Nav/Nav";
 import auth0 from "@/lib/auth";
@@ -64,7 +65,7 @@ const Account: NextPage<IUser> = ({ user }) => {
           </Button>
           <form style={{ width: "100%" }}>
             <VStack 
-            spacing={8}
+            spacing={4}
             >
               <CustomInput
               handleInputChange={() => console.log("change")}
@@ -81,6 +82,40 @@ const Account: NextPage<IUser> = ({ user }) => {
               <CustomInput
               handleInputChange={() => console.log("change")}
               name="address"
+              type="text"
+              value=""
+              />
+              <CustomInput
+              handleInputChange={() => console.log("change")}
+              helperText="Optional"
+              name="address line 2"
+              type="text"
+              value=""
+              />
+              <CustomInput
+              handleInputChange={() => console.log("change")}
+              name="city"
+              type="text"
+              value=""
+              />
+              <Flex 
+              align="center"
+              w="100%"
+              >
+                <CustomSelect 
+                name="country/region"
+                options={["Wales"]}
+                />
+                <CustomInput
+                handleInputChange={() => console.log("change")}
+                name="postcode"
+                type="text"
+                value=""
+                />
+              </Flex>
+              <CustomInput
+              handleInputChange={() => console.log("change")}
+              name="phone"
               type="text"
               value=""
               />
