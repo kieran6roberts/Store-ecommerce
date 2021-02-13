@@ -1,24 +1,41 @@
 import { Button,
+  Divider,
   Flex,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  FormLabel,
   Heading, 
-  Input,
   Text, 
   VStack } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
+import countryList from "react-select-country-list";
 
 import CustomInput from "@/components/Forms/CustomInput/CustomInput";
 import CustomSelect from "@/components/Forms/CustomSelect/CustomSelect";
 import Layout from "@/components/Layout/Layout";
 import { IUser } from "@/components/Layout/Nav/Nav";
+import useForm from "@/hooks/useForm";
 import auth0 from "@/lib/auth";
 
+export interface IAccountInput {
+  [key: string]: string;
+}
+  
+
 const Account: NextPage<IUser> = ({ user }) => {
-  console.log(user);
+  const initInputs = {
+    email: user.email,
+    name: "",
+    address: "",
+    addressLine2: "",
+    city: "",
+    country: "",
+    postcode: "",
+    phone: "",
+  };
+
+  const [ editDisabled, seteditDisabled ] = React.useState<boolean>(true);
+  const { inputValues, handleInputChange } = useForm(initInputs, () => console.log("change"));
+  const countryOptions = React.useMemo(() => countryList().getData(), []);
+
   return (
     <Layout>
       <Heading 
@@ -28,6 +45,7 @@ const Account: NextPage<IUser> = ({ user }) => {
       pl={4}
       >
         Welcome to your user account
+        <Divider pt={4} />
         <Text 
         fontSize="sm"
         fontWeight="400"
@@ -36,7 +54,7 @@ const Account: NextPage<IUser> = ({ user }) => {
           {user.nickname}
         </Text>
       </Heading>
-      <Flex>
+      <Flex direction={["column", "column", "row"]}>
         <VStack 
         align="flex-start"
         flex="1"
@@ -58,72 +76,101 @@ const Account: NextPage<IUser> = ({ user }) => {
             your details such as delivery address allowing us to speed up the
             time before they arrrive with you. 
           </Text>
-          <Button 
+          <Button
+          onClick={() => seteditDisabled(!editDisabled)} 
           size="sm"
-          variant="outline">
-            Update Details
+          variant="outline"
+          >
+            {editDisabled ? "Update Details" : "Save Details"}
           </Button>
           <form style={{ width: "100%" }}>
             <VStack 
             spacing={4}
             >
               <CustomInput
-              handleInputChange={() => console.log("change")}
+              handleInputChange={(event) => handleInputChange(event)}
+              isDisabled={editDisabled}
               name="email"
               type="email"
-              value=""
+              value={inputValues.email}
               />
               <CustomInput
-              handleInputChange={() => console.log("change")}
+              handleInputChange={(event) => handleInputChange(event)}
+              isDisabled={editDisabled}
               name="name"
               type="text"
-              value=""
+              value={inputValues.name}
               />
               <CustomInput
-              handleInputChange={() => console.log("change")}
+              handleInputChange={(event) => handleInputChange(event)}
+              isDisabled={editDisabled}
               name="address"
               type="text"
-              value=""
+              value={inputValues.address}
               />
               <CustomInput
-              handleInputChange={() => console.log("change")}
+              handleInputChange={(event) => handleInputChange(event)}
+              isDisabled={editDisabled}
               helperText="Optional"
-              name="address line 2"
+              name="addressLine2"
               type="text"
-              value=""
+              value={inputValues.addressLine2}
               />
               <CustomInput
-              handleInputChange={() => console.log("change")}
+              handleInputChange={(event) => handleInputChange(event)}
+              isDisabled={editDisabled}
               name="city"
               type="text"
-              value=""
+              value={inputValues.city}
               />
               <Flex 
               align="center"
               w="100%"
               >
                 <CustomSelect 
-                name="country/region"
-                options={["Wales"]}
+                isDisabled={editDisabled}
+                name="country"
+                options={countryOptions}
+                value={inputValues.country}
                 />
                 <CustomInput
-                handleInputChange={() => console.log("change")}
+                handleInputChange={(event) => handleInputChange(event)}
+                isDisabled={editDisabled}
                 name="postcode"
                 type="text"
-                value=""
+                value={inputValues.postcode}
                 />
               </Flex>
               <CustomInput
-              handleInputChange={() => console.log("change")}
+              handleInputChange={(event) => handleInputChange(event)}
+              isDisabled={editDisabled}
               name="phone"
               type="text"
-              value=""
+              value={inputValues.phone}
               />
             </VStack>
           </form>
+          <Button
+          onClick={() => seteditDisabled(!editDisabled)} 
+          size="sm"
+          variant="outline">
+            {editDisabled ? "Update Details" : "Save Details"}
+          </Button>
         </VStack>
-        <VStack flex="1">
-
+        <VStack 
+        align="flex-start"
+        flex="1"
+        >
+          <Heading 
+          as="h2"
+          fontSize="md"
+          mb={8}
+          >
+            Previous Orders
+          </Heading>
+          <Text fontSize="xs">
+            No orders
+          </Text>
         </VStack>
       </Flex>
     </Layout>

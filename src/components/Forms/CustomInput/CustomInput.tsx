@@ -10,6 +10,7 @@ interface ICustomInput {
     handleInputChange: (event: React.ChangeEvent) => void;
     helperText?: string;
     name: string;
+    isDisabled: boolean;
     type: string;
     value: string;
 }
@@ -17,6 +18,7 @@ interface ICustomInput {
 const CustomInput: React.FC<ICustomInput> = ({ 
     handleInputChange,
     helperText, 
+    isDisabled,
     name,
     type,
     value }) => {
@@ -30,6 +32,7 @@ const CustomInput: React.FC<ICustomInput> = ({
               {name}
             </FormLabel>
             <Input
+            isDisabled={isDisabled}
             onChange={(event) => handleInputChange(event)}
             name={name} 
             type={type} 
