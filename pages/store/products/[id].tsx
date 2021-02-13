@@ -1,4 +1,4 @@
-import { NormalizedCacheObject, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { Button,
     Center, 
     Flex, 
@@ -53,7 +53,10 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
     };
 
     const { data, error, loading } = useQuery<IReviewData>(GET_REVIEWS);
-    const [ addReview, { loading: mutationLoading, error: mutationError } ] = useMutation(CREATE_REVIEW);
+    const [ addReview, { 
+        loading: mutationLoading, 
+        error: mutationError 
+    }] = useMutation(CREATE_REVIEW);
 
     const handleReviewSubmit = (mutationVariable: IReviewInputs) => {
         addReview({

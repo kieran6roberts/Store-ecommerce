@@ -35,6 +35,7 @@ const CustomInput: React.FC<ICustomInput> = ({
             isDisabled={isDisabled}
             onChange={(event) => handleInputChange(event)}
             name={name} 
+            size="sm"
             type={type} 
             value={value}
             />

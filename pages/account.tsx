@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client";
 import { Button,
   Divider,
   Flex,
@@ -14,6 +15,8 @@ import Layout from "@/components/Layout/Layout";
 import { IUser } from "@/components/Layout/Nav/Nav";
 import useForm from "@/hooks/useForm";
 import auth0 from "@/lib/auth";
+import { UPDATE_USER } from "@/queries/users";
+import { usersValidation } from "@/utils/validation/users";
 
 export interface IAccountInput {
   [key: string]: string;
@@ -31,10 +34,44 @@ const Account: NextPage<IUser> = ({ user }) => {
     postcode: "",
     phone: "",
   };
+  
+  const handleUpdateUserSubmission = (mutationVariable: IAccountInput) => {
+    updateUsers({
+            context: { clientName: "users" },
+            variables: mutationVariable,
+            update: (store, { data }) => {
+                const userData = store.readQuery({
+                    query: UPDATE_USER
+                });
 
-  const [ editDisabled, seteditDisabled ] = React.useState<boolean>(true);
-  const { inputValues, handleInputChange } = useForm(initInputs, () => console.log("change"));
+                store.writeQuery({
+                    query: UPDATE_USER,
+                    data: {
+                        reviews: [...userData.users, data.update_users]
+                    }
+                });
+            }
+        });
+  };
+
   const countryOptions = React.useMemo(() => countryList().getData(), []);
+  const [ editDisabled, setEditDisabled ] = React.useState<boolean>(true);
+  const { 
+    inputValues, 
+    handleInputChange,
+    handleSubmit } = useForm(initInputs, handleUpdateUserSubmission, usersValidation);
+
+  console.log(inputValues);
+
+  const [ updateUsers, { 
+    loading: mutationLoading, 
+    error: mutationError 
+  }] = useMutation(UPDATE_USER, {
+    context: {
+      clientName: "users"
+    }
+  });
+
 
   return (
     <Layout>
@@ -77,13 +114,16 @@ const Account: NextPage<IUser> = ({ user }) => {
             time before they arrrive with you. 
           </Text>
           <Button
-          onClick={() => seteditDisabled(!editDisabled)} 
+          onClick={() => setEditDisabled(!editDisabled)} 
           size="sm"
           variant="outline"
           >
-            {editDisabled ? "Update Details" : "Save Details"}
+            {editDisabled ? "Edit Details" : "Save Details"}
           </Button>
-          <form style={{ width: "100%" }}>
+          <form 
+          onSubmit={(event) => editDisabled ? handleSubmit(event) : null}
+          style={{ width: "100%" }}
+          >
             <VStack 
             spacing={4}
             >
@@ -149,13 +189,17 @@ const Account: NextPage<IUser> = ({ user }) => {
               value={inputValues.phone}
               />
             </VStack>
+            <Button
+            colorScheme="blue"
+            isDisabled={editDisabled}
+            mt={8}
+            onClick={() => setEditDisabled(!editDisabled)} 
+            size="sm"
+            type="submit"
+            variant="outline">
+              Submit Details
+            </Button>
           </form>
-          <Button
-          onClick={() => seteditDisabled(!editDisabled)} 
-          size="sm"
-          variant="outline">
-            {editDisabled ? "Update Details" : "Save Details"}
-          </Button>
         </VStack>
         <VStack 
         align="flex-start"

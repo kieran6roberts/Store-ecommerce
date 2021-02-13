@@ -36,9 +36,10 @@ const CustomSelect: React.FC<ICustomSelect> = ({
                 {name}
             </FormLabel>
             <Select 
-            isDisabled={isDisabled}
             fontSize="sm"
+            isDisabled={isDisabled}
             placeholder={name}
+            size="sm"
             >
                {mapOptionsToDOM()}
             </Select>

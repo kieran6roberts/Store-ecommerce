@@ -18,7 +18,10 @@ interface IUseFormOutput {
     setInputValues: React.Dispatch<React.SetStateAction<InputCombinable>>
 }
 
-const useForm = (initInputs: InputCombinable, customSubmit: SubmissionCombinable): IUseFormOutput => {
+const useForm = (initInputs: InputCombinable, 
+    customSubmit: SubmissionCombinable,
+    customValidation: any
+    ): IUseFormOutput => {
     const [ inputValues, setInputValues ] = React.useState<InputCombinable>(initInputs);
     const [ errors, setErrors ] = React.useState<IReviewErrors>({ errors: "" });
     const [ submitDisabled, setSubmitDisabled ] = React.useState(true);
@@ -34,7 +37,7 @@ const useForm = (initInputs: InputCombinable, customSubmit: SubmissionCombinable
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setErrors(reviewValidation(inputValues));
+        setErrors(customValidation(inputValues));
     };
 
     React.useEffect(() => {
