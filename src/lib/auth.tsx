@@ -13,6 +13,8 @@ export default initAuth0({
     session: {
         cookieSecret: config.SESSION_COOKIE_SECRET,
         cookieLifetime: 60 * 60 * 8,
+        storeAccessToken: true,
         storeIdToken: true,
+        storeRefreshToken: true
     }
 });

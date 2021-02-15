@@ -17,10 +17,3 @@ export const UPDATE_USER = gql`
         }
     }
 `;
-/*
-{
-  "id": { "_eq": 1 },
-  "changes": {
-    "name": "Helena"
-  }
-}*/

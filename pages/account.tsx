@@ -34,8 +34,11 @@ const Account: NextPage<IUser> = ({ user }) => {
     postcode: "",
     phone: "",
   };
+
+  console.log(user)
   
-  const handleUpdateUserSubmission = (mutationVariable: IAccountInput) => {
+  const handleUpdateUserSubmission = async (mutationVariable: IAccountInput) => {
+    /*
     updateUsers({
             context: { clientName: "users" },
             variables: mutationVariable,
@@ -51,7 +54,14 @@ const Account: NextPage<IUser> = ({ user }) => {
                     }
                 });
             }
+        });*/
+
+        
+        const auth = await fetch("/api/session", {
+          method: "POST",
+          body: JSON.stringify(inputValues)
         });
+        console.log(auth);
   };
 
   const countryOptions = React.useMemo(() => countryList().getData(), []);
@@ -98,6 +108,7 @@ const Account: NextPage<IUser> = ({ user }) => {
         pl={4}
         pr={12}
         py={2}
+        mb={[16, 16, 0]}
         spacing={8}
         >
           <Heading 
