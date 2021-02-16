@@ -15,6 +15,7 @@ import { useStoreUpdate } from "@/hooks/useStorage";
 interface ICartItem {
     category: string;
     description: string;
+    hideEdit?: boolean;
     id: string;
     name: string;
     price: number;
@@ -23,6 +24,7 @@ interface ICartItem {
 const CartItem = ({ 
     category,
     description, 
+    hideEdit,
     id,
     name, 
     price }: ICartItem): React.ReactElement => {
@@ -46,7 +48,6 @@ const CartItem = ({
 
     return (
         <Stack
-        border="1px solid gray"
         direction={["column", "column", "column", "row"]}
         display="flex"
         divider={<StackDivider borderColor="blue.100" />}
@@ -69,16 +70,17 @@ const CartItem = ({
             flex="1"
             spacing={2}
             >
-                <Text fontSize="md">
+                <Text fontSize="sm">
                     {name}
                 </Text>
-                <Text fontSize="sm">
+                <Text fontSize="xs">
                     {category}
                 </Text>
                 <Text fontSize="xs">
                     {description}
                 </Text>
             </VStack>
+            {!hideEdit ? 
             <Flex 
             align="center"
             justify="center"
@@ -102,7 +104,7 @@ const CartItem = ({
                 >
                     Remove
                 </Button>
-            </Flex>
+            </Flex> : null}
             <Text 
             className="cart-item__total"
             flex="0.5"

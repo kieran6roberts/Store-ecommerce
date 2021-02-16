@@ -7,16 +7,12 @@ import { Button,
   VStack } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
-import countryList from "react-select-country-list";
 
-import CustomInput from "@/components/Forms/CustomInput/CustomInput";
-import CustomSelect from "@/components/Forms/CustomSelect/CustomSelect";
+import CheckoutForm from "@/components/Forms/CheckoutForm/CheckoutForm";
 import Layout from "@/components/Layout/Layout";
 import { IUser } from "@/components/Layout/Nav/Nav";
-import useForm from "@/hooks/useForm";
 import auth0 from "@/lib/auth";
 import { UPDATE_USER } from "@/queries/users";
-import { usersValidation } from "@/utils/validation/users";
 
 export interface IAccountInput {
   [key: string]: string;
@@ -24,19 +20,8 @@ export interface IAccountInput {
   
 
 const Account: NextPage<IUser> = ({ user }) => {
-  const initInputs = {
-    email: user.email,
-    name: "",
-    address: "",
-    addressLine2: "",
-    city: "",
-    country: "",
-    postcode: "",
-    phone: "",
-  };
+  const [ editDisabled, setEditDisabled ] = React.useState<boolean>(true);
 
-  console.log(user)
-  
   const handleUpdateUserSubmission = async (mutationVariable: IAccountInput) => {
     /*
     updateUsers({
@@ -63,15 +48,6 @@ const Account: NextPage<IUser> = ({ user }) => {
         });
         console.log(auth);
   };
-
-  const countryOptions = React.useMemo(() => countryList().getData(), []);
-  const [ editDisabled, setEditDisabled ] = React.useState<boolean>(true);
-  const { 
-    inputValues, 
-    handleInputChange,
-    handleSubmit } = useForm(initInputs, handleUpdateUserSubmission, usersValidation);
-
-  console.log(inputValues);
 
   const [ updateUsers, { 
     loading: mutationLoading, 
@@ -131,86 +107,13 @@ const Account: NextPage<IUser> = ({ user }) => {
           >
             {editDisabled ? "Edit Details" : "Save Details"}
           </Button>
-          <form 
-          onSubmit={(event) => editDisabled ? handleSubmit(event) : null}
-          style={{ width: "100%" }}
-          >
-            <VStack 
-            spacing={4}
-            >
-              <CustomInput
-              handleInputChange={(event) => handleInputChange(event)}
-              isDisabled={editDisabled}
-              name="email"
-              type="email"
-              value={inputValues.email}
-              />
-              <CustomInput
-              handleInputChange={(event) => handleInputChange(event)}
-              isDisabled={editDisabled}
-              name="name"
-              type="text"
-              value={inputValues.name}
-              />
-              <CustomInput
-              handleInputChange={(event) => handleInputChange(event)}
-              isDisabled={editDisabled}
-              name="address"
-              type="text"
-              value={inputValues.address}
-              />
-              <CustomInput
-              handleInputChange={(event) => handleInputChange(event)}
-              isDisabled={editDisabled}
-              helperText="Optional"
-              name="addressLine2"
-              type="text"
-              value={inputValues.addressLine2}
-              />
-              <CustomInput
-              handleInputChange={(event) => handleInputChange(event)}
-              isDisabled={editDisabled}
-              name="city"
-              type="text"
-              value={inputValues.city}
-              />
-              <Flex 
-              align="center"
-              w="100%"
-              >
-                <CustomSelect 
-                isDisabled={editDisabled}
-                name="country"
-                options={countryOptions}
-                value={inputValues.country}
-                />
-                <CustomInput
-                handleInputChange={(event) => handleInputChange(event)}
-                isDisabled={editDisabled}
-                name="postcode"
-                type="text"
-                value={inputValues.postcode}
-                />
-              </Flex>
-              <CustomInput
-              handleInputChange={(event) => handleInputChange(event)}
-              isDisabled={editDisabled}
-              name="phone"
-              type="text"
-              value={inputValues.phone}
-              />
-            </VStack>
-            <Button
-            colorScheme="blue"
-            isDisabled={editDisabled}
-            mt={8}
-            onClick={() => setEditDisabled(!editDisabled)} 
-            size="sm"
-            type="submit"
-            variant="outline">
-              Submit Details
-            </Button>
-          </form>
+          <CheckoutForm 
+          handleDisabled={() => setEditDisabled(!editDisabled)}
+          isDisabled={editDisabled}
+          submit={handleUpdateUserSubmission}
+          submitText="Submit Details"
+          userEmail={user.email}
+          />
         </VStack>
         <VStack 
         align="flex-start"
