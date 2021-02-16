@@ -1,7 +1,6 @@
 import { ApolloError } from "@apollo/client";
 import { Button,
     FormControl,
-    FormErrorMessage,
     FormHelperText,
     FormLabel,
     Input,
@@ -13,6 +12,7 @@ import * as React from "react";
 import Rating from "@/components/Products/Rating/Rating";
 import useForm from "@/hooks/useForm";
 import { useGetUser } from "@/lib/user";
+import { reviewValidation } from "@/utils/validation/reviews";
 
 export interface IReviewInputs {
     createdAt?: string;
@@ -55,7 +55,7 @@ const Review: React.FC<IReview> = ({
             handleSubmit, 
             handleInputChange, 
             inputValues,
-            setInputValues } = useForm(initReviewInputs, submitHandler);
+            setInputValues } = useForm(initReviewInputs, submitHandler, reviewValidation);
 
     const handleUpdateRating = () => {
         const rating = document.querySelectorAll("[data-rating='true']").length;

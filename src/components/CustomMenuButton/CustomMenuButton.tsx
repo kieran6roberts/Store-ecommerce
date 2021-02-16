@@ -16,7 +16,7 @@ interface IMenuButton {
 const CustomMenuButton: React.FC<IMenuButton> = ({ title, listItems = []}) => {
 
     const MenuItems = React.useMemo(() => listItems.map((item) => 
-        <MenuItem as="li" key={generateItemKey(item)}>
+        <MenuItem key={generateItemKey(item)}>
             {item}
         </MenuItem>
         ), [ listItems ]);
@@ -31,7 +31,7 @@ const CustomMenuButton: React.FC<IMenuButton> = ({ title, listItems = []}) => {
             >
                 {title ?? "No title"}
             </MenuButton>
-            <MenuList as="ul">
+            <MenuList>
                 {MenuItems}
             </MenuList>
         </Menu>

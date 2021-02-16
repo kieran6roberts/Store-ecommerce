@@ -5,15 +5,25 @@ import * as React from "react";
 
 import { generateItemKey } from "@/utils/generateItemKey";
 
-interface ICustomSelect {
-    name: string;
-    options: Array<string>;
+interface ICountry {
+    label: string;
+    value: string;
 }
 
-const CustomSelect: React.FC<ICustomSelect> = ({ name, options }) => {
+interface ICustomSelect {
+    isDisabled: boolean;
+    name: string;
+    options: ICountry[];
+}
+
+const CustomSelect: React.FC<ICustomSelect> = ({ 
+    isDisabled, 
+    name, 
+    options }) => {
+
     const mapOptionsToDOM = () => options.map(option => 
-        <option key={generateItemKey(option)}>
-            {option}
+        <option key={generateItemKey(option.value)}>
+            {option.label}
         </option>
         );
 
@@ -27,8 +37,11 @@ const CustomSelect: React.FC<ICustomSelect> = ({ name, options }) => {
             </FormLabel>
             <Select 
             fontSize="sm"
-            placeholder="Select country">
-                {mapOptionsToDOM()}
+            isDisabled={isDisabled}
+            placeholder={name}
+            size="sm"
+            >
+               {mapOptionsToDOM()}
             </Select>
         </FormControl>
     );

@@ -1,24 +1,64 @@
+import { useMutation } from "@apollo/client";
 import { Button,
+  Divider,
   Flex,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  FormLabel,
   Heading, 
-  Input,
   Text, 
   VStack } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
 
-import CustomInput from "@/components/Forms/CustomInput/CustomInput";
-import CustomSelect from "@/components/Forms/CustomSelect/CustomSelect";
+import CheckoutForm from "@/components/Forms/CheckoutForm/CheckoutForm";
 import Layout from "@/components/Layout/Layout";
 import { IUser } from "@/components/Layout/Nav/Nav";
 import auth0 from "@/lib/auth";
+import { UPDATE_USER } from "@/queries/users";
+
+export interface IAccountInput {
+  [key: string]: string;
+}
+  
 
 const Account: NextPage<IUser> = ({ user }) => {
-  console.log(user);
+  const [ editDisabled, setEditDisabled ] = React.useState<boolean>(true);
+
+  const handleUpdateUserSubmission = async (mutationVariable: IAccountInput) => {
+    /*
+    updateUsers({
+            context: { clientName: "users" },
+            variables: mutationVariable,
+            update: (store, { data }) => {
+                const userData = store.readQuery({
+                    query: UPDATE_USER
+                });
+
+                store.writeQuery({
+                    query: UPDATE_USER,
+                    data: {
+                        reviews: [...userData.users, data.update_users]
+                    }
+                });
+            }
+        });*/
+
+        
+        const auth = await fetch("/api/session", {
+          method: "POST",
+          body: JSON.stringify(inputValues)
+        });
+        console.log(auth);
+  };
+
+  const [ updateUsers, { 
+    loading: mutationLoading, 
+    error: mutationError 
+  }] = useMutation(UPDATE_USER, {
+    context: {
+      clientName: "users"
+    }
+  });
+
+
   return (
     <Layout>
       <Heading 
@@ -28,6 +68,7 @@ const Account: NextPage<IUser> = ({ user }) => {
       pl={4}
       >
         Welcome to your user account
+        <Divider pt={4} />
         <Text 
         fontSize="sm"
         fontWeight="400"
@@ -36,13 +77,14 @@ const Account: NextPage<IUser> = ({ user }) => {
           {user.nickname}
         </Text>
       </Heading>
-      <Flex>
+      <Flex direction={["column", "column", "row"]}>
         <VStack 
         align="flex-start"
         flex="1"
         pl={4}
         pr={12}
         py={2}
+        mb={[16, 16, 0]}
         spacing={8}
         >
           <Heading 
@@ -58,72 +100,35 @@ const Account: NextPage<IUser> = ({ user }) => {
             your details such as delivery address allowing us to speed up the
             time before they arrrive with you. 
           </Text>
-          <Button 
+          <Button
+          onClick={() => setEditDisabled(!editDisabled)} 
           size="sm"
-          variant="outline">
-            Update Details
+          variant="outline"
+          >
+            {editDisabled ? "Edit Details" : "Save Details"}
           </Button>
-          <form style={{ width: "100%" }}>
-            <VStack 
-            spacing={4}
-            >
-              <CustomInput
-              handleInputChange={() => console.log("change")}
-              name="email"
-              type="email"
-              value=""
-              />
-              <CustomInput
-              handleInputChange={() => console.log("change")}
-              name="name"
-              type="text"
-              value=""
-              />
-              <CustomInput
-              handleInputChange={() => console.log("change")}
-              name="address"
-              type="text"
-              value=""
-              />
-              <CustomInput
-              handleInputChange={() => console.log("change")}
-              helperText="Optional"
-              name="address line 2"
-              type="text"
-              value=""
-              />
-              <CustomInput
-              handleInputChange={() => console.log("change")}
-              name="city"
-              type="text"
-              value=""
-              />
-              <Flex 
-              align="center"
-              w="100%"
-              >
-                <CustomSelect 
-                name="country/region"
-                options={["Wales"]}
-                />
-                <CustomInput
-                handleInputChange={() => console.log("change")}
-                name="postcode"
-                type="text"
-                value=""
-                />
-              </Flex>
-              <CustomInput
-              handleInputChange={() => console.log("change")}
-              name="phone"
-              type="text"
-              value=""
-              />
-            </VStack>
-          </form>
+          <CheckoutForm 
+          handleDisabled={() => setEditDisabled(!editDisabled)}
+          isDisabled={editDisabled}
+          submit={handleUpdateUserSubmission}
+          submitText="Submit Details"
+          userEmail={user.email}
+          />
         </VStack>
-        <VStack flex="1">
-
+        <VStack 
+        align="flex-start"
+        flex="1"
+        >
+          <Heading 
+          as="h2"
+          fontSize="md"
+          mb={8}
+          >
+            Previous Orders
+          </Heading>
+          <Text fontSize="xs">
+            No orders
+          </Text>
         </VStack>
       </Flex>
     </Layout>

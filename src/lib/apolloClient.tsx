@@ -1,4 +1,5 @@
 import { ApolloClient,
+    ApolloLink,
     HttpLink, 
     InMemoryCache, 
     NormalizedCacheObject } from "@apollo/client";
@@ -6,12 +7,22 @@ import * as React from "react";
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
+const productsLink = new HttpLink({
+    uri: process.env.NEXT_PUBLIC_GRAPHCMS_API,
+});
+
+const usersLink = new HttpLink({
+    uri: process.env.NEXT_PUBLIC_HASURA_API,
+});
+
 const createApolloClient = () => {
     return new ApolloClient({
         ssrMode: typeof window === "undefined",
-        link: new HttpLink({
-            uri: process.env.NEXT_PUBLIC_GRAPHCMS_API,
-        }),
+        link: ApolloLink.split(
+            operation => operation.getContext().clientName === "users",
+            usersLink,
+            productsLink
+        ),
         cache: new InMemoryCache({
             typePolicies: {
                 Query: {

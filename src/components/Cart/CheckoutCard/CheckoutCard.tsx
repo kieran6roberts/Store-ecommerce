@@ -4,6 +4,7 @@ import { Button,
     Heading, 
     Text, 
     VStack } from "@chakra-ui/react";
+import NextLink from "next/link";
 import * as React from "react";
 import { BiLockAlt } from "react-icons/bi";
 
@@ -94,7 +95,9 @@ const CheckoutCard = (): React.ReactElement => {
             variant="solid"
             isDisabled={total === 0 ? true : false}
             >
-                Proceed to Checkout
+                <NextLink href="/checkout">
+                    Proceed to Checkout
+                </NextLink>
             </Button>
         </VStack>
     );

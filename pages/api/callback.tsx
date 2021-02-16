@@ -1,11 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import initAuth0 from "@/lib/auth";
+import initAuth from "@/lib/auth";
 
 export default async function callback(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     try {
-        await initAuth0.handleCallback(req, res, { 
-            redirectTo: "/" 
+        await initAuth.handleCallback(req, res, { 
+            redirectTo: "/",
+
         });
     } catch(error) {
         console.error(error);
