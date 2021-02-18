@@ -94,6 +94,7 @@ const CartItem = ({
                 />  
                 <Button 
                 aria-label="remove cart item"
+                className="cart-item--remove"
                 color="red.300"
                 fontSize="xs"
                 leftIcon={<ImCancelCircle />}

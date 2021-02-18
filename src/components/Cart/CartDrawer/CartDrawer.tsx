@@ -19,6 +19,8 @@ import DrawerTemplate from "@/components/DrawerTemplate/DrawerTemplate";
 import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 import { generateItemKey } from "@/utils/generateItemKey";
 
+const paths = ["/checkout", "/checkout/shipping", "/checkout/payment"];
+
 const CartDrawer = (): React.ReactElement => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const router = useRouter();
@@ -69,8 +71,7 @@ const CartDrawer = (): React.ReactElement => {
 
     return (
         <>
-        {router.pathname !== "/checkout" ? 
-        
+        {!paths.includes(router.pathname) ? 
         <Button 
         leftIcon={<BsArrowBarLeft />}
         onClick={onOpen}
