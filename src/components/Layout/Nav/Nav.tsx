@@ -1,16 +1,19 @@
 import { Box,
-    Button, 
+    Button,
     Flex,
     Heading, 
+    IconButton, 
     Link, 
     List, 
     ListItem, 
     Text,    
-    Tooltip } from "@chakra-ui/react";
+    Tooltip,
+    useColorMode } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
+import { FiMoon, FiSun } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCartOutline, IoHelpCircleOutline } from "react-icons/io5";
 
@@ -38,6 +41,7 @@ interface INav {
 const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
     const router = useRouter();
 
+    const { colorMode, toggleColorMode } = useColorMode();
     return (
         <Flex
         direction="column"
@@ -183,6 +187,13 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                         </span>
                     </Text>
                 </Box>
+                <IconButton 
+                aria-label={`toggle color theme: ${colorMode}`} 
+                onClick={toggleColorMode}
+                icon={colorMode === "light" ? <FiSun /> : <FiMoon />}
+                size="md"
+                variant="outline"
+                />
                 <CurrentUser 
                 user={user} 
                 userLoading={userLoading} 
