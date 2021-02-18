@@ -94,10 +94,9 @@ const CartDrawer = (): React.ReactElement => {
         </Button> : null}
         <DrawerTemplate
         header="What's in your bag"
-        footer={"@YourCoffeeShop"}
+        footer={"Next.js e-commerce"}
         isOpen={isOpen}
         onClose={onClose}
-        overlay={false}
         size="xs"
         >
             <NextLink 

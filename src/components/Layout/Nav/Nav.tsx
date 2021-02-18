@@ -174,7 +174,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
             mb={8}
             py={4}
             >
-                <Box>
+                <Box flex="1">
                     <Text>
                         <NextLink 
                         href="/" 
@@ -188,13 +188,19 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                         </span>
                     </Text>
                 </Box>
-                <IconButton 
-                aria-label={`toggle color theme: ${colorMode}`} 
-                onClick={toggleColorMode}
-                icon={colorMode === "light" ? <FiSun /> : <FiMoon />}
-                size="md"
-                variant="outline"
-                />
+                <Flex 
+                flex="2"
+                justify="center"
+                >
+                    <IconButton 
+                    aria-label={`toggle color theme: ${colorMode}`} 
+                    icon={colorMode === "light" ? <FiSun /> : <FiMoon />}
+                    onClick={toggleColorMode}
+                    size="md"
+                    variant="outline"
+                    
+                    />
+                </Flex>
                 <CurrentUser 
                 user={user} 
                 userLoading={userLoading} 

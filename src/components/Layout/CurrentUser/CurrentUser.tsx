@@ -10,7 +10,11 @@ interface ICurrentUser {
 
 const CurrentUser: React.FC<ICurrentUser> = ({ user, userLoading }) => {
     return (
-        <Flex alignItems="center">
+        <Flex 
+        alignItems="center"
+        justify="flex-end"
+        flex="1"
+        >
             {userLoading ? 
             <Box>
                 loading user
