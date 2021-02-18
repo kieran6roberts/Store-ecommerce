@@ -1,8 +1,9 @@
-import { DocumentNode, useLazyQuery, useQuery } from "@apollo/client";
+import { DocumentNode, useQuery } from "@apollo/client";
 import { Box, Button, SimpleGrid, VStack } from "@chakra-ui/react";
 import * as React from "react";
 
 import Product from "@/components/Products/Product/Product";
+import { generateItemKey } from "@/utils/generateItemKey";
 
 
 export interface IProductQuery {
@@ -55,11 +56,11 @@ const Products: React.FC<IProducts> = ({
         return <Box h="75vh">Loading products...</Box>;
     }
 
-    const mapProducts = data?.products.map((product: IProductQuery) => 
+    const mapProducts = () => data?.products.map((product: IProductQuery) => 
             <li 
             className="product"
             id={product.id}
-            key={product.id}
+            key={generateItemKey(product.id)}
             >
                 <Product
                 category={product.category.name}
@@ -92,11 +93,10 @@ const Products: React.FC<IProducts> = ({
             listStyleType="none"
             spacing="3rem"
             >
-                {mapProducts ?? null}
+                {mapProducts() ?? null}
             </SimpleGrid>
             {loadMore && checkForMoreProducts() ? 
             <Button onClick={() => { 
-                console.log("fetch more");
                 fetchMore({ 
                     variables: { 
                         offset: offset,

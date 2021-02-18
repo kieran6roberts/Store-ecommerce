@@ -68,8 +68,17 @@ export const PRODUCT_STORAGE = gql`
                 id
                 name
                 price
-
             }
+        }
+    }
+`;
+
+export const PRODUCT_SORT = gql`
+    query ProductSort($sort: ProductOrderByInput!, $price: Int) {
+        products(orderBy: price_ASC, where: { price: $price }) {
+            id
+            name
+            price
         }
     }
 `;
