@@ -6,30 +6,18 @@ import { Box,
     StackDivider, 
     Text,
     VStack } from "@chakra-ui/react";
-import { NextPage } from "next";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
 import * as React from "react";
 
-import { mapCartStorage } from "@/utils/mapCartStorage";
-import CartItem from "@/components/Cart/CartItem/CartItem";
-import CheckoutForm from "@/components/Forms/CheckoutForm/CheckoutForm";
+import NextLink from "next/link";
 import Layout from "@/components/Layout/Layout";
-import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
-import { generateItemKey } from "@/utils/generateItemKey";
+import { mapCartStorage } from "@/utils/mapCartStorage";
+import { useStore } from "@/hooks/useStorage";
 
-const Checkout: NextPage = () => {
-
-    const router = useRouter();
-
-    const handleSubmit = () => {
-        router.push("/checkout/shipping");
-    };
-
+const Shipping = () => {
     const { profile } = useGetUser();
     const { cartStorage } = useStore()!;
- 
+
     return (
         <Layout>
             <Flex 
@@ -53,7 +41,7 @@ const Checkout: NextPage = () => {
                         as="h2"
                         fontSize="md"
                         >
-                            Checkout 
+                            Shipping Details
                         </Heading>
                         <Divider 
                         mt={4} 
@@ -91,12 +79,6 @@ const Checkout: NextPage = () => {
                     >
                         Cart > Checkout > Shipping > Payment > Review
                     </Text>
-                    <CheckoutForm 
-                    isDisabled={false}
-                    submit={handleSubmit}
-                    submitText="Continue to shipping"
-                    userEmail={profile?.email ?? null}
-                    />
                     <NextLink 
                     href="/cart" 
                     passHref
@@ -121,4 +103,4 @@ const Checkout: NextPage = () => {
     );
 };
 
-export default Checkout;
+export default Shipping;

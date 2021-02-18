@@ -10,6 +10,7 @@ import { Box,
     useDisclosure } from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { BsArrowBarLeft } from "react-icons/bs";
 
@@ -20,6 +21,7 @@ import { generateItemKey } from "@/utils/generateItemKey";
 
 const CartDrawer = (): React.ReactElement => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const router = useRouter();
 
     const { cartStorage } = useStore()!;
     const { removeCartValue } = useStoreUpdate()!;
@@ -67,6 +69,8 @@ const CartDrawer = (): React.ReactElement => {
 
     return (
         <>
+        {router.pathname !== "/checkout" ? 
+        
         <Button 
         leftIcon={<BsArrowBarLeft />}
         onClick={onOpen}
@@ -76,7 +80,7 @@ const CartDrawer = (): React.ReactElement => {
         variant="ghost"
         >
             Cart
-        </Button>
+        </Button> : null}
         <DrawerTemplate
         header="What's in your bag"
         footer={"@YourCoffeeShop"}
