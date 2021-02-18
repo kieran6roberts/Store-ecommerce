@@ -1,4 +1,4 @@
-import { DocumentNode, useQuery } from "@apollo/client";
+import { DocumentNode, useLazyQuery, useQuery } from "@apollo/client";
 import { Box, Button, SimpleGrid, VStack } from "@chakra-ui/react";
 import * as React from "react";
 
@@ -45,13 +45,14 @@ const Products: React.FC<IProducts> = ({
     const [ offset, setOffset ] = React.useState(10);
 
     const { data, error, fetchMore, loading } = useQuery(query, variables);
-
+    
+ 
     if (error) {
         return <Box h="75vh">Error loading products</Box>;
     }
 
     if (loading) {
-        return <Box h="75vh">Loading prodcuts...</Box>;
+        return <Box h="75vh">Loading products...</Box>;
     }
 
     const mapProducts = data?.products.map((product: IProductQuery) => 
@@ -95,11 +96,14 @@ const Products: React.FC<IProducts> = ({
             </SimpleGrid>
             {loadMore && checkForMoreProducts() ? 
             <Button onClick={() => { 
+                console.log("fetch more");
                 fetchMore({ 
                     variables: { 
                         offset: offset,
                         limit: 10
-                    }
+                    },
+                    fetchPolicy: "cache-first",
+                    ssr: false
                 });
 
                 setOffset(offset + 10);

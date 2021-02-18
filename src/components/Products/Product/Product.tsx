@@ -12,7 +12,6 @@ import * as React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { TiDeleteOutline } from "react-icons/ti";
 
-import Rating from "@/components/Products/Rating/Rating";
 import { useStoreUpdate } from "@/hooks/useStorage";
 import { IProductStorage } from "@/utils/storage";
 
