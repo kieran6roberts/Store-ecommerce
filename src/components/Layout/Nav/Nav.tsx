@@ -151,6 +151,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     />
                     <Button 
                     aria-label="mobile navigation"
+                    colorScheme="blue"
                     fontSize="xs"
                     onClick={onOpen}
                     ml={12}

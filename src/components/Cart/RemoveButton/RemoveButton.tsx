@@ -9,11 +9,14 @@ interface IRemoveButton {
 const RemoveButton: React.FC<IRemoveButton> = ({ callback }) => {
     return (
         <Button 
-        color="red.300"
+        alignSelf="flex-end"
+        color="pink.300"
+        fontWeight="400"
         fontSize="xs"
         onClick={(event) => callback(event)}
         leftIcon={<ImCancelCircle />}
-        variant="outline"
+        size="sm"
+        variant="solid"
         >
             Remove
         </Button>

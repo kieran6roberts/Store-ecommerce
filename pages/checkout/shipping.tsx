@@ -198,7 +198,7 @@ const Shipping = () => {
                 mr={["0px", "0px", "0px", "0.5rem"]}
                 pl={[0, 0, 8]}
                 >
-                    {mapCartStorage(cartStorage)}
+                    {mapCartStorage(cartStorage, true)}
                 </VStack>
             </Flex>
         </Layout>

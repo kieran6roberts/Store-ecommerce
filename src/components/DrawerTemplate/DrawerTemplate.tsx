@@ -45,7 +45,6 @@ const DrawerTemplate = ({
                         {children}
                     </DrawerBody>
                     <DrawerFooter
-                    borderTop="1px solid gray"
                     justifyContent="flex-start"
                     >
                         {footer}
@@ -62,7 +61,9 @@ const DrawerTemplate = ({
                     {children}
                 </DrawerBody>
                 <DrawerFooter 
-                borderTop="1px solid gray"
+                color="gray.800"
+                fontSize="xs"
+                bgGradient="linear(90deg, blue.200, pink.100)"
                 justifyContent="flex-start"
                 >
                     {footer}
