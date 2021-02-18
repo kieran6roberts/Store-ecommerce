@@ -1,16 +1,19 @@
 import { Box,
-    Button, 
+    Button,
     Flex,
     Heading, 
+    IconButton, 
     Link, 
     List, 
     ListItem, 
     Text,    
-    Tooltip } from "@chakra-ui/react";
+    Tooltip,
+    useColorMode } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
+import { FiMoon, FiSun } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCartOutline, IoHelpCircleOutline } from "react-icons/io5";
 
@@ -38,6 +41,7 @@ interface INav {
 const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
     const router = useRouter();
 
+    const { colorMode, toggleColorMode } = useColorMode();
     return (
         <Flex
         direction="column"
@@ -147,6 +151,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     />
                     <Button 
                     aria-label="mobile navigation"
+                    colorScheme="blue"
                     fontSize="xs"
                     onClick={onOpen}
                     ml={12}
@@ -169,7 +174,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
             mb={8}
             py={4}
             >
-                <Box>
+                <Box flex="1">
                     <Text>
                         <NextLink 
                         href="/" 
@@ -183,6 +188,19 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                         </span>
                     </Text>
                 </Box>
+                <Flex 
+                flex="2"
+                justify="center"
+                >
+                    <IconButton 
+                    aria-label={`toggle color theme: ${colorMode}`} 
+                    icon={colorMode === "light" ? <FiSun /> : <FiMoon />}
+                    onClick={toggleColorMode}
+                    size="md"
+                    variant="outline"
+                    
+                    />
+                </Flex>
                 <CurrentUser 
                 user={user} 
                 userLoading={userLoading} 

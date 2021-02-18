@@ -6,7 +6,12 @@ import { Button,
 import * as React from "react";
 import { BsArrowDownShort } from "react-icons/bs";
 
-const Sort = (): React.ReactElement => {
+interface ISort {
+
+}
+
+const Sort = ({ handleAscPrice }): React.ReactElement => {
+   
     return (
         <Menu>
             <MenuButton 
@@ -24,7 +29,12 @@ const Sort = (): React.ReactElement => {
                 <MenuItem>
                     Price: High to Low
                 </MenuItem>
-                <MenuItem>
+                <MenuItem onClick={() => handleAscPrice({
+                        variables: {
+                            sort: "price_ASC",
+                            price: 60
+                        },
+                })}>
                     Price: Low to High
                 </MenuItem>
                 <MenuItem>

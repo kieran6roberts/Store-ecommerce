@@ -10,16 +10,22 @@ import { Box,
     useDisclosure } from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import * as React from "react";
+import { BiShoppingBag } from "react-icons/bi";
 import { BsArrowBarLeft } from "react-icons/bs";
+import { IoCartOutline } from "react-icons/io5";
 
 import RemoveButton from "@/components/Cart/RemoveButton/RemoveButton";
 import DrawerTemplate from "@/components/DrawerTemplate/DrawerTemplate";
 import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 import { generateItemKey } from "@/utils/generateItemKey";
 
+const paths = ["/checkout", "/checkout/shipping", "/checkout/payment"];
+
 const CartDrawer = (): React.ReactElement => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const router = useRouter();
 
     const { cartStorage } = useStore()!;
     const { removeCartValue } = useStoreUpdate()!;
@@ -32,8 +38,8 @@ const CartDrawer = (): React.ReactElement => {
                 key={generateItemKey(product.id)}
                 >
                     <Box 
-                    border="1px solid #241313"
-                    width="50%"
+                    m="auto"
+                    w="80%"
                     >
                         <Image 
                         alt={product.name}
@@ -42,31 +48,40 @@ const CartDrawer = (): React.ReactElement => {
                         width={80} 
                         />
                     </Box>
-                    <Flex justify="space-between">
-                        <Box as="article">
+                    <Flex 
+                    justify="space-between"
+                    mt={2}
+                    >
+                        <Box as="article" mr={4}>
                             <Heading 
                             as="h5"
-                            fontSize="md"
+                            fontSize="sm"
                             mb={2}
                             >
-                                Item
+                                {product.name}
                             </Heading>
                             <Text fontSize="xs">
-                                {product.name}
+                                {product.category}
                             </Text>
                         </Box>
-                        <RemoveButton callback={(event) => removeCartValue(event)}/>
+                        <RemoveButton 
+                        callback={(event) => removeCartValue(event)}/>
                     </Flex>
-                    <Divider my={8} />
+                    <Divider 
+                    bg="pink.100"
+                    my={8} 
+                    variant="solid"
+                    />
                 </ListItem>
             );
         } else {
-            return <Text>No Items in cart</Text>;
+            return <Text fontSize="sm" color="pink.200">Empty Cart</Text>;
         }
     };
 
     return (
         <>
+        {!paths.includes(router.pathname) ? 
         <Button 
         leftIcon={<BsArrowBarLeft />}
         onClick={onOpen}
@@ -76,13 +91,12 @@ const CartDrawer = (): React.ReactElement => {
         variant="ghost"
         >
             Cart
-        </Button>
+        </Button> : null}
         <DrawerTemplate
         header="What's in your bag"
-        footer={"@YourCoffeeShop"}
+        footer={"Next.js e-commerce"}
         isOpen={isOpen}
         onClose={onClose}
-        overlay={false}
         size="xs"
         >
             <NextLink 
@@ -90,12 +104,24 @@ const CartDrawer = (): React.ReactElement => {
             passHref
             >
                 <Link 
-                border="1px solid black"
-                display="block"
-                p={2}
+                alignItems="center"
+                display="flex"
+                py={2}
                 w="max-content"
+                _hover={{
+                    color: "pink.300"
+                }}
                 >
-                    To the cart
+                    <Box 
+                    alignSelf="center"
+                    bgGradient="linear(45deg, blue.100, pink.100)"
+                    display="inline-flex"
+                    mr={2}
+                    p={1}
+                    >
+                          <BiShoppingBag style={{ color: "black" }} />
+                    </Box>
+                   To the cart
                 </Link>
             </NextLink>
             <Divider my={4} />

@@ -34,6 +34,10 @@ const Home: NextPage = () => {
         <Products 
         loadMore={false} 
         query={PRODUCT_NEW} 
+        variables={{
+          ssr: false,
+          fetchPolicy: "no-cache"
+        }}
         />
         <NextLink 
         href="/store" 

@@ -9,7 +9,7 @@ import { usersValidation } from "@/utils/validation/users";
 
 interface ICheckoutForm {
     handleDisabled?: (value: React.SetStateAction<boolean>) => void;
-    isDisabled?: boolean;
+    isDisabled: boolean;
     submit: () => unknown;
     submitText: string;
     userEmail?: string;
@@ -42,7 +42,7 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
 
     return (
     <form 
-    onSubmit={(event) => isDisabled ? handleSubmit(event) : null}
+    onSubmit={(event) => handleSubmit(event)}
     style={{ width: "100%" }}
     >
         <VStack spacing={4}>
@@ -113,7 +113,6 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
             isDisabled={isDisabled}
             mt={8}
             p={6}
-            onClick={() => handleDisabled(!isDisabled)} 
             size="sm"
             type="submit"
             variant="outline">

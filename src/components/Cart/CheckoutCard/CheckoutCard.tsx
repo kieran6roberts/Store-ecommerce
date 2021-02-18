@@ -17,11 +17,10 @@ const CheckoutCard = (): React.ReactElement => {
         const itemPriceElements = Array.from(document.querySelectorAll(".cart-item__total"));
 
         const handleUpdateTotal = (event: React.MouseEvent) => {
-            if (!(event.target as HTMLButtonElement).classList.contains("qty-change")) {
-                return;
+            if ((event.target as HTMLButtonElement).classList.contains("qty-change")
+            || (event.target as HTMLButtonElement).classList.contains("cart-item--remove")) {
+                handleTotalCalculation(itemPriceElements);
             }
-
-            handleTotalCalculation(itemPriceElements);
         };
         
         window.addEventListener("click", handleUpdateTotal);
@@ -58,7 +57,7 @@ const CheckoutCard = (): React.ReactElement => {
             w="full"
             >
                 <Text>
-                    total:
+                    Total:
                 </Text>
                 <Text 
                 id="cart-total"

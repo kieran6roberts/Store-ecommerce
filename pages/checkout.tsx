@@ -4,11 +4,14 @@ import { Box,
     Heading, 
     Link, 
     StackDivider, 
+    Text,
     VStack } from "@chakra-ui/react";
 import { NextPage } from "next";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import * as React from "react";
 
+import { mapCartStorage } from "@/utils/mapCartStorage";
 import CartItem from "@/components/Cart/CartItem/CartItem";
 import CheckoutForm from "@/components/Forms/CheckoutForm/CheckoutForm";
 import Layout from "@/components/Layout/Layout";
@@ -18,31 +21,20 @@ import { generateItemKey } from "@/utils/generateItemKey";
 
 const Checkout: NextPage = () => {
 
-    const handleSubmit = () => console.log("checkout submit!");
+    const router = useRouter();
+
+    const handleSubmit = () => {
+        router.push("/checkout/shipping");
+    };
 
     const { profile } = useGetUser();
     const { cartStorage } = useStore()!;
-
-    const mapCartProductsToDOM = () => cartStorage!.map(product => 
-        <li 
-        id={product.id}
-        key={`${generateItemKey(product.id)}`}>
-          <CartItem 
-          category={product.category}
-          description={product.description}
-          hideEdit={true}
-          id={product.id}
-          name={product.name}
-          price={product.price}
-          />
-        </li>
-        );
  
     return (
         <Layout>
             <Flex 
             as="section"
-            flexDirection={["column", "column", "row"]}
+            flexDirection={["column", "column", "column", "row"]}
             minHeight="100vh"
             m={4}
             >
@@ -59,7 +51,7 @@ const Checkout: NextPage = () => {
                     >
                         <Heading 
                         as="h2"
-                        fontSize="sm"
+                        fontSize="md"
                         >
                             Checkout 
                         </Heading>
@@ -69,11 +61,36 @@ const Checkout: NextPage = () => {
                         />
                         <Heading 
                         as="h3"
-                        fontSize="md"
+                        fontSize="sm"
                         >
                             Next.js e-commerce
                         </Heading>
                     </Box>
+                    {!profile ? 
+                    <Text 
+                    fontSize="xs"
+                    mb={6}
+                    textAlign="right"
+                    w="full"
+                    >
+                        Already have an account?
+                        <NextLink 
+                        href="/api/login" 
+                        passHref
+                        >
+                        <Link display="inline-block" ml={2}>
+                            Sign in
+                        </Link>
+                    </NextLink>
+                    </Text> : null}
+                    <Text 
+                    fontSize="xs"
+                    mb={8}
+                    textAlign="center"
+                    w="full"
+                    >
+                        Cart > Checkout > Shipping > Payment > Review
+                    </Text>
                     <CheckoutForm 
                     isDisabled={false}
                     submit={handleSubmit}
@@ -97,7 +114,7 @@ const Checkout: NextPage = () => {
                 mr={["0px", "0px", "0px", "0.5rem"]}
                 pl={[0, 0, 8]}
                 >
-                    {mapCartProductsToDOM()}
+                    {mapCartStorage(cartStorage, true)}
                 </VStack>
             </Flex>
         </Layout>

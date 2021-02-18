@@ -3,6 +3,7 @@ import { Box, Button, SimpleGrid, VStack } from "@chakra-ui/react";
 import * as React from "react";
 
 import Product from "@/components/Products/Product/Product";
+import { generateItemKey } from "@/utils/generateItemKey";
 
 
 export interface IProductQuery {
@@ -45,20 +46,21 @@ const Products: React.FC<IProducts> = ({
     const [ offset, setOffset ] = React.useState(10);
 
     const { data, error, fetchMore, loading } = useQuery(query, variables);
-
+    
+ 
     if (error) {
         return <Box h="75vh">Error loading products</Box>;
     }
 
     if (loading) {
-        return <Box h="75vh">Loading prodcuts...</Box>;
+        return <Box h="75vh">Loading products...</Box>;
     }
 
-    const mapProducts = data?.products.map((product: IProductQuery) => 
+    const mapProducts = () => data?.products.map((product: IProductQuery) => 
             <li 
             className="product"
             id={product.id}
-            key={product.id}
+            key={generateItemKey(product.id)}
             >
                 <Product
                 category={product.category.name}
@@ -91,7 +93,7 @@ const Products: React.FC<IProducts> = ({
             listStyleType="none"
             spacing="3rem"
             >
-                {mapProducts ?? null}
+                {mapProducts() ?? null}
             </SimpleGrid>
             {loadMore && checkForMoreProducts() ? 
             <Button onClick={() => { 
@@ -99,7 +101,9 @@ const Products: React.FC<IProducts> = ({
                     variables: { 
                         offset: offset,
                         limit: 10
-                    }
+                    },
+                    fetchPolicy: "cache-first",
+                    ssr: false
                 });
 
                 setOffset(offset + 10);
