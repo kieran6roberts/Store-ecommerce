@@ -19,7 +19,7 @@ const CustomMenuButton: React.FC<IMenuButton> = ({ title, children}) =>
         size="sm"
         w="10rem"
         >
-            {title ?? "Error"}
+            {title}
         </MenuButton>
         <MenuList>
             {children}

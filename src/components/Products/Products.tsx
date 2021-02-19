@@ -62,6 +62,7 @@ const Products: React.FC<IProducts> = ({
     const { products: lazySortData } = products;
 
     const UI = lazySortData ?? cacheFirstData;
+    console.log(UI)
 
     const checkForMoreProducts = () => {
         const productElements = document.querySelectorAll(".product");
@@ -83,7 +84,7 @@ const Products: React.FC<IProducts> = ({
             listStyleType="none"
             spacing="3rem"
             >
-                {UI.map(product => 
+                {UI.map((product) => 
                     <li 
                     className="product"
                     id={product.id}
@@ -93,7 +94,7 @@ const Products: React.FC<IProducts> = ({
                         category={product.category.name}
                         description={product.description.text}
                         id={product.id}
-                        image={product.image}
+                        image={product.images[0]?.fileName}
                         name={product.name}
                         price={product.price}
                         />

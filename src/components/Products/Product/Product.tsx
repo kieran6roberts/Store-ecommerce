@@ -4,7 +4,9 @@ import { Box,
     IconButton, 
     Link, 
     Text,
-    Tooltip } from "@chakra-ui/react";
+    Tooltip,
+    useColorMode,
+    useColorModeValue } from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -18,7 +20,7 @@ import { IProductStorage } from "@/utils/storage";
 const Product: React.FC<IProductStorage> = ({ 
     category,
     description,
-    image = "/img.webp", 
+    image,
     id,
     name, 
     price,
@@ -26,6 +28,7 @@ const Product: React.FC<IProductStorage> = ({
  }) => {
 
     const router = useRouter();
+    const bg = useColorModeValue("gray.50", "pink.50");
 
     const { addCartValue, toggleSavedValue } = useStoreUpdate()!;
 
@@ -35,8 +38,7 @@ const Product: React.FC<IProductStorage> = ({
         image, 
         id,
         name, 
-        price: price * quantity,
-        quantity
+        price
     };
 
     const addProductToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -46,8 +48,10 @@ const Product: React.FC<IProductStorage> = ({
 
     return (
         <Flex
-        flexDirection="column"
         alignItems="flex-end"
+        borderRadius="md"
+        bg={bg}
+        flexDirection="column"
         fontSize="sm"
         h="380px"
         overflow="hidden"
@@ -65,10 +69,13 @@ const Product: React.FC<IProductStorage> = ({
                 <span>
                     <IconButton 
                     aria-label="save item"
+                    colorScheme="pink"
                     onClick={() => toggleSavedValue("saved-products", product)}
                     icon={router.pathname === "/saved-products" ?
                     <TiDeleteOutline /> 
-                    : <AiOutlineHeart /> } />
+                    : <AiOutlineHeart /> } 
+                    variant="ghost"
+                    />
                 </span>
             </Tooltip>
             <NextLink 
@@ -77,18 +84,16 @@ const Product: React.FC<IProductStorage> = ({
             >
                 <Link 
                 height="60%"
-                mb={2}
                 w="100%"
                 >
                     <Box 
-                    border="1px solid black"
                     h="100%"
                     mt={2}
                     w="100%"
                     >   
                         <Image
                         alt={name}
-                        src={image}
+                        src={`/${image}`}
                         height={200}
                         width={300}
                         />
@@ -96,7 +101,6 @@ const Product: React.FC<IProductStorage> = ({
                 </Link>
             </NextLink>
             <Box 
-            borderTop="1px solid gray"
             position="absolute"
             top="50%"
             left="0%"
@@ -104,10 +108,12 @@ const Product: React.FC<IProductStorage> = ({
             h="100%"
             w="100%"
             zIndex="-10"
+            />
+            <Text 
+            fontSize="md"
+            textTransform="uppercase"
+            mb={4}
             >
-
-            </Box>
-            <Text my={4}>
                 {name}
             </Text>
             <Flex 
@@ -127,7 +133,7 @@ const Product: React.FC<IProductStorage> = ({
                 <Text 
                 fontWeight="bold"
                 >
-                    £{price * quantity}
+                    £{price}
                 </Text>
             </Flex>
         </Flex>

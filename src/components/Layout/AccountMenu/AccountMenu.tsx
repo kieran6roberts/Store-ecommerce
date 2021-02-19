@@ -20,7 +20,7 @@ const AccountMenu: React.FC<IAccountMenu> = ({ display, user }) => {
         <Menu>
             <MenuButton 
             as={Button} 
-            colorScheme="blue"
+            colorScheme="pink"
             display={display}
             fontSize="xs"
             rightIcon={<IoChevronDownOutline />}

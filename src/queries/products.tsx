@@ -9,6 +9,9 @@ export const PRODUCT_DATA = gql`
             text
         }
         id
+        images {
+            fileName
+        }
         name
         price
         __typename
