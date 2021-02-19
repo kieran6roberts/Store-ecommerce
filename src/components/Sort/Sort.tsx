@@ -1,3 +1,4 @@
+import { PRODUCT_SORT } from "@/queries/products";
 import { Button, 
     Menu,
     MenuButton, 
@@ -23,25 +24,29 @@ const Sort = ({ handleAscPrice }): React.ReactElement => {
                 Sort
             </MenuButton>
             <MenuList>
-                <MenuItem>
+                <MenuItem onClick={() => 
+                    handleAscPrice({
+                        variables: {
+                            sort: "publishedAt_DESC",
+                        }
+                })}>
                     New
                 </MenuItem>
-                <MenuItem>
+                <MenuItem onClick={() => 
+                    handleAscPrice({
+                        variables: {
+                            sort: "price_DESC",
+                        },
+                })}>
                     Price: High to Low
                 </MenuItem>
-                <MenuItem onClick={() => handleAscPrice({
+                <MenuItem onClick={() => 
+                    handleAscPrice({
                         variables: {
                             sort: "price_ASC",
-                            price: 60
                         },
                 })}>
                     Price: Low to High
-                </MenuItem>
-                <MenuItem>
-                    Rating: High to Low
-                </MenuItem>
-                <MenuItem>
-                    Rating: Low to High
                 </MenuItem>
             </MenuList>
         </Menu>

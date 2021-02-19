@@ -7,17 +7,20 @@ import Filter from "@/components/Filter/Filter";
 import Layout from "@/components/Layout/Layout";
 import Products from "@/components/Products/Products";
 import Sort from "@/components/Sort/Sort";
-import { PRODUCT_ALL, PRODUCT_NEW } from "@/queries/products";
+import { PRODUCT_ALL, PRODUCT_SORT } from "@/queries/products";
 
 const Store: NextPage = () => {
 
-  const [ sortProducts, setSortProducts ] = React.useState({});
+  const [ sortProducts, setSortProducts ] = React.useState([]);
 
-  const [ handleAscPrice, { loading: sortLoading, data: sortData }] = useLazyQuery(PRODUCT_NEW, {
-    onCompleted: data => setSortProducts(data)
+  const [ handleAscPrice, { loading, data }] = useLazyQuery(PRODUCT_SORT, {
+    fetchPolicy: "no-cache",
+    onCompleted: data => setSortProducts(data),
   });
 
-  console.log(sortProducts)
+  React.useEffect(() => console.log("Sort update"), [ sortProducts ]);
+
+  console.log(sortProducts);
 
   return (
     <Layout>
@@ -29,6 +32,7 @@ const Store: NextPage = () => {
         <Filter />
       </Flex>
       <Products 
+      products={sortProducts}
       loadMore={true} 
       query={PRODUCT_ALL} 
       variables={{ 

@@ -21,6 +21,7 @@ export interface IProductQuery {
 }
 
 interface IProducts {
+    products?: IProductQuery[];
     loadMore: boolean;
     query: DocumentNode;
     variables?: {
@@ -39,6 +40,7 @@ export interface IMouseEventOnHTMLElement extends React.MouseEvent {
 }
 
 const Products: React.FC<IProducts> = ({ 
+    products,
     loadMore,
     query, 
     variables = undefined }) => {
@@ -56,7 +58,12 @@ const Products: React.FC<IProducts> = ({
         return <Box h="75vh">Loading products...</Box>;
     }
 
-    const mapProducts = () => data?.products.map((product: IProductQuery) => 
+     const { products: prodData } = data;
+     const { products: test } = products;
+
+    const UI = test ?? prodData;
+
+    const mapProductsToDOM = (data: IProductQuery[]) => data!.map((product: IProductQuery) => 
             <li 
             className="product"
             id={product.id}
@@ -93,7 +100,22 @@ const Products: React.FC<IProducts> = ({
             listStyleType="none"
             spacing="3rem"
             >
-                {mapProducts() ?? null}
+                {UI.map(product => 
+                    <li 
+                    className="product"
+                    id={product.id}
+                    key={generateItemKey(product.id)}
+                    >
+                        <Product
+                        category={product.category.name}
+                        description={product.description.text}
+                        id={product.id}
+                        image={product.image}
+                        name={product.name}
+                        price={product.price}
+                        />
+                    </li>
+                )}
             </SimpleGrid>
             {loadMore && checkForMoreProducts() ? 
             <Button onClick={() => { 

@@ -62,7 +62,7 @@ export const PRODUCT_STORAGE = gql`
 
 export const PRODUCT_SORT = gql`
     query ProductSort($sort: ProductOrderByInput!) {
-        products(orderBy: price_ASC) {
+        products(orderBy: $sort) {
             ...ProductParts
         }
     }
