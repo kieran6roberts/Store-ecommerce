@@ -58,27 +58,10 @@ const Products: React.FC<IProducts> = ({
         return <Box h="75vh">Loading products...</Box>;
     }
 
-     const { products: prodData } = data;
-     const { products: test } = products;
+    const { products: cacheFirstData } = data;
+    const { products: lazySortData } = products;
 
-    const UI = test ?? prodData;
-
-    const mapProductsToDOM = (data: IProductQuery[]) => data!.map((product: IProductQuery) => 
-            <li 
-            className="product"
-            id={product.id}
-            key={generateItemKey(product.id)}
-            >
-                <Product
-                category={product.category.name}
-                description={product.description.text}
-                id={product.id}
-                image={product.image}
-                name={product.name}
-                price={product.price}
-                />
-            </li>
-    );
+    const UI = lazySortData ?? cacheFirstData;
 
     const checkForMoreProducts = () => {
         const productElements = document.querySelectorAll(".product");

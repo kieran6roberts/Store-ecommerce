@@ -1,4 +1,4 @@
-import { PRODUCT_SORT } from "@/queries/products";
+import { QueryLazyOptions } from "@apollo/client";
 import { Button, 
     Menu,
     MenuButton, 
@@ -8,10 +8,10 @@ import * as React from "react";
 import { BsArrowDownShort } from "react-icons/bs";
 
 interface ISort {
-
+    handleAscPrice: (options?: QueryLazyOptions<Record<string, any>> | undefined) => void;
 }
 
-const Sort = ({ handleAscPrice }): React.ReactElement => {
+const Sort: React.FC<ISort> = ({ handleAscPrice }): React.ReactElement => {
    
     return (
         <Menu>
@@ -19,6 +19,7 @@ const Sort = ({ handleAscPrice }): React.ReactElement => {
             as={Button}
             mr={4}
             rightIcon={<BsArrowDownShort />}
+            size="sm"
             w="10rem"
             >
                 Sort
@@ -38,7 +39,7 @@ const Sort = ({ handleAscPrice }): React.ReactElement => {
                             sort: "price_DESC",
                         },
                 })}>
-                    Price: High to Low
+                    All: Price: High to Low
                 </MenuItem>
                 <MenuItem onClick={() => 
                     handleAscPrice({
@@ -46,7 +47,7 @@ const Sort = ({ handleAscPrice }): React.ReactElement => {
                             sort: "price_ASC",
                         },
                 })}>
-                    Price: Low to High
+                    All: Price: Low to High
                 </MenuItem>
             </MenuList>
         </Menu>

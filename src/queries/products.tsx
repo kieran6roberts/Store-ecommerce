@@ -21,7 +21,6 @@ export const PRODUCT_NAMES = gql`
             name
         }
     }
-    ${PRODUCT_DATA}
 `;
 
 export const PRODUCT_INFO = gql`
@@ -60,9 +59,37 @@ export const PRODUCT_STORAGE = gql`
     ${PRODUCT_DATA}
 `;
 
+export const PRODUCT_CATEGORIES = gql`
+    query GetProductCategories {
+        categories {
+            name
+        }
+    }
+`;
+
 export const PRODUCT_SORT = gql`
     query ProductSort($sort: ProductOrderByInput!) {
         products(orderBy: $sort) {
+            ...ProductParts
+        }
+    }
+    ${PRODUCT_DATA}
+`;
+
+export const CATEGORY_SORT = gql`
+    query CategorySort($sort: CategoryOrderByInput) {
+        categories(orderBy: $sort) {
+            products {
+                ...ProductParts
+            }
+        }
+    }
+    ${PRODUCT_DATA}
+`;
+
+export const GET_CATEGORY = gql`
+    query getP($name: String!) {
+        products(where: {category: {name: $name}}) {
             ...ProductParts
         }
     }

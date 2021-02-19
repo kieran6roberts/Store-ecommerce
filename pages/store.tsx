@@ -1,4 +1,4 @@
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { Flex } from "@chakra-ui/react";
 import { NextPage } from "next";
 import * as React from "react";
@@ -7,20 +7,30 @@ import Filter from "@/components/Filter/Filter";
 import Layout from "@/components/Layout/Layout";
 import Products from "@/components/Products/Products";
 import Sort from "@/components/Sort/Sort";
-import { PRODUCT_ALL, PRODUCT_SORT } from "@/queries/products";
-
+import { GET_CATEGORY,
+  PRODUCT_ALL, 
+  PRODUCT_CATEGORIES, 
+  PRODUCT_SORT } from "@/queries/products";
+ 
 const Store: NextPage = () => {
 
   const [ sortProducts, setSortProducts ] = React.useState([]);
 
-  const [ handleAscPrice, { loading, data }] = useLazyQuery(PRODUCT_SORT, {
+  const { data: categories, error, loading: loadingCategories } = useQuery(PRODUCT_CATEGORIES);
+
+  const [ handleAscPrice, { loading: sortError }] = useLazyQuery(PRODUCT_SORT, {
+    fetchPolicy: "no-cache",
+    onCompleted: data => setSortProducts(data),
+  });
+  
+  const [ handleCategoryFilter, { loading: filterLoading }] = useLazyQuery(GET_CATEGORY, {
     fetchPolicy: "no-cache",
     onCompleted: data => setSortProducts(data),
   });
 
-  React.useEffect(() => console.log("Sort update"), [ sortProducts ]);
-
-  console.log(sortProducts);
+  if (loadingCategories) {
+    return <Flex>Loading Products</Flex>;
+  }
 
   return (
     <Layout>
@@ -29,7 +39,7 @@ const Store: NextPage = () => {
       mb={12}
       >
         <Sort handleAscPrice={handleAscPrice} />
-        <Filter />
+        <Filter categories={categories ?? []} handleCategoryFilter={handleCategoryFilter} />
       </Flex>
       <Products 
       products={sortProducts}
