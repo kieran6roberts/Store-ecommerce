@@ -45,7 +45,7 @@ const CartDrawer = (): React.ReactElement => {
                         alt={product.name}
                         height={100}
                         src={`/${product.image}`}
-                        width={100} 
+                        width={130} 
                         />
                     </Box>
                     <Flex 

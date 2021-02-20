@@ -47,13 +47,28 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
         <Flex
         direction="column"
         position="relative"
-        pt={[2, 3, 4, 6]}
         mb={6}
         >
+            <Flex 
+            align="center"
+            bgGradient="linear(45deg, blue.300, blue.400)"
+            color="white"
+            justify="center"
+            h="2rem" 
+            >
+                <Text 
+                fontSize="sm"
+                fontWeight="700"
+                textAlign="center"
+                >
+                    Welcome! Free shipping for all orders over £29.99 
+                </Text>
+            </Flex>
             <Flex 
             as="nav"
             align="center"
             justify="space-between"
+            pt={[2, 3, 4, 6]}
             px={[2, 3, 4, 6]}
             >
                 <Heading 

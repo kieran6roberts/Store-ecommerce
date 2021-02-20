@@ -20,15 +20,7 @@ const Home: NextPage = () => {
     <Layout>
       <VStack spacing="24">
         <Hero />
-        <SimpleGrid 
-        columns={[]} 
-        spacing=""
-        >
-          
-        </SimpleGrid>
-        <Heading
-        as="h3"
-        >
+        <Heading as="h3">
           Newest Products
         </Heading>
         <Products 
