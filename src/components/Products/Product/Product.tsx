@@ -1,10 +1,13 @@
-import { Box, 
+import { 
+    Box, 
     Button,
     Flex, 
     IconButton, 
     Link, 
     Text,
-    Tooltip } from "@chakra-ui/react";
+    Tooltip,
+    useColorModeValue, 
+    VStack} from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -18,15 +21,15 @@ import { IProductStorage } from "@/utils/storage";
 const Product: React.FC<IProductStorage> = ({ 
     category,
     description,
-    image = "/img.webp", 
+    image,
     id,
     name, 
-    price,
-    quantity = 1
+    price
  }) => {
 
     const router = useRouter();
 
+    const [ isSaved, setIsSaved ] = React.useState<boolean>(false);
     const { addCartValue, toggleSavedValue } = useStoreUpdate()!;
 
     const product = {
@@ -35,8 +38,7 @@ const Product: React.FC<IProductStorage> = ({
         image, 
         id,
         name, 
-        price: price * quantity,
-        quantity
+        price
     };
 
     const addProductToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -44,31 +46,57 @@ const Product: React.FC<IProductStorage> = ({
         addCartValue(product);
     };
 
+
     return (
         <Flex
-        flexDirection="column"
         alignItems="flex-end"
+        borderRadius="md"
+        bg={useColorModeValue("gray.50", "gray.900")}
+        color={useColorModeValue("gray.800", "gray.50")}
+        flexDirection="column"
         fontSize="sm"
         h="380px"
         overflow="hidden"
         position="relative"
-        p={2}
         shadow="base"
         w="300px"
         >
             <Tooltip
-            label={router.pathname === "/saved-products" ? "remove product" : "save product"}
+            label={isSaved ? "Remove Save" : "Save"}
             fontSize="xs"
             hasArrow
-            placement="top"
+            placement="top-end"
             >
                 <span>
                     <IconButton 
                     aria-label="save item"
-                    onClick={() => toggleSavedValue("saved-products", product)}
+                    borderRadius="none"
+                    bg="gray.100"
+                    colorScheme="pink"
+                    onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                        const curTarget = event.currentTarget as HTMLButtonElement;
+
+                        setIsSaved(!isSaved);
+
+                        if (!isSaved) {
+                            curTarget.firstElementChild?.setAttribute("fill", "white");
+                            curTarget.style.backgroundColor = "rgb(184, 50, 128)";
+                        } else {
+                            curTarget.firstElementChild?.setAttribute("fill", "rgb(184, 50, 128)");
+                            curTarget.style.backgroundColor = "#EDF2F7";
+                        }
+
+                        toggleSavedValue("saved-products", product);
+                    }}
                     icon={router.pathname === "/saved-products" ?
                     <TiDeleteOutline /> 
-                    : <AiOutlineHeart /> } />
+                    : <AiOutlineHeart /> } 
+                    position="absolute"
+                    top="0"
+                    right="0"
+                    variant="ghost"
+                    zIndex="10"
+                    />
                 </span>
             </Tooltip>
             <NextLink 
@@ -76,60 +104,57 @@ const Product: React.FC<IProductStorage> = ({
             passHref
             >
                 <Link 
-                height="60%"
-                mb={2}
+                height="55%"
                 w="100%"
                 >
                     <Box 
-                    border="1px solid black"
                     h="100%"
-                    mt={2}
                     w="100%"
                     >   
                         <Image
                         alt={name}
-                        src={image}
+                        src={`/${image}`}
                         height={200}
                         width={300}
                         />
                     </Box>
                 </Link>
             </NextLink>
-            <Box 
-            borderTop="1px solid gray"
-            position="absolute"
-            top="50%"
-            left="0%"
-            transform="skewY(20deg)"
-            h="100%"
-            w="100%"
-            zIndex="-10"
-            >
-
-            </Box>
-            <Text my={4}>
-                {name}
-            </Text>
-            <Flex 
-            alignItems="center"
-            justifyContent="space-between"
-            mb={2}
+            <VStack 
+            h="full"
             px={2}
-            width="100%"
+            pb={3}
+            textAlign="center"
+            w="full"
             >
+                <Text 
+                fontSize="md"
+                textTransform="uppercase"
+                >
+                    {name}
+                </Text>
+                <Text 
+                fontSize="xs"
+                color={useColorModeValue("gray.500", "gray.200")}
+                >
+                    {description}
+                </Text>
+                <Text 
+                fontWeight="bold"
+                mb="auto"
+                textAlign="center"
+                >
+                    £{price}
+                </Text>
                 <Button 
-                colorScheme="blue"
+                colorScheme="pink"
+                id={`btn-${product.id}`}
                 onClick={addProductToCart}
                 size="sm"
                 >
-                    Add to Cart 
+                    + Add to Cart 
                 </Button>
-                <Text 
-                fontWeight="bold"
-                >
-                    £{price * quantity}
-                </Text>
-            </Flex>
+            </VStack>
         </Flex>
     );
 };

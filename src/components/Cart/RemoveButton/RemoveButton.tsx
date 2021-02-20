@@ -9,7 +9,6 @@ interface IRemoveButton {
 const RemoveButton: React.FC<IRemoveButton> = ({ callback }) => {
     return (
         <Button 
-        alignSelf="flex-end"
         color="pink.300"
         fontWeight="400"
         fontSize="xs"
@@ -17,6 +16,7 @@ const RemoveButton: React.FC<IRemoveButton> = ({ callback }) => {
         leftIcon={<ImCancelCircle />}
         size="sm"
         variant="solid"
+        w="5rem"
         >
             Remove
         </Button>

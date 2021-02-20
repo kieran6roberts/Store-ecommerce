@@ -1,4 +1,5 @@
-import { Box,
+import { 
+    Box,
     Button,
     Divider,
     Flex,
@@ -14,7 +15,6 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { BiShoppingBag } from "react-icons/bi";
 import { BsArrowBarLeft } from "react-icons/bs";
-import { IoCartOutline } from "react-icons/io5";
 
 import RemoveButton from "@/components/Cart/RemoveButton/RemoveButton";
 import DrawerTemplate from "@/components/DrawerTemplate/DrawerTemplate";
@@ -39,13 +39,13 @@ const CartDrawer = (): React.ReactElement => {
                 >
                     <Box 
                     m="auto"
-                    w="80%"
+                    w="100%"
                     >
                         <Image 
                         alt={product.name}
-                        height={80}
-                        src="/images/img.png"
-                        width={80} 
+                        height={100}
+                        src={`/${product.image}`}
+                        width={130} 
                         />
                     </Box>
                     <Flex 
@@ -87,16 +87,17 @@ const CartDrawer = (): React.ReactElement => {
         onClick={onOpen}
         w="5rem"
         ml="auto"
-        mr={4}
+        mr={8}
         variant="ghost"
         >
             Cart
         </Button> : null}
         <DrawerTemplate
         header="What's in your bag"
-        footer={"Next.js e-commerce"}
+        footer="Next.js e-commerce"
         isOpen={isOpen}
         onClose={onClose}
+        placement="right"
         size="xs"
         >
             <NextLink 

@@ -14,13 +14,17 @@ export interface IProductQuery {
         text: string;
     };
     id: string;
-    image: string;
+    images: {
+        fileName: string;
+        __typename: string;
+    }[];
     name: string;
     price: number;
     __typename?: string;
 }
 
 interface IProducts {
+    sortProducts?: { products: IProductQuery[] } | [];
     loadMore: boolean;
     query: DocumentNode;
     variables?: {
@@ -39,6 +43,7 @@ export interface IMouseEventOnHTMLElement extends React.MouseEvent {
 }
 
 const Products: React.FC<IProducts> = ({ 
+    sortProducts,
     loadMore,
     query, 
     variables = undefined }) => {
@@ -56,22 +61,9 @@ const Products: React.FC<IProducts> = ({
         return <Box h="75vh">Loading products...</Box>;
     }
 
-    const mapProducts = () => data?.products.map((product: IProductQuery) => 
-            <li 
-            className="product"
-            id={product.id}
-            key={generateItemKey(product.id)}
-            >
-                <Product
-                category={product.category.name}
-                description={product.description.text}
-                id={product.id}
-                image={product.image}
-                name={product.name}
-                price={product.price}
-                />
-            </li>
-    );
+    const { products: cacheFirstData } = data;
+
+    const productArr = sortProducts?.products ?? cacheFirstData;
 
     const checkForMoreProducts = () => {
         const productElements = document.querySelectorAll(".product");
@@ -93,7 +85,22 @@ const Products: React.FC<IProducts> = ({
             listStyleType="none"
             spacing="3rem"
             >
-                {mapProducts() ?? null}
+                {productArr.map((product: IProductQuery) => 
+                    <li 
+                    className="product"
+                    id={product.id}
+                    key={generateItemKey(product.id)}
+                    >
+                        <Product
+                        category={product.category.name}
+                        description={product.description.text}
+                        id={product.id}
+                        image={product.images[0]?.fileName}
+                        name={product.name}
+                        price={product.price}
+                        />
+                    </li>
+                )}
             </SimpleGrid>
             {loadMore && checkForMoreProducts() ? 
             <Button onClick={() => { 

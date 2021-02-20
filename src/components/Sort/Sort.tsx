@@ -1,3 +1,4 @@
+import { QueryLazyOptions } from "@apollo/client";
 import { Button, 
     Menu,
     MenuButton, 
@@ -7,10 +8,10 @@ import * as React from "react";
 import { BsArrowDownShort } from "react-icons/bs";
 
 interface ISort {
-
+    handleAscPrice: (options?: QueryLazyOptions<Record<string, any>> | undefined) => void;
 }
 
-const Sort = ({ handleAscPrice }): React.ReactElement => {
+const Sort: React.FC<ISort> = ({ handleAscPrice }): React.ReactElement => {
    
     return (
         <Menu>
@@ -18,30 +19,35 @@ const Sort = ({ handleAscPrice }): React.ReactElement => {
             as={Button}
             mr={4}
             rightIcon={<BsArrowDownShort />}
+            size="sm"
             w="10rem"
             >
                 Sort
             </MenuButton>
             <MenuList>
-                <MenuItem>
+                <MenuItem onClick={() => 
+                    handleAscPrice({
+                        variables: {
+                            sort: "publishedAt_DESC",
+                        }
+                })}>
                     New
                 </MenuItem>
-                <MenuItem>
-                    Price: High to Low
-                </MenuItem>
-                <MenuItem onClick={() => handleAscPrice({
+                <MenuItem onClick={() => 
+                    handleAscPrice({
                         variables: {
-                            sort: "price_ASC",
-                            price: 60
+                            sort: "price_DESC",
                         },
                 })}>
-                    Price: Low to High
+                    All: Price: High to Low
                 </MenuItem>
-                <MenuItem>
-                    Rating: High to Low
-                </MenuItem>
-                <MenuItem>
-                    Rating: Low to High
+                <MenuItem onClick={() => 
+                    handleAscPrice({
+                        variables: {
+                            sort: "price_ASC",
+                        },
+                })}>
+                    All: Price: Low to High
                 </MenuItem>
             </MenuList>
         </Menu>

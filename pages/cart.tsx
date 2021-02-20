@@ -40,7 +40,7 @@ const Cart: NextPage = () => {
         >
           <Stack 
           as="ul"
-          divider={<StackDivider borderColor="blue.200" />}
+          divider={<StackDivider borderColor="pink.50" />}
           flex="3"
           listStyleType="none"
           mr={["0px", "0px", "0px", "0.5rem"]}

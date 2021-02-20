@@ -3,19 +3,65 @@ import { Box,
     Heading, 
     Link, 
     List, 
-    ListItem } from "@chakra-ui/react";
+    ListItem, 
+    SimpleGrid,
+    useColorModeValue } from "@chakra-ui/react";
+import NextImage from "next/image";
 import NextLink from "next/link";
 import * as React from "react";
 
 const Hero = (): React.ReactElement => {
  return (
-    <Box>
+    <Box 
+    as="header" 
+    position="relative"
+    >
         <Center 
         as="article"
         display="flex"
         flexDirection="column"
-        h="45vh"
+        h="55vh"
         >
+        <SimpleGrid 
+        bottom="0"
+        columns={[2, 2, 2, 3]}
+        left="0"
+        position="absolute"
+        right="0"
+        spacing={8}
+        top="0"
+        zIndex="-10"
+        >
+            <Box bg={useColorModeValue("white", "gray.800")} />
+            <Box bg={useColorModeValue("white", "gray.800")} />
+            <Box bg={useColorModeValue("white", "gray.800")} />
+            <Box 
+            bg={useColorModeValue("pink.50", "gray.700")}
+            position="relative"
+            opacity="0.3"
+            >
+                <NextImage
+                alt=""
+                src="/coffee-product-8.webp"
+                layout="fill"
+                objectFit="cover"
+                objectPosition="bottom"
+                />
+            </Box>
+            <Box bg={useColorModeValue("white", "gray.800")} />
+            <Box 
+            bg={useColorModeValue("pink.50", "gray.700")} 
+            position="relative"
+            opacity="0.3"
+            >
+                <NextImage
+                alt=""
+                src="/coffee-product-4.webp"
+                layout="fill"
+                objectFit="cover"
+                />
+            </Box>
+        </SimpleGrid>
         <Heading 
         as="h1"
         fontWeight="400"
@@ -37,7 +83,9 @@ const Hero = (): React.ReactElement => {
             w="75vw"
             >
                 <ListItem 
-                border="2px solid pink"
+                
+                bg={useColorModeValue("white", "gray.600")}
+                border="1px solid pink"
                 borderRadius="md"
                 fontWeight="700"
                 py={1}
@@ -55,7 +103,8 @@ const Hero = (): React.ReactElement => {
                     </NextLink>
                 </ListItem>
                 <ListItem
-                border="2px solid pink"
+                bg={useColorModeValue("white", "gray.600")}
+                border="1px solid pink"
                 borderRadius="md"
                 fontWeight="700"
                 py={1}
@@ -73,7 +122,8 @@ const Hero = (): React.ReactElement => {
                     </NextLink>
                 </ListItem>
                 <ListItem
-                border="2px solid pink"
+                border="1px solid pink"
+                bg={useColorModeValue("white", "gray.600")}
                 borderRadius="md"
                 fontWeight="700"
                 py={1}
@@ -96,11 +146,12 @@ const Hero = (): React.ReactElement => {
             passHref
             >
                 <Link
-                border="4px solid pink"
+                bg="pink.400"
+                color="white"
                 borderRadius="md"
                 fontWeight="700"
-                py={2}
-                px={4}
+                py={3}
+                px={6}
                 textAlign="center"
                 textTransform="uppercase"
                 w="12rem">

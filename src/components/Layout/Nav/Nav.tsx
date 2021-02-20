@@ -8,7 +8,8 @@ import { Box,
     ListItem, 
     Text,    
     Tooltip,
-    useColorMode } from "@chakra-ui/react";
+    useColorMode,    
+    useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
@@ -46,17 +47,34 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
         <Flex
         direction="column"
         position="relative"
-        pt={[2, 3, 4, 6]}
-        px={[2, 3, 4, 6]}
+        mb={6}
         >
+            <Flex 
+            align="center"
+            bgGradient="linear(45deg, blue.300, blue.400)"
+            color="white"
+            justify="center"
+            h="2rem" 
+            >
+                <Text 
+                fontSize="sm"
+                fontWeight="700"
+                textAlign="center"
+                >
+                    Welcome! Free shipping for all orders over £29.99 
+                </Text>
+            </Flex>
             <Flex 
             as="nav"
             align="center"
             justify="space-between"
+            pt={[2, 3, 4, 6]}
+            px={[2, 3, 4, 6]}
             >
                 <Heading 
-                as="h1" 
+                as="h2" 
                 fontSize="lg"
+                h="full"
                 >
                     <NextLink 
                     href="/" 
@@ -151,7 +169,6 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     />
                     <Button 
                     aria-label="mobile navigation"
-                    colorScheme="blue"
                     fontSize="xs"
                     onClick={onOpen}
                     ml={12}
@@ -166,15 +183,17 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
             </Flex>
             <Flex 
             alignItems="center"
+            bgGradient={useColorModeValue("linear(90deg, gray.50, gray.50)", "linear(90deg, gray.700, gray.700)")}
             fontSize="sm"
             justify="space-between"
-            borderTop="1px solid gray"
-            borderBottom="1px solid gray"
             mt={4}
-            mb={8}
+            pb={6}
             py={4}
+            px={[2, 3, 4, 6]}
             >
-                <Box flex="1">
+                <Box 
+                display={["none", "none", "block"]}
+                flex="1">
                     <Text>
                         <NextLink 
                         href="/" 
@@ -190,7 +209,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                 </Box>
                 <Flex 
                 flex="2"
-                justify="center"
+                justify={["flex-start", "flex-start", "center"]}
                 >
                     <IconButton 
                     aria-label={`toggle color theme: ${colorMode}`} 

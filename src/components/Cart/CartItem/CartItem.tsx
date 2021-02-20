@@ -9,6 +9,7 @@ import Image from "next/image";
 import * as React from "react";
 import { ImCancelCircle } from "react-icons/im";
 
+import RemoveButton from "@/components/Cart/RemoveButton/RemoveButton";
 import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
 import { useStoreUpdate } from "@/hooks/useStorage";
 
@@ -17,6 +18,7 @@ interface ICartItem {
     description: string;
     hideEdit?: boolean;
     id: string;
+    image: string;
     name: string;
     price: number;
 }
@@ -26,6 +28,7 @@ const CartItem = ({
     description, 
     hideEdit,
     id,
+    image,
     name, 
     price }: ICartItem): React.ReactElement => {
 
@@ -50,7 +53,6 @@ const CartItem = ({
         <Stack
         direction={["column", "column", "column", "row"]}
         display="flex"
-        divider={<StackDivider borderColor="blue.100" />}
         fontSize="xs"
         maxW={[ "500px", "500px", "500px", "none" ]}
         mx="auto"
@@ -58,19 +60,22 @@ const CartItem = ({
         spacing="20px"
         justify="space-between"
         w="full">
-            <Box>
+            <Box m="auto">
                 <Image 
                 alt="product image"
-                height={100}
-                src="/images/img.png"
-                width={100}
+                height={130}
+                src={`/${image}`}
+                width={170}
                 />
             </Box>
             <VStack 
-            flex="1"
+            flex="2"
             spacing={2}
             >
-                <Text fontSize="sm">
+                <Text 
+                fontSize="sm"
+                fontWeight="700"
+                >
                     {name}
                 </Text>
                 <Text fontSize="xs">
@@ -92,27 +97,22 @@ const CartItem = ({
                 handleQtyDecrease={handleQtyDecrease}
                 handleQtyIncrease={handleQtyIncrease}
                 />  
-                <Button 
-                aria-label="remove cart item"
-                className="cart-item--remove"
-                color="red.300"
-                fontSize="xs"
-                leftIcon={<ImCancelCircle />}
-                onClick={(event: React.MouseEvent<HTMLButtonElement>) => removeCartValue(event)}
-                mt={4}
-                mx="auto"
-                variant="outline"
-                >
-                    Remove
-                </Button>
             </Flex> : null}
-            <Text 
-            className="cart-item__total"
-            flex="0.5"
-            textAlign="center"
+            <Flex 
+            align="center"
+            direction="column"
+            justify="center"
             >
-                Total: £{itemPrice}
-            </Text>
+                <Text 
+                className="cart-item__total"
+                flex="0.5"
+                mb={4}
+                textAlign="center"
+                >
+                    Total: £{itemPrice}
+                </Text>
+                <RemoveButton callback={removeCartValue} />
+            </Flex>
         </Stack>
     );
 };

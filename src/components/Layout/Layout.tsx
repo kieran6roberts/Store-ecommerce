@@ -32,6 +32,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
             isOpen={isOpen}
             onClose={onClose}
             user={profile} 
+            userLoading={loading}
             />
             <Box 
             as="main"
@@ -40,7 +41,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
             >
                 {children}
             </Box>
-            <Footer />
+            <Footer user={profile} />
         </Flex>
     );
 };
