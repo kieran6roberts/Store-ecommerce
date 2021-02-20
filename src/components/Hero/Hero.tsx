@@ -16,6 +16,7 @@ const Hero = (): React.ReactElement => {
         flexDirection="column"
         h="45vh"
         >
+   
         <Heading 
         as="h1"
         fontWeight="400"

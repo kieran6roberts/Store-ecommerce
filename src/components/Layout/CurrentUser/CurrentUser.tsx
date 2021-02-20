@@ -17,12 +17,12 @@ const CurrentUser: React.FC<ICurrentUser> = ({ user, userLoading }) => {
         >
             {userLoading ? 
             <Box>
-                loading user
+                ...
             </Box>
             :
             <>
             <Text>
-                {user?.nickname ?? "Logged in as: Guest"}
+                {user?.nickname ?? "User: Guest"}
             </Text>
             <Box ml={4}>
                 {user?.picture ?

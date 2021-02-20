@@ -7,7 +7,13 @@ import { Flex,
 import NextLink from "next/link";
 import * as React from "react";
 
-const Footer = (): React.ReactElement => {
+import { IUser } from "@/components/Layout/Nav/Nav";
+
+interface IFooter {
+    user: IUser;
+}
+
+const Footer: React.FC<IFooter> = ({ user }) => {
     return (
         <Flex 
         as="footer" 
@@ -23,10 +29,9 @@ const Footer = (): React.ReactElement => {
                 YourCoffeeShop @2021
             </Text>
             <List 
-            display="flex" 
             fontSize="sm"
             >
-                <HStack spacing="12">
+                <HStack spacing={8}>
                     <ListItem>
                         <NextLink href="/store">
                             <Link>
@@ -42,18 +47,19 @@ const Footer = (): React.ReactElement => {
                         </NextLink>
                     </ListItem>
                     <ListItem>
+                        {user ? 
                         <NextLink href="/account">
                             <Link>
                                 Account
                             </Link>
                         </NextLink>
-                    </ListItem>
-                    <ListItem>
-                        <NextLink href="/help">
+                        :
+                        <NextLink href="/api/login">
                             <Link>
-                                Help
+                                Login/Register
                             </Link>
                         </NextLink>
+                        }
                     </ListItem>
                 </HStack>
             </List>

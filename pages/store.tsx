@@ -69,7 +69,7 @@ const Store: NextPage = () => {
         handleCategoryFilter={handleCategoryFilter} 
         />
       </Flex>
-      {sortProducts.products.length === 0 ? 
+      {sortProducts.products?.length === 0 ? 
       <Text 
       color="pink.100"
       textAlign="center"

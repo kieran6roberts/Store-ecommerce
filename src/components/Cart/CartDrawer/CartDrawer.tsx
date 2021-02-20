@@ -87,16 +87,17 @@ const CartDrawer = (): React.ReactElement => {
         onClick={onOpen}
         w="5rem"
         ml="auto"
-        mr={4}
+        mr={8}
         variant="ghost"
         >
             Cart
         </Button> : null}
         <DrawerTemplate
         header="What's in your bag"
-        footer={"Next.js e-commerce"}
+        footer="Next.js e-commerce"
         isOpen={isOpen}
         onClose={onClose}
+        placement="right"
         size="xs"
         >
             <NextLink 

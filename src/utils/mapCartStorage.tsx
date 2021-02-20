@@ -14,6 +14,7 @@ export const mapCartStorage = (items: IProductStorage[] | null, hide: boolean): 
         description={item.description}
         hideEdit={hide}
         id={item.id}
+        image={item.image}
         name={item.name}
         price={item.price}
         />
