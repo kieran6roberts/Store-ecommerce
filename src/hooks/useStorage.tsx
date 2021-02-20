@@ -82,6 +82,9 @@ const useStorage = (key: string) => {
 
         const newStorage = items?.filter(item => item.id !== productElementId);
 
+        const productBtn = document.querySelector(`#btn-${productElementId}`);
+        productBtn ? productBtn.textContent = "+ Add to Cart" : null;
+
         setStorage(key, newStorage);
         setCartStorage(newStorage);
     };

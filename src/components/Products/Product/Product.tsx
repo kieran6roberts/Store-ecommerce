@@ -1,12 +1,13 @@
-import { Box, 
+import { 
+    Box, 
     Button,
     Flex, 
     IconButton, 
     Link, 
     Text,
     Tooltip,
-    useColorMode,
-    useColorModeValue } from "@chakra-ui/react";
+    useColorModeValue, 
+    VStack} from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -23,12 +24,10 @@ const Product: React.FC<IProductStorage> = ({
     image,
     id,
     name, 
-    price,
-    quantity = 1
+    price
  }) => {
 
     const router = useRouter();
-    const bg = useColorModeValue("gray.50", "pink.50");
 
     const { addCartValue, toggleSavedValue } = useStoreUpdate()!;
 
@@ -46,17 +45,18 @@ const Product: React.FC<IProductStorage> = ({
         addCartValue(product);
     };
 
+
     return (
         <Flex
         alignItems="flex-end"
         borderRadius="md"
-        bg={bg}
+        bg={useColorModeValue("gray.50", "gray.900")}
+        color={useColorModeValue("gray.800", "gray.50")}
         flexDirection="column"
         fontSize="sm"
         h="380px"
         overflow="hidden"
         position="relative"
-        p={2}
         shadow="base"
         w="300px"
         >
@@ -64,17 +64,22 @@ const Product: React.FC<IProductStorage> = ({
             label={router.pathname === "/saved-products" ? "remove product" : "save product"}
             fontSize="xs"
             hasArrow
-            placement="top"
+            placement="right"
             >
                 <span>
                     <IconButton 
                     aria-label="save item"
+                    bg="gray.100"
                     colorScheme="pink"
                     onClick={() => toggleSavedValue("saved-products", product)}
                     icon={router.pathname === "/saved-products" ?
                     <TiDeleteOutline /> 
                     : <AiOutlineHeart /> } 
+                    position="absolute"
+                    top="0"
+                    right="0"
                     variant="ghost"
+                    zIndex="10"
                     />
                 </span>
             </Tooltip>
@@ -83,12 +88,11 @@ const Product: React.FC<IProductStorage> = ({
             passHref
             >
                 <Link 
-                height="60%"
+                height="55%"
                 w="100%"
                 >
                     <Box 
                     h="100%"
-                    mt={2}
                     w="100%"
                     >   
                         <Image
@@ -100,42 +104,41 @@ const Product: React.FC<IProductStorage> = ({
                     </Box>
                 </Link>
             </NextLink>
-            <Box 
-            position="absolute"
-            top="50%"
-            left="0%"
-            transform="skewY(20deg)"
-            h="100%"
-            w="100%"
-            zIndex="-10"
-            />
-            <Text 
-            fontSize="md"
-            textTransform="uppercase"
-            mb={4}
-            >
-                {name}
-            </Text>
-            <Flex 
-            alignItems="center"
-            justifyContent="space-between"
-            mb={2}
+            <VStack 
+            h="full"
             px={2}
-            width="100%"
+            pb={3}
+            textAlign="center"
+            w="full"
             >
-                <Button 
-                colorScheme="blue"
-                onClick={addProductToCart}
-                size="sm"
+                <Text 
+                fontSize="md"
+                textTransform="uppercase"
                 >
-                    Add to Cart 
-                </Button>
+                    {name}
+                </Text>
+                <Text 
+                fontSize="xs"
+                color={useColorModeValue("gray.500", "gray.200")}
+                >
+                    {description}
+                </Text>
                 <Text 
                 fontWeight="bold"
+                mb="auto"
+                textAlign="center"
                 >
                     £{price}
                 </Text>
-            </Flex>
+                <Button 
+                colorScheme="pink"
+                id={`btn-${product.id}`}
+                onClick={addProductToCart}
+                size="sm"
+                >
+                    + Add to Cart 
+                </Button>
+            </VStack>
         </Flex>
     );
 };

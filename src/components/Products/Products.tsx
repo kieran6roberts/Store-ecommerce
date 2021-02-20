@@ -14,14 +14,17 @@ export interface IProductQuery {
         text: string;
     };
     id: string;
-    image: string;
+    images: {
+        fileName: string;
+        __typename: string;
+    }[];
     name: string;
     price: number;
     __typename?: string;
 }
 
 interface IProducts {
-    products?: IProductQuery[];
+    sortProducts?: { products: IProductQuery[] };
     loadMore: boolean;
     query: DocumentNode;
     variables?: {
@@ -40,7 +43,7 @@ export interface IMouseEventOnHTMLElement extends React.MouseEvent {
 }
 
 const Products: React.FC<IProducts> = ({ 
-    products,
+    sortProducts,
     loadMore,
     query, 
     variables = undefined }) => {
@@ -59,10 +62,8 @@ const Products: React.FC<IProducts> = ({
     }
 
     const { products: cacheFirstData } = data;
-    const { products: lazySortData } = products;
 
-    const UI = lazySortData ?? cacheFirstData;
-    console.log(UI)
+    const productArr = sortProducts?.products ?? cacheFirstData;
 
     const checkForMoreProducts = () => {
         const productElements = document.querySelectorAll(".product");
@@ -84,7 +85,7 @@ const Products: React.FC<IProducts> = ({
             listStyleType="none"
             spacing="3rem"
             >
-                {UI.map((product) => 
+                {productArr.map((product: IProductQuery) => 
                     <li 
                     className="product"
                     id={product.id}
