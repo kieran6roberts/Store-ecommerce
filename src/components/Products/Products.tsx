@@ -24,7 +24,7 @@ export interface IProductQuery {
 }
 
 interface IProducts {
-    sortProducts?: { products: IProductQuery[] };
+    sortProducts?: { products: IProductQuery[] } | [];
     loadMore: boolean;
     query: DocumentNode;
     variables?: {

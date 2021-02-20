@@ -29,6 +29,7 @@ const Product: React.FC<IProductStorage> = ({
 
     const router = useRouter();
 
+    const [ isSaved, setIsSaved ] = React.useState<boolean>(false);
     const { addCartValue, toggleSavedValue } = useStoreUpdate()!;
 
     const product = {
@@ -61,17 +62,32 @@ const Product: React.FC<IProductStorage> = ({
         w="300px"
         >
             <Tooltip
-            label={router.pathname === "/saved-products" ? "remove product" : "save product"}
+            label={isSaved ? "Remove Save" : "Save"}
             fontSize="xs"
             hasArrow
-            placement="right"
+            placement="top-end"
             >
                 <span>
                     <IconButton 
                     aria-label="save item"
+                    borderRadius="none"
                     bg="gray.100"
                     colorScheme="pink"
-                    onClick={() => toggleSavedValue("saved-products", product)}
+                    onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                        const curTarget = event.currentTarget as HTMLButtonElement;
+
+                        setIsSaved(!isSaved);
+
+                        if (!isSaved) {
+                            curTarget.firstElementChild?.setAttribute("fill", "white");
+                            curTarget.style.backgroundColor = "rgb(184, 50, 128)";
+                        } else {
+                            curTarget.firstElementChild?.setAttribute("fill", "rgb(184, 50, 128)");
+                            curTarget.style.backgroundColor = "#EDF2F7";
+                        }
+
+                        toggleSavedValue("saved-products", product);
+                    }}
                     icon={router.pathname === "/saved-products" ?
                     <TiDeleteOutline /> 
                     : <AiOutlineHeart /> } 
