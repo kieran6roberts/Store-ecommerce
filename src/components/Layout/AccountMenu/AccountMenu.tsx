@@ -11,11 +11,12 @@ import { IoChevronDownOutline } from "react-icons/io5";
 import { IUser } from "@/components/Layout/Nav/Nav";
 
 interface IAccountMenu {
-    display: string[],
-    user: IUser
+    display: string[];
+    user: IUser;
+    variant?: string;
 }
 
-const AccountMenu: React.FC<IAccountMenu> = ({ display, user }) => {
+const AccountMenu: React.FC<IAccountMenu> = ({ display, user, variant = "outline" }) => {
     return (
         <Menu>
             <MenuButton 
@@ -24,7 +25,7 @@ const AccountMenu: React.FC<IAccountMenu> = ({ display, user }) => {
             fontSize="xs"
             rightIcon={<IoChevronDownOutline />}
             transition="all 200ms"
-            variant="outline"
+            variant={variant}
             >
                 Account
             </MenuButton>

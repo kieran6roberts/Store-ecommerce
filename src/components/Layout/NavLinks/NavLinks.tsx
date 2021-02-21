@@ -32,7 +32,7 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled }) => (
                 >
                     <Box
                     alignSelf="center"
-                    bgGradient="linear(45deg, green.300, teal.300)"
+                    bgGradient="linear(45deg, orange.300, teal.300)"
                     borderRadius="sm"
                     display="inline-flex"
                     mr={2}

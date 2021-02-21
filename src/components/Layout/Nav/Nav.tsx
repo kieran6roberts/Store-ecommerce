@@ -95,6 +95,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                 >
                     <HStack 
                     as="ul"
+                    display={["none", "none", "flex"]}
                     listStyleType="none"
                     spacing={12}
                     mr={16}

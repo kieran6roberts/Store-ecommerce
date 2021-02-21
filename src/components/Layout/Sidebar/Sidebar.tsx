@@ -1,4 +1,4 @@
-import { Flex, List, VStack } from "@chakra-ui/react";
+import { Flex, List, useColorModeValue, VStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import * as React from "react";
 
@@ -26,10 +26,17 @@ const Sidebar = ({ isOpen, onClose, user, userLoading }: ISidebar): React.ReactE
         size="xs"
         user={user} 
         >
-            <Flex mb={6}>
+            <Flex 
+            bg={useColorModeValue("gray.50", "gray.800")}
+            borderRadius="md"
+            fontSize="xs"
+            mb={6}
+            p={2}
+            >
                 <AccountMenu 
                 user={user} 
                 display={["flex"]} 
+                variant="solid"
                 />
                 <CurrentUser 
                 user={user} 
@@ -41,7 +48,7 @@ const Sidebar = ({ isOpen, onClose, user, userLoading }: ISidebar): React.ReactE
             align="flex-start"
             flexDirection="column"
             listStyleType="none"
-            spacing={12}
+            spacing={10}
             >
                 <NavLinks isStyled={true} />
             </VStack>

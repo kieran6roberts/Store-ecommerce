@@ -1,9 +1,9 @@
 import { 
+    Heading,
     HStack, 
     IconButton,
     List, 
-    ListItem,
-    Text } from "@chakra-ui/react";
+    ListItem } from "@chakra-ui/react";
 import * as React from "react";
 import { AiOutlineStar } from "react-icons/ai";
 
@@ -44,9 +44,14 @@ const Rating = ({ updateRating }: { updateRating: () => void }): React.ReactElem
             <HStack 
             display="flex"
             spacing={1}>
-                <Text display="inline-block">
-                    Product Rating: 
-                </Text>
+                <Heading 
+                as="h3" 
+                fontSize="md"
+                fontWeight="500"
+                w="full"
+                >
+                    Product Rating 
+                </Heading>
                 <ListItem>
                     <IconButton 
                     aria-label="rate product"

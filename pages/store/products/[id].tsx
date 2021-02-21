@@ -10,16 +10,18 @@ import { Button,
     TabPanels, 
     Tabs, 
     Text, 
+    useColorModeValue, 
     VStack} from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
+import Products from "@/components/Products/Products";
 import Review, { IReviewInputs } from "@/components/Products/Review/Review";
 import { useStoreUpdate } from "@/hooks/useStorage";
 import { initApollo } from "@/lib/apolloClient";
-import { PRODUCT_INFO, PRODUCT_NAMES } from "@/queries/products";
+import { PRODUCT_INFO, PRODUCT_NAMES, PRODUCT_NEW } from "@/queries/products";
 import { CREATE_REVIEW, GET_REVIEWS } from "@/queries/reviews";
 import { generateItemKey } from "@/utils/generateItemKey";
 
@@ -39,10 +41,13 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
 
     const { addCartValue } = useStoreUpdate()!;
 
+    console.log(product)
+
     const { 
         name: productName, 
         price: productPrice, 
         id: productId, 
+        images: productImage,
         category: { name: productCategory },
         description: { text: productDescription }
     } = product;
@@ -116,18 +121,21 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             </Heading>
             <Flex 
             direction={["column", "column", "row"]}
+            h="400px"
             >
                 <Center 
-                border="1px solid black"
+                borderRadius="sm"
                 flex="1"
                 mb={[12, 12, 0]}
                 mr={[0, 0, 2]}
+                shadow="base"
+                position="relative"
                 >
                     <Image
-                    alt="alt"
-                    height={375}
-                    src="/img.png"
-                    width={300}
+                    alt={productName}
+                    src={`/${productImage[0].fileName}`}
+                    layout="fill"
+                    objectFit="cover"
                     />
                 </Center>
                 <Tabs 
@@ -188,6 +196,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             </Flex>
             <Heading 
             as="h3"
+            color={useColorModeValue("gray.600", "gray.200")}
             size="md"
             my={12}
             >
@@ -195,7 +204,6 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             </Heading>
             <SimpleGrid
             as="ul"
-            border="1px solid gray"
             columns={[1, 1, 2, 2, 3, 4]} 
             fontSize="sm"
             listStyleType="none"
@@ -206,11 +214,20 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             </SimpleGrid>
             <Heading 
             as="h3"
+            color={useColorModeValue("gray.600", "gray.200")}
             size="md"
-            mt={12}
+            my={12}
             >
                 Other Products you might like
             </Heading>
+            <Products
+            loadMore={false} 
+            query={PRODUCT_NEW} 
+            variables={{
+            ssr: false,
+            fetchPolicy: "no-cache"
+            }}
+            />
         </Layout>
     );
 };

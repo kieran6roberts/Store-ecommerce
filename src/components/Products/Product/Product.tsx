@@ -151,6 +151,7 @@ const Product: React.FC<IProductStorage> = ({
                 id={`btn-${product.id}`}
                 onClick={addProductToCart}
                 size="sm"
+                variant="solid"
                 >
                     + Add to Cart 
                 </Button>
