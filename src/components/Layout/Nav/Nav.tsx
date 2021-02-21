@@ -2,6 +2,7 @@ import { Box,
     Button,
     Flex,
     Heading, 
+    HStack, 
     IconButton, 
     Link, 
     List, 
@@ -92,7 +93,14 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                 fontSize="sm"
                 justifyContent="flex-end"
                 >
-                    <NavLinks />
+                    <HStack 
+                    as="ul"
+                    listStyleType="none"
+                    spacing={12}
+                    mr={16}
+                    >
+                        <NavLinks isStyled={false} />
+                    </HStack>
                     <AccountMenu 
                     display={["none", "none", "flex"]}
                     user={user} 

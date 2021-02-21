@@ -1,4 +1,4 @@
-import { Flex, List } from "@chakra-ui/react";
+import { Flex, List, VStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import * as React from "react";
 
@@ -26,7 +26,7 @@ const Sidebar = ({ isOpen, onClose, user, userLoading }: ISidebar): React.ReactE
         size="xs"
         user={user} 
         >
-            <Flex>
+            <Flex mb={6}>
                 <AccountMenu 
                 user={user} 
                 display={["flex"]} 
@@ -36,12 +36,15 @@ const Sidebar = ({ isOpen, onClose, user, userLoading }: ISidebar): React.ReactE
                 userLoading={userLoading} 
                 />
             </Flex>
-            <List 
-            display="flex"
+            <VStack
+            as="ul"
+            align="flex-start"
             flexDirection="column"
+            listStyleType="none"
+            spacing={12}
             >
-                <NavLinks />
-            </List>
+                <NavLinks isStyled={true} />
+            </VStack>
         </DrawerTemplate>
     );
 };

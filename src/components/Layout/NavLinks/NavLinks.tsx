@@ -1,11 +1,53 @@
-import { Link, ListItem, Tooltip } from "@chakra-ui/react";
+import { 
+    Box, 
+    Link, 
+    ListItem, 
+    Text, 
+    Tooltip } from "@chakra-ui/react";
 import NextLink from "next/link";
 import * as React from "react";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiOutlineShop } from "react-icons/ai";
 import { IoCartOutline, IoHelpCircleOutline } from "react-icons/io5";
 
-const NavLinks: React.FC = () => (
+interface INavLinks {
+    isStyled: boolean;
+}
+
+const NavLinks: React.FC<INavLinks> = ({ isStyled }) => (
     <>
+    <ListItem>
+        <NextLink 
+        href="/store" 
+        passHref
+        >
+            <Link 
+            aria-label="store page"
+            alignItems="center" 
+            display="flex"
+            fontSize="lg"
+            >
+                <Tooltip 
+                fontSize="sm"
+                label="Store" 
+                >
+                    <Box
+                    alignSelf="center"
+                    bgGradient="linear(45deg, green.300, teal.300)"
+                    borderRadius="sm"
+                    display="inline-flex"
+                    mr={2}
+                    p={1}
+                    >
+                        <AiOutlineShop style={{ color: "white" }} />
+                    </Box>
+                </Tooltip>
+                {isStyled ? 
+                <Text>
+                    Store
+                </Text> : null}
+            </Link>
+        </NextLink>
+    </ListItem>
     <ListItem>
         <NextLink 
         href="/cart" 
@@ -21,42 +63,25 @@ const NavLinks: React.FC = () => (
                 fontSize="sm"
                 label="Cart" 
                 >
-                    <span>
-                        <IoCartOutline />
-                    </span>
+                    <Box
+                    alignSelf="center"
+                    bgGradient="linear(45deg, blue.300, green.300)"
+                    borderRadius="sm"
+                    display="inline-flex"
+                    mr={2}
+                    p={1}
+                    >
+                        <IoCartOutline style={{ color: "white" }} />
+                    </Box>
                 </Tooltip>
+                {isStyled ? 
+                <Text>
+                    Cart
+                </Text> : null}
             </Link>
         </NextLink>
     </ListItem>
-    <ListItem 
-    display={["none", "none", "block"]} 
-    ml={12}
-    >
-        <NextLink 
-        href="/help" 
-        passHref
-        >
-            <Link 
-            aria-label="help page"
-            alignItems="center" 
-            display="flex"
-            fontSize="lg"
-            >
-                <Tooltip 
-                fontSize="sm"
-                label="Help" 
-                >
-                    <span>
-                        <IoHelpCircleOutline />
-                    </span>
-                </Tooltip>
-            </Link>
-        </NextLink>
-    </ListItem>
-    <ListItem 
-    display={["none", "none", "block"]} 
-    mx={12} 
-    >
+    <ListItem display="block">
         <NextLink 
         href="/saved-products" 
         passHref
@@ -71,10 +96,54 @@ const NavLinks: React.FC = () => (
                 fontSize="sm"
                 label="Saved" 
                 >
-                    <span>
-                        <AiOutlineHeart />
-                    </span>
+                    <Box
+                    alignSelf="center"
+                    bgGradient="linear(45deg, pink.300, purple.300)"
+                    borderRadius="sm"
+                    display="inline-flex"
+                    mr={2}
+                    p={1}
+                    >
+                        <AiOutlineHeart style={{ color: "white" }} />
+                    </Box>
                 </Tooltip>
+                {isStyled ? 
+                <Text>
+                    Saved Items
+                </Text> : null}
+            </Link>
+        </NextLink>
+    </ListItem>
+    <ListItem display="block">
+        <NextLink 
+        href="/help" 
+        passHref
+        >
+            <Link 
+            aria-label="help page"
+            alignItems="center" 
+            display="flex"
+            fontSize="lg"
+            >
+                <Tooltip 
+                fontSize="sm"
+                label="Help" 
+                >
+                    <Box
+                    alignSelf="center"
+                    bgGradient="linear(45deg, blue.600, pink.600)"
+                    borderRadius="sm"
+                    display="inline-flex"
+                    mr={2}
+                    p={1}
+                    >
+                        <IoHelpCircleOutline style={{ color: "white" }} />
+                    </Box>
+                </Tooltip>
+                {isStyled ? 
+                <Text>
+                    Help
+                </Text> : null}
             </Link>
         </NextLink>
     </ListItem>
