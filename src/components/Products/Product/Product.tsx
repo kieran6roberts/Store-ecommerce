@@ -144,7 +144,7 @@ const Product: React.FC<IProductStorage> = ({
                 mb="auto"
                 textAlign="center"
                 >
-                    £{price}
+                    £{price.toFixed(2)}
                 </Text>
                 <Button 
                 colorScheme="pink"

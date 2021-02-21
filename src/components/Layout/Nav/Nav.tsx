@@ -20,6 +20,7 @@ import { IoCartOutline, IoHelpCircleOutline } from "react-icons/io5";
 
 import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
 import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
+import NavLinks from "@/components/Layout/NavLinks/NavLinks";
 
 export interface IUser {
     user: {
@@ -91,78 +92,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                 fontSize="sm"
                 justifyContent="flex-end"
                 >
-                    <ListItem>
-                        <NextLink 
-                        href="/cart" 
-                        passHref
-                        >
-                            <Link 
-                            aria-label="store page"
-                            alignItems="center" 
-                            display="flex"
-                            fontSize="lg"
-                            >
-                                <Tooltip 
-                                fontSize="sm"
-                                label="Cart" 
-                                >
-                                    <span>
-                                        <IoCartOutline />
-                                    </span>
-                                </Tooltip>
-                            </Link>
-                        </NextLink>
-                    </ListItem>
-                    <ListItem 
-                    display={["none", "none", "block"]} 
-                    ml={12}
-                    >
-                        <NextLink 
-                        href="/help" 
-                        passHref
-                        >
-                            <Link 
-                            aria-label="help page"
-                            alignItems="center" 
-                            display="flex"
-                            fontSize="lg"
-                            >
-                                <Tooltip 
-                                fontSize="sm"
-                                label="Help" 
-                                >
-                                    <span>
-                                        <IoHelpCircleOutline />
-                                    </span>
-                                </Tooltip>
-                            </Link>
-                        </NextLink>
-                    </ListItem>
-                    <ListItem 
-                    display={["none", "none", "block"]} 
-                    mx={12} 
-                    >
-                        <NextLink 
-                        href="/saved-products" 
-                        passHref
-                        >
-                            <Link 
-                            aria-label="saved products page"
-                            alignItems="center" 
-                            display="flex"
-                            fontSize="lg"
-                            >
-                                <Tooltip 
-                                fontSize="sm"
-                                label="Saved" 
-                                >
-                                    <span>
-                                        <AiOutlineHeart />
-                                    </span>
-                                </Tooltip>
-                            </Link>
-                        </NextLink>
-                    </ListItem>
+                    <NavLinks />
                     <AccountMenu 
                     display={["none", "none", "flex"]}
                     user={user} 

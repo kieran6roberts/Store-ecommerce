@@ -18,6 +18,7 @@ const Footer: React.FC<IFooter> = ({ user }) => {
         <Flex 
         as="footer" 
         alignItems="center"
+        bg="gray.50"
         direction="column"
         justifyContent="center"
         p={[6, 6, 8, 12]}
