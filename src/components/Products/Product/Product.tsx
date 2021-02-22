@@ -147,8 +147,8 @@ const Product: React.FC<IProductStorage> = ({
                     £{price.toFixed(2)}
                 </Text>
                 <Button 
+                className={`btn-${product.id}`}
                 colorScheme="pink"
-                id={`btn-${product.id}`}
                 onClick={addProductToCart}
                 size="sm"
                 variant="solid"

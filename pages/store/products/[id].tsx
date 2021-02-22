@@ -41,8 +41,6 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
 
     const { addCartValue } = useStoreUpdate()!;
 
-    console.log(product)
-
     const { 
         name: productName, 
         price: productPrice, 
@@ -54,7 +52,14 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
 
     const addProductToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
         (event.target as HTMLButtonElement).textContent = "Added";
-        addCartValue(product);
+        addCartValue({
+            category: productCategory,
+            description: productDescription,
+            image: productImage[0].fileName,
+            id: productId,
+            name: productName,
+            price: productPrice
+        });
     };
 
     const { data, error, loading } = useQuery<IReviewData>(GET_REVIEWS);
@@ -139,6 +144,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                     />
                 </Center>
                 <Tabs 
+                colorScheme="pink"
                 flex="1"
                 isFitted
                 isLazy
@@ -158,25 +164,31 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                     </TabList>
                     <TabPanels fontSize="sm">
                         <TabPanel>
-                            <VStack 
-                            display="flex"
-                            justifyContent="center"
-                            h="250px"
-                            spacing={6}
+                            <Flex 
+                            flexDirection="column"
+                            justify="flex-start"
+                            h="320px"
                             >
                                 <Text>
                                     {productDescription}
                                 </Text>
-                                <Text>
-                                    £{productPrice}
+                                <Text 
+                                alignSelf="flex-end"
+                                mt="auto"
+                                >
+                                    £{productPrice.toFixed(2)}
                                 </Text>
                                 <Button 
-                                colorScheme="blue"
-                                onClick={(event) => addProductToCart(event)}
+                                alignSelf="flex-end"
+                                colorScheme="pink"
+                                className={`btn-${productId}`}
+                                mt={8}
+                                onClick={addProductToCart}
+                                variant="solid"
                                 >
                                     Add To Cart
                                 </Button>
-                            </VStack>
+                            </Flex>
                         </TabPanel>
                         <TabPanel>
                             <Text>
