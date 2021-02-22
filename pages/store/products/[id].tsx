@@ -94,7 +94,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         return input.map(review => 
             <Box 
             as="li"
-            bg="gray.50"
+            bg={useColorModeValue("gray.50", "gray.700")}
             borderRadius="md"
             key={generateItemKey(review.headline)}
             mb={4}
@@ -125,7 +125,6 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                         <IconButton 
                         aria-label="rate product"
                         bg={parseInt(review.rating) >= 1 ? "orange.300" : null}
-                        className="rating-btn"
                         icon={<AiOutlineStar />} 
                         isRound={true}
                         pointerEvents="none"
@@ -137,7 +136,6 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                         <IconButton 
                         aria-label="rate product"
                         bg={parseInt(review.rating) >= 2 ? "orange.300" : null}
-                        className="rating-btn"
                         icon={<AiOutlineStar />} 
                         isRound={true}
                         pointerEvents="none"
@@ -149,7 +147,6 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                         <IconButton
                         aria-label="rate product"
                         bg={parseInt(review.rating) >= 3 ? "orange.300" : null}
-                        className="rating-btn" 
                         icon={<AiOutlineStar />} 
                         isRound={true}
                         pointerEvents="none"
@@ -161,7 +158,6 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                         <IconButton 
                         aria-label="rate product"
                         bg={parseInt(review.rating) >= 4 ? "orange.300" : null}
-                        className="rating-btn"
                         icon={<AiOutlineStar />} 
                         isRound={true}
                         pointerEvents="none"
@@ -173,7 +169,6 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                         <IconButton 
                         aria-label="rate product"
                         bg={parseInt(review.rating) >= 5 ? "orange.300" : null}
-                        className="rating-btn" 
                         icon={<AiOutlineStar />} 
                         isRound={true}
                         pointerEvents="none"
@@ -183,7 +178,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                     </ListItem>
                 </List>
                 <Text 
-                bg="white"
+                bg={useColorModeValue("white", "gray.800")}
                 h="full"
                 p={2}
                 >
