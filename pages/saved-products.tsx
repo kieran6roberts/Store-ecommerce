@@ -32,22 +32,22 @@ const savedProducts: NextPage = () => {
                     />
                 </li>
                 )
-            :
-            <Box 
-            as="header"
-            h="250px"
-            >
-                <Heading 
-                fontSize="lg"
-                mb={12}
+                :
+                <Box 
+                as="header"
+                h="250px"
                 >
-                    Empty
-                </Heading>
-                <Text fontSize="sm">
-                    Saved products will appear here
-                </Text>
-            </Box>
-            }
+                    <Heading 
+                    fontSize="lg"
+                    mb={12}
+                    >
+                        Empty
+                    </Heading>
+                    <Text fontSize="sm">
+                        Saved products will appear here
+                    </Text>
+                </Box>
+                }
             </SimpleGrid>
         </Layout>
     );

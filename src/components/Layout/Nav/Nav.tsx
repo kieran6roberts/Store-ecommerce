@@ -109,7 +109,6 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     onClick={onOpen}
                     ml={12}
                     variant="outline" 
-                    //w="8rem"
                     >
                         <GiHamburgerMenu style={{ marginRight: "6px" }} />
                         <Text color="brand.300">
