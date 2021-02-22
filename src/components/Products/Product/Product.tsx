@@ -49,13 +49,13 @@ const Product: React.FC<IProductStorage> = ({
     };
 
     React.useEffect(() => {
-        if (!cartStorage) {
-            return;
-        }
+        const btn = document.querySelector(`.btn-${id}`);
 
         if (cartStorage.some(item => item.id === id)) {
-            const btn = document.querySelector(`.btn-${id}`);
-            btn ? btn.textContent = "Added" : null;
+            console.log("item in cart");
+            btn && btn.textContent !== "Added" ? btn.textContent = "Added" : null;
+        } else {
+            btn && btn.textContent === "Added" ? btn.textContent = "Add To Cart" : null;
         }
 
     }, [ cartStorage ]);

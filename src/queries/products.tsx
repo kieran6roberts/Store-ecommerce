@@ -44,6 +44,15 @@ export const PRODUCT_NEW = gql`
     ${PRODUCT_DATA}
 `;
 
+export const PRODUCT_BEST = gql`
+    query GetNewProducts {
+        products(last: 3, orderBy: createdAt_DESC) {
+           ...ProductParts
+        }
+    }
+    ${PRODUCT_DATA}
+`;
+
 export const PRODUCT_ALL = gql`
     query GetAllProducts($offset: Int, $limit: Int) {
         products(first: $limit, skip: $offset ) {

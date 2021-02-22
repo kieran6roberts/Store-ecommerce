@@ -49,6 +49,13 @@ const Footer: React.FC<IFooter> = ({ user }) => {
                         </NextLink>
                     </ListItem>
                     <ListItem>
+                        <NextLink href="/saved-products">
+                            <Link>
+                                Saved Products
+                            </Link>
+                        </NextLink>
+                    </ListItem>
+                    <ListItem>
                         {user ? 
                         <NextLink href="/account">
                             <Link>
@@ -58,7 +65,7 @@ const Footer: React.FC<IFooter> = ({ user }) => {
                         :
                         <NextLink href="/api/login">
                             <Link>
-                                Login/Register
+                                Login
                             </Link>
                         </NextLink>
                         }
