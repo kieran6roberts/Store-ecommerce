@@ -1,8 +1,12 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { Button,
+import { Box,
+    Button,
     Center, 
     Flex, 
     Heading,
+    IconButton,
+    List,
+    ListItem,
     SimpleGrid,
     Tab, 
     TabList, 
@@ -10,11 +14,11 @@ import { Button,
     TabPanels, 
     Tabs, 
     Text, 
-    useColorModeValue, 
-    VStack} from "@chakra-ui/react";
+    useColorModeValue } from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import * as React from "react";
+import { AiOutlineStar } from "react-icons/ai";
 
 import Layout from "@/components/Layout/Layout";
 import Products from "@/components/Products/Products";
@@ -88,13 +92,17 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
 
     const mapReviewsToDom = (input: IReviewInputs[]) => {
         return input.map(review => 
-            <li 
+            <Box 
+            as="li"
+            bg="gray.50"
+            borderRadius="md"
             key={generateItemKey(review.headline)}
             mb={4}
+            p={4}
             >
                 <Heading 
                 as="h4"
-                fontSize="sm"
+                fontSize="xs"
                 fontWeight="400"
                 mb={2}
                 >
@@ -103,16 +111,85 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                 <Heading 
                 as="h5"
                 fontSize="md"
+                mb={4}
                 >
                     {review.headline}
                 </Heading>
-                <Text mb={6}>
-                    {`Rating: ${review.rating} out of 5`}
-                </Text>
-                <Text>
+                <List
+                as="ul" 
+                display="flex"
+                mb={4}
+                >
+                    <ListItem 
+                    mx={1}>
+                        <IconButton 
+                        aria-label="rate product"
+                        bg={parseInt(review.rating) >= 1 ? "orange.300" : null}
+                        className="rating-btn"
+                        icon={<AiOutlineStar />} 
+                        isRound={true}
+                        pointerEvents="none"
+                        size="xs"
+                        variant="ghost"
+                        />
+                    </ListItem>
+                    <ListItem mx={1}>
+                        <IconButton 
+                        aria-label="rate product"
+                        bg={parseInt(review.rating) >= 2 ? "orange.300" : null}
+                        className="rating-btn"
+                        icon={<AiOutlineStar />} 
+                        isRound={true}
+                        pointerEvents="none"
+                        size="xs"
+                        variant="ghost"
+                        />
+                    </ListItem>
+                    <ListItem mx={1}>
+                        <IconButton
+                        aria-label="rate product"
+                        bg={parseInt(review.rating) >= 3 ? "orange.300" : null}
+                        className="rating-btn" 
+                        icon={<AiOutlineStar />} 
+                        isRound={true}
+                        pointerEvents="none"
+                        size="xs"
+                        variant="ghost"
+                        />
+                    </ListItem>
+                    <ListItem mx={1}>
+                        <IconButton 
+                        aria-label="rate product"
+                        bg={parseInt(review.rating) >= 4 ? "orange.300" : null}
+                        className="rating-btn"
+                        icon={<AiOutlineStar />} 
+                        isRound={true}
+                        pointerEvents="none"
+                        size="xs"
+                        variant="ghost"
+                        />
+                    </ListItem>
+                    <ListItem mx={1}>
+                        <IconButton 
+                        aria-label="rate product"
+                        bg={parseInt(review.rating) >= 5 ? "orange.300" : null}
+                        className="rating-btn" 
+                        icon={<AiOutlineStar />} 
+                        isRound={true}
+                        pointerEvents="none"
+                        size="xs"
+                        variant="ghost"
+                        />
+                    </ListItem>
+                </List>
+                <Text 
+                bg="white"
+                h="full"
+                p={2}
+                >
                     {review.message}
                 </Text>
-            </li>
+            </Box>
         );
     };
 
@@ -153,13 +230,13 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                 >
                     <TabList>
                         <Tab>
-                            Product Description
+                            Purchase
                         </Tab>
                         <Tab>
-                            Details
+                            Category
                         </Tab>
                         <Tab>
-                            Reviews
+                            Review
                         </Tab>
                     </TabList>
                     <TabPanels fontSize="sm">

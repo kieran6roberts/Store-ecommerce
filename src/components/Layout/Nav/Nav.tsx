@@ -6,18 +6,14 @@ import { Box,
     IconButton, 
     Link, 
     List, 
-    ListItem, 
     Text,    
-    Tooltip,
     useColorMode,    
     useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { AiOutlineHeart } from "react-icons/ai";
 import { FiMoon, FiSun } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { IoCartOutline, IoHelpCircleOutline } from "react-icons/io5";
 
 import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
 import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
