@@ -56,6 +56,7 @@ const Product: React.FC<IProductStorage> = ({
         flexDirection="column"
         fontSize="sm"
         h="380px"
+        m="auto"
         overflow="hidden"
         position="relative"
         shadow="base"

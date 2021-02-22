@@ -1,4 +1,4 @@
-import { DocumentNode, useQuery } from "@apollo/client";
+import { BaseQueryOptions, DocumentNode, useQuery } from "@apollo/client";
 import { Box, Button, SimpleGrid, VStack } from "@chakra-ui/react";
 import * as React from "react";
 
@@ -27,14 +27,7 @@ interface IProducts {
     sortProducts?: { products: IProductQuery[] } | [];
     loadMore: boolean;
     query: DocumentNode;
-    variables?: {
-        variables: {
-            offset?: number,
-            limit?: number,
-            id?: string
-            ids?: string[]
-        }
-    };
+    variables?: BaseQueryOptions<Record<string, any>> | undefined;
 }
 
 export interface IMouseEventOnHTMLElement extends React.MouseEvent {
@@ -86,7 +79,8 @@ const Products: React.FC<IProducts> = ({
             spacing="3rem"
             >
                 {productArr.map((product: IProductQuery) => 
-                    <li 
+                    <Box 
+                    as="li" 
                     className="product"
                     id={product.id}
                     key={generateItemKey(product.id)}
@@ -99,7 +93,7 @@ const Products: React.FC<IProducts> = ({
                         name={product.name}
                         price={product.price}
                         />
-                    </li>
+                    </Box>
                 )}
             </SimpleGrid>
             {loadMore && checkForMoreProducts() ? 

@@ -104,10 +104,12 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     />
                     <Button 
                     aria-label="mobile navigation"
+                    display={["flex", "flex", "none"]}
                     fontSize="xs"
                     onClick={onOpen}
                     ml={12}
                     variant="outline" 
+                    //w="8rem"
                     >
                         <GiHamburgerMenu style={{ marginRight: "6px" }} />
                         <Text color="brand.300">

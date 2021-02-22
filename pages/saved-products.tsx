@@ -1,4 +1,4 @@
-import { Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import * as React from "react";
 
@@ -19,7 +19,7 @@ const savedProducts: NextPage = () => {
             mx={8}
             spacing="3rem"
             >
-                {savedStorage ?
+                {savedStorage && savedStorage.length ?
                 savedStorage.map((product) => 
                 <li key={generateItemKey(product.id)}>
                     <Product 
@@ -33,7 +33,10 @@ const savedProducts: NextPage = () => {
                 </li>
                 )
             :
-            <header>
+            <Box 
+            as="header"
+            h="250px"
+            >
                 <Heading 
                 fontSize="lg"
                 mb={12}
@@ -43,7 +46,7 @@ const savedProducts: NextPage = () => {
                 <Text fontSize="sm">
                     Saved products will appear here
                 </Text>
-            </header>
+            </Box>
             }
             </SimpleGrid>
         </Layout>

@@ -291,7 +291,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             spacing="2rem"
             p={4}
             >
-                {reviews ? mapReviewsToDom(reviews) : <Text>No Reviews yet</Text>}
+                {reviews && reviews.length ? mapReviewsToDom(reviews) : <Text>No Reviews yet</Text>}
             </SimpleGrid>
             <Heading 
             as="h3"

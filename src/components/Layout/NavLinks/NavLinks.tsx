@@ -114,39 +114,6 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled }) => (
             </Link>
         </NextLink>
     </ListItem>
-    <ListItem display="block">
-        <NextLink 
-        href="/help" 
-        passHref
-        >
-            <Link 
-            aria-label="help page"
-            alignItems="center" 
-            display="flex"
-            fontSize="lg"
-            >
-                <Tooltip 
-                fontSize="sm"
-                label="Help" 
-                >
-                    <Box
-                    alignSelf="center"
-                    bgGradient="linear(45deg, blue.600, pink.600)"
-                    borderRadius="sm"
-                    display="inline-flex"
-                    mr={2}
-                    p={1}
-                    >
-                        <IoHelpCircleOutline style={{ color: "white" }} />
-                    </Box>
-                </Tooltip>
-                {isStyled ? 
-                <Text>
-                    Help
-                </Text> : null}
-            </Link>
-        </NextLink>
-    </ListItem>
     </>
 );
 
