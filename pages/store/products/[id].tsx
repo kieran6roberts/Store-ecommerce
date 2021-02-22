@@ -35,7 +35,7 @@ interface IProductName {
 }
 
 interface IReviewData {
-    reviews: IReviewInputs
+    reviews: IReviewInputs[];
 }
 
 
@@ -66,32 +66,31 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         });
     };
 
-    const { data, error, loading } = useQuery<IReviewData>(GET_REVIEWS);
+    const { data, error, loading } = useQuery<IReviewData>(GET_REVIEWS, {
+        variables: {
+            id: productId
+        },
+    });
+
     const [ addReview, { 
+        data: mutationData,
         loading: mutationLoading, 
         error: mutationError 
     }] = useMutation(CREATE_REVIEW);
 
+    const [ reviews, setReviews ] = React.useState<IReviewInputs[] | undefined>();
+
     const handleReviewSubmit = (mutationVariable: IReviewInputs) => {
         addReview({
             variables: mutationVariable,
-            update: (store, { data }) => {
-                const reviewData = store.readQuery({
-                    query: GET_REVIEWS
-                });
-
-                store.writeQuery({
-                    query: GET_REVIEWS,
-                    data: {
-                        reviews: [...reviewData.reviews, data.createReview]
-                    }
-                });
-            }
         });
     };
 
-    const mapReviewsToDom = (input: IReviewInputs[]) => {
-        return input.map(review => 
+    React.useEffect(() => {
+        setReviews(mutationData ? reviews?.concat(mutationData.createReview) : data?.reviews);
+    }, [ data, mutationData ]);
+
+    const mapReviewsToDom = (input: IReviewInputs[]) => input.map(review => 
             <Box 
             as="li"
             bg={useColorModeValue("gray.50", "gray.700")}
@@ -168,7 +167,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                     <ListItem mx={1}>
                         <IconButton 
                         aria-label="rate product"
-                        bg={parseInt(review.rating) >= 5 ? "orange.300" : null}
+                        bg={parseInt(review.rating) >= 5 ? "orange.300" : "transparent"}
                         icon={<AiOutlineStar />} 
                         isRound={true}
                         pointerEvents="none"
@@ -184,9 +183,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                 >
                     {review.message}
                 </Text>
-            </Box>
-        );
-    };
+            </Box>);
 
     return (
         <Layout>
@@ -294,7 +291,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             spacing="2rem"
             p={4}
             >
-                {mapReviewsToDom(data ? data.reviews : [])}
+                {reviews ? mapReviewsToDom(reviews) : <Text>No Reviews yet</Text>}
             </SimpleGrid>
             <Heading 
             as="h3"

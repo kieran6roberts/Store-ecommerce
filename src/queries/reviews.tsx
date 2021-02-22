@@ -1,14 +1,17 @@
 import { gql } from "@apollo/client";
 
 export const GET_REVIEWS = gql`
-    query GetReviews {
-        reviews {
+    query GetReviews($id:ID) {
+        reviews(where: {product: { id: $id }}) {
             createdAt
             headline
             id
             message
             name
             rating
+            product {
+                id
+            }
         }
     } 
 `;

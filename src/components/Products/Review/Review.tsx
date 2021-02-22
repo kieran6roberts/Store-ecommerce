@@ -19,7 +19,7 @@ export interface IReviewInputs {
     headline: string;
     name: string;
     message: string;
-    rating: number;
+    rating: string;
     product: {
         id: string;
     }
@@ -63,8 +63,6 @@ const Review: React.FC<IReview> = ({
             id: productId,
             rating,
         });
-
-        console.log(inputValues);
     };
 
     return (
