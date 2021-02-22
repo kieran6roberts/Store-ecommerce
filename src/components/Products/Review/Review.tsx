@@ -19,7 +19,7 @@ export interface IReviewInputs {
     headline: string;
     name: string;
     message: string;
-    rating: number;
+    rating: string;
     product: {
         id: string;
     }
@@ -46,9 +46,7 @@ const Review: React.FC<IReview> = ({
         headline: "",
         message: "",
         rating: 0,
-        product: {
-            id: productId
-        }
+        id: productId
     };
 
     const { errors,
@@ -62,7 +60,8 @@ const Review: React.FC<IReview> = ({
 
         setInputValues({
             ...inputValues,
-            rating
+            id: productId,
+            rating,
         });
     };
 
@@ -73,11 +72,14 @@ const Review: React.FC<IReview> = ({
         >
             <form 
             onSubmit={(event) => handleSubmit(event)}
-            style={{ width: "100%" }}
+            style={{ display: "flex", flexDirection: "column", width: "100%" }}
             >
                 <FormControl mb={2}>
                     <Rating updateRating={handleUpdateRating} />
-                    <FormLabel mt={4}>
+                    <FormLabel 
+                    fontSize="sm"
+                    mt={4}
+                    >
                         Review Headline
                     </FormLabel>
                     <Input 
@@ -87,12 +89,12 @@ const Review: React.FC<IReview> = ({
                     type="text"
                     value={inputValues.headline}
                     />
-                    <FormHelperText>
+                    <FormHelperText fontSize="xs">
                         {errors.headline ?? "title for your review"}
                     </FormHelperText>
                 </FormControl>
                 <FormControl mb={2}>
-                    <FormLabel>
+                    <FormLabel fontSize="sm">
                         Review content
                     </FormLabel>
                     <Textarea 
@@ -101,13 +103,14 @@ const Review: React.FC<IReview> = ({
                     onChange={(event) => handleInputChange(event)}
                     value={inputValues.message}
                     />
-                    <FormHelperText>
+                    <FormHelperText fontSize="xs">
                         {errors.message ?? "what would you like to say?"}
                     </FormHelperText>
                 </FormControl>
                 <Button 
-                colorScheme="blue"
+                colorScheme="pink"
                 id="review-submit"
+                alignSelf="flex-end"
                 type="submit"
                 isLoading={mutationLoading}
                 >

@@ -15,7 +15,7 @@ import * as React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { TiDeleteOutline } from "react-icons/ti";
 
-import { useStoreUpdate } from "@/hooks/useStorage";
+import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 import { IProductStorage } from "@/utils/storage";
 
 const Product: React.FC<IProductStorage> = ({ 
@@ -31,6 +31,8 @@ const Product: React.FC<IProductStorage> = ({
 
     const [ isSaved, setIsSaved ] = React.useState<boolean>(false);
     const { addCartValue, toggleSavedValue } = useStoreUpdate()!;
+    const { cartStorage } = useStore()!;
+
 
     const product = {
         category,
@@ -42,9 +44,21 @@ const Product: React.FC<IProductStorage> = ({
     };
 
     const addProductToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
-        (event.target as HTMLButtonElement).textContent = "Added";
+        (event.currentTarget as HTMLButtonElement).textContent = "Added";
         addCartValue(product);
     };
+
+    React.useEffect(() => {
+        const btn = document.querySelector(`.btn-${id}`);
+
+        if (cartStorage.some(item => item.id === id)) {
+            console.log("item in cart");
+            btn && btn.textContent !== "Added" ? btn.textContent = "Added" : null;
+        } else {
+            btn && btn.textContent === "Added" ? btn.textContent = "Add To Cart" : null;
+        }
+
+    }, [ cartStorage ]);
 
 
     return (
@@ -56,6 +70,7 @@ const Product: React.FC<IProductStorage> = ({
         flexDirection="column"
         fontSize="sm"
         h="380px"
+        m="auto"
         overflow="hidden"
         position="relative"
         shadow="base"
@@ -144,13 +159,14 @@ const Product: React.FC<IProductStorage> = ({
                 mb="auto"
                 textAlign="center"
                 >
-                    £{price}
+                    £{price.toFixed(2)}
                 </Text>
                 <Button 
+                className={`btn-${product.id}`}
                 colorScheme="pink"
-                id={`btn-${product.id}`}
                 onClick={addProductToCart}
                 size="sm"
+                variant="solid"
                 >
                     + Add to Cart 
                 </Button>
@@ -159,4 +175,4 @@ const Product: React.FC<IProductStorage> = ({
     );
 };
 
-export default Product;
+export default React.memo(Product);

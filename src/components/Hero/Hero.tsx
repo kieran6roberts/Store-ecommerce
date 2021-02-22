@@ -24,7 +24,7 @@ const Hero = (): React.ReactElement => {
         >
         <SimpleGrid 
         bottom="0"
-        columns={[2, 2, 2, 3]}
+        columns={3}
         left="0"
         position="absolute"
         right="0"

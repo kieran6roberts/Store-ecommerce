@@ -1,9 +1,10 @@
 import { 
+    Heading,
     HStack, 
     IconButton,
     List, 
     ListItem,
-    Text } from "@chakra-ui/react";
+    useColorModeValue } from "@chakra-ui/react";
 import * as React from "react";
 import { AiOutlineStar } from "react-icons/ai";
 
@@ -12,11 +13,7 @@ const Rating = ({ updateRating }: { updateRating: () => void }): React.ReactElem
     const handleRatingUI = (element: HTMLElement) => {
         const activeColor = "orange";
 
-        if (!(element instanceof HTMLElement)) {
-            return;
-        }
-
-        element.style.color = activeColor;
+        element.style.backgroundColor = activeColor;
         element.setAttribute("data-rating", "true");
     };
 
@@ -24,7 +21,7 @@ const Rating = ({ updateRating }: { updateRating: () => void }): React.ReactElem
         const ratingBtns = Array.from(document.querySelectorAll(".rating-btn")) as HTMLElement[];
 
         ratingBtns.forEach((btn) => {
-            btn.style.color = "black";
+            btn.style.backgroundColor = "transparent";
             btn.setAttribute("data-rating", "false");
         });
 
@@ -40,13 +37,24 @@ const Rating = ({ updateRating }: { updateRating: () => void }): React.ReactElem
     };
 
     return (
-        <List aria-label="product-rating">
-            <HStack 
-            display="flex"
-            spacing={1}>
-                <Text display="inline-block">
-                    Product Rating: 
-                </Text>
+        <>
+        <Heading 
+        as="h3" 
+        fontSize="sm"
+        fontWeight="500"
+        mb={2}
+        w="full"
+        >
+            Product Rating 
+        </Heading>
+        <List 
+        aria-label="product-rating"
+        bg={useColorModeValue("gray.50", "gray.700")}
+        borderRadius="md"
+        p={1}
+        w="max-content"
+        >
+            <HStack spacing={1}>
                 <ListItem>
                     <IconButton 
                     aria-label="rate product"
@@ -70,7 +78,7 @@ const Rating = ({ updateRating }: { updateRating: () => void }): React.ReactElem
                     />
                 </ListItem>
                 <ListItem>
-                    <IconButton 
+                    <IconButton
                     aria-label="rate product"
                     className="rating-btn" 
                     icon={<AiOutlineStar />} 
@@ -104,6 +112,7 @@ const Rating = ({ updateRating }: { updateRating: () => void }): React.ReactElem
                 </ListItem>
             </HStack>
         </List>
+        </>
     );
 };
 

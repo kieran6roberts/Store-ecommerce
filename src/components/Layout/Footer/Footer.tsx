@@ -3,7 +3,8 @@ import { Flex,
     Link, 
     List, 
     ListItem, 
-    Text } from "@chakra-ui/react";
+    Text, 
+    useColorModeValue} from "@chakra-ui/react";
 import NextLink from "next/link";
 import * as React from "react";
 
@@ -18,6 +19,7 @@ const Footer: React.FC<IFooter> = ({ user }) => {
         <Flex 
         as="footer" 
         alignItems="center"
+        bg={useColorModeValue("gray.50", "gray.900")}
         direction="column"
         justifyContent="center"
         p={[6, 6, 8, 12]}
@@ -47,6 +49,13 @@ const Footer: React.FC<IFooter> = ({ user }) => {
                         </NextLink>
                     </ListItem>
                     <ListItem>
+                        <NextLink href="/saved-products">
+                            <Link>
+                                Saved Products
+                            </Link>
+                        </NextLink>
+                    </ListItem>
+                    <ListItem>
                         {user ? 
                         <NextLink href="/account">
                             <Link>
@@ -56,7 +65,7 @@ const Footer: React.FC<IFooter> = ({ user }) => {
                         :
                         <NextLink href="/api/login">
                             <Link>
-                                Login/Register
+                                Login
                             </Link>
                         </NextLink>
                         }

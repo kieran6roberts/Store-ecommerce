@@ -13,8 +13,8 @@ import Image from "next/image";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { BiShoppingBag } from "react-icons/bi";
 import { BsArrowBarLeft } from "react-icons/bs";
+import { IoCartOutline } from "react-icons/io5";
 
 import RemoveButton from "@/components/Cart/RemoveButton/RemoveButton";
 import DrawerTemplate from "@/components/DrawerTemplate/DrawerTemplate";
@@ -115,12 +115,12 @@ const CartDrawer = (): React.ReactElement => {
                 >
                     <Box 
                     alignSelf="center"
-                    bgGradient="linear(45deg, blue.100, pink.100)"
+                    bgGradient="linear(45deg, blue.300, green.300)"
                     display="inline-flex"
                     mr={2}
                     p={1}
                     >
-                          <BiShoppingBag style={{ color: "black" }} />
+                          <IoCartOutline style={{ color: "white" }} />
                     </Box>
                    To the cart
                 </Link>

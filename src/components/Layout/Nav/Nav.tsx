@@ -2,24 +2,22 @@ import { Box,
     Button,
     Flex,
     Heading, 
+    HStack, 
     IconButton, 
     Link, 
     List, 
-    ListItem, 
     Text,    
-    Tooltip,
     useColorMode,    
     useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { AiOutlineHeart } from "react-icons/ai";
 import { FiMoon, FiSun } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { IoCartOutline, IoHelpCircleOutline } from "react-icons/io5";
 
 import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
 import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
+import NavLinks from "@/components/Layout/NavLinks/NavLinks";
 
 export interface IUser {
     user: {
@@ -91,84 +89,22 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                 fontSize="sm"
                 justifyContent="flex-end"
                 >
-                    <ListItem>
-                        <NextLink 
-                        href="/cart" 
-                        passHref
-                        >
-                            <Link 
-                            aria-label="store page"
-                            alignItems="center" 
-                            display="flex"
-                            fontSize="lg"
-                            >
-                                <Tooltip 
-                                fontSize="sm"
-                                label="Cart" 
-                                >
-                                    <span>
-                                        <IoCartOutline />
-                                    </span>
-                                </Tooltip>
-                            </Link>
-                        </NextLink>
-                    </ListItem>
-                    <ListItem 
-                    display={["none", "none", "block"]} 
-                    ml={12}
+                    <HStack 
+                    as="ul"
+                    display={["none", "none", "flex"]}
+                    listStyleType="none"
+                    spacing={12}
+                    mr={16}
                     >
-                        <NextLink 
-                        href="/help" 
-                        passHref
-                        >
-                            <Link 
-                            aria-label="help page"
-                            alignItems="center" 
-                            display="flex"
-                            fontSize="lg"
-                            >
-                                <Tooltip 
-                                fontSize="sm"
-                                label="Help" 
-                                >
-                                    <span>
-                                        <IoHelpCircleOutline />
-                                    </span>
-                                </Tooltip>
-                            </Link>
-                        </NextLink>
-                    </ListItem>
-                    <ListItem 
-                    display={["none", "none", "block"]} 
-                    mx={12} 
-                    >
-                        <NextLink 
-                        href="/saved-products" 
-                        passHref
-                        >
-                            <Link 
-                            aria-label="saved products page"
-                            alignItems="center" 
-                            display="flex"
-                            fontSize="lg"
-                            >
-                                <Tooltip 
-                                fontSize="sm"
-                                label="Saved" 
-                                >
-                                    <span>
-                                        <AiOutlineHeart />
-                                    </span>
-                                </Tooltip>
-                            </Link>
-                        </NextLink>
-                    </ListItem>
+                        <NavLinks isStyled={false} />
+                    </HStack>
                     <AccountMenu 
                     display={["none", "none", "flex"]}
                     user={user} 
                     />
                     <Button 
                     aria-label="mobile navigation"
+                    display={["flex", "flex", "none"]}
                     fontSize="xs"
                     onClick={onOpen}
                     ml={12}
