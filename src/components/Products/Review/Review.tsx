@@ -46,9 +46,7 @@ const Review: React.FC<IReview> = ({
         headline: "",
         message: "",
         rating: 0,
-        product: {
-            id: productId
-        }
+        id: productId
     };
 
     const { errors,
@@ -62,8 +60,11 @@ const Review: React.FC<IReview> = ({
 
         setInputValues({
             ...inputValues,
-            rating
+            id: productId,
+            rating,
         });
+
+        console.log(inputValues);
     };
 
     return (

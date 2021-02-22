@@ -14,8 +14,8 @@ export const GET_REVIEWS = gql`
 `;
 
 export const CREATE_REVIEW = gql`
-    mutation NewReview($name: String!, $headline: String!, $message: String!, $rating: Int!) {
-        createReview(data: {name: $name, headline: $headline, message: $message, rating: $rating}) {
+    mutation NewReview($name: String!, $headline: String!, $message: String!, $rating: Int!, $id: ID) {
+        createReview(data: {name: $name, headline: $headline, message: $message, rating: $rating, product: {connect: {id: $id}}}) {
         name
         headline
         message
