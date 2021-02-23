@@ -8,6 +8,7 @@ import {
     List,
     ListItem, 
     Text,
+    useColorModeValue,    
     useDisclosure } from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
@@ -23,7 +24,7 @@ import { generateItemKey } from "@/utils/generateItemKey";
 
 const paths = ["/checkout", "/checkout/shipping", "/checkout/payment"];
 
-const CartDrawer = (): React.ReactElement => {
+const CartDrawer: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const router = useRouter();
 
@@ -106,8 +107,11 @@ const CartDrawer = (): React.ReactElement => {
             >
                 <Link 
                 alignItems="center"
+                bg={useColorModeValue("gray.100", "gray.800")}
+                borderRadius="md"
                 display="flex"
                 py={2}
+                px={4}
                 w="max-content"
                 _hover={{
                     color: "pink.300"
