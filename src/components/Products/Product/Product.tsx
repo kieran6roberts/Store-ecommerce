@@ -52,10 +52,9 @@ const Product: React.FC<IProductStorage> = ({
         const btn = document.querySelector(`.btn-${id}`);
 
         if (cartStorage.some(item => item.id === id)) {
-            console.log("item in cart");
             btn && btn.textContent !== "Added" ? btn.textContent = "Added" : null;
         } else {
-            btn && btn.textContent === "Added" ? btn.textContent = "Add To Cart" : null;
+            btn && btn.textContent === "Added" ? btn.textContent = "+ Add To Cart" : null;
         }
 
     }, [ cartStorage ]);
@@ -125,6 +124,10 @@ const Product: React.FC<IProductStorage> = ({
                     <Box 
                     h="100%"
                     w="100%"
+                    _hover={{
+                        transform: "scale(1.03)",
+                        transition: "transform 300ms ease-in"
+                    }}
                     >   
                         <Image
                         alt={name}

@@ -109,13 +109,13 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
               />
             </VStack>
             <Button
-            colorScheme="blue"
+            colorScheme="pink"
             isDisabled={isDisabled}
             mt={8}
             p={6}
             size="sm"
             type="submit"
-            variant="outline">
+            variant="solid">
               {submitText}
             </Button>
           </form>

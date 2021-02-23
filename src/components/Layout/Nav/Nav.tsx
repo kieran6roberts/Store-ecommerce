@@ -157,6 +157,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     />
                 </Flex>
                 <CurrentUser 
+                position="flex-end"
                 user={user} 
                 userLoading={userLoading} 
                 />
