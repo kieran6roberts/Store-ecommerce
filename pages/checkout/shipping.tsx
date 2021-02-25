@@ -8,15 +8,16 @@ import { Box,
     StackDivider, 
     Text,
     VStack } from "@chakra-ui/react";
-import * as React from "react";
-
-import countryList from "react-select-country-list";
 import NextLink from "next/link";
+import * as React from "react";
+import countryList from "react-select-country-list";
+
 import Layout from "@/components/Layout/Layout";
-import { useGetUser } from "@/lib/user";
-import { mapCartStorage } from "@/utils/mapCartStorage";
-import { useStore } from "@/hooks/useStorage";
 import useForm from "@/hooks/useForm";
+import { useStore } from "@/hooks/useStorage";
+import { useGetUser } from "@/lib/user";
+import { checkoutProcess } from "@/pages/checkout";
+import { mapCartStorage } from "@/utils/mapCartStorage";
 
 const Shipping = () => {
     const initInputs = {
@@ -95,7 +96,7 @@ const Shipping = () => {
                     textAlign="center"
                     w="full"
                     >
-                        Cart > Checkout > Shipping > Payment > Review
+                        {checkoutProcess.join(" > ")}
                     </Text>
                     <Flex 
                     border="1px solid gray"

@@ -86,9 +86,10 @@ const CartItem = ({
                 </Text>
             </VStack>
             {!hideEdit ? 
+            <>
             <Flex 
             align="center"
-            justify="center"
+            justify="space-evenly"
             direction="column"
             >
                 <QuantityInput 
@@ -97,7 +98,8 @@ const CartItem = ({
                 handleQtyDecrease={handleQtyDecrease}
                 handleQtyIncrease={handleQtyIncrease}
                 />  
-            </Flex> : null}
+                <RemoveButton callback={removeCartValue} /> 
+            </Flex>
             <Flex 
             align="center"
             direction="column"
@@ -111,8 +113,8 @@ const CartItem = ({
                 >
                     Total: £{itemPrice}
                 </Text>
-                <RemoveButton callback={removeCartValue} />
             </Flex>
+            </> : null}
         </Stack>
     );
 };

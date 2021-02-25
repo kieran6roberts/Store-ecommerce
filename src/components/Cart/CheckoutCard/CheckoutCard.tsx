@@ -33,7 +33,7 @@ const CheckoutCard = (): React.ReactElement => {
     return (
         <VStack 
         as="article"
-        border="1px solid black"
+        borderRadius="md"
         flex="1"
         fontSize="xs"
         maxW="500px"
@@ -41,6 +41,7 @@ const CheckoutCard = (): React.ReactElement => {
         mb={["4rem", "4rem", "4rem", "0px"]}
         mx="auto"
         spacing="20px"
+        shadow="base"
         p={3}
         w="full"
         >

@@ -1,23 +1,20 @@
-import { Box,
-    Divider, 
-    Flex, 
-    Heading, 
+import { Flex,  
     Link, 
     StackDivider, 
     Text,
+    useColorModeValue,
     VStack } from "@chakra-ui/react";
 import { NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 
-import { mapCartStorage } from "@/utils/mapCartStorage";
-import CartItem from "@/components/Cart/CartItem/CartItem";
+import CartProcessIndicator from "@/components/Cart/CartHeader/CartHeader";
 import CheckoutForm from "@/components/Forms/CheckoutForm/CheckoutForm";
 import Layout from "@/components/Layout/Layout";
 import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
-import { generateItemKey } from "@/utils/generateItemKey";
+import { mapCartStorage } from "@/utils/mapCartStorage";
 
 const Checkout: NextPage = () => {
 
@@ -42,30 +39,9 @@ const Checkout: NextPage = () => {
                 align="flex-start"
                 mb={12}
                 pr={[0, 0, 8]}
+                spacing={4}
                 >
-                    <Box 
-                    as="header"
-                    mb={8}
-                    textAlign="center"
-                    w="full"
-                    >
-                        <Heading 
-                        as="h2"
-                        fontSize="md"
-                        >
-                            Checkout 
-                        </Heading>
-                        <Divider 
-                        mt={4} 
-                        mb={2}
-                        />
-                        <Heading 
-                        as="h3"
-                        fontSize="sm"
-                        >
-                            Next.js e-commerce
-                        </Heading>
-                    </Box>
+                    <CartProcessIndicator />
                     {!profile ? 
                     <Text 
                     fontSize="xs"
@@ -78,19 +54,15 @@ const Checkout: NextPage = () => {
                         href="/api/login" 
                         passHref
                         >
-                        <Link display="inline-block" ml={2}>
-                            Sign in
-                        </Link>
-                    </NextLink>
+                            <Link 
+                            color="pink.400"
+                            display="inline-block" 
+                            ml={2}
+                            >
+                                Sign in
+                            </Link>
+                        </NextLink>
                     </Text> : null}
-                    <Text 
-                    fontSize="xs"
-                    mb={8}
-                    textAlign="center"
-                    w="full"
-                    >
-                        Cart > Checkout > Shipping > Payment > Review
-                    </Text>
                     <CheckoutForm 
                     isDisabled={false}
                     submit={handleSubmit}
@@ -101,7 +73,16 @@ const Checkout: NextPage = () => {
                     href="/cart" 
                     passHref
                     >
-                        <Link fontSize="sm">
+                        <Link 
+                        border="1px solid pink"
+                        borderRadius="md"
+                        color="pink.400"
+                        display="block"
+                        fontSize="sm"
+                        ml="auto"
+                        p={2}
+                        
+                        >
                             Back to cart
                         </Link>
                     </NextLink>
