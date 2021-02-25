@@ -7,34 +7,38 @@ import { Box,
     Link, 
     StackDivider, 
     Text,
+    useColorModeValue,
     VStack } from "@chakra-ui/react";
+import { GetServerSideProps , NextPage } from "next";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import * as React from "react";
 import countryList from "react-select-country-list";
 
+import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
 import useForm from "@/hooks/useForm";
 import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
-import { checkoutProcess } from "@/pages/checkout";
 import { mapCartStorage } from "@/utils/mapCartStorage";
 
-const Shipping = () => {
-    const initInputs = {
-        address: "",
-        addressLine2: "",
-        city: "",
-        country: "",
-        postcode: ""
-    };
+const Shipping: NextPage = ({ query: { data: queryData } }) => {
+    const userData = JSON.parse(queryData);
+    const router = useRouter();
 
-    const countryOptions = React.useMemo(() => countryList().getData(), []);
     const { profile } = useGetUser();
     const { cartStorage } = useStore()!;
-       const { 
-        handleInputChange, 
-        handleSubmit, 
-        inputValues } = useForm(initInputs, () => console.log("submit"), null);
+
+    const handleContinueCheckout = () => {
+        router.push(`/checkout/payment?data=${JSON.stringify(userData)}`);
+    };
+
+    React.useEffect(() => {
+        if (typeof window !== "undefined") {
+            window.history.replaceState(null, "", `${window.location.origin}/checkout/shipping`);
+        }
+
+    }, []);
 
     return (
         <Layout>
@@ -50,29 +54,7 @@ const Shipping = () => {
                 mb={12}
                 pr={[0, 0, 8]}
                 >
-                    <Box 
-                    as="header"
-                    mb={8}
-                    textAlign="center"
-                    w="full"
-                    >
-                        <Heading 
-                        as="h2"
-                        fontSize="md"
-                        >
-                            Shipping Details
-                        </Heading>
-                        <Divider 
-                        mt={4} 
-                        mb={2}
-                        />
-                        <Heading 
-                        as="h3"
-                        fontSize="sm"
-                        >
-                            Next.js e-commerce
-                        </Heading>
-                    </Box>
+                   <CartHeader />
                     {!profile ? 
                     <Text 
                     fontSize="xs"
@@ -85,21 +67,19 @@ const Shipping = () => {
                         href="/api/login" 
                         passHref
                         >
-                        <Link display="inline-block" ml={2}>
+                        <Link 
+                        color="pink.400"
+                        display="inline-block" 
+                        ml={2}
+                        >
                             Sign in
                         </Link>
                     </NextLink>
                     </Text> : null}
-                    <Text 
-                    fontSize="xs"
-                    mb={8}
-                    textAlign="center"
-                    w="full"
-                    >
-                        {checkoutProcess.join(" > ")}
-                    </Text>
                     <Flex 
-                    border="1px solid gray"
+                    bg="blue.300"
+                    borderRadius="sm"
+                    color="white"
                     fontSize="sm"
                     justify="space-between"
                     maxW="800px"
@@ -110,7 +90,7 @@ const Shipping = () => {
                             Contact
                         </Text>
                         <Text>
-                            {profile?.email ?? "null"}
+                            {userData.email} | {userData.phone}
                         </Text>
                         <Text>
                             <NextLink 
@@ -124,7 +104,9 @@ const Shipping = () => {
                         </Text>
                     </Flex>
                     <Flex 
-                    border="1px solid gray"
+                    bg="blue.300"
+                    borderRadius="sm"
+                    color="white"
                     fontSize="sm"
                     justify="space-between"
                     maxW="800px"
@@ -136,7 +118,7 @@ const Shipping = () => {
                             Shipping To
                         </Text>
                         <Text>
-                            Pull address here
+                            {`${userData.address} | ${userData.addressLine2 ? userData.addressLine2 + "|" : ""} ${userData.city}`}
                         </Text>
                         <Text>
                             <NextLink 
@@ -156,7 +138,8 @@ const Shipping = () => {
                         Shipping Method
                     </Heading>
                     <Flex 
-                    border="1px solid gray"
+                    border="1px solid gray.200"
+                    borderRadius="sm"
                     fontSize="sm"
                     justify="space-between"
                     maxW="800px"
@@ -174,19 +157,34 @@ const Shipping = () => {
                             Free
                         </Text>
                     </Flex>
-                    <NextLink href="/checkout/payment" passHref>
-                        <Link 
-                        border="1px solid black"
-                        p={4}
-                        >
-                            Continue to Payment
-                        </Link>
-                    </NextLink>
+                    <Button
+                    bg="pink.400"
+                    borderRadius="md"
+                    color="white"
+                    onClick={handleContinueCheckout}
+                    my={8}
+                    p={8}
+                    size="sm"
+                    _hover={{
+                        bg: "pink.500"
+                    }}
+                    >
+                        Continue to Payment
+                    </Button>
                     <NextLink 
-                    href="/cart" 
+                    href="/checkout" 
                     passHref
                     >
-                        <Link fontSize="sm">
+                        <Link 
+                        border="1px solid pink"
+                        bg={useColorModeValue("gray.100", "gray.700")}
+                        borderRadius="md"
+                        color="pink.400"
+                        display="block"
+                        fontSize="sm"
+                        ml="auto"
+                        p={2}
+                        >
                             Back to cart
                         </Link>
                     </NextLink>
@@ -204,6 +202,25 @@ const Shipping = () => {
             </Flex>
         </Layout>
     );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    if (!ctx.query) {
+        return {
+            redirect: {
+                destination: "/checkout",
+                permanent: false
+            }
+        };
+    }
+
+    const query = ctx.query;
+
+    return {
+        props: {
+            query: query,
+        }
+    };
 };
 
 export default Shipping;

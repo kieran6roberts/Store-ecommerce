@@ -14,10 +14,17 @@ const checkoutProcess = ["Cart", "Checkout", "Shipping", "Payment", "Review"];
 
 const CartProcessIndicator: React.FC = () => {
 
+    const router = useRouter();
+
+    const getParam = () => {
+        const split = router.pathname.split("/");
+        return split[split.length - 1];
+    };
+
     const mapCheckoutProgress = (): React.ReactNode => {
         return checkoutProcess.map((path: string, index) => {
             const capitalizedString = path.charAt(0).toLowerCase() + path.slice(1);
-
+            
             return (
                 <ListItem 
                 display="inline-block"
@@ -25,7 +32,7 @@ const CartProcessIndicator: React.FC = () => {
                 >
                     <Text
                     display="inline-block" 
-                    color={capitalizedString === useRouter().asPath.slice(1, useRouter().asPath.length) ? "blue.300" : useColorModeValue("gray.800", "gray.50")}>
+                    color={capitalizedString === getParam() ? "blue.300" : useColorModeValue("gray.800", "gray.50")}>
                         {path} 
                     </Text>
                     <Text  

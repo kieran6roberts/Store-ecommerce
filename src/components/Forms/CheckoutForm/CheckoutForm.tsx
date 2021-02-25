@@ -15,6 +15,10 @@ interface ICheckoutForm {
     userEmail?: string;
 }
 
+export interface ICheckoutInputs {
+  [key: string]: string;
+}
+
 const CheckoutForm: React.FC<ICheckoutForm> = ({ 
     handleDisabled, 
     isDisabled, 
@@ -109,13 +113,18 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
               />
             </VStack>
             <Button
-            colorScheme="pink"
+            bg="pink.400"
+            borderRadius="md"
+            color="white"
             isDisabled={isDisabled}
             mt={8}
-            p={6}
+            p={5}
             size="sm"
             type="submit"
-            variant="solid">
+            _hover={{
+              bg: "pink.500"
+            }}
+            >
               {submitText}
             </Button>
           </form>

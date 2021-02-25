@@ -9,8 +9,8 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 
-import CartProcessIndicator from "@/components/Cart/CartHeader/CartHeader";
-import CheckoutForm from "@/components/Forms/CheckoutForm/CheckoutForm";
+import CartHeader from "@/components/Cart/CartHeader/CartHeader";
+import CheckoutForm, { ICheckoutInputs } from "@/components/Forms/CheckoutForm/CheckoutForm";
 import Layout from "@/components/Layout/Layout";
 import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
@@ -20,9 +20,8 @@ const Checkout: NextPage = () => {
 
     const router = useRouter();
 
-    const handleSubmit = () => {
-        router.push("/checkout/shipping");
-    };
+    const handleSubmit = (values: ICheckoutInputs) => router.push(`/checkout/shipping?data=${JSON.stringify(values)}`);
+
 
     const { profile } = useGetUser();
     const { cartStorage } = useStore()!;
@@ -41,7 +40,7 @@ const Checkout: NextPage = () => {
                 pr={[0, 0, 8]}
                 spacing={4}
                 >
-                    <CartProcessIndicator />
+                    <CartHeader />
                     {!profile ? 
                     <Text 
                     fontSize="xs"
@@ -74,6 +73,7 @@ const Checkout: NextPage = () => {
                     passHref
                     >
                         <Link 
+                        bg={useColorModeValue("gray.100", "gray.700")}
                         border="1px solid pink"
                         borderRadius="md"
                         color="pink.400"
