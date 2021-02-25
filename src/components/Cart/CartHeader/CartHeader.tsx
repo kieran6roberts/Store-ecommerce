@@ -58,7 +58,7 @@ const CartProcessIndicator: React.FC = () => {
             as="h2"
             fontSize="md"
             >
-                Checkout 
+                {getParam().charAt(0).toUpperCase() + getParam().slice(1)}
             </Heading>
             <Divider 
             mt={4} 
