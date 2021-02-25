@@ -1,7 +1,5 @@
-import { Box,
-    Button,
-    Checkbox,
-    Divider, 
+import { Button,
+    Checkbox, 
     Flex, 
     Heading, 
     Link, 
@@ -13,11 +11,9 @@ import { GetServerSideProps , NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
-import countryList from "react-select-country-list";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
-import useForm from "@/hooks/useForm";
 import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
 import { mapCartStorage } from "@/utils/mapCartStorage";
