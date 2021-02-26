@@ -7,6 +7,7 @@ import { Button,
     Text,
     useColorModeValue,
     VStack } from "@chakra-ui/react";
+import { loadStripe } from "@stripe/stripe-js";
 import { GetServerSideProps , NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -18,6 +19,8 @@ import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
 import { mapCartStorage } from "@/utils/mapCartStorage";
 
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+
 const Shipping: NextPage = ({ query: { data: queryData } }) => {
     const userData = JSON.parse(queryData);
     const router = useRouter();
@@ -27,14 +30,21 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
 
     const cartProductIds = cartStorage?.map(item => item.id);
 
-    const handlePaymentInit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handlePaymentInit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        fetch("/api/create-checkout-session", {
+        
+        const stripe = await stripePromise;
+
+        const session = await fetch("/api/create-checkout-session", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(cartProductIds)
+        }).then(res => res.json());
+
+        const result = stripe?.redirectToCheckout({
+            sessionId: session.id
         });
     };
 
