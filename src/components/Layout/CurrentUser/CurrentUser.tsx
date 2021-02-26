@@ -1,18 +1,19 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import * as React from "react";
 
-import { IUser } from "@/pages/index";
+import { IUser } from "@/components/Layout/Nav/Nav";
 
 interface ICurrentUser {
+    position: string;
     user: IUser;
-    userLoading: boolean
+    userLoading?: boolean
 }
 
-const CurrentUser: React.FC<ICurrentUser> = ({ user, userLoading }) => {
+const CurrentUser: React.FC<ICurrentUser> = ({ user, userLoading, position }) => {
     return (
         <Flex 
         alignItems="center"
-        justify="flex-end"
+        justify={position}
         flex="1"
         >
             {userLoading ? 

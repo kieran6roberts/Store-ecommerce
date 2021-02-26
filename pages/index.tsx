@@ -42,13 +42,23 @@ const Home: NextPage = () => {
           fetchPolicy: "no-cache"
         }}
         />
-        <NextLink 
-        href="/store" 
-        >
-          <Link>
-            To The Shop
-          </Link>
-        </NextLink>
+            <NextLink 
+          href="/store"
+          passHref
+          >
+              <Link
+              bg="pink.400"
+              color="white"
+              borderRadius="md"
+              fontWeight="700"
+              py={3}
+              px={6}
+              textAlign="center"
+              textTransform="uppercase"
+              w="12rem">
+                  Shop All Items
+              </Link>
+          </NextLink>
       </VStack>
     </Layout>
     </>

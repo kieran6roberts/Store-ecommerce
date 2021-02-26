@@ -139,7 +139,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                             </Link>
                         </NextLink>
                         <span>
-                            {router.asPath.split("/").join(" > ").toLowerCase()}
+                            {router.pathname.split("/").join(" > ").toLowerCase()}
                         </span>
                     </Text>
                 </Box>
@@ -157,6 +157,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     />
                 </Flex>
                 <CurrentUser 
+                position="flex-end"
                 user={user} 
                 userLoading={userLoading} 
                 />

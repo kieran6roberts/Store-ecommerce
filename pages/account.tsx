@@ -9,6 +9,7 @@ import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
 
 import CheckoutForm from "@/components/Forms/CheckoutForm/CheckoutForm";
+import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
 import Layout from "@/components/Layout/Layout";
 import { IUser } from "@/components/Layout/Nav/Nav";
 import auth0 from "@/lib/auth";
@@ -41,12 +42,12 @@ const Account: NextPage<IUser> = ({ user }) => {
             }
         });*/
 
-        
+        /*
         const auth = await fetch("/api/session", {
           method: "POST",
           body: JSON.stringify(inputValues)
         });
-        console.log(auth);
+        console.log(auth);*/
   };
 
   const [ updateUsers, { 
@@ -64,19 +65,14 @@ const Account: NextPage<IUser> = ({ user }) => {
       <Heading 
       as="h1"
       fontSize="xl"
-      mb={12}
       pl={4}
       >
         Welcome to your user account
-        <Divider pt={4} />
-        <Text 
-        fontSize="sm"
-        fontWeight="400"
-        pt={4}
-        >
-          {user.nickname}
-        </Text>
       </Heading>
+      <Divider 
+        mb={4}
+        pt={4}
+      />
       <Flex direction={["column", "column", "row"]}>
         <VStack 
         align="flex-start"
@@ -87,6 +83,10 @@ const Account: NextPage<IUser> = ({ user }) => {
         mb={[16, 16, 0]}
         spacing={8}
         >
+          <CurrentUser 
+          position="flex-start"
+          user={user}
+          />
           <Heading 
           as="h2"
           fontSize="md"
@@ -101,6 +101,7 @@ const Account: NextPage<IUser> = ({ user }) => {
             time before they arrrive with you. 
           </Text>
           <Button
+          colorScheme="pink"
           onClick={() => setEditDisabled(!editDisabled)} 
           size="sm"
           variant="outline"

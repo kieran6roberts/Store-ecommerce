@@ -12,6 +12,14 @@ const savedProducts: NextPage = () => {
 
     return (
         <Layout>
+            <Heading 
+            as="h1"
+            fontSize="xl"
+            mb={16}
+            ml={8}
+            >
+                Your saved products
+            </Heading>
             <SimpleGrid 
             as="ul"
             columns={[1, 1, 2, 2, 3, 4]} 
@@ -38,6 +46,7 @@ const savedProducts: NextPage = () => {
                 h="250px"
                 >
                     <Heading 
+                    as="h3"
                     fontSize="lg"
                     mb={12}
                     >
