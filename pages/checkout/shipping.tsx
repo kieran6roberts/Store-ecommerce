@@ -25,15 +25,23 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
     const { profile } = useGetUser();
     const { cartStorage } = useStore()!;
 
-    const handleContinueCheckout = () => {
-        router.push(`/checkout/payment?data=${JSON.stringify(userData)}`);
+    const cartProductIds = cartStorage?.map(item => item.id);
+
+    const handlePaymentInit = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        fetch("/api/create-checkout-session", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(cartProductIds)
+        });
     };
 
     React.useEffect(() => {
         if (typeof window !== "undefined") {
             window.history.replaceState(null, "", `${window.location.origin}/checkout/shipping`);
         }
-
     }, []);
 
     return (
@@ -134,7 +142,7 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
                         Shipping Method
                     </Heading>
                     <Flex 
-                    border="1px solid gray.200"
+                    bg={useColorModeValue("gray.100", "gray.700")}
                     borderRadius="sm"
                     fontSize="sm"
                     justify="space-between"
@@ -157,7 +165,7 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
                     bg="pink.400"
                     borderRadius="md"
                     color="white"
-                    onClick={handleContinueCheckout}
+                    onClick={handlePaymentInit}
                     my={8}
                     p={8}
                     size="sm"

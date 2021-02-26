@@ -78,20 +78,20 @@ const Products: React.FC<IProducts> = ({
             listStyleType="none"
             spacing="3rem"
             >
-                {productArr.map((product: IProductQuery) => 
+                {productArr.map(({id, category, description, images, name, price }: IProductQuery) => 
                     <Box 
                     as="li" 
                     className="product"
-                    id={product.id}
-                    key={generateItemKey(product.id)}
+                    id={id}
+                    key={generateItemKey(id)}
                     >
                         <Product
-                        category={product.category.name}
-                        description={product.description.text}
-                        id={product.id}
-                        image={product.images[0]?.fileName}
-                        name={product.name}
-                        price={product.price}
+                        category={category.name}
+                        description={description.text}
+                        id={id}
+                        image={images[0]?.fileName}
+                        name={name}
+                        price={price}
                         />
                     </Box>
                 )}

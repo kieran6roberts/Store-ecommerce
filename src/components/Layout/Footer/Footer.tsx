@@ -22,7 +22,7 @@ const Footer: React.FC<IFooter> = ({ user }) => {
         bg={useColorModeValue("gray.50", "gray.900")}
         direction="column"
         justifyContent="center"
-        mt={24}
+        mt={12}
         p={[6, 6, 8, 12]}
         >
             <Text 

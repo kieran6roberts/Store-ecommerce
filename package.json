@@ -17,7 +17,6 @@
     "@chakra-ui/react": "^1.1.2",
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
-    "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.11.0",
     "@types/js-cookie": "^2.2.6",
     "@types/react-select": "^4.0.13",
@@ -28,7 +27,8 @@
     "react-dom": "17.0.1",
     "react-icons": "^4.1.0",
     "react-select": "^4.1.0",
-    "react-select-country-list": "^2.2.3"
+    "react-select-country-list": "^2.2.3",
+    "stripe": "^8.137.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.8",
