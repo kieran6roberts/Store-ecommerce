@@ -162,7 +162,7 @@ const Product: React.FC<IProductStorage> = ({
                 mb="auto"
                 textAlign="center"
                 >
-                    £{price.toFixed(2)}
+                    €{(price / 100).toFixed(2)}
                 </Text>
                 <Button 
                 className={`btn-${product.id}`}

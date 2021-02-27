@@ -4,14 +4,27 @@ import { Button,
     Heading, 
     Text, 
     VStack } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { BiLockAlt } from "react-icons/bi";
 
 import useCalculateTotal from "@/hooks/useCalculateTotal";
+import { useStoreUpdate } from "@/hooks/useStorage";
 
 const CheckoutCard = (): React.ReactElement => {
     const { total, handleTotalCalculation } = useCalculateTotal()!;
+    const { updateItemsQuantities } = useStoreUpdate()!;
+
+    const router = useRouter();
+
+    const handleCheckoutProceed = () => {
+        const quantitiyElements: HTMLInputElement[] = Array.from(document.querySelectorAll(".item-qty"));
+        const cartQuantities = quantitiyElements.map((input) => parseInt(input.value));
+
+        updateItemsQuantities(cartQuantities);
+
+        router.push("/checkout");
+    };
 
     React.useEffect(() => {
         const itemPriceElements = Array.from(document.querySelectorAll(".cart-item__total"));
@@ -58,12 +71,12 @@ const CheckoutCard = (): React.ReactElement => {
             w="full"
             >
                 <Text>
-                    Total:
+                    Items Total:
                 </Text>
                 <Text 
                 id="cart-total"
                 >
-                    £{total.toFixed(2)}
+                    €{total.toFixed(2)}
                 </Text>
             </Flex>
             <Flex 
@@ -74,7 +87,7 @@ const CheckoutCard = (): React.ReactElement => {
                     Shipping Costs:
                 </Text>
                 <Text id="shipping-costs">
-                    £{total >= 30 ? "0.00" : "4.99"}
+                    €{total >= 30 ? "0.00" : "4.99"}
                 </Text>
             </Flex>
             <Flex 
@@ -85,19 +98,18 @@ const CheckoutCard = (): React.ReactElement => {
                     Total:
                 </Text>
                 <Text>
-                    £{total < 30 ? (total + 4.99).toFixed(2) : total.toFixed(2)}
+                    €{total < 30 ? (total + 4.99).toFixed(2) : total.toFixed(2)}
                 </Text>
             </Flex>
             <Divider />
             <Button 
             colorScheme="blue"
             leftIcon={<BiLockAlt />}
-            variant="solid"
             isDisabled={total === 0 ? true : false}
+            onClick={handleCheckoutProceed}
+            variant="solid"
             >
-                <NextLink href="/checkout">
-                    Proceed to Checkout
-                </NextLink>
+                Proceed To Checkout
             </Button>
         </VStack>
     );

@@ -10,7 +10,6 @@ import { Button,
 import { loadStripe } from "@stripe/stripe-js";
 import { GetServerSideProps , NextPage } from "next";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
 import * as React from "react";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
@@ -23,12 +22,11 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 
 const Shipping: NextPage = ({ query: { data: queryData } }) => {
     const userData = JSON.parse(queryData);
-    const router = useRouter();
 
     const { profile } = useGetUser();
     const { cartStorage } = useStore()!;
 
-    const cartProductIds = cartStorage?.map(item => item.id);
+    const cartProductIds = cartStorage?.map(item => ({ id: item.id, quantity: item.quantity }));
 
     const handlePaymentInit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();

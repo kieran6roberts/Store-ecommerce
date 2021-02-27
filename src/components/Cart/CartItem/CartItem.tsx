@@ -1,13 +1,10 @@
 import { Box,
-    Button, 
     Flex, 
     Stack, 
-    StackDivider, 
     Text, 
     VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import * as React from "react";
-import { ImCancelCircle } from "react-icons/im";
 
 import RemoveButton from "@/components/Cart/RemoveButton/RemoveButton";
 import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
@@ -111,7 +108,7 @@ const CartItem = ({
                 mb={4}
                 textAlign="center"
                 >
-                    Total: £{itemPrice}
+                    Total: €{(itemPrice / 100).toFixed(2)}
                 </Text>
             </Flex>
             </> : null}

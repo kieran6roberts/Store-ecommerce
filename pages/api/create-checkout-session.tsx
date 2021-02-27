@@ -16,25 +16,25 @@ async function createCheckoutSession (req, res) {
     const { data: { products } } = await client.query({
         query: PRODUCT_STORAGE,
         variables: {
-            ids: req.body
+            ids: req.body.map((product: { id: string, quantity: string }) => product.id)
         }
     });
-
+    
     try {
         const session = await stripe.checkout.sessions.create({
             success_url: "http://localhost:3000/?id={CHECKOUT_SESSION_ID}",
             cancel_url: "http://localhost:3000/cart",
             mode: "payment",
             payment_method_types: ["card", "ideal", "sepa_debit"],
-            line_items: products.map(product => ({
+            line_items: products.map((product, index: number) => ({
                 price_data: {
                     unit_amount: product.price,
                     currency: "EUR",
                     product_data: {
-                        name: product.name,
+                        name: product.name,           
                     },
                 },
-                quantity: 1
+                quantity: req.body[index].quantity
             }))
         });
 

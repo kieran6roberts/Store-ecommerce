@@ -14,7 +14,7 @@ const useCalculateTotal = (): ICalculationReturn => {
         const products = getStorage(CART_KEY);
 
         if (products && products.length) {
-            return products.map(product => product.price)
+            return products.map(product => product.price / 100)
                     .reduce((accum, curValue) => accum + curValue);
         } else {
             return 0;
@@ -25,7 +25,7 @@ const useCalculateTotal = (): ICalculationReturn => {
         if (!input.length) {
             setTotal(0);
         } else {
-            const currentTotal = input.map(element => parseInt(element.textContent!.replace("Total: £", "")))
+            const currentTotal = input.map(element => parseInt(element.textContent!.replace("Total: €", "")))
             .reduce((accum, curValue) => accum + curValue, 0);
 
             setTotal(currentTotal);
