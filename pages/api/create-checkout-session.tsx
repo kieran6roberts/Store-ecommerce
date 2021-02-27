@@ -13,6 +13,7 @@ const client = new ApolloClient({
 });
 
 async function createCheckoutSession (req, res) {
+    console.log(req.body);
     const { data: { products } } = await client.query({
         query: PRODUCT_STORAGE,
         variables: {

@@ -51,7 +51,7 @@ const Product: React.FC<IProductStorage> = ({
     React.useEffect(() => {
         const btn = document.querySelector(`.btn-${id}`);
 
-        if (cartStorage.some(item => item.id === id)) {
+        if (cartStorage?.some(item => item.id === id)) {
             btn && btn.textContent !== "Added" ? btn.textContent = "Added" : null;
         } else {
             btn && btn.textContent === "Added" ? btn.textContent = "+ Add To Cart" : null;

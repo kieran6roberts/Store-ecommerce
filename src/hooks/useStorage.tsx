@@ -85,6 +85,8 @@ const useStorage = (key: string) => {
             setStorage(key, updatedItems);
             
         }
+
+        setCartStorage(updatedItems);
     };
 
     const removeCartValue = (event: React.MouseEvent<HTMLButtonElement>) => {
