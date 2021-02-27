@@ -22,7 +22,7 @@ import DrawerTemplate from "@/components/DrawerTemplate/DrawerTemplate";
 import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 import { generateItemKey } from "@/utils/generateItemKey";
 
-const paths = ["/checkout", "/checkout/shipping", "/checkout/payment"];
+const paths = ["/checkout", "/checkout/shipping", "/checkout/review"];
 
 const CartDrawer: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();

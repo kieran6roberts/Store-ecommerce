@@ -41,6 +41,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
     const router = useRouter();
 
     const { colorMode, toggleColorMode } = useColorMode();
+    
     return (
         <Flex
         direction="column"
