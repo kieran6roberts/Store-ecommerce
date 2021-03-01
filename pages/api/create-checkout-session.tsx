@@ -13,7 +13,6 @@ const client = new ApolloClient({
 });
 
 async function createCheckoutSession (req, res) {
-    console.log(req.body);
     const { data: { products } } = await client.query({
         query: PRODUCT_STORAGE,
         variables: {
@@ -23,6 +22,7 @@ async function createCheckoutSession (req, res) {
     
     try {
         const session = await stripe.checkout.sessions.create({
+            customer_email: req.body.customer_email,
             success_url: "http://localhost:3000/checkout/review?id={CHECKOUT_SESSION_ID}",
             cancel_url: "http://localhost:3000/cart",
             mode: "payment",

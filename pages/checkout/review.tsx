@@ -5,14 +5,15 @@ import {
     Link, 
     useColorModeValue, 
     VStack } from "@chakra-ui/react";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import NextLink from "next/link";
 import * as React from "react";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
 
-const Review: NextPage = () => {
+const Review: NextPage = ({ query }) => {
+    console.log(query)
     return (
         <Layout>
             <Flex        
@@ -79,6 +80,15 @@ const Review: NextPage = () => {
             </Flex>
         </Layout>
     );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  return {
+    props: {
+        query: ctx.query
+    }
+  };
 };
 
 export default Review;

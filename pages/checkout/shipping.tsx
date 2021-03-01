@@ -26,7 +26,11 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
     const { profile } = useGetUser();
     const { cartStorage } = useStore()!;
 
-    const cartProductIds = cartStorage?.map(item => ({ id: item.id, quantity: item.quantity }));
+    const cartProductIds = cartStorage?.map(item => ({ 
+        id: item.id, 
+        quantity: item.quantity,
+        customer_email: userData.email,
+    }));
 
     const handlePaymentInit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -43,7 +47,13 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
 
         const result = stripe?.redirectToCheckout({
             sessionId: session.id
+        }).then(res => {
+            if (res.error) {
+                console.log(res.error.message);
+            }
         });
+
+        console.log(result);
     };
 
     React.useEffect(() => {
