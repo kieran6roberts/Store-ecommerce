@@ -1,8 +1,10 @@
+import { useQuery } from "@apollo/client";
 import { 
     Box,
     Flex, 
     Heading,
     Link, 
+    Text,
     useColorModeValue, 
     VStack } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
@@ -11,9 +13,33 @@ import * as React from "react";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
+import { USER_ORDER } from "@/queries/orders";
 
 const Review: NextPage = ({ query }) => {
-    console.log(query)
+    const orderID = query.id;
+
+    const { data: orderData, loading, error } = useQuery(USER_ORDER, {
+        variables: {
+            id: orderID
+        }
+    });
+
+    if (loading) {
+        console.log("loading");
+    }
+
+    if (error) {
+        console.log("order error");
+    }
+
+    const [ order ] = orderData.orders;
+
+    React.useEffect(() => {
+        if (typeof window !== "undefined") {
+            window.history.replaceState(null, "", `${window.location.origin}/checkout/shipping`);
+        }
+    }, []);
+
     return (
         <Layout>
             <Flex        
@@ -42,13 +68,44 @@ const Review: NextPage = ({ query }) => {
                     >
                         <Box flex="1">
                             <CartHeader />
-                            <Heading 
-                            as="h3"
-                            fontSize="lg"
-                            textAlign="center"
+                            <VStack 
+                            as="article"
+                            fontSize="sm"
                             >
-                                Order Summary
-                            </Heading>
+                                <Heading 
+                                as="h3"
+                                fontSize="lg"
+                                mb={8}
+                                textAlign="center"
+                                >
+                                    Order Summary
+                                </Heading>
+                                <Flex 
+                                bg={useColorModeValue("gray.100", "gray.700")}
+                                justify="flex-start"
+                                py={4}
+                                px={2}
+                                w="100%"
+                                >
+                                    <Text mx={8}>
+                                        Email
+                                    </Text>
+                                    <Text>
+                                        {order.email}
+                                    </Text>
+                                </Flex>
+                                <Flex 
+                                justify="space-evenly"
+                                w="100%"
+                                >
+                                    <Text>
+                                        Email
+                                    </Text>
+                                    <Text>
+                                        {order.email}
+                                    </Text>
+                                </Flex>
+                            </VStack>
                         </Box>
                         <Flex 
                         align="center"
@@ -83,6 +140,15 @@ const Review: NextPage = ({ query }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  if (!ctx.query) {
+      return {
+            redirect: {
+                destination: "/",
+                permanent: false
+            }
+      };
+  }
 
   return {
     props: {

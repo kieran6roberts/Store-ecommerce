@@ -23,11 +23,6 @@ async function orderWebhook (req, res) {
         }
     );
 
-    const line_items = session.line_items.data;
-    const customer = session.customer_email;
-    console.log(session);
-
-    
     const response = await client.mutate({
         mutation: gql`
             mutation CreateOrder($data: OrderCreateInput!) {
@@ -47,20 +42,18 @@ async function orderWebhook (req, res) {
         }`,
         variables: {
             data: {
-                name: "Kieran",
-                email: "email",
-                phone: "phone number",
-                total: 30,
-                stripeCheckoutId: "stripeid",
+                name: session.customer.email,
+                email: session.customer.email,
+                phone: session.customer.phone ?? "none",
+                total: session.amount_total,
+                stripeCheckoutId: session.id,
                 fulfilled: true,
                 orderItems: {
-                    create: [
-                        {
-                        name: "name",
-                        quantity: 5,
-                        price: 20,
-                        }
-                    ]
+                    create: session.line_items.data.map(item => ({
+                        name: item.id,
+                        quantity: item.quantity,
+                        price: item.amount_total,
+                    }))
                 }
             }
         }
@@ -68,7 +61,7 @@ async function orderWebhook (req, res) {
 
     console.log(response);
 
-    res.json({ data: line_items, message: "success" });
+    res.json({ message: "success" });
 }
 
 export default orderWebhook;
