@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 import Stripe from "stripe";
 
 const stripe = new Stripe("sk_test_51IP3LTLIxM3ayKtnxOkzYa16G3uIIBhzb0q9LUvcqXg0By4pOVqCtUxwqQRnu5QLtR4h4NauShgjqYbuSWPUVApy00PZZx4mcQ", {
@@ -7,7 +7,10 @@ const stripe = new Stripe("sk_test_51IP3LTLIxM3ayKtnxOkzYa16G3uIIBhzb0q9LUvcqXg0
 
 const client = new ApolloClient({
   uri: process.env.NEXT_PUBLIC_GRAPHCMS_API,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  headers: {
+      Authorization: `Bearer ${process.env.GRAPHCMS_MUTATION_TOKEN}`
+  }
 });
 
 
@@ -20,18 +23,52 @@ async function orderWebhook (req, res) {
         }
     );
 
-    const line_items = session.line_items;
+    const line_items = session.line_items.data;
     const customer = session.customer_email;
-    console.log(line_items);
+    console.log(session);
 
-    const { data } = await client.query({
-        query: ORDER_MUTATION,
+    
+    const response = await client.mutate({
+        mutation: gql`
+            mutation CreateOrder($data: OrderCreateInput!) {
+            createOrder(data: $data) {
+                id
+                email
+                name
+                fulfilled
+                stripeCheckoutId
+                total
+                orderItems {
+                    name
+                    quantity
+                    price
+                }
+            }
+        }`,
         variables: {
-            ids: req.body.map((product: { id: string, quantity: string }) => product.id)
+            data: {
+                name: "Kieran",
+                email: "email",
+                phone: "phone number",
+                total: 30,
+                stripeCheckoutId: "stripeid",
+                fulfilled: true,
+                orderItems: {
+                    create: [
+                        {
+                        name: "name",
+                        quantity: 5,
+                        price: 20,
+                        }
+                    ]
+                }
+            }
         }
     });
 
-    res.json({ message: "success" });
+    console.log(response);
+
+    res.json({ data: line_items, message: "success" });
 }
 
 export default orderWebhook;
