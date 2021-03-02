@@ -9,18 +9,21 @@ import {
     VStack } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import NextLink from "next/link";
+import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
 import { USER_ORDER } from "@/queries/orders";
 
-const Review: NextPage = ({ query }) => {
-    const orderID = query.id;
+interface IReview {
+    query: ParsedUrlQuery
+}
 
+const Review: NextPage<IReview> = ({ query }) => {
     const { data: orderData, loading, error } = useQuery(USER_ORDER, {
         variables: {
-            id: orderID
+            id: query.id
         }
     });
 
@@ -29,16 +32,9 @@ const Review: NextPage = ({ query }) => {
     }
 
     if (error) {
-        console.log("order error");
+        console.log("error");
     }
 
-    const [ order ] = orderData.orders;
-
-    React.useEffect(() => {
-        if (typeof window !== "undefined") {
-            window.history.replaceState(null, "", `${window.location.origin}/checkout/shipping`);
-        }
-    }, []);
 
     return (
         <Layout>
@@ -70,7 +66,10 @@ const Review: NextPage = ({ query }) => {
                             <CartHeader />
                             <VStack 
                             as="article"
+                            bg={useColorModeValue("gray.50", "gray.700")}
+                            borderRadius="sm"
                             fontSize="sm"
+                            p={12}
                             >
                                 <Heading 
                                 as="h3"
@@ -81,57 +80,57 @@ const Review: NextPage = ({ query }) => {
                                     Order Summary
                                 </Heading>
                                 <Flex 
-                                bg={useColorModeValue("gray.100", "gray.700")}
+                                bg={useColorModeValue("gray.100", "gray.600")}
+                                borderRadius="sm"
                                 justify="flex-start"
                                 py={4}
                                 px={2}
                                 w="100%"
                                 >
-                                    <Text mx={8}>
-                                        Email
+                                    <Text mx={4}>
+                                        Email: 
                                     </Text>
-                                    <Text>
-                                        {order.email}
+                                    <Text mx={4}>
+                                        {orderData.orders[0].email}
                                     </Text>
                                 </Flex>
                                 <Flex 
-                                justify="space-evenly"
+                                bg={useColorModeValue("gray.100", "gray.600")}
+                                borderRadius="sm"
+                                justify="flex-start"
+                                mb={16}
+                                py={4}
+                                px={2}
                                 w="100%"
                                 >
-                                    <Text>
-                                        Email
+                                    <Text mx={4}>
+                                        Total:
                                     </Text>
-                                    <Text>
-                                        {order.email}
+                                    <Text mx={4}>
+                                        €{(orderData.orders[0].total / 100).toFixed(2)}
                                     </Text>
                                 </Flex>
+                                <NextLink
+                                href="/"
+                                passHref
+                                >
+                                    <Link         
+                                    bg="pink.400"
+                                    borderRadius="md"
+                                    color="white"
+                                    display="block"
+                                    my={8}
+                                    p={6}
+                                    w="max-content"
+                                    _hover={{
+                                    bg: "pink.500"
+                                    }}
+                                    >
+                                        Back to home
+                                    </Link>
+                                </NextLink>
                             </VStack>
                         </Box>
-                        <Flex 
-                        align="center"
-                        justify="center"
-                        flex="1"
-                        >
-                            <NextLink
-                            href="/"
-                            passHref
-                            >
-                                <Link         
-                                bg="pink.400"
-                                borderRadius="md"
-                                color="white"
-                                display="block"
-                                my={8}
-                                p={8}
-                                w="max-content"
-                                _hover={{
-                                bg: "pink.500"
-                                }}
-                                >
-                                    Back to home
-                                </Link>
-                            </NextLink>
-                        </Flex>
                     </Flex>
                 </VStack>
             </Flex>
@@ -140,21 +139,11 @@ const Review: NextPage = ({ query }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-
-  if (!ctx.query) {
-      return {
-            redirect: {
-                destination: "/",
-                permanent: false
-            }
-      };
-  }
-
-  return {
-    props: {
-        query: ctx.query
-    }
-  };
+    return {
+        props: {
+            query: ctx.query,
+        }
+    };
 };
 
 export default Review;

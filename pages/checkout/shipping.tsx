@@ -10,12 +10,14 @@ import { Button,
 import { loadStripe } from "@stripe/stripe-js";
 import { GetServerSideProps , NextPage } from "next";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import * as React from "react";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
 import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
+import isObjectEmpty from "@/utils/isObjectEmpty";
 import { mapCartStorage } from "@/utils/mapCartStorage";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -23,8 +25,10 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 const Shipping: NextPage = ({ query: { data: queryData } }) => {
     const userData = JSON.parse(queryData);
 
-    const { profile } = useGetUser();
     const { cartStorage } = useStore()!;
+    const { profile } = useGetUser();
+
+    const router = useRouter();
 
     const cartProductIds = cartStorage?.map(item => ({ 
         id: item.id, 
@@ -60,6 +64,7 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
         if (typeof window !== "undefined") {
             window.history.replaceState(null, "", `${window.location.origin}/checkout/shipping`);
         }
+
     }, []);
 
     return (
@@ -111,9 +116,15 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
                         <Text>
                             Contact
                         </Text>
+                        {userData ?
                         <Text>
                             {userData.email} | {userData.phone}
                         </Text>
+                        :
+                        <Text>
+                            Not Available
+                        </Text>
+                        }
                         <Text>
                             <NextLink 
                             href="/checkout" 
@@ -139,9 +150,15 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
                         <Text>
                             Shipping To
                         </Text>
+                        {userData ?
                         <Text>
                             {`${userData.address} | ${userData.addressLine2 ? userData.addressLine2 + "|" : ""} ${userData.city}`}
                         </Text>
+                        :
+                        <Text>
+                            Not available
+                        </Text>
+                        }
                         <Text>
                             <NextLink 
                             href="/checkout" 
@@ -227,7 +244,7 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    if (!ctx.query) {
+    if (isObjectEmpty(ctx.query)) {
         return {
             redirect: {
                 destination: "/checkout",
@@ -236,11 +253,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         };
     }
 
-    const query = ctx.query;
-
     return {
         props: {
-            query: query,
+            query: ctx.query,
         }
     };
 };
