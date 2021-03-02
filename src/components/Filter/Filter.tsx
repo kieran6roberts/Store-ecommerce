@@ -18,25 +18,24 @@ interface IFilter {
 }
 
 
-const Filter: React.FC<IFilter> = ({ categories: { categories }, handleCategoryFilter }): React.ReactElement => {
-    return (
-        <Flex justify="center">
-            <CustomMenuButton title="Product Type">
-                {categories.map((cat: ICategories) => 
-                    <MenuItem 
-                    key={generateItemKey(cat.name)}
-                    onClick={() => handleCategoryFilter({
-                        variables: {
-                            name: cat.name
-                        }
-                    })}
-                    >
-                        {cat.name}
-                    </MenuItem>
-                )}
-            </CustomMenuButton>
-        </Flex>
-    );
-};
+const Filter: React.FC<IFilter> = ({ categories: { categories }, handleCategoryFilter }) => (
+    <Flex justify="center">
+        <CustomMenuButton title="Product Type">
+            {categories.map(({ name }: ICategories) => 
+                <MenuItem 
+                key={generateItemKey(name)}
+                onClick={() => handleCategoryFilter({
+                    variables: {
+                        name: name
+                    }
+                })}
+                >
+                    {name}
+                </MenuItem>
+            )}
+        </CustomMenuButton>
+    </Flex>
+);
+
 
 export default Filter;
