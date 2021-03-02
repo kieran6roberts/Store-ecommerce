@@ -7,7 +7,7 @@ import {
 import * as React from "react";
 
 interface ICustomInput {
-    handleInputChange: (event: React.ChangeEvent) => void;
+    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     helperText?: string;
     name: string;
     isDisabled: boolean;

@@ -1,4 +1,5 @@
-import { Button,
+import { 
+    Button,
     Checkbox, 
     Flex, 
     Heading, 
@@ -10,7 +11,7 @@ import { Button,
 import { loadStripe } from "@stripe/stripe-js";
 import { GetServerSideProps , NextPage } from "next";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
@@ -22,13 +23,11 @@ import { mapCartStorage } from "@/utils/mapCartStorage";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-const Shipping: NextPage = ({ query: { data: queryData } }) => {
-    const userData = JSON.parse(queryData);
+const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryData } }) => {
+    const userData = JSON.parse(queryData as string);
 
     const { cartStorage } = useStore()!;
     const { profile } = useGetUser();
-
-    const router = useRouter();
 
     const cartProductIds = cartStorage?.map(item => ({ 
         id: item.id, 
@@ -56,15 +55,12 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
                 console.log(res.error.message);
             }
         });
-
-        console.log(result);
     };
 
     React.useEffect(() => {
         if (typeof window !== "undefined") {
             window.history.replaceState(null, "", `${window.location.origin}/checkout/shipping`);
         }
-
     }, []);
 
     return (

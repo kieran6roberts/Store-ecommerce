@@ -1,4 +1,5 @@
-import { Box, 
+import { 
+  Box, 
   Divider, 
   Flex,
   Heading, 
@@ -18,6 +19,7 @@ export type ItemsPrices = {
 }[] | null;
 
 const Cart: NextPage = () => {
+  
   const { cartStorage } = useStore()!;
 
   return (

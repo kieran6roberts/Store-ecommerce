@@ -20,7 +20,6 @@ import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
 import NavLinks from "@/components/Layout/NavLinks/NavLinks";
 
 export interface IUser {
-    user: {
       name?: string,
       nickname?: string,
       picture?: string,
@@ -28,7 +27,6 @@ export interface IUser {
       email?: string,
       email_verified?: string,
       sub?: string
-    }
   }
 
 interface INav { 

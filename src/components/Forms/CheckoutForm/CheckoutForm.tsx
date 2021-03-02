@@ -10,7 +10,7 @@ import { usersValidation } from "@/utils/validation/users";
 interface ICheckoutForm {
     handleDisabled?: (value: React.SetStateAction<boolean>) => void;
     isDisabled: boolean;
-    submit: () => unknown;
+    submit: (values: ICheckoutInputs) => Promise<unknown>;
     submitText: string;
     userEmail?: string;
 }
@@ -20,7 +20,6 @@ export interface ICheckoutInputs {
 }
 
 const CheckoutForm: React.FC<ICheckoutForm> = ({ 
-    handleDisabled, 
     isDisabled, 
     submit, 
     submitText,

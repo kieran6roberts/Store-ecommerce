@@ -1,4 +1,5 @@
-import { Flex,  
+import { 
+    Flex,  
     Link, 
     StackDivider, 
     Text,
@@ -18,14 +19,12 @@ import { mapCartStorage } from "@/utils/mapCartStorage";
 
 const Checkout: NextPage = () => {
 
+    const { profile } = useGetUser();
+    const { cartStorage } = useStore()!;
     const router = useRouter();
 
     const handleSubmit = (values: ICheckoutInputs) => router.push(`/checkout/shipping?data=${JSON.stringify(values)}`);
 
-
-    const { profile } = useGetUser();
-    const { cartStorage } = useStore()!;
- 
     return (
         <Layout>
             <Flex 

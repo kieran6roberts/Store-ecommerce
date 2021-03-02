@@ -1,28 +1,27 @@
 import * as React from "react";
 
+import { ICheckoutInputs } from "@/components/Forms/CheckoutForm/CheckoutForm";
 import { IReviewInputs } from "@/components/Products/Review/Review";
 import { IAccountInput } from "@/pages/account";
 import isObjectEmpty from "@/utils/isObjectEmpty";
 import { IReviewErrors, reviewValidation } from "@/utils/validation/reviews";
 
 type InputType = HTMLInputElement | HTMLTextAreaElement;
-type SubmitProp = (mutationVariable: IReviewInputs) => Promise<void>;
-type SubmissionCombinable = SubmitProp | (() => void);
-type InputCombinable = IReviewInputs | IAccountInput;
+type SubmitProp = (values: {[key: string]: string}) => Promise<unknown>;
 
 interface IUseFormOutput {
     errors: IReviewErrors;
     handleInputChange: <T extends InputType>(event: React.ChangeEvent<T>) => void;
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void; 
-    inputValues: InputCombinable;
-    setInputValues: React.Dispatch<React.SetStateAction<InputCombinable>>
+    inputValues: {[key: string]: string};
+    setInputValues: React.Dispatch<React.SetStateAction<any>>
 }
 
-const useForm = (initInputs: InputCombinable, 
-    customSubmit: SubmissionCombinable,
+const useForm = (initInputs: { [key: string]: string }, 
+    customSubmit: SubmitProp,
     customValidation: any
     ): IUseFormOutput => {
-    const [ inputValues, setInputValues ] = React.useState<InputCombinable>(initInputs);
+    const [ inputValues, setInputValues ] = React.useState(initInputs);
     const [ errors, setErrors ] = React.useState<IReviewErrors>({ errors: "" });
     const [ submitDisabled, setSubmitDisabled ] = React.useState(true);
 

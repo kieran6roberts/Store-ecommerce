@@ -14,6 +14,7 @@ interface ICustomSelect {
     isDisabled: boolean;
     name: string;
     options: ICountry[];
+    value: string;
 }
 
 const CustomSelect: React.FC<ICustomSelect> = ({ 
@@ -21,9 +22,9 @@ const CustomSelect: React.FC<ICustomSelect> = ({
     name, 
     options }) => {
 
-    const mapOptionsToDOM = () => options.map(option => 
-        <option key={generateItemKey(option.value)}>
-            {option.label}
+    const mapOptionsToDOM = () => options.map(({ label, value }) => 
+        <option key={generateItemKey(value)}>
+            {label}
         </option>
         );
 

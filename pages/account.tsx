@@ -1,5 +1,6 @@
 import { useMutation } from "@apollo/client";
-import { Button,
+import { 
+  Button,
   Divider,
   Flex,
   Heading, 
@@ -18,9 +19,8 @@ import { UPDATE_USER } from "@/queries/users";
 export interface IAccountInput {
   [key: string]: string;
 }
-  
 
-const Account: NextPage<IUser> = ({ user }) => {
+const Account: NextPage<{ user: IUser }> = ({ user }) => {
   const [ editDisabled, setEditDisabled ] = React.useState<boolean>(true);
 
   const handleUpdateUserSubmission = async (mutationVariable: IAccountInput) => {

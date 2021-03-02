@@ -14,6 +14,7 @@ import * as React from "react";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
+import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import { USER_ORDER } from "@/queries/orders";
 
 interface IReview {
@@ -28,13 +29,16 @@ const Review: NextPage<IReview> = ({ query }) => {
     });
 
     if (loading) {
-        console.log("loading");
+        return (
+            <Box minH="75vh">
+                <LoadingSpinner/>
+            </Box>
+        );
     }
 
     if (error) {
         console.log("error");
     }
-
 
     return (
         <Layout>
