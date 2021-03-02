@@ -5,6 +5,7 @@ import * as React from "react";
 
 import Hero from "@/components/Hero/Hero";
 import Layout from "@/components/Layout/Layout";
+import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import NextHead from "@/components/NextHead/NextHead";
 import Products from "@/components/Products/Products";
 import { PRODUCT_BEST, PRODUCT_NEW } from "@/queries/products";
@@ -60,6 +61,7 @@ const Home: NextPage = () => {
               </Link>
           </NextLink>
       </VStack>
+      <LoadingSpinner />
     </Layout>
     </>
   );
