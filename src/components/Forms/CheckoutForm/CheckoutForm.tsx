@@ -1,10 +1,15 @@
-import { Button, Flex, VStack } from "@chakra-ui/react";
+import { 
+  Button, 
+  Flex, 
+  Text,
+  VStack } from "@chakra-ui/react";
 import * as React from "react";
 import countryList from "react-select-country-list";
 
 import CustomInput from "@/components/Forms/CustomInput/CustomInput";
 import CustomSelect from "@/components/Forms/CustomSelect/CustomSelect";
 import useForm from "@/hooks/useForm";
+import isObjectEmpty from "@/utils/isObjectEmpty";
 import { usersValidation } from "@/utils/validation/users";
 
 interface ICheckoutForm {
@@ -43,6 +48,19 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
         handleSubmit, 
         inputValues } = useForm(initInputs, submit, usersValidation);
     
+    const hasMounted = React.useRef(false);
+
+    React.useEffect(() => {
+      if (hasMounted.current) {
+        if (!isObjectEmpty(errors)) {
+          const firstInput = document.querySelector(`#${Object.keys(errors)[0]}`) as HTMLInputElement;
+          firstInput.focus();
+        }
+      } else {
+        hasMounted.current = true;
+      }
+        console.log("form error use effect");
+    }, [ errors ]);
 
     return (
     <form 
@@ -50,6 +68,9 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
     style={{ width: "100%" }}
     >
         <VStack spacing={4}>
+            <Text fontSize="xs">
+              Please Fill out all required fields
+            </Text>
             <CustomInput
             error={errors.email}
             handleInputChange={(event) => handleInputChange(event)}
@@ -100,6 +121,8 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
               w="100%"
               >
                 <CustomSelect 
+                error={errors.country}
+                handleInputChange={(event) => handleInputChange(event)}
                 isDisabled={isDisabled}
                 isRequired
                 name="country"

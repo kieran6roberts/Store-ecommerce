@@ -13,6 +13,7 @@ import { GetServerSideProps , NextPage } from "next";
 import NextLink from "next/link";
 import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
+import { BsArrowLeft } from "react-icons/bs";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
@@ -211,16 +212,19 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
                     passHref
                     >
                         <Link 
-                        border="1px solid pink"
                         bg={useColorModeValue("gray.100", "gray.700")}
+                        border="1px solid pink"
                         borderRadius="md"
-                        color="pink.400"
+                        color={useColorModeValue("gray.800", "white")}
                         display="block"
                         fontSize="sm"
                         ml="auto"
                         p={2}
+                        _hover={{
+                            bg: useColorModeValue("gray.200","gray.800")
+                        }}
                         >
-                            Back to cart
+                            <BsArrowLeft style={{ display: "inline-block" }} /> Back to cart
                         </Link>
                     </NextLink>
                 </VStack>

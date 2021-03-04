@@ -1,9 +1,9 @@
 import {
     FormControl,
-    FormErrorMessage,
     FormHelperText,
     FormLabel,
-    Input } from "@chakra-ui/react";
+    Input,
+    Text } from "@chakra-ui/react";
 import * as React from "react";
 
 interface ICustomInput {
@@ -27,19 +27,22 @@ const CustomInput: React.FC<ICustomInput> = ({
     type,
     value }) => {
 
-        console.log(error);
-
     return (
         <FormControl id={name}>
             <FormLabel 
+            display="inline-block"
             fontSize="sm"
             textTransform="capitalize"
             >
               {name} <span style={{ color: "red" }}>{isRequired ? "*" : null}</span>
             </FormLabel>
-            <FormErrorMessage fontSize="sm" color="white">
-                {error}
-            </FormErrorMessage>
+            <Text 
+            color="red.400"
+            display="inline-block"
+            fontSize="xs"
+            >
+                  {error}
+            </Text>
             <Input
             errorBorderColor="red.400"
             isInvalid={error ? true : false}

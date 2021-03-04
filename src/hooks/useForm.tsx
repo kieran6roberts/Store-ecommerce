@@ -27,6 +27,7 @@ const useForm = (initInputs: { [key: string]: string | number },
 
     const handleInputChange = <T extends InputType>(event: React.ChangeEvent<T>) => {
         const { name: eventName, value: eventValue } = event.target;
+        console.log(event.target)
 
         setInputValues({
             ...inputValues,
@@ -41,6 +42,9 @@ const useForm = (initInputs: { [key: string]: string | number },
 
     React.useEffect(() => {
         const isError = isObjectEmpty(errors);
+
+        console.log(errors);
+        console.log(inputValues);
 
         if (isError && !submitDisabled) {
             customSubmit(inputValues);

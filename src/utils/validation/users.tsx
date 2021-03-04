@@ -13,17 +13,20 @@ export interface IUsersValidation {
 
 export const usersValidation = (inputs: ICheckoutInputs): IUsersValidation => {
     const errors: IUsersValidation = {};
-
+    const emailCheck = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const numberCheck = /^[0-9]+$/;
     
     if (!inputs.email.trim() || typeof inputs.email !== "string") {
         errors.email = "Valid email is required!";
-    } 
+    } else if (!emailCheck.test(inputs.email)) {
+        errors.email = "Invalid email address! Please enter a valid address";
+      }
 
     if (!inputs.name.trim() || typeof inputs.name !== "string") {
         errors.name = "Name is required!";
     }
     
-    if (!inputs.address.trim() || typeof inputs.adress !== "string") {
+    if (!inputs.address.trim() || typeof inputs.address !== "string") {
         errors.address = "Address is required!";
     }
     
@@ -45,6 +48,8 @@ export const usersValidation = (inputs: ICheckoutInputs): IUsersValidation => {
 
     if (!inputs.phone.trim() || typeof inputs.phone !== "string") {
         errors.phone = "Phone number is required!";
+    } else if (!numberCheck.test(inputs.phone)) {
+        errors.phone = "Invalid phone number! Please enter a valid phone number";
     }
 
     return errors;
