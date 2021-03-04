@@ -108,8 +108,6 @@ const Products: React.FC<IProducts> = ({
                         offset: offset,
                         limit: 10
                     },
-                    fetchPolicy: "cache-first",
-                    ssr: false
                 });
 
                 setOffset(offset + 10);

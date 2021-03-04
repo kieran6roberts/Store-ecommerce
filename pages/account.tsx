@@ -84,7 +84,7 @@ const Account: NextPage<{ user: IUser }> = ({ user }) => {
         spacing={8}
         >
           <CurrentUser 
-          position="flex-start"
+          justify="flex-start"
           user={user}
           />
           <Heading 

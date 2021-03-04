@@ -48,9 +48,9 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx" ],
+    "**/*.tsx", "src/lib/user.js" ],
   "exclude": [
-    "node_modules"
+    "node_modules",
   ]
     // "allowJs": true,                       /* Allow javascript files to be compiled. */
     // "checkJs": true,                       /* Report errors in .js files. */

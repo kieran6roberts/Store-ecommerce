@@ -3,7 +3,7 @@ import * as React from "react";
 import { getStorage } from "@/utils/storage";
 
 interface ICalculationReturn {
-    handleTotalCalculation: (input: Element[]) => 0 | null;
+    handleTotalCalculation: (input: Element[]) => null;
     total: number;
 }
 
@@ -24,6 +24,7 @@ const useCalculateTotal = (): ICalculationReturn => {
     const handleTotalCalculation = (input: Element[]) => {
         if (!input.length) {
             setTotal(0);
+            return null;
         } else {
             const currentTotal = input.map(element => parseInt(element.textContent!.replace("Total: €", "")))
             .reduce((accum, curValue) => accum + curValue, 0);

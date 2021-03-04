@@ -13,7 +13,7 @@ interface ICartDrawer {
     footer: string;
     isOpen: boolean;
     onClose: () => void;
-    placement: string;
+    placement: "top" | "left" | "right" | "bottom" | undefined;
     size?: string;
 }
 

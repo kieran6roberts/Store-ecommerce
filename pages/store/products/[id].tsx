@@ -81,7 +81,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
 
     const [ reviews, setReviews ] = React.useState<IReviewInputs[] | undefined>();
 
-    const handleReviewSubmit = (mutationVariable: IReviewInputs) => {
+    const handleReviewSubmit = (mutationVariable: any) => {
         addReview({
             variables: mutationVariable,
         });

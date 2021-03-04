@@ -1,4 +1,5 @@
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
+import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 
 const stripe = new Stripe("sk_test_51IP3LTLIxM3ayKtnxOkzYa16G3uIIBhzb0q9LUvcqXg0By4pOVqCtUxwqQRnu5QLtR4h4NauShgjqYbuSWPUVApy00PZZx4mcQ", {
@@ -14,7 +15,7 @@ const client = new ApolloClient({
 });
 
 
-async function orderWebhook (req, res) {
+async function orderWebhook (req: NextApiRequest, res: NextApiResponse): Promise<void> {
     const event = req.body;
     
     const session = await stripe.checkout.sessions.retrieve(
@@ -22,6 +23,8 @@ async function orderWebhook (req, res) {
             expand: ["line_items", "customer"]
         }
     );
+
+    const { customer }: any = session;
 
     const response = await client.mutate({
         mutation: gql`
@@ -42,14 +45,14 @@ async function orderWebhook (req, res) {
         }`,
         variables: {
             data: {
-                name: session.customer.email,
-                email: session.customer.email,
-                phone: session.customer.phone ?? "none",
+                name: customer.email,
+                email: customer.email,
+                phone: customer.phone ?? "none",
                 total: session.amount_total,
                 stripeCheckoutId: session.id,
                 fulfilled: true,
                 orderItems: {
-                    create: session.line_items.data.map(item => ({
+                    create: session.line_items?.data.map(item => ({
                         name: item.id,
                         quantity: item.quantity,
                         price: item.amount_total,
@@ -58,8 +61,6 @@ async function orderWebhook (req, res) {
             }
         }
     });
-
-    console.log(response);
 
     res.json({ message: "success" });
 }

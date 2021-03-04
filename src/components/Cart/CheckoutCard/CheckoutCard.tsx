@@ -14,6 +14,7 @@ import { useStoreUpdate } from "@/hooks/useStorage";
 const CheckoutCard = (): React.ReactElement => {
     const { total, handleTotalCalculation } = useCalculateTotal()!;
     const { updateItemsQuantities } = useStoreUpdate()!;
+    const [ isDisabled, setIsDisabled ] = React.useState(false);
 
     const router = useRouter();
 
@@ -26,10 +27,20 @@ const CheckoutCard = (): React.ReactElement => {
         router.push("/checkout");
     };
 
+    const handleToggleDisable = (value: boolean) => setIsDisabled(value);
+
+    React.useEffect(() => {
+        if (total <= 0) {
+            handleToggleDisable(true);
+        } else {
+            handleToggleDisable(false);
+        }
+    }, [ total ]);
+
     React.useEffect(() => {
         const itemPriceElements = Array.from(document.querySelectorAll(".cart-item__total"));
 
-        const handleUpdateTotal = (event: React.MouseEvent) => {
+        const handleUpdateTotal = (event: MouseEvent) => {
             if ((event.target as HTMLButtonElement).classList.contains("qty-change")
             || (event.target as HTMLButtonElement).classList.contains("cart-item--remove")) {
                 handleTotalCalculation(itemPriceElements);
@@ -105,7 +116,7 @@ const CheckoutCard = (): React.ReactElement => {
             <Button 
             colorScheme="blue"
             leftIcon={<BiLockAlt />}
-            isDisabled={total === 0 ? true : false}
+            isDisabled={isDisabled}
             onClick={handleCheckoutProceed}
             variant="solid"
             >

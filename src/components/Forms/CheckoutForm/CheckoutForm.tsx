@@ -54,21 +54,21 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
             isDisabled={isDisabled}
             name="email"
             type="email"
-            value={inputValues.email}
+            value={inputValues.email as string}
             />
               <CustomInput
               handleInputChange={(event) => handleInputChange(event)}
               isDisabled={isDisabled}
               name="name"
               type="text"
-              value={inputValues.name}
+              value={inputValues.name as string}
               />
               <CustomInput
               handleInputChange={(event) => handleInputChange(event)}
               isDisabled={isDisabled}
               name="address"
               type="text"
-              value={inputValues.address}
+              value={inputValues.address as string}
               />
               <CustomInput
               handleInputChange={(event) => handleInputChange(event)}
@@ -76,14 +76,14 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
               helperText="Optional"
               name="addressLine2"
               type="text"
-              value={inputValues.addressLine2}
+              value={inputValues.addressLine as string}
               />
               <CustomInput
               handleInputChange={(event) => handleInputChange(event)}
               isDisabled={isDisabled}
               name="city"
               type="text"
-              value={inputValues.city}
+              value={inputValues.city as string}
               />
               <Flex 
               align="center"
@@ -93,14 +93,14 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
                 isDisabled={isDisabled}
                 name="country"
                 options={countryOptions}
-                value={inputValues.country}
+                value={inputValues.country as string}
                 />
                 <CustomInput
                 handleInputChange={(event) => handleInputChange(event)}
                 isDisabled={isDisabled}
                 name="postcode"
                 type="text"
-                value={inputValues.postcode}
+                value={inputValues.postcode as string}
                 />
               </Flex>
               <CustomInput
@@ -108,7 +108,7 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
               isDisabled={isDisabled}
               name="phone"
               type="text"
-              value={inputValues.phone}
+              value={inputValues.phone as string}
               />
             </VStack>
             <Button

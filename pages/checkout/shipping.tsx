@@ -29,7 +29,7 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
     const { cartStorage } = useStore()!;
     const { profile } = useGetUser();
 
-    const cartProductIds = cartStorage?.map(item => ({ 
+    const lineItems = cartStorage?.map(item => ({ 
         id: item.id, 
         quantity: item.quantity,
         customer_email: userData.email,
@@ -45,7 +45,7 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(cartProductIds)
+            body: JSON.stringify(lineItems)
         }).then(res => res.json());
 
         const result = stripe?.redirectToCheckout({

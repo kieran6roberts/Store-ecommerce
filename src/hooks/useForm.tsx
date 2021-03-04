@@ -7,18 +7,18 @@ import isObjectEmpty from "@/utils/isObjectEmpty";
 import { IReviewErrors, reviewValidation } from "@/utils/validation/reviews";
 
 type InputType = HTMLInputElement | HTMLTextAreaElement;
-type SubmitProp = (values: {[key: string]: string}) => Promise<unknown>;
+type SubmitProp = (values: { [key:string]: string | number }) => Promise<unknown>;
 
 interface IUseFormOutput {
     errors: IReviewErrors;
     handleInputChange: <T extends InputType>(event: React.ChangeEvent<T>) => void;
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void; 
-    inputValues: {[key: string]: string};
+    inputValues: { [key: string]: string | number };
     setInputValues: React.Dispatch<React.SetStateAction<any>>
 }
 
-const useForm = (initInputs: { [key: string]: string }, 
-    customSubmit: SubmitProp,
+const useForm = (initInputs: { [key: string]: string | number }, 
+    customSubmit: any,
     customValidation: any
     ): IUseFormOutput => {
     const [ inputValues, setInputValues ] = React.useState(initInputs);

@@ -5,6 +5,8 @@ import { ApolloClient,
     NormalizedCacheObject } from "@apollo/client";
 import * as React from "react";
 
+type InitApollo = (initState?: null) => ApolloClient<NormalizedCacheObject>;
+
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 const productsLink = new HttpLink({
@@ -40,7 +42,7 @@ const createApolloClient = () => {
     });
 };
 
-const initApollo = (initState = null) => {
+const initApollo:(initState?: null) => ApolloClient<NormalizedCacheObject> = (initState: any = null)  => {
     const _apolloClient = apolloClient ?? createApolloClient();
 
     if (initState) {
@@ -58,7 +60,7 @@ const initApollo = (initState = null) => {
     return _apolloClient;
 };
 
-const useApollo = (initState) => {
+const useApollo = (initState: any) => {
     const store = React.useMemo(() => initApollo(initState), [initState]);
     return store;
 };

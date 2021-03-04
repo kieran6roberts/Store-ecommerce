@@ -1,6 +1,7 @@
 import * as React from "react";
 
 const getUser = async (cookie = "") => {
+
     if (typeof window === "undefined" && window.__user) {
         return window.__user;
     }

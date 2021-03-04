@@ -14,7 +14,6 @@ interface IQuantityInput {
 }
 
 const QuantityInput = ({ 
-    //handleInputChange,
     handleQtyDecrease, 
     handleQtyIncrease,
     id }: IQuantityInput): React.ReactElement => {

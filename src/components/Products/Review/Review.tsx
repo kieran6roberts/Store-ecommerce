@@ -39,7 +39,7 @@ const Review: React.FC<IReview> = ({
     productId,
     submitHandler }) => {
 
-    const { profile, loading } = useGetUser();
+    const { profile } = useGetUser();
 
     const initReviewInputs = {
         name: profile?.nickname ?? "Anonymous",
