@@ -12,6 +12,7 @@ interface ICountry {
 
 interface ICustomSelect {
     isDisabled: boolean;
+    isRequired?: boolean;
     name: string;
     options: ICountry[];
     value: string;
@@ -19,6 +20,7 @@ interface ICustomSelect {
 
 const CustomSelect: React.FC<ICustomSelect> = ({ 
     isDisabled, 
+    isRequired,
     name, 
     options }) => {
 
@@ -34,7 +36,7 @@ const CustomSelect: React.FC<ICustomSelect> = ({
             fontSize="sm"
             textTransform="capitalize"
             >
-                {name}
+                {name} <span style={{ color: "red" }}>{isRequired ? "*" : null}</span>
             </FormLabel>
             <Select 
             fontSize="sm"

@@ -10,7 +10,7 @@ type InputType = HTMLInputElement | HTMLTextAreaElement;
 type SubmitProp = (values: { [key:string]: string | number }) => Promise<unknown>;
 
 interface IUseFormOutput {
-    errors: IReviewErrors;
+    errors: { [key: string]: string };
     handleInputChange: <T extends InputType>(event: React.ChangeEvent<T>) => void;
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void; 
     inputValues: { [key: string]: string | number };
@@ -22,7 +22,7 @@ const useForm = (initInputs: { [key: string]: string | number },
     customValidation: any
     ): IUseFormOutput => {
     const [ inputValues, setInputValues ] = React.useState(initInputs);
-    const [ errors, setErrors ] = React.useState<IReviewErrors>({ errors: "" });
+    const [ errors, setErrors ] = React.useState<{ [key: string]: string }>({ errors: "" });
     const [ submitDisabled, setSubmitDisabled ] = React.useState(true);
 
     const handleInputChange = <T extends InputType>(event: React.ChangeEvent<T>) => {

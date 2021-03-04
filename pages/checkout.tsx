@@ -23,7 +23,10 @@ const Checkout: NextPage = () => {
     const { cartStorage } = useStore()!;
     const router = useRouter();
 
-    const handleSubmit = (values: ICheckoutInputs) => router.push(`/checkout/shipping?data=${JSON.stringify(values)}`);
+    const handleSubmit = (values: ICheckoutInputs) => {
+        console.log(values);
+        router.push(`/checkout/shipping?data=${JSON.stringify(values)}`);
+    }
 
     return (
         <Layout>

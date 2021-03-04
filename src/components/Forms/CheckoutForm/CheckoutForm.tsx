@@ -38,6 +38,7 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
     };
 
     const { 
+        errors,
         handleInputChange, 
         handleSubmit, 
         inputValues } = useForm(initInputs, submit, usersValidation);
@@ -50,27 +51,34 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
     >
         <VStack spacing={4}>
             <CustomInput
+            error={errors.email}
             handleInputChange={(event) => handleInputChange(event)}
             isDisabled={isDisabled}
+            isRequired
             name="email"
             type="email"
             value={inputValues.email as string}
             />
               <CustomInput
+              error={errors.name}
               handleInputChange={(event) => handleInputChange(event)}
               isDisabled={isDisabled}
+              isRequired
               name="name"
               type="text"
               value={inputValues.name as string}
               />
               <CustomInput
+              error={errors.address}
               handleInputChange={(event) => handleInputChange(event)}
               isDisabled={isDisabled}
+              isRequired
               name="address"
               type="text"
               value={inputValues.address as string}
               />
               <CustomInput
+              error={errors.addressLine2}
               handleInputChange={(event) => handleInputChange(event)}
               isDisabled={isDisabled}
               helperText="Optional"
@@ -79,8 +87,10 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
               value={inputValues.addressLine as string}
               />
               <CustomInput
+              error={errors.city}
               handleInputChange={(event) => handleInputChange(event)}
               isDisabled={isDisabled}
+              isRequired
               name="city"
               type="text"
               value={inputValues.city as string}
@@ -91,21 +101,26 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
               >
                 <CustomSelect 
                 isDisabled={isDisabled}
+                isRequired
                 name="country"
                 options={countryOptions}
                 value={inputValues.country as string}
                 />
                 <CustomInput
+                error={errors.postcode}
                 handleInputChange={(event) => handleInputChange(event)}
                 isDisabled={isDisabled}
+                isRequired
                 name="postcode"
                 type="text"
                 value={inputValues.postcode as string}
                 />
               </Flex>
               <CustomInput
+              error={errors.phone}
               handleInputChange={(event) => handleInputChange(event)}
               isDisabled={isDisabled}
+              isRequired
               name="phone"
               type="text"
               value={inputValues.phone as string}
