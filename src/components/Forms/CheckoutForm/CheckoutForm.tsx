@@ -59,7 +59,6 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
       } else {
         hasMounted.current = true;
       }
-        console.log("form error use effect");
     }, [ errors ]);
 
     return (

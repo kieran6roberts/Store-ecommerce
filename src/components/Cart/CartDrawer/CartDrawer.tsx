@@ -80,6 +80,16 @@ const CartDrawer: React.FC = () => {
         }
     };
 
+    const hasMounted = React.useRef(false);
+
+    React.useEffect(() => {
+        if (hasMounted.current) {
+           onOpen();
+        } else {
+            hasMounted.current = true;
+        }
+    }, [ cartStorage ]);
+
     return (
         <>
         {!paths.includes(router.pathname) ? 
