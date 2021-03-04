@@ -43,10 +43,7 @@ const Product: React.FC<IProductStorage> = ({
         price
     };
 
-    const addProductToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
-        (event.currentTarget as HTMLButtonElement).textContent = "Added";
-        addCartValue(product);
-    };
+    const addProductToCart = () => addCartValue(product);
 
     React.useEffect(() => {
         const btn = document.querySelector(`.btn-${id}`);
@@ -74,6 +71,7 @@ const Product: React.FC<IProductStorage> = ({
         position="relative"
         shadow="base"
         w="300px"
+        zIndex={-20}
         >
             <Tooltip
             label={isSaved ? "Remove Save" : "Save"}
