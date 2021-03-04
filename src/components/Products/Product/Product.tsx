@@ -71,7 +71,7 @@ const Product: React.FC<IProductStorage> = ({
         position="relative"
         shadow="base"
         w="300px"
-        zIndex={-20}
+        zIndex={0}
         >
             <Tooltip
             label={isSaved ? "Remove Save" : "Save"}
