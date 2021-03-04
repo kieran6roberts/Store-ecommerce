@@ -50,7 +50,8 @@ const CartProcessIndicator: React.FC = () => {
     return (
         <Box 
         as="header"
-        mb={8}
+        flex="1"
+        mb={4}
         textAlign="center"
         w="full"
         >

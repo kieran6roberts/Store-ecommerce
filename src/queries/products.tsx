@@ -107,3 +107,12 @@ export const GET_CATEGORY = gql`
     }
     ${PRODUCT_DATA}
 `;
+
+export const GET_SPECIALS = gql`
+    query MyQuery {
+        products(where: {collections_every: {name: "Limited Time Specials"}}) {
+            ...ProductParts
+        }
+    }
+    ${PRODUCT_DATA}
+`;

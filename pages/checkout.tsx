@@ -1,4 +1,5 @@
-import { Flex,  
+import { 
+    Flex,  
     Link, 
     StackDivider, 
     Text,
@@ -8,6 +9,7 @@ import { NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
+import { BsArrowLeft } from "react-icons/bs";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import CheckoutForm, { ICheckoutInputs } from "@/components/Forms/CheckoutForm/CheckoutForm";
@@ -18,14 +20,12 @@ import { mapCartStorage } from "@/utils/mapCartStorage";
 
 const Checkout: NextPage = () => {
 
+    const { profile } = useGetUser();
+    const { cartStorage } = useStore()!;
     const router = useRouter();
 
     const handleSubmit = (values: ICheckoutInputs) => router.push(`/checkout/shipping?data=${JSON.stringify(values)}`);
 
-
-    const { profile } = useGetUser();
-    const { cartStorage } = useStore()!;
- 
     return (
         <Layout>
             <Flex 
@@ -76,14 +76,16 @@ const Checkout: NextPage = () => {
                         bg={useColorModeValue("gray.100", "gray.700")}
                         border="1px solid pink"
                         borderRadius="md"
-                        color="pink.400"
+                        color={useColorModeValue("gray.800", "white")}
                         display="block"
                         fontSize="sm"
                         ml="auto"
                         p={2}
-                        
+                        _hover={{
+                            bg: useColorModeValue("gray.200","gray.800")
+                        }}
                         >
-                            Back to cart
+                            <BsArrowLeft style={{ display: "inline-block" }} /> Back to cart
                         </Link>
                     </NextLink>
                 </VStack>

@@ -11,7 +11,8 @@ import Filter from "@/components/Filter/Filter";
 import Layout from "@/components/Layout/Layout";
 import Products, { IProductQuery } from "@/components/Products/Products";
 import Sort from "@/components/Sort/Sort";
-import { GET_CATEGORY,
+import { 
+  GET_CATEGORY,
   PRODUCT_ALL, 
   PRODUCT_CATEGORIES, 
   PRODUCT_SORT } from "@/queries/products";
@@ -19,23 +20,19 @@ import { GET_CATEGORY,
  
 const Store: NextPage = () => {
 
-  const [ sortProducts, setSortProducts ] = React.useState<{ products: IProductQuery[] | [] } | []>([]);
+  const [ sortProducts, setSortProducts ] = React.useState<IProductQuery[] | []>([]);
 
-  const { data: categories, error, loading: loadingCategories } = useQuery(PRODUCT_CATEGORIES);
+  const { data: categories } = useQuery(PRODUCT_CATEGORIES);
 
-  const [ handleAscPrice, { loading: sortError }] = useLazyQuery(PRODUCT_SORT, {
+  const [ handleAscPrice ] = useLazyQuery(PRODUCT_SORT, {
     fetchPolicy: "no-cache",
-    onCompleted: data => setSortProducts(data)
+    onCompleted: data => setSortProducts(data.products)
   });
   
-  const [ handleCategoryFilter, { loading: filterLoading }] = useLazyQuery(GET_CATEGORY, {
+  const [ handleCategoryFilter ] = useLazyQuery(GET_CATEGORY, {
     fetchPolicy: "no-cache",
-    onCompleted: data => setSortProducts(data)
+    onCompleted: data => setSortProducts(data.products)
   });
-
-  if (loadingCategories) {
-    return <Flex>Loading Products</Flex>;
-  }
 
   return (
     <Layout>
@@ -65,18 +62,10 @@ const Store: NextPage = () => {
       >
         <Sort handleAscPrice={handleAscPrice} />
         <Filter 
-        categories={categories ?? []} 
+        categories={categories ?? { categories: [] } } 
         handleCategoryFilter={handleCategoryFilter} 
         />
       </Flex>
-      {sortProducts.products?.length === 0 ? 
-      <Text 
-      color="pink.100"
-      textAlign="center"
-      >
-        No Products Matching this search
-      </Text>
-      :
       <Products 
       sortProducts={sortProducts}
       loadMore={true} 
@@ -90,7 +79,6 @@ const Store: NextPage = () => {
         ssr: false
       }}
       />
-    }
     </Layout>
   );
 };

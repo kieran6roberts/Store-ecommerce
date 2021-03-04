@@ -13,7 +13,7 @@ interface ICartDrawer {
     footer: string;
     isOpen: boolean;
     onClose: () => void;
-    placement: string;
+    placement: "top" | "left" | "right" | "bottom" | undefined;
     size?: string;
 }
 
@@ -44,8 +44,8 @@ const DrawerTemplate = ({
                         {children}
                     </DrawerBody>
                     <DrawerFooter
-                    bgGradient="linear(90deg, blue.50, pink.50)"
-                    color="gray.800"
+                    bgGradient="linear(90deg, blue.300, pink.300)"
+                    color="white"
                     fontWeight="700"
                     fontSize="xs"
                     justifyContent="flex-start"

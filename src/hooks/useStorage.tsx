@@ -12,6 +12,7 @@ type StorageUpdateContextType = {
     addCartValue: (value: IProductStorage) => void;
     removeCartValue: (event: React.MouseEvent<HTMLButtonElement>) => void;
     setCartStorage: React.Dispatch<React.SetStateAction<IProductStorage[] | null>>;
+    updateItemsQuantities: (cartQuantities: number[]) => void;
 }
 
 const StorageContext = React.createContext<StorageContextType | undefined>(undefined);
@@ -75,6 +76,19 @@ const useStorage = (key: string) => {
         setCartStorage(items);
     };
 
+    const updateItemsQuantities = (quantities: number[]) => {
+        const items = getStorage(key)!;
+        let updatedItems = items;
+
+        if (items) {
+            updatedItems = items.map((item, index) => ({ ...item, quantity: quantities[index] }));
+            setStorage(key, updatedItems);
+            
+        }
+
+        setCartStorage(updatedItems);
+    };
+
     const removeCartValue = (event: React.MouseEvent<HTMLButtonElement>) => {
         const items = getStorage(key)!;
 
@@ -93,22 +107,27 @@ const useStorage = (key: string) => {
         savedStorage,
         setCartStorage,
         toggleSavedValue,
+        updateItemsQuantities
     };
 };
 
 const StorageProvider = ({ children }: { children: React.ReactNode}): React.ReactElement  => {
     const { cartStorage, 
         addCartValue, 
-        removeCartValue } = useStorage("cart-products");
+        removeCartValue,
+        updateItemsQuantities } = useStorage("cart-products");
 
-    const { savedStorage, toggleSavedValue, setCartStorage } = useStorage("saved-products");
+    const { savedStorage, 
+        toggleSavedValue, 
+        setCartStorage } = useStorage("saved-products");
 
     return (
         <StorageContext.Provider value={{ cartStorage, savedStorage }} >
             <StorageDispatchContext.Provider value={{ addCartValue, 
                 removeCartValue, 
                 setCartStorage,
-                toggleSavedValue
+                toggleSavedValue,
+                updateItemsQuantities
                 }}>
                 {children} 
             </StorageDispatchContext.Provider>

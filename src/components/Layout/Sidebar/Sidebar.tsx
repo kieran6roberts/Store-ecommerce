@@ -1,11 +1,11 @@
-import { Flex, List, useColorModeValue, VStack } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { Flex, useColorModeValue, VStack } from "@chakra-ui/react";
 import * as React from "react";
 
 import DrawerTemplate from "@/components/DrawerTemplate/DrawerTemplate";
 import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
 import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
 import { IUser } from "@/components/Layout/Nav/Nav";
+
 import NavLinks from "../NavLinks/NavLinks";
 
 interface ISidebar {
@@ -24,7 +24,6 @@ const Sidebar = ({ isOpen, onClose, user, userLoading }: ISidebar): React.ReactE
         onClose={onClose} 
         placement="left"
         size="xs"
-        user={user} 
         >
             <Flex 
             bg={useColorModeValue("gray.50", "gray.800")}
@@ -39,6 +38,7 @@ const Sidebar = ({ isOpen, onClose, user, userLoading }: ISidebar): React.ReactE
                 variant="solid"
                 />
                 <CurrentUser 
+                justify="flex-start"
                 user={user} 
                 userLoading={userLoading} 
                 />

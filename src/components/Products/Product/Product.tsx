@@ -43,18 +43,15 @@ const Product: React.FC<IProductStorage> = ({
         price
     };
 
-    const addProductToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
-        (event.currentTarget as HTMLButtonElement).textContent = "Added";
-        addCartValue(product);
-    };
+    const addProductToCart = () => addCartValue(product);
 
     React.useEffect(() => {
         const btn = document.querySelector(`.btn-${id}`);
 
-        if (cartStorage.some(item => item.id === id)) {
-            btn && btn.textContent !== "Added" ? btn.textContent = "Added" : null;
+        if (cartStorage?.some(item => item.id === id)) {
+            btn && btn.textContent !== "In Cart" ? btn.textContent = "In Cart" : null;
         } else {
-            btn && btn.textContent === "Added" ? btn.textContent = "+ Add To Cart" : null;
+            btn && btn.textContent === "In Cart" ? btn.textContent = "+ Add To Cart" : null;
         }
 
     }, [ cartStorage ]);
@@ -74,6 +71,7 @@ const Product: React.FC<IProductStorage> = ({
         position="relative"
         shadow="base"
         w="300px"
+        zIndex={0}
         >
             <Tooltip
             label={isSaved ? "Remove Save" : "Save"}
@@ -85,8 +83,12 @@ const Product: React.FC<IProductStorage> = ({
                     <IconButton 
                     aria-label="save item"
                     borderRadius="none"
-                    bg="gray.100"
+                    borderBottomLeftRadius="md"
+                    bg={useColorModeValue("gray.100", "gray.700")}
                     colorScheme="pink"
+                    _hover={{
+                        bg: useColorModeValue("gray.100", "gray.900")
+                    }}
                     onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                         const curTarget = event.currentTarget as HTMLButtonElement;
 
@@ -162,7 +164,7 @@ const Product: React.FC<IProductStorage> = ({
                 mb="auto"
                 textAlign="center"
                 >
-                    £{price.toFixed(2)}
+                    €{(price / 100).toFixed(2)}
                 </Text>
                 <Button 
                 className={`btn-${product.id}`}

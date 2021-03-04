@@ -22,7 +22,7 @@ import DrawerTemplate from "@/components/DrawerTemplate/DrawerTemplate";
 import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 import { generateItemKey } from "@/utils/generateItemKey";
 
-const paths = ["/checkout", "/checkout/shipping", "/checkout/payment"];
+const paths = ["/checkout", "/checkout/shipping", "/checkout/review"];
 
 const CartDrawer: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -79,6 +79,16 @@ const CartDrawer: React.FC = () => {
             return <Text fontSize="sm" color="pink.200">Empty Cart</Text>;
         }
     };
+
+    const hasMounted = React.useRef(false);
+
+    React.useEffect(() => {
+        if (hasMounted.current) {
+           onOpen();
+        } else {
+            hasMounted.current = true;
+        }
+    }, [ cartStorage ]);
 
     return (
         <>

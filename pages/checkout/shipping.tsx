@@ -1,4 +1,5 @@
-import { Button,
+import { 
+    Button,
     Checkbox, 
     Flex, 
     Heading, 
@@ -10,25 +11,30 @@ import { Button,
 import { loadStripe } from "@stripe/stripe-js";
 import { GetServerSideProps , NextPage } from "next";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
+import { BsArrowLeft } from "react-icons/bs";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
 import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
+import isObjectEmpty from "@/utils/isObjectEmpty";
 import { mapCartStorage } from "@/utils/mapCartStorage";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-const Shipping: NextPage = ({ query: { data: queryData } }) => {
-    const userData = JSON.parse(queryData);
-    const router = useRouter();
+const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryData } }) => {
+    const userData = JSON.parse(queryData as string);
 
-    const { profile } = useGetUser();
     const { cartStorage } = useStore()!;
+    const { profile } = useGetUser();
 
-    const cartProductIds = cartStorage?.map(item => item.id);
+    const lineItems = cartStorage?.map(item => ({ 
+        id: item.id, 
+        quantity: item.quantity,
+        customer_email: userData.email,
+    }));
 
     const handlePaymentInit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -40,11 +46,15 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(cartProductIds)
+            body: JSON.stringify(lineItems)
         }).then(res => res.json());
 
         const result = stripe?.redirectToCheckout({
             sessionId: session.id
+        }).then(res => {
+            if (res.error) {
+                console.log(res.error.message);
+            }
         });
     };
 
@@ -103,9 +113,15 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
                         <Text>
                             Contact
                         </Text>
+                        {userData ?
                         <Text>
                             {userData.email} | {userData.phone}
                         </Text>
+                        :
+                        <Text>
+                            Not Available
+                        </Text>
+                        }
                         <Text>
                             <NextLink 
                             href="/checkout" 
@@ -131,9 +147,15 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
                         <Text>
                             Shipping To
                         </Text>
+                        {userData ?
                         <Text>
                             {`${userData.address} | ${userData.addressLine2 ? userData.addressLine2 + "|" : ""} ${userData.city}`}
                         </Text>
+                        :
+                        <Text>
+                            Not available
+                        </Text>
+                        }
                         <Text>
                             <NextLink 
                             href="/checkout" 
@@ -190,16 +212,19 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
                     passHref
                     >
                         <Link 
-                        border="1px solid pink"
                         bg={useColorModeValue("gray.100", "gray.700")}
+                        border="1px solid pink"
                         borderRadius="md"
-                        color="pink.400"
+                        color={useColorModeValue("gray.800", "white")}
                         display="block"
                         fontSize="sm"
                         ml="auto"
                         p={2}
+                        _hover={{
+                            bg: useColorModeValue("gray.200","gray.800")
+                        }}
                         >
-                            Back to cart
+                            <BsArrowLeft style={{ display: "inline-block" }} /> Back to cart
                         </Link>
                     </NextLink>
                 </VStack>
@@ -219,7 +244,7 @@ const Shipping: NextPage = ({ query: { data: queryData } }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    if (!ctx.query) {
+    if (isObjectEmpty(ctx.query)) {
         return {
             redirect: {
                 destination: "/checkout",
@@ -228,11 +253,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         };
     }
 
-    const query = ctx.query;
-
     return {
         props: {
-            query: query,
+            query: ctx.query,
         }
     };
 };

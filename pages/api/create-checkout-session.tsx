@@ -1,7 +1,9 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
+import type { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 
 import { PRODUCT_STORAGE } from "@/queries/products";
+import { IProductStorage } from "@/utils/storage";
 
 const stripe = new Stripe("sk_test_51IP3LTLIxM3ayKtnxOkzYa16G3uIIBhzb0q9LUvcqXg0By4pOVqCtUxwqQRnu5QLtR4h4NauShgjqYbuSWPUVApy00PZZx4mcQ", {
   apiVersion: "2020-08-27",
@@ -12,29 +14,30 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-async function createCheckoutSession (req, res) {
+async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse): Promise<void> {
     const { data: { products } } = await client.query({
         query: PRODUCT_STORAGE,
         variables: {
-            ids: req.body
+            ids: req.body.map((product: { id: string, quantity: string }) => product.id)
         }
     });
-
+    
     try {
         const session = await stripe.checkout.sessions.create({
-            success_url: "http://localhost:3000/?id={CHECKOUT_SESSION_ID}",
+            customer_email: req.body.customer_email,
+            success_url: "http://localhost:3000/checkout/review?id={CHECKOUT_SESSION_ID}",
             cancel_url: "http://localhost:3000/cart",
             mode: "payment",
             payment_method_types: ["card", "ideal", "sepa_debit"],
-            line_items: products.map(product => ({
+            line_items: products.map((product: IProductStorage, index: number) => ({
                 price_data: {
                     unit_amount: product.price,
                     currency: "EUR",
                     product_data: {
-                        name: product.name,
+                        name: product.name,           
                     },
                 },
-                quantity: 1
+                quantity: req.body[index].quantity
             }))
         });
 

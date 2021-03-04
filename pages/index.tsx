@@ -9,8 +9,7 @@ import NextHead from "@/components/NextHead/NextHead";
 import Products from "@/components/Products/Products";
 import { PRODUCT_BEST, PRODUCT_NEW } from "@/queries/products";
 
-const Home: NextPage = () => {
-  return (
+const Home: NextPage = () => (
     <>
     <NextHead 
     currentURL="http://localhost:3000" 
@@ -62,7 +61,6 @@ const Home: NextPage = () => {
       </VStack>
     </Layout>
     </>
-  );
-};
+);
 
 export default Home;

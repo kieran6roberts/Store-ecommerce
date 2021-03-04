@@ -20,7 +20,6 @@ import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
 import NavLinks from "@/components/Layout/NavLinks/NavLinks";
 
 export interface IUser {
-    user: {
       name?: string,
       nickname?: string,
       picture?: string,
@@ -28,7 +27,6 @@ export interface IUser {
       email?: string,
       email_verified?: string,
       sub?: string
-    }
   }
 
 interface INav { 
@@ -41,6 +39,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
     const router = useRouter();
 
     const { colorMode, toggleColorMode } = useColorMode();
+    
     return (
         <Flex
         direction="column"
@@ -157,7 +156,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     />
                 </Flex>
                 <CurrentUser 
-                position="flex-end"
+                justify="flex-end"
                 user={user} 
                 userLoading={userLoading} 
                 />

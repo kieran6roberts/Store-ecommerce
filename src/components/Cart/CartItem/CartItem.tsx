@@ -1,13 +1,10 @@
 import { Box,
-    Button, 
     Flex, 
     Stack, 
-    StackDivider, 
     Text, 
     VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import * as React from "react";
-import { ImCancelCircle } from "react-icons/im";
 
 import RemoveButton from "@/components/Cart/RemoveButton/RemoveButton";
 import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
@@ -87,10 +84,12 @@ const CartItem = ({
             </VStack>
             {!hideEdit ? 
             <>
-            <Flex 
-            align="center"
-            justify="space-evenly"
+            <VStack 
+            display="flex"
+            align-items="center"
+            justify-items="space-evenly"
             direction="column"
+            spacing={4}
             >
                 <QuantityInput 
                 id={id}
@@ -99,7 +98,7 @@ const CartItem = ({
                 handleQtyIncrease={handleQtyIncrease}
                 />  
                 <RemoveButton callback={removeCartValue} /> 
-            </Flex>
+            </VStack>
             <Flex 
             align="center"
             direction="column"
@@ -111,7 +110,7 @@ const CartItem = ({
                 mb={4}
                 textAlign="center"
                 >
-                    Total: £{itemPrice}
+                    Total: €{(itemPrice / 100).toFixed(2)}
                 </Text>
             </Flex>
             </> : null}

@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { Box,
+import { 
+    Box,
     Button,
     Center, 
     Flex, 
@@ -80,7 +81,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
 
     const [ reviews, setReviews ] = React.useState<IReviewInputs[] | undefined>();
 
-    const handleReviewSubmit = (mutationVariable: IReviewInputs) => {
+    const handleReviewSubmit = (mutationVariable: any) => {
         addReview({
             variables: mutationVariable,
         });
@@ -123,7 +124,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                     mx={1}>
                         <IconButton 
                         aria-label="rate product"
-                        bg={parseInt(review.rating) >= 1 ? "orange.300" : null}
+                        bg={parseInt(review.rating) >= 1 ? "orange.300" : "transparent"}
                         icon={<AiOutlineStar />} 
                         isRound={true}
                         pointerEvents="none"
@@ -134,7 +135,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                     <ListItem mx={1}>
                         <IconButton 
                         aria-label="rate product"
-                        bg={parseInt(review.rating) >= 2 ? "orange.300" : null}
+                        bg={parseInt(review.rating) >= 2 ? "orange.300" : "transparent"}
                         icon={<AiOutlineStar />} 
                         isRound={true}
                         pointerEvents="none"
@@ -145,7 +146,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                     <ListItem mx={1}>
                         <IconButton
                         aria-label="rate product"
-                        bg={parseInt(review.rating) >= 3 ? "orange.300" : null}
+                        bg={parseInt(review.rating) >= 3 ? "orange.300" : "transparent"}
                         icon={<AiOutlineStar />} 
                         isRound={true}
                         pointerEvents="none"
@@ -156,7 +157,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                     <ListItem mx={1}>
                         <IconButton 
                         aria-label="rate product"
-                        bg={parseInt(review.rating) >= 4 ? "orange.300" : null}
+                        bg={parseInt(review.rating) >= 4 ? "orange.300" : "transparent"}
                         icon={<AiOutlineStar />} 
                         isRound={true}
                         pointerEvents="none"

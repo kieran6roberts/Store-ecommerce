@@ -5,6 +5,8 @@ import * as React from "react";
 import Product from "@/components/Products/Product/Product";
 import { generateItemKey } from "@/utils/generateItemKey";
 
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+
 
 export interface IProductQuery {
     category: {
@@ -24,7 +26,7 @@ export interface IProductQuery {
 }
 
 interface IProducts {
-    sortProducts?: { products: IProductQuery[] } | [];
+    sortProducts?: IProductQuery[] | [];
     loadMore: boolean;
     query: DocumentNode;
     variables?: BaseQueryOptions<Record<string, any>> | undefined;
@@ -51,12 +53,15 @@ const Products: React.FC<IProducts> = ({
     }
 
     if (loading) {
-        return <Box h="75vh">Loading products...</Box>;
+        return (
+            <Box h="75vh">
+                <LoadingSpinner />
+            </Box>
+        );
     }
 
     const { products: cacheFirstData } = data;
-
-    const productArr = sortProducts?.products ?? cacheFirstData;
+    const productArr = sortProducts?.length ? sortProducts : cacheFirstData;
 
     const checkForMoreProducts = () => {
         const productElements = document.querySelectorAll(".product");
@@ -103,8 +108,6 @@ const Products: React.FC<IProducts> = ({
                         offset: offset,
                         limit: 10
                     },
-                    fetchPolicy: "cache-first",
-                    ssr: false
                 });
 
                 setOffset(offset + 10);

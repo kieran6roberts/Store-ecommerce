@@ -3,17 +3,19 @@ import * as React from "react";
 
 import { IUser } from "@/components/Layout/Nav/Nav";
 
+type Justify = "flex-start" | "flex-end";
+
 interface ICurrentUser {
-    position: string;
+    justify: Justify;
     user: IUser;
     userLoading?: boolean
 }
 
-const CurrentUser: React.FC<ICurrentUser> = ({ user, userLoading, position }) => {
+const CurrentUser: React.FC<ICurrentUser> = ({ justify, user, userLoading }) => {
     return (
         <Flex 
         alignItems="center"
-        justify={position}
+        justify={justify}
         flex="1"
         >
             {userLoading ? 

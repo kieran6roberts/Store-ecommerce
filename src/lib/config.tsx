@@ -41,3 +41,5 @@ if (typeof window === "undefined") {
         POST_LOGOUT_REDIRECT: window.location.origin,
     };
 }
+
+export {}
