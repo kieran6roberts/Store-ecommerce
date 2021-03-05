@@ -5,6 +5,7 @@ import { Box,
     List, 
     ListItem, 
     SimpleGrid,
+    Text,
     useColorModeValue } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
@@ -82,63 +83,35 @@ const Hero = (): React.ReactElement => {
             my={8}
             w="75vw"
             >
-                <ListItem 
-                
+                <ListItem
                 bg={useColorModeValue("white", "gray.600")}
-                border="1px solid pink"
-                borderRadius="md"
                 fontWeight="700"
                 py={1}
                 px={2}
                 textTransform="uppercase"
                 w="10rem"
                 >
-                    <NextLink 
-                    href="/store"
-                    passHref
-                    >
-                        <Link>
-                            Coffee Beans
-                        </Link>
-                    </NextLink>
+                    Coffee Beans
                 </ListItem>
                 <ListItem
                 bg={useColorModeValue("white", "gray.600")}
-                border="1px solid pink"
-                borderRadius="md"
                 fontWeight="700"
                 py={1}
                 px={2}
                 textTransform="uppercase"
                 w="10rem"
                 >
-                    <NextLink 
-                    href="/store"
-                    passHref
-                    >
-                        <Link>
-                            Ground Coffee
-                        </Link>
-                    </NextLink>
+                    Ground Coffee
                 </ListItem>
                 <ListItem
-                border="1px solid pink"
                 bg={useColorModeValue("white", "gray.600")}
-                borderRadius="md"
                 fontWeight="700"
                 py={1}
                 px={2}
                 textTransform="uppercase"
                 w="10rem"
                 >
-                    <NextLink 
-                    href="/store"
-                    passHref
-                    >
-                        <Link>
-                            Mugs & Cups
-                        </Link>
-                    </NextLink>
+                    Mugs & Cups
                 </ListItem>
             </List>
             <NextLink 

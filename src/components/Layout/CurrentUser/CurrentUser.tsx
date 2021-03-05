@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { IUser } from "@/components/Layout/Nav/Nav";
 
-type Justify = "flex-start" | "flex-end";
+type Justify = "flex-start" | "flex-end" | "center";
 
 interface ICurrentUser {
     justify: Justify;

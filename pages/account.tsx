@@ -1,10 +1,13 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { 
   Button,
   Divider,
   Flex,
   Heading, 
+  List,
+  ListItem,
   Text, 
+  useColorModeValue, 
   VStack } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
@@ -14,7 +17,10 @@ import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
 import Layout from "@/components/Layout/Layout";
 import { IUser } from "@/components/Layout/Nav/Nav";
 import auth0 from "@/lib/auth";
+import { GET_USER_ORDERS } from "@/queries/orders";
 import { UPDATE_USER } from "@/queries/users";
+import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import { generateItemKey } from "@/utils/generateItemKey";
 
 export interface IAccountInput {
   [key: string]: string;
@@ -22,6 +28,12 @@ export interface IAccountInput {
 
 const Account: NextPage<{ user: IUser }> = ({ user }) => {
   const [ editDisabled, setEditDisabled ] = React.useState<boolean>(true);
+
+  const { data, loading } = useQuery(GET_USER_ORDERS, {
+    variables: {
+      email: user.email
+    }
+  });
 
   const handleUpdateUserSubmission = async (mutationVariable: IAccountInput) => {
     /*
@@ -58,6 +70,8 @@ const Account: NextPage<{ user: IUser }> = ({ user }) => {
       clientName: "users"
     }
   });
+
+  console.log(data)
 
 
   return (
@@ -127,9 +141,34 @@ const Account: NextPage<{ user: IUser }> = ({ user }) => {
           >
             Previous Orders
           </Heading>
-          <Text fontSize="xs">
-            No orders
-          </Text>
+          {loading ? 
+          <LoadingSpinner />
+          :
+          <List w="full">
+              {data.orders.map(({ createdAt, name, orderItems, total }) => (
+                <ListItem 
+                bg={useColorModeValue("gray.100", "gray.700")}
+                borderRadius="md"
+                key={generateItemKey(name)}
+                p={4}
+                >
+                  <Text 
+                  fontSize="sm"
+                  fontWeight="700"
+                  >
+                    Order placed on {createdAt.slice(0, 10)}
+                  </Text>
+                  <Divider my={2} />
+                  <Text fontSize="xs">
+                    By: {name}
+                  </Text>
+                  <Text fontSize="xs">
+                    Total: €{(total/ 100).toFixed(2)}
+                  </Text>
+                </ListItem>
+              ))}
+          </List>
+          }
         </VStack>
       </Flex>
     </Layout>

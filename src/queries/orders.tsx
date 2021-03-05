@@ -18,3 +18,18 @@ export const USER_ORDER = gql`
         }
     }
 `;
+
+export const GET_USER_ORDERS = gql`
+    query GetUserOrders($email: String) {
+        orders(where: {email: $email}) {
+            createdAt
+            name
+            total
+            orderItems {
+                name
+                quantity
+                price
+            }
+        }
+    }
+`;

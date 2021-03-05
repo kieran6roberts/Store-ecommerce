@@ -1,4 +1,4 @@
-import { Heading, Link, VStack } from "@chakra-ui/react";
+import { Heading, Link, Text, VStack } from "@chakra-ui/react";
 import { NextPage } from "next";
 import NextLink from "next/link";
 import * as React from "react";
@@ -17,11 +17,18 @@ const Home: NextPage = () => (
     title="Home" 
     />
     <Layout>
-        <VStack spacing="24">
+        <VStack spacing="16">
             <Hero />
             <Heading as="h3">
                 Newest Products
             </Heading>
+            <Text         
+            w="60%"
+            textAlign="center"
+            >
+                These products are brand new to our store! The finest quality ingredients sourced
+                fresh for your pleasure.
+            </Text>
             <Products 
             loadMore={false} 
             query={PRODUCT_NEW} 
@@ -33,6 +40,13 @@ const Home: NextPage = () => (
             <Heading as="h3">
               Limited Time Specials
             </Heading>
+            <Text 
+            w="60%"
+            textAlign="center"
+            >
+                These products are sourced worldwide featuring some of the best qualtity beans that we can get our hands on. 
+                But beware, they will not be here for long so come and take a look.
+            </Text>
             <Products 
             loadMore={false} 
             query={PRODUCT_SPECIALS} 
@@ -41,6 +55,13 @@ const Home: NextPage = () => (
                 fetchPolicy: "no-cache"
             }}
             />
+            <Text   
+            w="60%"
+            textAlign="center"
+            >
+                Want to check out our full range of quality products? Click the link below 
+                and transport yourself into coffee heaven.
+            </Text>
             <NextLink 
             href="/store"
             passHref

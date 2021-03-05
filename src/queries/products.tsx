@@ -110,8 +110,13 @@ export const GET_CATEGORY = gql`
 
 export const PRODUCT_SPECIALS = gql`
     query GetSpecials {
-      products(where: {collections_some: {name: "Limited Time Specials"}}){
-        ...ProductParts
+        products(where: {collections_some: {name: "Limited Time Specials"}}){
+            ...ProductParts
+        }
+        collections(where: {name: "Limited Time Specials"}) {
+            description {
+                text
+            }
         }
     }
     ${PRODUCT_DATA}
