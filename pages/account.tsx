@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { 
+  Box,
   Button,
   Divider,
   Flex,
@@ -16,14 +17,21 @@ import CheckoutForm from "@/components/Forms/CheckoutForm/CheckoutForm";
 import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
 import Layout from "@/components/Layout/Layout";
 import { IUser } from "@/components/Layout/Nav/Nav";
+import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import auth0 from "@/lib/auth";
 import { GET_USER_ORDERS } from "@/queries/orders";
 import { UPDATE_USER } from "@/queries/users";
-import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import { formatPrice } from "@/utils/formatPrice";
 import { generateItemKey } from "@/utils/generateItemKey";
 
 export interface IAccountInput {
-  [key: string]: string;
+    [key: string]: string;
+}
+
+interface IPreviousOrders {
+    createdAt: string;
+    name:string;
+    total: number;
 }
 
 const Account: NextPage<{ user: IUser }> = ({ user }) => {
@@ -122,13 +130,19 @@ const Account: NextPage<{ user: IUser }> = ({ user }) => {
           >
             {editDisabled ? "Edit Details" : "Save Details"}
           </Button>
-          <CheckoutForm 
-          handleDisabled={() => setEditDisabled(!editDisabled)}
-          isDisabled={editDisabled}
-          submit={handleUpdateUserSubmission}
-          submitText="Submit Details"
-          userEmail={user.email}
-          />
+          <Box 
+          bg={editDisabled ? useColorModeValue("gray.50", "gray.700")  : "none" }
+          borderRadius="md"
+          p={4}
+          >
+            <CheckoutForm 
+            handleDisabled={() => setEditDisabled(!editDisabled)}
+            isDisabled={editDisabled}
+            submit={handleUpdateUserSubmission}
+            submitText="Submit Details"
+            userEmail={user.email}
+            />
+          </Box>
         </VStack>
         <VStack 
         align="flex-start"
@@ -145,7 +159,7 @@ const Account: NextPage<{ user: IUser }> = ({ user }) => {
           <LoadingSpinner />
           :
           <List w="full">
-              {data.orders.map(({ createdAt, name, orderItems, total }) => (
+              {data.orders.map(({ createdAt, name, total }: IPreviousOrders) => (
                 <ListItem 
                 bg={useColorModeValue("gray.100", "gray.700")}
                 borderRadius="md"
@@ -163,7 +177,7 @@ const Account: NextPage<{ user: IUser }> = ({ user }) => {
                     By: {name}
                   </Text>
                   <Text fontSize="xs">
-                    Total: €{(total/ 100).toFixed(2)}
+                    Total: {formatPrice(total)}
                   </Text>
                 </ListItem>
               ))}
