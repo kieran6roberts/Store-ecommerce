@@ -94,12 +94,17 @@ const CartDrawer: React.FC = () => {
         <>
         {!paths.includes(router.pathname) ? 
         <Button 
+        bg="pink.400"
+        color="white"
         leftIcon={<BsArrowBarLeft />}
         onClick={onOpen}
         w="5rem"
         ml="auto"
         mr={8}
         variant="ghost"
+        _hover={{
+            bg: "pink.500"
+        }}
         >
             Cart
         </Button> : null}
@@ -124,6 +129,7 @@ const CartDrawer: React.FC = () => {
                 px={4}
                 w="max-content"
                 _hover={{
+                    bg: useColorModeValue("gray.200", "gray.900"),
                     color: "pink.300"
                 }}
                 >

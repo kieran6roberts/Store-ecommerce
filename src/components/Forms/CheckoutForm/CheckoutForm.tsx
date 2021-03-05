@@ -54,7 +54,7 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
       if (hasMounted.current) {
         if (!isObjectEmpty(errors)) {
           const firstInput = document.querySelector(`#${Object.keys(errors)[0]}`) as HTMLInputElement;
-          firstInput.focus();
+          firstInput? firstInput.focus() : null;
         }
       } else {
         hasMounted.current = true;

@@ -87,17 +87,17 @@ const CartItem = ({
             <VStack 
             display="flex"
             align-items="center"
-            justify-items="space-evenly"
+            justify-items="space-between"
             direction="column"
             spacing={4}
             >
+                <RemoveButton callback={removeCartValue} /> 
                 <QuantityInput 
                 id={id}
                 handleInputChange={handleInputChange}
                 handleQtyDecrease={handleQtyDecrease}
                 handleQtyIncrease={handleQtyIncrease}
                 />  
-                <RemoveButton callback={removeCartValue} /> 
             </VStack>
             <Flex 
             align="center"

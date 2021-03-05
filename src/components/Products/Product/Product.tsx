@@ -65,7 +65,7 @@ const Product: React.FC<IProductStorage> = ({
         color={useColorModeValue("gray.800", "gray.50")}
         flexDirection="column"
         fontSize="sm"
-        h="380px"
+        h="420px"
         m="auto"
         overflow="hidden"
         position="relative"
@@ -154,14 +154,14 @@ const Product: React.FC<IProductStorage> = ({
                     {name}
                 </Text>
                 <Text 
-                fontSize="xs"
                 color={useColorModeValue("gray.500", "gray.200")}
+                fontSize="xs"
+                mb="auto"
                 >
                     {description}
                 </Text>
                 <Text 
                 fontWeight="bold"
-                mb="auto"
                 textAlign="center"
                 >
                     €{(price / 100).toFixed(2)}

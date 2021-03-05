@@ -62,6 +62,7 @@ const CustomSelect: React.FC<ICustomSelect> = ({
             name={name}
             placeholder={name}
             size="sm"
+            value={value}
             >
                {mapOptionsToDOM()}
             </Select>

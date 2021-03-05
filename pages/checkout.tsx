@@ -30,7 +30,7 @@ const Checkout: NextPage = () => {
         <Layout>
             <Flex 
             as="section"
-            flexDirection={["column", "column", "column", "row"]}
+            flexDirection={["column", "column", "column", "column", "row"]}
             minHeight="100vh"
             m={4}
             >

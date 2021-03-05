@@ -7,7 +7,7 @@ import Hero from "@/components/Hero/Hero";
 import Layout from "@/components/Layout/Layout";
 import NextHead from "@/components/NextHead/NextHead";
 import Products from "@/components/Products/Products";
-import { PRODUCT_BEST, PRODUCT_NEW } from "@/queries/products";
+import { PRODUCT_NEW, PRODUCT_SPECIALS } from "@/queries/products";
 
 const Home: NextPage = () => (
     <>
@@ -17,50 +17,50 @@ const Home: NextPage = () => (
     title="Home" 
     />
     <Layout>
-      <VStack spacing="24">
-        <Hero />
-        <Heading as="h3">
-          Newest Products
-        </Heading>
-        <Products 
-        loadMore={false} 
-        query={PRODUCT_NEW} 
-        variables={{
-          ssr: false,
-          fetchPolicy: "no-cache"
-        }}
-        />
-        <Heading as="h3">
-          Best Selling
-        </Heading>
-        <Products 
-        loadMore={false} 
-        query={PRODUCT_BEST} 
-        variables={{
-          ssr: false,
-          fetchPolicy: "no-cache"
-        }}
-        />
+        <VStack spacing="24">
+            <Hero />
+            <Heading as="h3">
+                Newest Products
+            </Heading>
+            <Products 
+            loadMore={false} 
+            query={PRODUCT_NEW} 
+            variables={{
+                ssr: false,
+                fetchPolicy: "no-cache"
+            }}
+            />
+            <Heading as="h3">
+              Limited Time Specials
+            </Heading>
+            <Products 
+            loadMore={false} 
+            query={PRODUCT_SPECIALS} 
+            variables={{
+                ssr: false,
+                fetchPolicy: "no-cache"
+            }}
+            />
             <NextLink 
-          href="/store"
-          passHref
-          >
-              <Link
-              bg="pink.400"
-              color="white"
-              borderRadius="md"
-              fontWeight="700"
-              py={3}
-              px={6}
-              textAlign="center"
-              textTransform="uppercase"
-              w="12rem">
-                  Shop All Items
-              </Link>
-          </NextLink>
-      </VStack>
+            href="/store"
+            passHref
+            >
+                <Link
+                bg="pink.400"
+                color="white"
+                borderRadius="md"
+                fontWeight="700"
+                py={3}
+                px={6}
+                textAlign="center"
+                textTransform="uppercase"
+                w="12rem">
+                    Shop All Items
+                </Link>
+            </NextLink>
+        </VStack>
     </Layout>
-    </>
+  </>
 );
 
 export default Home;

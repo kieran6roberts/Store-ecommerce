@@ -100,7 +100,7 @@ export const CATEGORY_SORT = gql`
 `;
 
 export const GET_CATEGORY = gql`
-    query getP($name: String!) {
+    query GetCategory($name: String!) {
         products(where: {category: {name: $name}}) {
             ...ProductParts
         }
@@ -108,10 +108,10 @@ export const GET_CATEGORY = gql`
     ${PRODUCT_DATA}
 `;
 
-export const GET_SPECIALS = gql`
-    query MyQuery {
-        products(where: {collections_every: {name: "Limited Time Specials"}}) {
-            ...ProductParts
+export const PRODUCT_SPECIALS = gql`
+    query GetSpecials {
+      products(where: {collections_some: {name: "Limited Time Specials"}}){
+        ...ProductParts
         }
     }
     ${PRODUCT_DATA}

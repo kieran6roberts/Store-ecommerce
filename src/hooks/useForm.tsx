@@ -6,7 +6,7 @@ import { IAccountInput } from "@/pages/account";
 import isObjectEmpty from "@/utils/isObjectEmpty";
 import { IReviewErrors, reviewValidation } from "@/utils/validation/reviews";
 
-type InputType = HTMLInputElement | HTMLTextAreaElement;
+type InputType = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 type SubmitProp = (values: { [key:string]: string | number }) => Promise<unknown>;
 
 interface IUseFormOutput {
@@ -27,7 +27,6 @@ const useForm = (initInputs: { [key: string]: string | number },
 
     const handleInputChange = <T extends InputType>(event: React.ChangeEvent<T>) => {
         const { name: eventName, value: eventValue } = event.target;
-        console.log(event.target)
 
         setInputValues({
             ...inputValues,
@@ -42,9 +41,6 @@ const useForm = (initInputs: { [key: string]: string | number },
 
     React.useEffect(() => {
         const isError = isObjectEmpty(errors);
-
-        console.log(errors);
-        console.log(inputValues);
 
         if (isError && !submitDisabled) {
             customSubmit(inputValues);
