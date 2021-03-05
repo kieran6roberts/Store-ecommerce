@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { 
   Box,
   Button,
@@ -20,7 +20,6 @@ import { IUser } from "@/components/Layout/Nav/Nav";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import auth0 from "@/lib/auth";
 import { GET_USER_ORDERS } from "@/queries/orders";
-import { UPDATE_USER } from "@/queries/users";
 import { formatPrice } from "@/utils/formatPrice";
 import { generateItemKey } from "@/utils/generateItemKey";
 
@@ -37,49 +36,19 @@ interface IPreviousOrders {
 const Account: NextPage<{ user: IUser }> = ({ user }) => {
   const [ editDisabled, setEditDisabled ] = React.useState<boolean>(true);
 
+  console.log(user)
   const { data, loading } = useQuery(GET_USER_ORDERS, {
     variables: {
       email: user.email
     }
   });
 
-  const handleUpdateUserSubmission = async (mutationVariable: IAccountInput) => {
-    /*
-    updateUsers({
-            context: { clientName: "users" },
-            variables: mutationVariable,
-            update: (store, { data }) => {
-                const userData = store.readQuery({
-                    query: UPDATE_USER
-                });
-
-                store.writeQuery({
-                    query: UPDATE_USER,
-                    data: {
-                        reviews: [...userData.users, data.update_users]
-                    }
-                });
-            }
-        });*/
-
-        /*
-        const auth = await fetch("/api/session", {
-          method: "POST",
-          body: JSON.stringify(inputValues)
-        });
-        console.log(auth);*/
+  const handleUpdateUserSubmission = async (inputs: { [key:string]: string }) => {
+      const auth = await fetch("/api/session", {
+        method: "POST",
+        body: JSON.stringify(inputs)
+      });
   };
-
-  const [ updateUsers, { 
-    loading: mutationLoading, 
-    error: mutationError 
-  }] = useMutation(UPDATE_USER, {
-    context: {
-      clientName: "users"
-    }
-  });
-
-  console.log(data)
 
 
   return (
