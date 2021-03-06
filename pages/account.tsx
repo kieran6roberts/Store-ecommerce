@@ -46,8 +46,17 @@ const Account: NextPage<{ user: IUser }> = ({ user }) => {
   const handleUpdateUserSubmission = async (inputs: { [key:string]: string }) => {
       const auth = await fetch("/api/session", {
         method: "POST",
-        body: JSON.stringify(inputs)
-      });
+        body: JSON.stringify(inputs),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => res.json());
+
+      const { update_users: { returning } } = auth.data;
+      
+      console.log(returning);
+
+      setEditDisabled(true);
   };
 
 
@@ -67,7 +76,7 @@ const Account: NextPage<{ user: IUser }> = ({ user }) => {
       <Flex direction={["column", "column", "row"]}>
         <VStack 
         align="flex-start"
-        flex="1"
+        flex="2"
         pl={4}
         pr={12}
         py={2}
