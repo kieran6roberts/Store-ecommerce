@@ -8,6 +8,9 @@ export default async function updateUser(req: NextApiRequest, res: NextApiRespon
     try {
         const session = await initAuth.getSession(req);
 
+        console.log(session)
+        console.log(req.body)
+
         const client = new ApolloClient({
             uri: process.env.NEXT_PUBLIC_HASURA_API!,
             cache: new InMemoryCache(),

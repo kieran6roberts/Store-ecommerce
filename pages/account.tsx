@@ -23,9 +23,15 @@ import { GET_USER_ORDERS} from "@/queries/orders";
 import { USER_DETAILS } from "@/queries/users";
 import { formatPrice } from "@/utils/formatPrice";
 import { generateItemKey } from "@/utils/generateItemKey";
+import { IUsersValidation } from "@/utils/validation/users";
 
 export interface IAccountInput {
     [key: string]: string;
+}
+
+interface IAccount {
+  user: IUser;
+  userInfo: IUsersValidation[];
 }
 
 interface IPreviousOrders {
@@ -34,8 +40,9 @@ interface IPreviousOrders {
     total: number;
 }
 
-const Account: NextPage<{ user: IUser }> = ({ user, userInfo }) => {
+const Account: NextPage<IAccount> = ({ user, userInfo }) => {
     const [ editDisabled, setEditDisabled ] = React.useState<boolean>(true);
+    const [ isUpdated, setIsUpdated ] = React.useState<boolean>(false);
 
     const { data: orderData, loading: orderLoading } = useQuery(GET_USER_ORDERS, {
       variables: {
@@ -56,9 +63,14 @@ const Account: NextPage<{ user: IUser }> = ({ user, userInfo }) => {
 
         const { update_users: { returning } } = auth.data;
 
+        setIsUpdated(true);
         setEditDisabled(true);
     };
 
+    React.useEffect(() => {
+      const editBtn = document.querySelector("#details-toggle") as HTMLButtonElement;
+      editBtn?.focus();
+    }, [ isUpdated ]);
 
     return (
       <Layout>
@@ -100,8 +112,19 @@ const Account: NextPage<{ user: IUser }> = ({ user, userInfo }) => {
               your details such as delivery address allowing us to speed up the
               time before they arrrive with you. 
             </Text>
+            {isUpdated ? 
+            <Text 
+            borderRadius="md"
+            border="1px solid pink"
+            color="pink.400"
+            p={4}
+            >
+                Your account details were successfully updated!
+            </Text> : null
+            }
             <Button
             colorScheme="pink"
+            id="details-toggle"
             onClick={() => setEditDisabled(!editDisabled)} 
             size="sm"
             variant="outline"

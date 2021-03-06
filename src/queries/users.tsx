@@ -1,28 +1,19 @@
 import { gql } from "@apollo/client";
 
-export const USER_DATA = gql`
-    fragment UserParts on User {
-        address
-        addressLine2
-        city
-        country
-        id
-        name
-        phone
-        postcode
-        updated_at
-    }
-`;
-
 export const UPDATE_USER = gql`
    mutation UserMutation($id: String_comparison_exp, $changes: users_set_input) {
         update_users(where: {auth0_id: $id}, _set: $changes) {
             returning {
-                ...UserParts
+                address
+                addressLine2
+                city
+                country
+                name
+                phone
+                postcode
             }
         }
     }
-    ${USER_DATA}
 `;
 
 export const USER_DETAILS = gql`
