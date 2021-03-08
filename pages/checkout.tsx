@@ -1,3 +1,4 @@
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { 
     Flex,  
     Link, 
@@ -5,7 +6,7 @@ import {
     Text,
     useColorModeValue,
     VStack } from "@chakra-ui/react";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
@@ -15,10 +16,17 @@ import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import CheckoutForm, { ICheckoutInputs } from "@/components/Forms/CheckoutForm/CheckoutForm";
 import Layout from "@/components/Layout/Layout";
 import { useStore } from "@/hooks/useStorage";
+import auth0 from "@/lib/auth";
 import { useGetUser } from "@/lib/user";
+import { USER_DETAILS } from "@/queries/users";
 import { mapCartStorage } from "@/utils/mapCartStorage";
+import { IUsersValidation } from "@/utils/validation/users";
 
-const Checkout: NextPage = () => {
+interface ICheckout {
+    userInfo: IUsersValidation[];
+}
+
+const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
 
     const { profile } = useGetUser();
     const { cartStorage } = useStore()!;
@@ -62,11 +70,20 @@ const Checkout: NextPage = () => {
                             </Link>
                         </NextLink>
                     </Text> : null}
+                    {userInfo ? 
+                    <Text 
+                    color="pink.400"
+                    fontSize="xs"
+                    textAlign="center"
+                    w="full"
+                    >
+                        We have used you current saved details to save you some time
+                    </Text> : null}
                     <CheckoutForm 
                     isDisabled={false}
                     submit={handleSubmit}
                     submitText="Continue to shipping"
-                    userEmail={profile?.email ?? null}
+                    userSavedDetails={userInfo[0] ?? null}
                     />
                     <NextLink 
                     href="/cart" 
@@ -102,6 +119,32 @@ const Checkout: NextPage = () => {
             </Flex>
         </Layout>
     );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await auth0.getSession(ctx.req);
+
+  const client = new ApolloClient({
+      uri: process.env.NEXT_PUBLIC_HASURA_API!,
+      cache: new InMemoryCache(),
+      headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${session?.accessToken}`
+      }
+  });
+
+  const { data: { users: user }} = await client.query({
+      query: USER_DETAILS,
+      variables: {
+          id: session?.user.sub
+      }
+    });
+
+  return {
+    props: {
+      userInfo: user ?? null
+    }
+  };
 };
 
 export default Checkout;
