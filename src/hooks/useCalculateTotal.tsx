@@ -26,7 +26,7 @@ const useCalculateTotal = (): ICalculationReturn => {
             setTotal(0);
             return null;
         } else {
-            const currentTotal = input.map(element => parseInt(element.textContent!.replace("Total: €", "")))
+            const currentTotal = input.map(element => parseFloat(element.textContent!.replace("Total: €", "")))
             .reduce((accum, curValue) => accum + curValue, 0);
 
             setTotal(currentTotal);

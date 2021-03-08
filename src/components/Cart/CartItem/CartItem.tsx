@@ -2,6 +2,7 @@ import { Box,
     Flex, 
     Stack, 
     Text, 
+    useColorModeValue, 
     VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import * as React from "react";
@@ -48,13 +49,15 @@ const CartItem = ({
 
     return (
         <Stack
+        bg={useColorModeValue("gray.100", "gray.700")}
+        borderRadius="md"
         direction={["column", "column", "column", "row"]}
         display="flex"
         fontSize="xs"
         maxW={[ "500px", "500px", "500px", "none" ]}
         mx="auto"
         p={4}
-        spacing="20px"
+        spacing="0"
         justify="space-between"
         w="full">
             <Box m="auto">
@@ -68,6 +71,7 @@ const CartItem = ({
             <VStack 
             flex="2"
             spacing={2}
+            px="1rem"
             >
                 <Text 
                 fontSize="sm"
@@ -89,15 +93,17 @@ const CartItem = ({
             align-items="center"
             justify-items="space-between"
             direction="column"
+            mb={[4, 4, 4, 2]}
+            px="1rem"
             spacing={4}
             >
-                <RemoveButton callback={removeCartValue} /> 
                 <QuantityInput 
                 id={id}
                 handleInputChange={handleInputChange}
                 handleQtyDecrease={handleQtyDecrease}
                 handleQtyIncrease={handleQtyIncrease}
                 />  
+                <RemoveButton callback={removeCartValue} /> 
             </VStack>
             <Flex 
             align="center"
@@ -106,8 +112,7 @@ const CartItem = ({
             >
                 <Text 
                 className="cart-item__total"
-                flex="0.5"
-                mb={4}
+                flex="1"
                 textAlign="center"
                 >
                     Total: €{(itemPrice / 100).toFixed(2)}

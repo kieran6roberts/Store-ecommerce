@@ -98,7 +98,7 @@ const CheckoutCard = (): React.ReactElement => {
                     Shipping Costs:
                 </Text>
                 <Text id="shipping-costs">
-                    €{total >= 30 ? "0.00" : "4.99"}
+                    FREE
                 </Text>
             </Flex>
             <Flex 
@@ -109,7 +109,7 @@ const CheckoutCard = (): React.ReactElement => {
                     Total:
                 </Text>
                 <Text>
-                    €{total < 30 ? (total + 4.99).toFixed(2) : total.toFixed(2)}
+                    €{total}
                 </Text>
             </Flex>
             <Divider />

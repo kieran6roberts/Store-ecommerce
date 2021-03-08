@@ -1,4 +1,5 @@
-import { Button,
+import { Box,
+    Button,
     HStack,
     Input,
     useNumberInput } from "@chakra-ui/react";
@@ -34,13 +35,17 @@ const QuantityInput = ({
     const input = getInputProps();
 
     return (
+        <>
+            <Box 
+            as="p"
+            textAlign="center"
+            >
+                Quantity
+            </Box>
         <HStack 
+        display="flex"
         maxW="250px" 
-        mx="auto"
         >
-            <p>
-                Qty
-            </p>
             <Button 
             aria-label="decrease quantity"
             className="qty-change"
@@ -54,7 +59,7 @@ const QuantityInput = ({
             className="item-qty"
             id={`qty-${id}`}
             isDisabled={true}
-            width="4rem" 
+            width="3rem" 
             />
             <Button 
             aria-label="increase quantity"
@@ -65,6 +70,8 @@ const QuantityInput = ({
                 +
             </Button>
         </HStack>
+        
+            </>
     );
 };
 
