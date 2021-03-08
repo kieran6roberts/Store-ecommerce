@@ -138,7 +138,11 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                             </Link>
                         </NextLink>
                         <span>
-                            {router.pathname.split("/").join(" > ").toLowerCase()}
+                            {console.log(router)}
+                            {router.pathname === "/store/products" ?
+                             router.asPath.split("/").join(" > ").toLowerCase()
+                            :
+                            router.pathname.split("/").join(" > ").toLowerCase()}
                         </span>
                     </Text>
                 </Box>

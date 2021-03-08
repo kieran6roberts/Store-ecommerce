@@ -84,7 +84,8 @@ const Hero = (): React.ReactElement => {
             w="75vw"
             >
                 <ListItem
-                bg={useColorModeValue("white", "gray.600")}
+                bg={useColorModeValue("white", "gray.700")}
+                borderRadius="sm"
                 fontWeight="700"
                 py={1}
                 px={2}
@@ -94,7 +95,8 @@ const Hero = (): React.ReactElement => {
                     Coffee Beans
                 </ListItem>
                 <ListItem
-                bg={useColorModeValue("white", "gray.600")}
+                bg={useColorModeValue("white", "gray.700")}
+                borderRadius="sm"
                 fontWeight="700"
                 py={1}
                 px={2}
@@ -104,7 +106,8 @@ const Hero = (): React.ReactElement => {
                     Ground Coffee
                 </ListItem>
                 <ListItem
-                bg={useColorModeValue("white", "gray.600")}
+                bg={useColorModeValue("white", "gray.700")}
+                borderRadius="sm"
                 fontWeight="700"
                 py={1}
                 px={2}
@@ -127,7 +130,11 @@ const Hero = (): React.ReactElement => {
                 px={6}
                 textAlign="center"
                 textTransform="uppercase"
-                w="12rem">
+                w="12rem"
+                _hover={{
+                    bg: "pink.500"
+                }}
+                >
                     Shop All Items
                 </Link>
             </NextLink>
