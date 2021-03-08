@@ -34,6 +34,11 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
 
     const handleSubmit = (values: ICheckoutInputs) => router.push(`/checkout/shipping?data=${JSON.stringify(values)}`);
 
+    React.useEffect(() => {
+        const emailElement = document.querySelector("#email") as HTMLButtonElement;
+        emailElement.focus();
+    }, []);
+
     return (
         <Layout>
             <Flex 
@@ -83,7 +88,7 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
                     isDisabled={false}
                     submit={handleSubmit}
                     submitText="Continue to shipping"
-                    userSavedDetails={userInfo[0] ?? null}
+                    userSavedDetails={userInfo ? userInfo[0] : null}
                     />
                     <NextLink 
                     href="/cart" 
@@ -124,27 +129,33 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const session = await auth0.getSession(ctx.req);
 
-  const client = new ApolloClient({
-      uri: process.env.NEXT_PUBLIC_HASURA_API!,
-      cache: new InMemoryCache(),
-      headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${session?.accessToken}`
-      }
-  });
-
-  const { data: { users: user }} = await client.query({
-      query: USER_DETAILS,
-      variables: {
-          id: session?.user.sub
-      }
-    });
-
-  return {
-    props: {
-      userInfo: user ?? null
+  if (!session) {
+      return {
+          props: {}
+      };
+  } else {
+        const client = new ApolloClient({
+            uri: process.env.NEXT_PUBLIC_HASURA_API!,
+            cache: new InMemoryCache(),
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${session?.accessToken}`
+            }
+        });
+        
+        const { data: { users: user }} = await client.query({
+            query: USER_DETAILS,
+            variables: {
+                id: session?.user.sub
+            }
+            });
+        
+        return {
+            props: {
+            userInfo: user ?? null
+            }
+        };
     }
-  };
 };
 
 export default Checkout;

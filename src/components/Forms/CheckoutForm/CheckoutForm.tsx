@@ -17,7 +17,7 @@ interface ICheckoutForm {
     isDisabled: boolean;
     submit: (values: ICheckoutInputs) => Promise<unknown>;
     submitText: string;
-    userSavedDetails?: IUsersValidation;
+    userSavedDetails?: IUsersValidation | null;
 }
 
 export interface ICheckoutInputs {
