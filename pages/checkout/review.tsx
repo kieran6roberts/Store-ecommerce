@@ -18,6 +18,7 @@ import Layout from "@/components/Layout/Layout";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import { USER_ORDER } from "@/queries/orders";
 import { getStorage, setStorage } from "@/utils/storage";
+import { nowDate } from "@/utils/nowDate";
 
 interface IReview {
     query: ParsedUrlQuery
@@ -101,7 +102,28 @@ const Review: NextPage<IReview> = ({ query }) => {
                                 px={2}
                                 w="100%"
                                 >
+                                    <Text 
+                                    fontWeight="700"
+                                    mx={4}
+                                    >
+                                        Order placed on:
+                                    </Text>
                                     <Text mx={4}>
+                                        {nowDate()}
+                                    </Text>
+                                </Flex>
+                                <Flex 
+                                bg={useColorModeValue("gray.100", "gray.600")}
+                                borderRadius="sm"
+                                justify="flex-start"
+                                py={4}
+                                px={2}
+                                w="100%"
+                                >
+                                    <Text 
+                                    fontWeight="700"
+                                    mx={4}
+                                    >
                                         Email: 
                                     </Text>
                                     <Text mx={4}>
@@ -117,7 +139,10 @@ const Review: NextPage<IReview> = ({ query }) => {
                                 px={2}
                                 w="100%"
                                 >
-                                    <Text mx={4}>
+                                    <Text 
+                                    fontWeight="700"
+                                    mx={4}
+                                    >
                                         Total:
                                     </Text>
                                     <Text mx={4}>
