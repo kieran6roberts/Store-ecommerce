@@ -26,8 +26,8 @@ const CheckoutCard = (): React.ReactElement => {
         updateItemsQuantities(cartQuantities);
 
         setCookie(null, "checkout-session", "active", {
-            maxAge: 60,
-            expires: new Date(Date.now() + 60),
+            maxAge: 3600,
+            expires: new Date(Date.now() + 3600),
             path: "/"
         });
 

@@ -20,6 +20,7 @@ import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
 import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
+import isObjectEmpty from "@/utils/isObjectEmpty";
 import { mapCartStorage } from "@/utils/mapCartStorage";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -246,7 +247,22 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const cookies = nookies.get(ctx);
 
-    if(!cookies["checkout-session"]) {
+    if(!cookies["checkout-session"] || (!cookies["checkout-session"] && isObjectEmpty(ctx.query))) {
+        return {
+            redirect: {
+                destination: "/cart",
+                permanent: false
+            }
+        };
+    }
+
+    const queryCheck = ["email", "name", "address", "city", "country", "postcode", "phone"];
+
+    const parsedQuery = ctx.query.data ? JSON.parse(ctx.query.data as string) : null;
+
+    const isValidQuery = queryCheck.every(property => parsedQuery ? parsedQuery[property] : null);
+
+    if (!isValidQuery) {
         return {
             redirect: {
                 destination: "/cart",
