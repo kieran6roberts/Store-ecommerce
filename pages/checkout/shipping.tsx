@@ -34,8 +34,10 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
     const lineItems = cartStorage?.map(item => ({ 
         id: item.id, 
         quantity: item.quantity,
-        customer_email: userData.email,
+        ...userData
     }));
+
+    console.log(lineItems)
 
     const handlePaymentInit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();

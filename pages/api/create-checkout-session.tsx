@@ -22,18 +22,25 @@ async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse)
             ids: req.body.map((product: { id: string, quantity: string }) => product.id)
         }
     });
+
+    console.log(req.body)
     
     try {
         const session = await stripe.checkout.sessions.create({
-            customer_email: req.body.customer_email,
-            success_url: "http://localhost:3000/checkout/review?id={CHECKOUT_SESSION_ID}",
+            billing_address_collection: "required",
             cancel_url: "http://localhost:3000/cart",
+            customer_email: req.body.email,
+            metadata: {
+                address: req.body.address,
+                addressLine2: req.body.addressLine2,
+                city: req.body.city,
+                country: req.body.country,
+                postcode: req.body.postcode,
+                phone: req.body.phone
+            },
             mode: "payment",
             payment_method_types: ["card", "ideal", "sepa_debit"],
-            shipping_address_collection: {
-                allowed_countries: allowedShippingCountries,
-            },
-            billing_address_collection: "required",
+            success_url: "http://localhost:3000/checkout/review?id={CHECKOUT_SESSION_ID}",
             line_items: products.map((product: IProductStorage, index: number) => ({
                 price_data: {
                     unit_amount: product.price,

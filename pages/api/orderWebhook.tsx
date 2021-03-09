@@ -25,6 +25,7 @@ async function orderWebhook (req: NextApiRequest, res: NextApiResponse): Promise
     );
 
     const { customer }: any = session;
+    const userObject = session.metadata[0];
 
     const response = await client.mutate({
         mutation: gql`
@@ -45,9 +46,9 @@ async function orderWebhook (req: NextApiRequest, res: NextApiResponse): Promise
         }`,
         variables: {
             data: {
-                name: customer.email,
-                email: customer.email,
-                phone: customer.phone ?? "none",
+                name: userObject.email,
+                email: userObject.email,
+                phone: userObject.phone,
                 total: session.amount_total,
                 stripeCheckoutId: session.id,
                 fulfilled: true,
