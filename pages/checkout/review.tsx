@@ -17,6 +17,7 @@ import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import { USER_ORDER } from "@/queries/orders";
+import { getStorage, setStorage } from "@/utils/storage";
 
 interface IReview {
     query: ParsedUrlQuery
@@ -40,6 +41,14 @@ const Review: NextPage<IReview> = ({ query }) => {
     if (error) {
         console.log("error");
     }
+
+    React.useEffect(() => {
+        if (typeof window !== "undefined") {
+            window.history.replaceState(null, "", `${window.location.origin}/checkout/review`);
+        }
+
+        setStorage("cart-products", []);
+    }, []);
 
     return (
         <Layout>
