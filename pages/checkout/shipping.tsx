@@ -11,6 +11,7 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { GetServerSideProps , NextPage } from "next";
 import NextLink from "next/link";
+import nookies from "nookies";
 import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
 import { BsArrowLeft } from "react-icons/bs";
@@ -19,7 +20,6 @@ import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
 import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
-import isObjectEmpty from "@/utils/isObjectEmpty";
 import { mapCartStorage } from "@/utils/mapCartStorage";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -244,10 +244,12 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    if (isObjectEmpty(ctx.query)) {
+    const cookies = nookies.get(ctx);
+
+    if(!cookies["checkout-session"]) {
         return {
             redirect: {
-                destination: "/checkout",
+                destination: "/cart",
                 permanent: false
             }
         };

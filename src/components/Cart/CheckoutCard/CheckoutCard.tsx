@@ -5,6 +5,7 @@ import { Button,
     Text, 
     VStack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { setCookie } from "nookies";
 import * as React from "react";
 import { BiLockAlt } from "react-icons/bi";
 
@@ -23,6 +24,12 @@ const CheckoutCard = (): React.ReactElement => {
         const cartQuantities = quantitiyElements.map((input) => parseInt(input.value));
 
         updateItemsQuantities(cartQuantities);
+
+        setCookie(null, "checkout-session", "active", {
+            maxAge: 60,
+            expires: new Date(Date.now() + 60),
+            path: "/"
+        });
 
         router.push("/checkout");
     };
@@ -122,6 +129,13 @@ const CheckoutCard = (): React.ReactElement => {
             >
                 Proceed To Checkout
             </Button>
+            <Text 
+            color="pink.400"
+            fontSize="xs"
+            >
+                Once the checkout process begins you will have an hour to complete
+                your checkout otherwise you will be returned back to the cart to start over.
+            </Text>
         </VStack>
     );
 };

@@ -11,6 +11,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { BsArrowLeft } from "react-icons/bs";
+import nookies from "nookies";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import CheckoutForm, { ICheckoutInputs } from "@/components/Forms/CheckoutForm/CheckoutForm";
@@ -127,13 +128,24 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await auth0.getSession(ctx.req);
+    const cookies = nookies.get(ctx);
 
-  if (!session) {
-      return {
-          props: {}
-      };
-  } else {
+    if(!cookies["checkout-session"]) {
+        return {
+            redirect: {
+                destination: "/cart",
+                permanent: false
+            }
+        };
+    }
+
+    const session = await auth0.getSession(ctx.req);
+
+    if (!session) {
+        return {
+            props: {}
+        };
+    } else {
         const client = new ApolloClient({
             uri: process.env.NEXT_PUBLIC_HASURA_API!,
             cache: new InMemoryCache(),

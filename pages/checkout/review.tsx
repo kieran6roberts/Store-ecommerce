@@ -9,6 +9,7 @@ import {
     VStack } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import NextLink from "next/link";
+import nookies from "nookies";
 import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
 
@@ -143,6 +144,17 @@ const Review: NextPage<IReview> = ({ query }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const cookies = nookies.get(ctx);
+
+    if(!cookies["checkout-session"]) {
+        return {
+            redirect: {
+                destination: "/cart",
+                permanent: false
+            }
+        };
+    }
+
     return {
         props: {
             query: ctx.query,
