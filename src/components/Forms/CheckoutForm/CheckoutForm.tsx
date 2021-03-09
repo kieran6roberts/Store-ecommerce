@@ -24,13 +24,18 @@ export interface ICheckoutInputs {
   [key: string]: string;
 }
 
+export const allowedShippingCountries: any = ["GB", "FR", "DE", "IE", "NL"];
+
 const CheckoutForm: React.FC<ICheckoutForm> = ({ 
     isDisabled, 
     submit, 
     submitText,
     userSavedDetails }) => {
+
     const countryOptions = React.useMemo(() => countryList().getData(), []);
-    
+
+    const shippingCountries = countryOptions.filter(country => allowedShippingCountries.includes(country.value));
+
     const initInputs = {
         email: userSavedDetails?.email ?? "",
         name: userSavedDetails?.name ?? "",
@@ -125,7 +130,7 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
                 isDisabled={isDisabled}
                 isRequired
                 name="country"
-                options={countryOptions}
+                options={shippingCountries}
                 value={inputValues.country as string}
                 />
                 <CustomInput

@@ -2,6 +2,7 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 
+import { allowedShippingCountries } from "@/components/Forms/CheckoutForm/CheckoutForm";
 import { PRODUCT_STORAGE } from "@/queries/products";
 import { IProductStorage } from "@/utils/storage";
 
@@ -29,6 +30,10 @@ async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse)
             cancel_url: "http://localhost:3000/cart",
             mode: "payment",
             payment_method_types: ["card", "ideal", "sepa_debit"],
+            shipping_address_collection: {
+                allowed_countries: allowedShippingCountries,
+            },
+            billing_address_collection: "required",
             line_items: products.map((product: IProductStorage, index: number) => ({
                 price_data: {
                     unit_amount: product.price,

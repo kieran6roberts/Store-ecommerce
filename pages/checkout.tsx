@@ -9,9 +9,9 @@ import {
 import { GetServerSideProps, NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
+import nookies from "nookies";
 import * as React from "react";
 import { BsArrowLeft } from "react-icons/bs";
-import nookies from "nookies";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import CheckoutForm, { ICheckoutInputs } from "@/components/Forms/CheckoutForm/CheckoutForm";
@@ -50,6 +50,7 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
             >
                 <VStack 
                 align="flex-start"
+                flex="2"
                 mb={12}
                 pr={[0, 0, 8]}
                 spacing={4}
@@ -115,7 +116,7 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
                 <VStack
                 as="ul"
                 divider={<StackDivider borderColor="blue.200" />}
-                flex="3"
+                flex="1.5"
                 listStyleType="none"
                 mr={["0px", "0px", "0px", "0.5rem"]}
                 pl={[0, 0, 8]}

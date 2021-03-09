@@ -75,7 +75,7 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
             >
                 <VStack 
                 align="flex-start"
-                flex="3"
+                flex="2"
                 mb={12}
                 pr={[0, 0, 8]}
                 >
@@ -231,8 +231,8 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
                 </VStack>
                 <VStack
                 as="ul"
+                flex="1.5"
                 divider={<StackDivider borderColor="blue.200" />}
-                flex="3"
                 listStyleType="none"
                 mr={["0px", "0px", "0px", "0.5rem"]}
                 pl={[0, 0, 8]}
