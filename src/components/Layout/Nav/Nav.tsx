@@ -58,7 +58,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                 fontWeight="700"
                 textAlign="center"
                 >
-                    Welcome! Currently free shipping on all orders so go and get your deals before they are gone
+                    Welcome! Currently free shipping on all orders!
                 </Text>
             </Flex>
             <Flex 
@@ -77,7 +77,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     href="/" 
                     passHref>
                         <Link>
-                            Next.js e-commerce
+                            Kieran's Coffee Collection
                         </Link>
                     </NextLink>
                 </Heading>

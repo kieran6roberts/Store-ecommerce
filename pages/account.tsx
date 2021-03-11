@@ -135,6 +135,7 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
             bg={editDisabled ? useColorModeValue("gray.50", "gray.700")  : "none" }
             borderRadius="md"
             p={4}
+            w="100%"
             >
               <CheckoutForm 
               handleDisabled={() => setEditDisabled(!editDisabled)}

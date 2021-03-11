@@ -113,7 +113,7 @@ const CartDrawer: React.FC = () => {
         </Button> : null}
         <DrawerTemplate
         header="What's in your bag"
-        footer="Next.js e-commerce"
+        footer="Kieran's Coffee Collection"
         isOpen={isOpen}
         onClose={onClose}
         placement="right"

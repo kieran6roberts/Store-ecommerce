@@ -29,7 +29,7 @@ const Footer: React.FC<IFooter> = ({ user }) => {
             fontSize="md" 
             mb={6}
             >
-                YourCoffeeShop @2021
+                Kieran's Coffee Collection @2021
             </Text>
             <List 
             fontSize="sm"

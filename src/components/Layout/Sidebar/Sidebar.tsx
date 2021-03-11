@@ -18,8 +18,8 @@ interface ISidebar {
 const Sidebar = ({ isOpen, onClose, user, userLoading }: ISidebar): React.ReactElement => {
     return (
         <DrawerTemplate 
-        header="Next.js E-commerce"
-        footer="Next.js e-commerce"
+        header="Kieran's Coffee Collection"
+        footer="Kieran's Coffee Collection @2021"
         isOpen={isOpen} 
         onClose={onClose} 
         placement="left"
