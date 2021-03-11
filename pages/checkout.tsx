@@ -16,6 +16,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import CheckoutForm, { ICheckoutInputs } from "@/components/Forms/CheckoutForm/CheckoutForm";
 import Layout from "@/components/Layout/Layout";
+import NextHead from "@/components/NextHead/NextHead";
 import { useStore } from "@/hooks/useStorage";
 import auth0 from "@/lib/auth";
 import { useGetUser } from "@/lib/user";
@@ -41,6 +42,12 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
     }, []);
 
     return (
+        <>
+        <NextHead 
+        currentURL="http://localhost:3000" 
+        description="Enter your order details including your shipping address" 
+        title="Shipping Details" 
+        />
         <Layout>
             <Flex 
             as="section"
@@ -125,6 +132,7 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
                 </VStack>
             </Flex>
         </Layout>
+        </>
     );
 };
 

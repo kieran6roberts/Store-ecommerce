@@ -9,6 +9,7 @@ import * as React from "react";
 
 import Filter from "@/components/Filter/Filter";
 import Layout from "@/components/Layout/Layout";
+import NextHead from "@/components/NextHead/NextHead";
 import Products, { IProductQuery } from "@/components/Products/Products";
 import Sort from "@/components/Sort/Sort";
 import { 
@@ -35,6 +36,12 @@ const Store: NextPage = () => {
   });
 
   return (
+    <>
+    <NextHead 
+    currentURL="http://localhost:3000" 
+    description="Our coffee store housing the freshest and most delicious coffee beans as well as hand crafted mugs & cups" 
+    title="Coffee Beans, Mugs & Cups" 
+    />
     <Layout>
       <Box 
       as="header"
@@ -80,6 +87,7 @@ const Store: NextPage = () => {
       }}
       />
     </Layout>
+    </>
   );
 };
 

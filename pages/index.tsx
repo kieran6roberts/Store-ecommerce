@@ -13,8 +13,8 @@ const Home: NextPage = () => (
     <>
     <NextHead 
     currentURL="http://localhost:3000" 
-    description="home page" 
-    title="Home" 
+    description="Welcome to Kieran's Coffee Collection! We would like to share our delicious range of fresh coffee with you." 
+    title="Kieran's Coffee Collection" 
     />
     <Layout>
         <VStack spacing="16">

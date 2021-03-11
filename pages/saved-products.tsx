@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import * as React from "react";
 
 import Layout from "@/components/Layout/Layout";
+import NextHead from "@/components/NextHead/NextHead";
 import Product from "@/components/Products/Product/Product";
 import { useStore } from "@/hooks/useStorage";
 import { generateItemKey } from "@/utils/generateItemKey";
@@ -11,6 +12,12 @@ const savedProducts: NextPage = () => {
     const { savedStorage } = useStore()!;
 
     return (
+        <>
+        <NextHead 
+        currentURL="http://localhost:3000" 
+        description="Your saved products will show up here." 
+        title="Your Saved Products" 
+        />
         <Layout>
             <Heading 
             as="h1"
@@ -59,6 +66,7 @@ const savedProducts: NextPage = () => {
                 }
             </SimpleGrid>
         </Layout>
+        </>
     );
 };
 
