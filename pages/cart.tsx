@@ -4,7 +4,8 @@ import {
   Flex,
   Heading, 
   Stack,  
-  StackDivider } from "@chakra-ui/react";
+  StackDivider,
+  Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import * as React from "react";
 
@@ -28,6 +29,18 @@ const Cart: NextPage = () => {
       as="section"
       px={2}
       >
+        <Text
+        bg="pink.400"
+        borderRadius="sm"
+        color="white"
+        fontSize="sm"
+        mb={8}
+        p={2}
+        textAlign="center"
+        >
+          We are currently only shipping to a limited number of countries. These countries are 
+          France, Germany, Ireland, The Netherlands and The United Kingdom.
+        </Text>
         <Heading 
         as="h1"
         fontSize="lg"

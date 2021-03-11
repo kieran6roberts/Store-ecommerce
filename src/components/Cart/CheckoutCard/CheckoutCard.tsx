@@ -5,6 +5,7 @@ import { Button,
     Text, 
     VStack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { setCookie } from "nookies";
 import * as React from "react";
 import { BiLockAlt } from "react-icons/bi";
 
@@ -23,6 +24,12 @@ const CheckoutCard = (): React.ReactElement => {
         const cartQuantities = quantitiyElements.map((input) => parseInt(input.value));
 
         updateItemsQuantities(cartQuantities);
+
+        setCookie(null, "checkout-session", "active", {
+            maxAge: 3600,
+            expires: new Date(Date.now() + 3600),
+            path: "/"
+        });
 
         router.push("/checkout");
     };
@@ -98,7 +105,7 @@ const CheckoutCard = (): React.ReactElement => {
                     Shipping Costs:
                 </Text>
                 <Text id="shipping-costs">
-                    €{total >= 30 ? "0.00" : "4.99"}
+                    FREE
                 </Text>
             </Flex>
             <Flex 
@@ -109,7 +116,7 @@ const CheckoutCard = (): React.ReactElement => {
                     Total:
                 </Text>
                 <Text>
-                    €{total < 30 ? (total + 4.99).toFixed(2) : total.toFixed(2)}
+                    €{total}
                 </Text>
             </Flex>
             <Divider />
@@ -122,6 +129,13 @@ const CheckoutCard = (): React.ReactElement => {
             >
                 Proceed To Checkout
             </Button>
+            <Text 
+            color="pink.400"
+            fontSize="xs"
+            >
+                Once the checkout process begins you will have an hour to complete
+                your checkout otherwise you will be returned back to the cart to start over.
+            </Text>
         </VStack>
     );
 };

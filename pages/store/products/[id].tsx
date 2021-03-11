@@ -28,6 +28,7 @@ import { useStoreUpdate } from "@/hooks/useStorage";
 import { initApollo } from "@/lib/apolloClient";
 import { PRODUCT_INFO, PRODUCT_NAMES, PRODUCT_NEW } from "@/queries/products";
 import { CREATE_REVIEW, GET_REVIEWS } from "@/queries/reviews";
+import { formatPrice } from "@/utils/formatPrice";
 import { generateItemKey } from "@/utils/generateItemKey";
 
 interface IProductName {
@@ -246,7 +247,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                                 alignSelf="flex-end"
                                 mt="auto"
                                 >
-                                    £{productPrice.toFixed(2)}
+                                    {formatPrice(productPrice)}
                                 </Text>
                                 <Button 
                                 alignSelf="flex-end"

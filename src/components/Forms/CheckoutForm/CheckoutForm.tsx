@@ -10,36 +10,41 @@ import CustomInput from "@/components/Forms/CustomInput/CustomInput";
 import CustomSelect from "@/components/Forms/CustomSelect/CustomSelect";
 import useForm from "@/hooks/useForm";
 import isObjectEmpty from "@/utils/isObjectEmpty";
-import { usersValidation } from "@/utils/validation/users";
+import { IUsersValidation,usersValidation } from "@/utils/validation/users";
 
 interface ICheckoutForm {
     handleDisabled?: (value: React.SetStateAction<boolean>) => void;
     isDisabled: boolean;
     submit: (values: ICheckoutInputs) => Promise<unknown>;
     submitText: string;
-    userEmail?: string;
+    userSavedDetails?: IUsersValidation | null;
 }
 
 export interface ICheckoutInputs {
   [key: string]: string;
 }
 
+export const allowedShippingCountries: any = ["GB", "FR", "DE", "IE", "NL"];
+
 const CheckoutForm: React.FC<ICheckoutForm> = ({ 
     isDisabled, 
     submit, 
     submitText,
-    userEmail }) => {
+    userSavedDetails }) => {
+
     const countryOptions = React.useMemo(() => countryList().getData(), []);
-    
+
+    const shippingCountries = countryOptions.filter(country => allowedShippingCountries.includes(country.value));
+
     const initInputs = {
-        email: userEmail ?? "",
-        name: "",
-        address: "",
-        addressLine2: "",
-        city: "",
-        country: "",
-        postcode: "",
-        phone: "",
+        email: userSavedDetails?.email ?? "",
+        name: userSavedDetails?.name ?? "",
+        address: userSavedDetails?.address ?? "",
+        addressLine2: userSavedDetails?.addressLine2 ?? "",
+        city: userSavedDetails?.city ?? "",
+        country: userSavedDetails?.country ?? "",
+        postcode: userSavedDetails?.postcode ?? "",
+        phone: userSavedDetails?.phone ?? "",
     };
 
     const { 
@@ -54,7 +59,7 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
       if (hasMounted.current) {
         if (!isObjectEmpty(errors)) {
           const firstInput = document.querySelector(`#${Object.keys(errors)[0]}`) as HTMLInputElement;
-          firstInput.focus();
+          firstInput? firstInput.focus() : null;
         }
       } else {
         hasMounted.current = true;
@@ -125,7 +130,7 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
                 isDisabled={isDisabled}
                 isRequired
                 name="country"
-                options={countryOptions}
+                options={shippingCountries}
                 value={inputValues.country as string}
                 />
                 <CustomInput

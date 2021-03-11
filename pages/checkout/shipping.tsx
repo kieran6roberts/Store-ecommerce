@@ -11,6 +11,7 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { GetServerSideProps , NextPage } from "next";
 import NextLink from "next/link";
+import nookies from "nookies";
 import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
 import { BsArrowLeft } from "react-icons/bs";
@@ -33,8 +34,10 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
     const lineItems = cartStorage?.map(item => ({ 
         id: item.id, 
         quantity: item.quantity,
-        customer_email: userData.email,
+        ...userData
     }));
+
+    console.log(lineItems)
 
     const handlePaymentInit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -74,7 +77,7 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
             >
                 <VStack 
                 align="flex-start"
-                flex="3"
+                flex="2"
                 mb={12}
                 pr={[0, 0, 8]}
                 >
@@ -230,8 +233,8 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
                 </VStack>
                 <VStack
                 as="ul"
+                flex="1.5"
                 divider={<StackDivider borderColor="blue.200" />}
-                flex="3"
                 listStyleType="none"
                 mr={["0px", "0px", "0px", "0.5rem"]}
                 pl={[0, 0, 8]}
@@ -244,10 +247,27 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    if (isObjectEmpty(ctx.query)) {
+    const cookies = nookies.get(ctx);
+
+    if(!cookies["checkout-session"] || (!cookies["checkout-session"] && isObjectEmpty(ctx.query))) {
         return {
             redirect: {
-                destination: "/checkout",
+                destination: "/cart",
+                permanent: false
+            }
+        };
+    }
+
+    const queryCheck = ["email", "name", "address", "city", "country", "postcode", "phone"];
+
+    const parsedQuery = ctx.query.data ? JSON.parse(ctx.query.data as string) : null;
+
+    const isValidQuery = queryCheck.every(property => parsedQuery ? parsedQuery[property] : null);
+
+    if (!isValidQuery) {
+        return {
+            redirect: {
+                destination: "/cart",
                 permanent: false
             }
         };

@@ -38,7 +38,7 @@ const Sidebar = ({ isOpen, onClose, user, userLoading }: ISidebar): React.ReactE
                 variant="solid"
                 />
                 <CurrentUser 
-                justify="flex-start"
+                justify="center"
                 user={user} 
                 userLoading={userLoading} 
                 />

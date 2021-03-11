@@ -9,6 +9,7 @@ import {
     VStack } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import NextLink from "next/link";
+import nookies from "nookies";
 import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
 
@@ -16,6 +17,7 @@ import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import { USER_ORDER } from "@/queries/orders";
+import { nowDate } from "@/utils/nowDate";
 
 interface IReview {
     query: ParsedUrlQuery
@@ -39,6 +41,17 @@ const Review: NextPage<IReview> = ({ query }) => {
     if (error) {
         console.log("error");
     }
+
+    console.log(orderData)
+
+    /*
+    React.useEffect(() => {
+        if (typeof window !== "undefined") {
+            window.history.replaceState(null, "", `${window.location.origin}/checkout/review`);
+        }
+
+        //setStorage("cart-products", []);
+    }, []);*/
 
     return (
         <Layout>
@@ -91,11 +104,32 @@ const Review: NextPage<IReview> = ({ query }) => {
                                 px={2}
                                 w="100%"
                                 >
+                                    <Text 
+                                    fontWeight="700"
+                                    mx={4}
+                                    >
+                                        Order placed on:
+                                    </Text>
                                     <Text mx={4}>
+                                        {nowDate()}
+                                    </Text>
+                                </Flex>
+                                <Flex 
+                                bg={useColorModeValue("gray.100", "gray.600")}
+                                borderRadius="sm"
+                                justify="flex-start"
+                                py={4}
+                                px={2}
+                                w="100%"
+                                >
+                                    <Text 
+                                    fontWeight="700"
+                                    mx={4}
+                                    >
                                         Email: 
                                     </Text>
                                     <Text mx={4}>
-                                        {orderData.orders[0].email}
+                                        
                                     </Text>
                                 </Flex>
                                 <Flex 
@@ -107,11 +141,14 @@ const Review: NextPage<IReview> = ({ query }) => {
                                 px={2}
                                 w="100%"
                                 >
-                                    <Text mx={4}>
+                                    <Text 
+                                    fontWeight="700"
+                                    mx={4}
+                                    >
                                         Total:
                                     </Text>
                                     <Text mx={4}>
-                                        €{(orderData.orders[0].total / 100).toFixed(2)}
+                                        
                                     </Text>
                                 </Flex>
                                 <NextLink
@@ -143,6 +180,17 @@ const Review: NextPage<IReview> = ({ query }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const cookies = nookies.get(ctx);
+
+    if(!cookies["checkout-session"]) {
+        return {
+            redirect: {
+                destination: "/cart",
+                permanent: false
+            }
+        };
+    }
+
     return {
         props: {
             query: ctx.query,

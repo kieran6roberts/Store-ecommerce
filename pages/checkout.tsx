@@ -1,3 +1,4 @@
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { 
     Flex,  
     Link, 
@@ -5,9 +6,10 @@ import {
     Text,
     useColorModeValue,
     VStack } from "@chakra-ui/react";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
+import nookies from "nookies";
 import * as React from "react";
 import { BsArrowLeft } from "react-icons/bs";
 
@@ -15,10 +17,17 @@ import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import CheckoutForm, { ICheckoutInputs } from "@/components/Forms/CheckoutForm/CheckoutForm";
 import Layout from "@/components/Layout/Layout";
 import { useStore } from "@/hooks/useStorage";
+import auth0 from "@/lib/auth";
 import { useGetUser } from "@/lib/user";
+import { USER_DETAILS } from "@/queries/users";
 import { mapCartStorage } from "@/utils/mapCartStorage";
+import { IUsersValidation } from "@/utils/validation/users";
 
-const Checkout: NextPage = () => {
+interface ICheckout {
+    userInfo: IUsersValidation[];
+}
+
+const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
 
     const { profile } = useGetUser();
     const { cartStorage } = useStore()!;
@@ -26,16 +35,22 @@ const Checkout: NextPage = () => {
 
     const handleSubmit = (values: ICheckoutInputs) => router.push(`/checkout/shipping?data=${JSON.stringify(values)}`);
 
+    React.useEffect(() => {
+        const emailElement = document.querySelector("#email") as HTMLButtonElement;
+        emailElement.focus();
+    }, []);
+
     return (
         <Layout>
             <Flex 
             as="section"
-            flexDirection={["column", "column", "column", "row"]}
+            flexDirection={["column", "column", "column", "column", "row"]}
             minHeight="100vh"
             m={4}
             >
                 <VStack 
                 align="flex-start"
+                flex="2"
                 mb={12}
                 pr={[0, 0, 8]}
                 spacing={4}
@@ -62,11 +77,20 @@ const Checkout: NextPage = () => {
                             </Link>
                         </NextLink>
                     </Text> : null}
+                    {userInfo ? 
+                    <Text 
+                    color="pink.400"
+                    fontSize="xs"
+                    textAlign="center"
+                    w="full"
+                    >
+                        We have used you current saved details to save you some time
+                    </Text> : null}
                     <CheckoutForm 
                     isDisabled={false}
                     submit={handleSubmit}
                     submitText="Continue to shipping"
-                    userEmail={profile?.email ?? null}
+                    userSavedDetails={userInfo ? userInfo[0] : null}
                     />
                     <NextLink 
                     href="/cart" 
@@ -92,7 +116,7 @@ const Checkout: NextPage = () => {
                 <VStack
                 as="ul"
                 divider={<StackDivider borderColor="blue.200" />}
-                flex="3"
+                flex="1.5"
                 listStyleType="none"
                 mr={["0px", "0px", "0px", "0.5rem"]}
                 pl={[0, 0, 8]}
@@ -102,6 +126,49 @@ const Checkout: NextPage = () => {
             </Flex>
         </Layout>
     );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const cookies = nookies.get(ctx);
+
+    if(!cookies["checkout-session"]) {
+        return {
+            redirect: {
+                destination: "/cart",
+                permanent: false
+            }
+        };
+    }
+
+    const session = await auth0.getSession(ctx.req);
+
+    if (!session) {
+        return {
+            props: {}
+        };
+    } else {
+        const client = new ApolloClient({
+            uri: process.env.NEXT_PUBLIC_HASURA_API!,
+            cache: new InMemoryCache(),
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${session?.accessToken}`
+            }
+        });
+        
+        const { data: { users: user }} = await client.query({
+            query: USER_DETAILS,
+            variables: {
+                id: session?.user.sub
+            }
+            });
+        
+        return {
+            props: {
+            userInfo: user ?? null
+            }
+        };
+    }
 };
 
 export default Checkout;

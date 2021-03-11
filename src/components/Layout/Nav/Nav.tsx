@@ -58,7 +58,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                 fontWeight="700"
                 textAlign="center"
                 >
-                    Welcome! Free shipping for all orders over £29.99 
+                    Welcome! Currently free shipping on all orders so go and get your deals before they are gone
                 </Text>
             </Flex>
             <Flex 
@@ -128,7 +128,8 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
             >
                 <Box 
                 display={["none", "none", "block"]}
-                flex="1">
+                flex="1"
+                >
                     <Text>
                         <NextLink 
                         href="/" 
@@ -138,7 +139,10 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                             </Link>
                         </NextLink>
                         <span>
-                            {router.pathname.split("/").join(" > ").toLowerCase()}
+                            {router.pathname === "/store/products/[id]" ?
+                             router.asPath.split("/").join(" > ").toLowerCase()
+                            :
+                            router.pathname.split("/").join(" > ").toLowerCase()}
                         </span>
                     </Text>
                 </Box>

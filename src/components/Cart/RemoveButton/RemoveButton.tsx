@@ -9,7 +9,9 @@ interface IRemoveButton {
 const RemoveButton: React.FC<IRemoveButton> = ({ callback }) => {
     return (
         <Button 
-        color="pink.300"
+        bg="pink.300"
+        className="cart-item--remove"
+        color="white"
         fontWeight="400"
         fontSize="xs"
         onClick={(event) => callback(event)}
@@ -17,6 +19,9 @@ const RemoveButton: React.FC<IRemoveButton> = ({ callback }) => {
         size="sm"
         variant="solid"
         w="5rem"
+        _hover={{
+            bg: "pink.400"
+        }}
         >
             Remove
         </Button>

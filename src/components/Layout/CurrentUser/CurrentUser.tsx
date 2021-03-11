@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { IUser } from "@/components/Layout/Nav/Nav";
 
-type Justify = "flex-start" | "flex-end";
+type Justify = "flex-start" | "flex-end" | "center";
 
 interface ICurrentUser {
     justify: Justify;
@@ -20,12 +20,12 @@ const CurrentUser: React.FC<ICurrentUser> = ({ justify, user, userLoading }) => 
         >
             {userLoading ? 
             <Box>
-                ...
+                One moment
             </Box>
             :
             <>
             <Text>
-                {user?.nickname ?? "User: Guest"}
+                {user?.nickname ?? "Guest"}
             </Text>
             <Box ml={4}>
                 {user?.picture ?
