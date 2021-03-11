@@ -53,20 +53,23 @@ const CartDrawer: React.FC = () => {
                     justify="space-between"
                     mt={2}
                     >
-                        <Box as="article" mr={4}>
+                        <Box as="article">
                             <Heading 
                             as="h5"
-                            fontSize="sm"
+                            fontSize="xs"
                             mb={2}
                             >
                                 {product.name}
                             </Heading>
-                            <Text fontSize="xs">
+                            <Text 
+                            fontSize="xs"
+                            mb={4}
+                            >
                                 {product.category}
                             </Text>
+                               <RemoveButton callback={(event) => removeCartValue(event)} />
                         </Box>
-                        <RemoveButton 
-                        callback={(event) => removeCartValue(event)}/>
+                
                     </Flex>
                     <Divider 
                     bg="pink.100"

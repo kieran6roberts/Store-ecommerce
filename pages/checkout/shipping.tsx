@@ -190,7 +190,7 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
                         defaultChecked
                         isDisabled
                         >
-                            Free Shipping for orders over £25
+                            Currently Free Shipping
                         </Checkbox>
                         <Text>
                             Free
