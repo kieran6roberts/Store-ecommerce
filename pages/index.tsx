@@ -75,7 +75,11 @@ const Home: NextPage = () => (
                 px={6}
                 textAlign="center"
                 textTransform="uppercase"
-                w="12rem">
+                w="12rem"
+                hover={{
+                    bg: "pink.500"
+                }}
+                >
                     Shop All Items
                 </Link>
             </NextLink>

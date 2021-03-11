@@ -2,7 +2,6 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 
-import { allowedShippingCountries } from "@/components/Forms/CheckoutForm/CheckoutForm";
 import { PRODUCT_STORAGE } from "@/queries/products";
 import { IProductStorage } from "@/utils/storage";
 
@@ -23,20 +22,21 @@ async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse)
         }
     });
 
-    console.log(req.body)
+    const [ data ] = req.body;
     
     try {
         const session = await stripe.checkout.sessions.create({
             billing_address_collection: "required",
             cancel_url: "http://localhost:3000/cart",
-            customer_email: req.body.email,
+            customer_email: data.email,
             metadata: {
-                address: req.body.address,
-                addressLine2: req.body.addressLine2,
-                city: req.body.city,
-                country: req.body.country,
-                postcode: req.body.postcode,
-                phone: req.body.phone
+                name: data.name,
+                address: data.address,
+                addressLine2: data.addressLine2,
+                city: data.city,
+                country: data.country,
+                postcode: data.postcode,
+                phone: data.phone
             },
             mode: "payment",
             payment_method_types: ["card", "ideal", "sepa_debit"],

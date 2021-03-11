@@ -7,7 +7,7 @@ import {
 import NextLink from "next/link";
 import * as React from "react";
 import { AiOutlineHeart, AiOutlineShop } from "react-icons/ai";
-import { IoCartOutline, IoHelpCircleOutline } from "react-icons/io5";
+import { IoCartOutline } from "react-icons/io5";
 
 interface INavLinks {
     isStyled: boolean;
@@ -35,7 +35,6 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled }) => (
                     bgGradient="linear(45deg, orange.300, teal.300)"
                     borderRadius="sm"
                     display="inline-flex"
-                    mr={2}
                     p={1}
                     >
                         <AiOutlineShop style={{ color: "white" }} />
@@ -68,7 +67,6 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled }) => (
                     bgGradient="linear(45deg, blue.300, green.300)"
                     borderRadius="sm"
                     display="inline-flex"
-                    mr={2}
                     p={1}
                     >
                         <IoCartOutline style={{ color: "white" }} />
@@ -101,7 +99,6 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled }) => (
                     bgGradient="linear(45deg, pink.300, purple.300)"
                     borderRadius="sm"
                     display="inline-flex"
-                    mr={2}
                     p={1}
                     >
                         <AiOutlineHeart style={{ color: "white" }} />

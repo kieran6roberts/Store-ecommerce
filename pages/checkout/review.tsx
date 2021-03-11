@@ -18,7 +18,6 @@ import Layout from "@/components/Layout/Layout";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import { USER_ORDER } from "@/queries/orders";
 import { nowDate } from "@/utils/nowDate";
-import { setStorage } from "@/utils/storage";
 
 interface IReview {
     query: ParsedUrlQuery
@@ -42,6 +41,8 @@ const Review: NextPage<IReview> = ({ query }) => {
     if (error) {
         console.log("error");
     }
+
+    console.log(orderData)
 
     /*
     React.useEffect(() => {
@@ -128,7 +129,7 @@ const Review: NextPage<IReview> = ({ query }) => {
                                         Email: 
                                     </Text>
                                     <Text mx={4}>
-                                        {orderData.orders[0].email}
+                                        
                                     </Text>
                                 </Flex>
                                 <Flex 
@@ -147,7 +148,7 @@ const Review: NextPage<IReview> = ({ query }) => {
                                         Total:
                                     </Text>
                                     <Text mx={4}>
-                                        €{(orderData.orders[0].total / 100).toFixed(2)}
+                                        
                                     </Text>
                                 </Flex>
                                 <NextLink
