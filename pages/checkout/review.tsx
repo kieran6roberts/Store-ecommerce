@@ -16,7 +16,9 @@ import * as React from "react";
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import { useStoreUpdate } from "@/hooks/useStorage";
 import { USER_ORDER } from "@/queries/orders";
+import { formatPrice } from "@/utils/formatPrice";
 import { nowDate } from "@/utils/nowDate";
 
 interface IReview {
@@ -30,6 +32,10 @@ const Review: NextPage<IReview> = ({ query }) => {
         }
     });
 
+    const { setCartStorage } = useStoreUpdate()!;
+
+    //setCartStorage([]);
+
     if (loading) {
         return (
             <Box minH="75vh">
@@ -42,18 +48,12 @@ const Review: NextPage<IReview> = ({ query }) => {
         console.log("error");
     }
 
-    console.log(orderData)
     const [ order ] = orderData.orders;
-    console.log(order)
 
     /*
-    React.useEffect(() => {
-        if (typeof window !== "undefined") {
-            window.history.replaceState(null, "", `${window.location.origin}/checkout/review`);
-        }
-
-        //setStorage("cart-products", []);
-    }, []);*/
+    if (typeof window !== "undefined") {
+        window.history.replaceState(null, "", `${window.location.origin}/checkout/review`);
+    }*/
 
     return (
         <Layout>
@@ -131,7 +131,47 @@ const Review: NextPage<IReview> = ({ query }) => {
                                         Email: 
                                     </Text>
                                     <Text mx={4}>
-                                        
+                                        {order.email}
+                                    </Text>
+                                </Flex>
+                                <Flex 
+                                bg={useColorModeValue("gray.100", "gray.600")}
+                                borderRadius="sm"
+                                justify="flex-start"
+                                py={4}
+                                px={2}
+                                w="100%"
+                                >
+                                    <Text 
+                                    fontWeight="700"
+                                    mx={4}
+                                    >
+                                        Total:
+                                    </Text>
+                                    <Text mx={4}>
+                                        {formatPrice(order.total)}
+                                    </Text>
+                                </Flex>
+                                <Flex 
+                                bg={useColorModeValue("gray.100", "gray.600")}
+                                borderRadius="sm"
+                                justify="flex-start"
+                                py={4}
+                                px={2}
+                                w="100%"
+                                >
+                                    <Text 
+                                    fontWeight="700"
+                                    mx={4}
+                                    >
+                                        Shipping Address: 
+                                    </Text>
+                                    <Text mx={4}>
+                                        {`${order.shippingAddress.address1},  
+                                        ${order.shippingAddress.city}, 
+                                        ${order.shippingAddress.country}, 
+                                        ${order.shippingAddress.zip}
+                                        `}
                                     </Text>
                                 </Flex>
                                 <Flex 
@@ -147,10 +187,14 @@ const Review: NextPage<IReview> = ({ query }) => {
                                     fontWeight="700"
                                     mx={4}
                                     >
-                                        Total:
+                                        Billing Address:
                                     </Text>
                                     <Text mx={4}>
-                                        
+                                        {`${order.billingAddress.address1},  
+                                        ${order.billingAddress.city}, 
+                                        ${order.billingAddress.country}, 
+                                        ${order.billingAddress.zip}
+                                        `}
                                     </Text>
                                 </Flex>
                                 <NextLink
