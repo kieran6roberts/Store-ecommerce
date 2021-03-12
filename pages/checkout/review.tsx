@@ -16,10 +16,10 @@ import * as React from "react";
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
-import { useStoreUpdate } from "@/hooks/useStorage";
 import { USER_ORDER } from "@/queries/orders";
 import { formatPrice } from "@/utils/formatPrice";
 import { nowDate } from "@/utils/nowDate";
+import { setStorage } from "@/utils/storage";
 
 interface IReview {
     query: ParsedUrlQuery
@@ -31,10 +31,6 @@ const Review: NextPage<IReview> = ({ query }) => {
             id: query.id
         }
     });
-
-    const { setCartStorage } = useStoreUpdate()!;
-
-    //setCartStorage([]);
 
     if (loading) {
         return (
@@ -50,10 +46,11 @@ const Review: NextPage<IReview> = ({ query }) => {
 
     const [ order ] = orderData.orders;
 
-    /*
+    
     if (typeof window !== "undefined") {
         window.history.replaceState(null, "", `${window.location.origin}/checkout/review`);
-    }*/
+        setStorage("cart-products", []);
+    }
 
     return (
         <Layout>
