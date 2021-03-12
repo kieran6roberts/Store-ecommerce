@@ -22,21 +22,21 @@ async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse)
         }
     });
 
-    const [ data ] = req.body;
+    const metaData = req.body[0];
     
     try {
         const session = await stripe.checkout.sessions.create({
             billing_address_collection: "required",
             cancel_url: "http://localhost:3000/cart",
-            customer_email: data.email,
+            customer_email: metaData.email,
             metadata: {
-                name: data.name,
-                address: data.address,
-                addressLine2: data.addressLine2,
-                city: data.city,
-                country: data.country,
-                postcode: data.postcode,
-                phone: data.phone
+                name: metaData.name,
+                address: metaData.address,
+                addressLine2: metaData.addressLine2,
+                city: metaData.city,
+                country: metaData.country,
+                postcode: metaData.postcode,
+                phone: metaData.phone
             },
             mode: "payment",
             payment_method_types: ["card", "ideal", "sepa_debit"],

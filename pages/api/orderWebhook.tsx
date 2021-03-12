@@ -2,6 +2,7 @@ import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 
+import { CREATE_ORDER } from "@/queries/orders";
 import { IUsersValidation } from "@/utils/validation/users";
 
 const stripe = new Stripe("sk_test_51IP3LTLIxM3ayKtnxOkzYa16G3uIIBhzb0q9LUvcqXg0By4pOVqCtUxwqQRnu5QLtR4h4NauShgjqYbuSWPUVApy00PZZx4mcQ", {
@@ -29,47 +30,15 @@ async function orderWebhook (req: NextApiRequest, res: NextApiResponse): Promise
 
     
         const userObject = session?.metadata as IUsersValidation;
-        console.log(userObject);
+        console.log("UserObject is ", userObject);
+        console.log(session);
 
         const response = await client.mutate({
-            mutation: gql`
-                mutation CreateOrder($data: OrderCreateInput!) {
-                createOrder(data: $data) {
-                    id
-                    email
-                    name
-                    fulfilled
-                    stripeCheckoutId
-                    total
-                    orderItems {
-                        name
-                        quantity
-                        price
-                    }
-                    billingAddress {
-                        name
-                        address1
-                        address2
-                        city
-                        country
-                        zip
-                        phone
-                    }
-                    shippingAddress {
-                        name
-                        address1
-                        address2
-                        city
-                        country
-                        zip
-                        phone
-                    }
-                }
-            }`,
+            mutation: CREATE_ORDER,
             variables: {
                 data: {
                     name: userObject.name,
-                    email: userObject.email,
+                    email: session.customer_email,
                     phone: userObject.phone,
                     total: session.amount_total,
                     stripeCheckoutId: session.id,
@@ -105,12 +74,14 @@ async function orderWebhook (req: NextApiRequest, res: NextApiResponse): Promise
                     }
                 }
             }
-        }).then(res => console.log(res));
+        });
 
-        res.json({ message: "success" });
+        console.log(response);
+
+        return res.json({ message: "success" });
 
     } catch (err) {
-        res.json({ error: { message: err }});
+        return res.json({ error: { message: err }});
     }
 }
 

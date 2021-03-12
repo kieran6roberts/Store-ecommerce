@@ -43,6 +43,8 @@ const Review: NextPage<IReview> = ({ query }) => {
     }
 
     console.log(orderData)
+    const [ order ] = orderData.orders;
+    console.log(order)
 
     /*
     React.useEffect(() => {
