@@ -18,6 +18,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import AccountMenu from "@/components/Layout/AccountMenu/AccountMenu";
 import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
 import NavLinks from "@/components/Layout/NavLinks/NavLinks";
+import { useStore } from "@/hooks/useStorage";
 
 export interface IUser {
       name?: string,
@@ -38,6 +39,7 @@ interface INav {
 const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
     const router = useRouter();
 
+    const { cartStorage } = useStore()!;
     const { colorMode, toggleColorMode } = useColorMode();
     
     return (
@@ -95,7 +97,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     spacing={12}
                     mr={16}
                     >
-                        <NavLinks isStyled={false} />
+                        <NavLinks isStyled={false} cartNumber={cartStorage.length} />
                     </HStack>
                     <AccountMenu 
                     display={["none", "none", "flex"]}
