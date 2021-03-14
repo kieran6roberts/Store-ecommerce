@@ -82,7 +82,7 @@ const Store: NextPage = () => {
           offset: 0, 
           limit: 10
         }, 
-        fetchPolicy: "cache-first",
+        fetchPolicy: "no-cache",
         ssr: false
       }}
       />
