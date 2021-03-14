@@ -18,6 +18,7 @@ import { BsArrowLeft } from "react-icons/bs";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
+import NextHead from "@/components/NextHead/NextHead";
 import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
 import isObjectEmpty from "@/utils/isObjectEmpty";
@@ -36,8 +37,6 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
         quantity: item.quantity,
         ...userData
     }));
-
-    console.log(lineItems)
 
     const handlePaymentInit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -68,6 +67,12 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
     }, []);
 
     return (
+        <>
+        <NextHead 
+        currentURL="http://localhost:3000/checkout/shipping" 
+        description="Confirm order shipping details" 
+        title="Confirm Shipping" 
+        />
         <Layout>
             <Flex 
             as="section"
@@ -243,6 +248,7 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
                 </VStack>
             </Flex>
         </Layout>
+        </>
     );
 };
 

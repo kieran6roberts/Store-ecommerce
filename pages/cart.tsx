@@ -11,6 +11,7 @@ import * as React from "react";
 
 import CheckoutCard from "@/components/Cart/CheckoutCard/CheckoutCard";
 import Layout from "@/components/Layout/Layout";
+import NextHead from "@/components/NextHead/NextHead";
 import { useStore } from "@/hooks/useStorage";
 import { mapCartStorage } from "@/utils/mapCartStorage";
 
@@ -24,6 +25,12 @@ const Cart: NextPage = () => {
   const { cartStorage } = useStore()!;
 
   return (
+    <>
+    <NextHead 
+    currentURL="http://localhost:3000/cart" 
+    description="User coffee cart full of high quality coffee products" 
+    title="Cart" 
+    />
     <Layout>
       <Box 
       as="section"
@@ -66,6 +73,7 @@ const Cart: NextPage = () => {
         </Flex>
       </Box>
     </Layout>
+    </>
   );
 };
 

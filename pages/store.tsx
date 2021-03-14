@@ -38,7 +38,7 @@ const Store: NextPage = () => {
   return (
     <>
     <NextHead 
-    currentURL="http://localhost:3000" 
+    currentURL="http://localhost:3000/store" 
     description="Our coffee store housing the freshest and most delicious coffee beans as well as hand crafted mugs & cups" 
     title="Coffee Beans, Mugs & Cups" 
     />

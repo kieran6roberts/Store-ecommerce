@@ -44,7 +44,7 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
     return (
         <>
         <NextHead 
-        currentURL="http://localhost:3000" 
+        currentURL="http://localhost:3000/checkout" 
         description="Enter your order details including your shipping address" 
         title="Shipping Details" 
         />

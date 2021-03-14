@@ -18,6 +18,7 @@ import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
 import Layout from "@/components/Layout/Layout";
 import { IUser } from "@/components/Layout/Nav/Nav";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import NextHead from "@/components/NextHead/NextHead";
 import auth0 from "@/lib/auth";
 import { GET_USER_ORDERS} from "@/queries/orders";
 import { USER_DETAILS } from "@/queries/users";
@@ -73,6 +74,12 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
     }, [ isUpdated ]);
 
     return (
+      <>
+      <NextHead 
+      currentURL="http://localhost:3000/account" 
+      description="Users personal coffee collection account" 
+      title="Account" 
+      />
       <Layout>
         <Heading 
         as="h1"
@@ -188,6 +195,7 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
           </VStack>
         </Flex>
       </Layout>
+      </>
     );
 };
 

@@ -14,7 +14,7 @@ const savedProducts: NextPage = () => {
     return (
         <>
         <NextHead 
-        currentURL="http://localhost:3000" 
+        currentURL="http://localhost:3000/saved-products" 
         description="Your saved products will show up here." 
         title="Your Saved Products" 
         />

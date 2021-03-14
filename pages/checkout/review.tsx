@@ -16,6 +16,7 @@ import * as React from "react";
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import NextHead from "@/components/NextHead/NextHead";
 import { USER_ORDER } from "@/queries/orders";
 import { formatPrice } from "@/utils/formatPrice";
 import { nowDate } from "@/utils/nowDate";
@@ -45,7 +46,6 @@ const Review: NextPage<IReview> = ({ query }) => {
     }
 
     const [ order ] = orderData.orders;
-
     
     if (typeof window !== "undefined") {
         window.history.replaceState(null, "", `${window.location.origin}/checkout/review`);
@@ -53,6 +53,12 @@ const Review: NextPage<IReview> = ({ query }) => {
     }
 
     return (
+        <>
+        <NextHead 
+        currentURL="http://localhost:3000/checkout/review" 
+        description="Review your new order details" 
+        title="Order Review" 
+        />
         <Layout>
             <Flex        
             as="section"
@@ -219,6 +225,7 @@ const Review: NextPage<IReview> = ({ query }) => {
                 </VStack>
             </Flex>
         </Layout>
+        </>
     );
 };
 

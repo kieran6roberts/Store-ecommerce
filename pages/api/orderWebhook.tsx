@@ -1,4 +1,4 @@
-import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 
@@ -30,8 +30,6 @@ async function orderWebhook (req: NextApiRequest, res: NextApiResponse): Promise
 
     
         const userObject = session?.metadata as IUsersValidation;
-        console.log("UserObject is ", userObject);
-        console.log(session);
 
         const response = await client.mutate({
             mutation: CREATE_ORDER,
@@ -75,8 +73,6 @@ async function orderWebhook (req: NextApiRequest, res: NextApiResponse): Promise
                 }
             }
         });
-
-        console.log(response);
 
         return res.json({ message: "success" });
 

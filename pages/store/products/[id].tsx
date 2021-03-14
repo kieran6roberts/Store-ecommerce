@@ -21,6 +21,7 @@ import Image from "next/image";
 import * as React from "react";
 import { AiOutlineStar } from "react-icons/ai";
 
+import { useRouter } from "next/router";
 import Layout from "@/components/Layout/Layout";
 import Products from "@/components/Products/Products";
 import Review, { IReviewInputs } from "@/components/Products/Review/Review";
@@ -30,6 +31,7 @@ import { PRODUCT_INFO, PRODUCT_NAMES, PRODUCT_NEW } from "@/queries/products";
 import { CREATE_REVIEW, GET_REVIEWS } from "@/queries/reviews";
 import { formatPrice } from "@/utils/formatPrice";
 import { generateItemKey } from "@/utils/generateItemKey";
+import NextHead from "@/components/NextHead/NextHead";
 
 interface IProductName {
     name: string,
@@ -46,6 +48,8 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
     const product = initialApolloState[ref];
 
     const { addCartValue } = useStoreUpdate()!;
+    const router = useRouter();
+    console.log(router)
 
     const { 
         name: productName, 
@@ -188,6 +192,12 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             </Box>);
 
     return (
+        <>
+        <NextHead 
+        currentURL={`http://localhost:3000${router.asPath}`}
+        description="Enter your order details including your shipping address" 
+        title="Shipping Details" 
+        />
         <Layout>
             <Heading 
             as="h3"
@@ -312,6 +322,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             }}
             />
         </Layout>
+        </>
     );
 };
 
