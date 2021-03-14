@@ -31,7 +31,7 @@ const Product: React.FC<IProductStorage> = ({
 
     const [ isSaved, setIsSaved ] = React.useState<boolean>(false);
     const { addCartValue, toggleSavedValue } = useStoreUpdate()!;
-    const { cartStorage } = useStore()!;
+    const { cartStorage, savedStorage } = useStore()!;
 
 
     const product = {
@@ -45,7 +45,7 @@ const Product: React.FC<IProductStorage> = ({
 
     const addProductToCart = () => addCartValue(product);
 
-    React.useEffect(() => {
+    const updateCartStatus = () => {
         const btn = document.querySelector(`.btn-${id}`);
 
         if (cartStorage?.some(item => item.id === id)) {
@@ -53,7 +53,28 @@ const Product: React.FC<IProductStorage> = ({
         } else {
             btn && btn.textContent === "In Cart" ? btn.textContent = "+ Add To Cart" : null;
         }
+    };
 
+    const updateLikedStatus = () => {
+        const saveBtn = document.querySelector(`.save-btn-${id}`)! as HTMLButtonElement;
+
+        let isASavedProduct = false;
+
+        if (savedStorage?.some(item => item.id === id)) {
+            saveBtn.firstElementChild.setAttribute("fill", "white");
+            saveBtn.style.backgroundColor = "rgb(184, 50, 128)";
+            isASavedProduct = true;
+        }
+
+        setIsSaved(isASavedProduct);
+    };
+
+    React.useEffect(() => {
+        updateLikedStatus();
+    }, []);
+
+    React.useEffect(() => {
+        updateCartStatus();
     }, [ cartStorage ]);
 
 
@@ -85,6 +106,7 @@ const Product: React.FC<IProductStorage> = ({
                     borderRadius="none"
                     borderBottomLeftRadius="md"
                     bg={useColorModeValue("gray.100", "gray.700")}
+                    className={`save-btn-${id}`}
                     colorScheme="pink"
                     _hover={{
                         bg: useColorModeValue("gray.100", "gray.900")
