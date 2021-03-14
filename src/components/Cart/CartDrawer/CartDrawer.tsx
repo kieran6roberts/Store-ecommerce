@@ -103,7 +103,7 @@ const CartDrawer: React.FC = () => {
         onClick={onOpen}
         w="5rem"
         ml="auto"
-        mr={8}
+        mr={[4, 4, 4, 6]}
         variant="ghost"
         _hover={{
             bg: "pink.500"
@@ -113,7 +113,7 @@ const CartDrawer: React.FC = () => {
         </Button> : null}
         <DrawerTemplate
         header="What's in your bag"
-        footer="Kieran's Coffee Collection"
+        footer="Kieran's Coffee Collection @2021"
         isOpen={isOpen}
         onClose={onClose}
         placement="right"
@@ -148,7 +148,9 @@ const CartDrawer: React.FC = () => {
                    To the cart
                 </Link>
             </NextLink>
-            <Divider my={4} />
+            <Divider 
+            bg="pink.100"
+            my={4} />
             <List>
                 {mapProductsToDom()}
             </List>

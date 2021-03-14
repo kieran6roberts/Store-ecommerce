@@ -41,7 +41,7 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled }) => (
                     </Box>
                 </Tooltip>
                 {isStyled ? 
-                <Text>
+                <Text ml={4}>
                     Store
                 </Text> : null}
             </Link>
@@ -73,7 +73,7 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled }) => (
                     </Box>
                 </Tooltip>
                 {isStyled ? 
-                <Text>
+                <Text ml={4}>
                     Cart
                 </Text> : null}
             </Link>
@@ -105,7 +105,7 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled }) => (
                     </Box>
                 </Tooltip>
                 {isStyled ? 
-                <Text>
+                <Text ml={4}>
                     Saved Items
                 </Text> : null}
             </Link>

@@ -109,11 +109,12 @@ const CartItem = ({
             align="center"
             direction="column"
             justify="center"
-            w="15%"
+            w={[ "100%", "100%", "100%", "15%" ]}
             >
                 <Text 
                 className="cart-item__total"
                 textAlign="center"
+                w="100%"
                 >
                     Total: €{(itemPrice / 100).toFixed(2)}
                 </Text>
