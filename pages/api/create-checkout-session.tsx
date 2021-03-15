@@ -22,7 +22,20 @@ async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse)
         }
     });
 
+    const mergeProducts = products?.map(product => {
+        const match = req.body.find(index => index.id === product.id);
+        
+        return ({
+            name: product.name,
+            price: product.price,
+            quantity: match.quantity
+        });
+    });
+
+    
     const metaData = req.body[0];
+
+    console.log(mergeProducts)
     
     try {
         const session = await stripe.checkout.sessions.create({
@@ -41,7 +54,7 @@ async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse)
             mode: "payment",
             payment_method_types: ["card", "ideal", "sepa_debit"],
             success_url: "http://localhost:3000/checkout/review?id={CHECKOUT_SESSION_ID}",
-            line_items: products.map((product: IProductStorage, index: number) => ({
+            line_items: mergeProducts.map((product: IProductStorage) => ({
                 price_data: {
                     unit_amount: product.price,
                     currency: "EUR",
@@ -49,7 +62,7 @@ async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse)
                         name: product.name,           
                     },
                 },
-                quantity: req.body[index].quantity
+                quantity: product.quantity
             }))
         });
 
