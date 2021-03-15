@@ -3,6 +3,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import * as React from "react";
 
+import CheckoutDataProvider from "@/hooks/useCheckoutData";
 import StorageProvider from "@/hooks/useStorage";
 import { useApollo } from "@/lib/apolloClient";
 
@@ -44,9 +45,11 @@ const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => {
   return (
     <ApolloProvider client={apolloClient}>
       <ChakraProvider resetCSS={true} theme={theme}>
-        <StorageProvider>
-          <Component {...pageProps} />
-        </StorageProvider>
+        <CheckoutDataProvider>
+          <StorageProvider>
+            <Component {...pageProps} />
+          </StorageProvider>
+        </CheckoutDataProvider>
       </ChakraProvider>
     </ApolloProvider>
   );

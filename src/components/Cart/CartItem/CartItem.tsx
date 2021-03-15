@@ -54,12 +54,12 @@ const CartItem = ({
         direction={["column", "column", "column", "row"]}
         display="flex"
         fontSize="xs"
-        maxW={[ "500px", "500px", "500px", "none" ]}
+        maxW={[ "500px", "500px", "none" ]}
         mx="auto"
         p={4}
         spacing="0"
         justify="space-between"
-        w="full">
+        w="100%">
             <Box m="auto">
                 <Image 
                 alt="product image"

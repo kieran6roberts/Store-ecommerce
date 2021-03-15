@@ -8,6 +8,7 @@ export const mapCartStorage = (items: IProductStorage[] | null, hide: boolean): 
     <li 
     id={item.id}
     key={generateItemKey(item.name)}
+    style={{ width: "100%" }}
     >
         <CartItem 
         category={item.category}

@@ -34,8 +34,6 @@ async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse)
 
     
     const metaData = req.body[0];
-
-    console.log(mergeProducts)
     
     try {
         const session = await stripe.checkout.sessions.create({

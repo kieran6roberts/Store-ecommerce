@@ -78,7 +78,13 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     <NextLink 
                     href="/" 
                     passHref>
-                        <Link>
+                        <Link 
+                        fontSize="md"
+                        textTransform="uppercase"
+                        _hover={{
+                            color: "pink.200"
+                        }}
+                        >
                             Kieran's Coffee Collection
                         </Link>
                     </NextLink>
