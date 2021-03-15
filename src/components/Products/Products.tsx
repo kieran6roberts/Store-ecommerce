@@ -43,11 +43,12 @@ const Products: React.FC<IProducts> = ({
     query, 
     variables = undefined }) => {
         
-    const [ offset, setOffset ] = React.useState(10);
+    const [ offset, dispatchOffset ] = React.useReducer((state: number, action: number) => state + action, 10);
 
+    console.log(offset);
+    
     const { data, error, fetchMore, loading } = useQuery(query, variables);
     
- 
     if (error) {
         return <Box h="75vh">Error loading products</Box>;
     }
@@ -110,7 +111,7 @@ const Products: React.FC<IProducts> = ({
                     },
                 });
 
-                setOffset(offset + 10);
+                dispatchOffset(10);
             }
                 }>
                 Load More
