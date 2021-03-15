@@ -5,6 +5,7 @@ import CartDrawer from "@/components/Cart/CartDrawer/CartDrawer";
 import Footer from "@/components/Layout/Footer/Footer";
 import Nav from "@/components/Layout/Nav/Nav";
 import Sidebar from "@/components/Layout/Sidebar/Sidebar";
+import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
 
 interface ILayout {
@@ -14,6 +15,7 @@ interface ILayout {
 const Layout: React.FC<ILayout> = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { profile, loading } = useGetUser();
+    const { cartStorage }= useStore()!;
 
     return (
         <Flex 
@@ -29,6 +31,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
             />
             <CartDrawer />
             <Sidebar 
+            cartLength={cartStorage?.length ?? 0}
             isOpen={isOpen}
             onClose={onClose}
             user={profile} 

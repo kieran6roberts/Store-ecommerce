@@ -2,8 +2,15 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 
+import { ICheckoutInputs } from "@/components/Forms/CheckoutForm/CheckoutForm";
+import { IProductQuery } from "@/components/Products/Products";
 import { PRODUCT_STORAGE } from "@/queries/products";
 import { IProductStorage } from "@/utils/storage";
+
+interface IRequestContent extends ICheckoutInputs {
+    id: string;
+    quantity: string;
+}
 
 const stripe = new Stripe("sk_test_51IP3LTLIxM3ayKtnxOkzYa16G3uIIBhzb0q9LUvcqXg0By4pOVqCtUxwqQRnu5QLtR4h4NauShgjqYbuSWPUVApy00PZZx4mcQ", {
   apiVersion: "2020-08-27",
@@ -22,8 +29,8 @@ async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse)
         }
     });
 
-    const mergeProducts = products?.map(product => {
-        const match = req.body.find(index => index.id === product.id);
+    const mergeProducts = products?.map((product: IProductQuery) => {
+        const match = req.body.find((index: IRequestContent) => index.id === product.id);
         
         return ({
             name: product.name,

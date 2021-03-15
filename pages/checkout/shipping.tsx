@@ -13,7 +13,6 @@ import { GetServerSideProps , NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import nookies from "nookies";
-import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
 import { BsArrowLeft } from "react-icons/bs";
 
@@ -23,7 +22,6 @@ import NextHead from "@/components/NextHead/NextHead";
 import { useCheckout } from "@/hooks/useCheckoutData";
 import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
-import isObjectEmpty from "@/utils/isObjectEmpty";
 import { mapCartStorage } from "@/utils/mapCartStorage";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);

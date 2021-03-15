@@ -61,7 +61,7 @@ const Product: React.FC<IProductStorage> = ({
         let isASavedProduct = false;
 
         if (savedStorage?.some(item => item.id === id)) {
-            saveBtn.firstElementChild.setAttribute("fill", "white");
+            saveBtn.firstElementChild?.setAttribute("fill", "white");
             saveBtn.style.backgroundColor = "rgb(184, 50, 128)";
             isASavedProduct = true;
         }

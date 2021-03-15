@@ -1,5 +1,9 @@
 import { BaseQueryOptions, DocumentNode, useQuery } from "@apollo/client";
-import { Box, Button, SimpleGrid, VStack } from "@chakra-ui/react";
+import { Box, 
+    Button, 
+    SimpleGrid, 
+    Text,
+    VStack } from "@chakra-ui/react";
 import * as React from "react";
 
 import Product from "@/components/Products/Product/Product";
@@ -46,7 +50,7 @@ const Products: React.FC<IProducts> = ({
     const [ offset, dispatchOffset ] = React.useReducer((state: number, action: number) => state + action, 10);
 
     console.log(offset);
-    
+
     const { data, error, fetchMore, loading } = useQuery(query, variables);
     
     if (error) {
@@ -115,7 +119,11 @@ const Products: React.FC<IProducts> = ({
             }
                 }>
                 Load More
-            </Button> : null}
+            </Button> : 
+            <Text>
+                End of products.
+            </Text>
+            }
         </VStack>
     );
 };
