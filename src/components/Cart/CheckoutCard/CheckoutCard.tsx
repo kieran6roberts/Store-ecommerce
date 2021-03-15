@@ -116,7 +116,7 @@ const CheckoutCard = (): React.ReactElement => {
                     Total:
                 </Text>
                 <Text>
-                    €{total}
+                    €{total.toFixed(2)}
                 </Text>
             </Flex>
             <Divider />
