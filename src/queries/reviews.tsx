@@ -13,6 +13,7 @@ export const GET_REVIEWS = gql`
                 id
             }
             userPicture
+            __typename
         }
     } 
 `;
@@ -28,6 +29,7 @@ export const CREATE_REVIEW = gql`
             id
         }
         userPicture
+        __typename
     }
 }
 `;

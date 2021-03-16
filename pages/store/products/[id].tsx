@@ -58,11 +58,11 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         description: { text: productDescription }
     } = product;
 
-    const { data: reviewData, error, loading, refetch } = useQuery<IReviewData>(GET_REVIEWS, {
-        fetchPolicy: "no-cache",
+    const { data: reviewData, error, loading } = useQuery<IReviewData>(GET_REVIEWS, {
+        fetchPolicy: "cache-first",
         variables: {
             id: productId
-        },
+        }
     });
 
     const { addCartValue } = useStoreUpdate()!;
@@ -82,28 +82,26 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         });
     };
 
-    const [ addReview ] = useMutation(CREATE_REVIEW, { 
-        ignoreResults: true, 
-        refetchQueries: [{ 
-            query: GET_REVIEWS,
-            variables: {
-                id: productId
-            }
-        }],
-        onCompleted: refetch
-    });
-
-    const [ reviews, setReviews ] = React.useState<IReviewInputs[] | undefined>();
+    const [ addReview, { 
+        data: mutationData,
+        loading: mutationLoading, 
+        error: mutationError
+    }] = useMutation(CREATE_REVIEW);
 
     const handleReviewSubmit = (mutationVariable: any) => {
         addReview({
-            variables: mutationVariable
+            variables: mutationVariable,
+            update: (cache, { data: { reviews } }) => {
+                const data = cache.readQuery({ query: GET_REVIEWS });
+                console.log(data);
+                console.log(cache)
+                //data.reviews = [ ...data.reviews, GetReviews ];
+                cache.writeQuery({ query: GET_REVIEWS }, data);
+            }
         });
     };
-    
-    React.useEffect(() => {
-        setReviews(reviewData?.reviews);
-    }, [ reviewData ]);
+
+    console.log(reviewData)
 
     const mapReviewsToDom = (input: IReviewInputs[]) => input.map(review => 
             <Box 
@@ -301,8 +299,8 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                         <TabPanel>
                             <Review 
                             productId={productId}
-                            mutationLoading={loading}
-                            mutationError={error}
+                            mutationLoading={mutationLoading}
+                            mutationError={mutationError}
                             submitHandler={handleReviewSubmit}
                             user={profile?.nickname ?? null}
                             userPicture={profile?.picture ?? null}
@@ -327,7 +325,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             spacing="2rem"
             p={4}
             >
-                {reviews && reviews.length ? mapReviewsToDom(reviews) : <Text>No Reviews yet</Text>}
+                {reviewData?.reviews ? mapReviewsToDom(reviewData?.reviews) : <Text>No Reviews yet</Text>}
             </SimpleGrid>
             <Heading 
             as="h3"
