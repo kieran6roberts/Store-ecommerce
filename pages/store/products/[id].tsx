@@ -49,10 +49,6 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
     const ref = initialApolloState.ROOT_QUERY.products[0].__ref;
     const product = initialApolloState[ref];
 
-    const { addCartValue } = useStoreUpdate()!;
-    const router = useRouter();
-    const { profile } = useGetUser();
-
     const { 
         name: productName, 
         price: productPrice, 
@@ -62,8 +58,20 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         description: { text: productDescription }
     } = product;
 
+    const { data: reviewData, error, loading, refetch } = useQuery<IReviewData>(GET_REVIEWS, {
+        fetchPolicy: "no-cache",
+        variables: {
+            id: productId
+        },
+    });
+
+    const { addCartValue } = useStoreUpdate()!;
+    const router = useRouter();
+    const { profile } = useGetUser();
+
     const addProductToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
         (event.target as HTMLButtonElement).textContent = "Added";
+
         addCartValue({
             category: productCategory,
             description: productDescription,
@@ -74,29 +82,28 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         });
     };
 
-    const { data, error, loading } = useQuery<IReviewData>(GET_REVIEWS, {
-        variables: {
-            id: productId
-        },
+    const [ addReview ] = useMutation(CREATE_REVIEW, { 
+        ignoreResults: true, 
+        refetchQueries: [{ 
+            query: GET_REVIEWS,
+            variables: {
+                id: productId
+            }
+        }],
+        onCompleted: refetch
     });
 
-    const [ addReview, { 
-        data: mutationData,
-        loading: mutationLoading, 
-        error: mutationError 
-    }] = useMutation(CREATE_REVIEW);
-
-    const [ reviews, setReviews ] = React.useState<IReviewInputs[] | undefined>(data?.reviews);
+    const [ reviews, setReviews ] = React.useState<IReviewInputs[] | undefined>();
 
     const handleReviewSubmit = (mutationVariable: any) => {
         addReview({
-            variables: mutationVariable,
+            variables: mutationVariable
         });
     };
-
+    
     React.useEffect(() => {
-        setReviews(mutationData ? reviews?.concat(mutationData.createReview) : data?.reviews);
-    }, [ data, mutationData ]);
+        setReviews(reviewData?.reviews);
+    }, [ reviewData ]);
 
     const mapReviewsToDom = (input: IReviewInputs[]) => input.map(review => 
             <Box 
@@ -294,8 +301,8 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                         <TabPanel>
                             <Review 
                             productId={productId}
-                            mutationLoading={mutationLoading}
-                            mutationError={mutationError}
+                            mutationLoading={loading}
+                            mutationError={error}
                             submitHandler={handleReviewSubmit}
                             user={profile?.nickname ?? null}
                             userPicture={profile?.picture ?? null}
