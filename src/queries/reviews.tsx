@@ -12,13 +12,14 @@ export const GET_REVIEWS = gql`
             product {
                 id
             }
+            userPicture
         }
     } 
 `;
 
 export const CREATE_REVIEW = gql`
-    mutation NewReview($name: String!, $headline: String!, $message: String!, $rating: Int!, $id: ID) {
-        createReview(data: {name: $name, headline: $headline, message: $message, rating: $rating, product: {connect: {id: $id}}}) {
+    mutation NewReview($name: String!, $headline: String!, $message: String!, $rating: Int!, $id: ID, $userPicture: String) {
+        createReview(data: {name: $name, headline: $headline, message: $message, rating: $rating, userPicture: $userPicture, product: {connect: {id: $id}}}) {
         name
         headline
         message
@@ -26,6 +27,7 @@ export const CREATE_REVIEW = gql`
         product {
             id
         }
+        userPicture
     }
 }
 `;

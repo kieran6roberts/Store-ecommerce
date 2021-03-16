@@ -49,8 +49,6 @@ const Products: React.FC<IProducts> = ({
         
     const [ offset, dispatchOffset ] = React.useReducer((state: number, action: number) => state + action, 10);
 
-    console.log(offset);
-
     const { data, error, fetchMore, loading } = useQuery(query, variables);
     
     if (error) {

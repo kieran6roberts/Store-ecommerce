@@ -6,6 +6,7 @@ import {
     Flex, 
     Heading,
     IconButton,
+    Image,
     List,
     ListItem,
     SimpleGrid,
@@ -17,21 +18,22 @@ import {
     Text, 
     useColorModeValue } from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import Image from "next/image";
+import NextImage from "next/image";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { AiOutlineStar } from "react-icons/ai";
 
-import { useRouter } from "next/router";
 import Layout from "@/components/Layout/Layout";
+import NextHead from "@/components/NextHead/NextHead";
 import Products from "@/components/Products/Products";
 import Review, { IReviewInputs } from "@/components/Products/Review/Review";
 import { useStoreUpdate } from "@/hooks/useStorage";
 import { initApollo } from "@/lib/apolloClient";
+import { useGetUser } from "@/lib/user";
 import { PRODUCT_INFO, PRODUCT_NAMES, PRODUCT_NEW } from "@/queries/products";
 import { CREATE_REVIEW, GET_REVIEWS } from "@/queries/reviews";
 import { formatPrice } from "@/utils/formatPrice";
 import { generateItemKey } from "@/utils/generateItemKey";
-import NextHead from "@/components/NextHead/NextHead";
 
 interface IProductName {
     name: string,
@@ -49,7 +51,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
 
     const { addCartValue } = useStoreUpdate()!;
     const router = useRouter();
-    console.log(router)
+    const { profile } = useGetUser();
 
     const { 
         name: productName, 
@@ -105,14 +107,27 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             mb={4}
             p={4}
             >
-                <Heading 
-                as="h4"
-                fontSize="xs"
-                fontWeight="400"
-                mb={2}
+                <Flex 
+                align="center"
+                justify="flex-start"
+                mb={4}
                 >
-                    {review.name}
-                </Heading>
+                    {review?.userPicture ?
+                    <Box mr={4}>
+                        <Image 
+                        alt="user profile pic"
+                        boxSize={["20px", "20px", "20px", "30px"]}
+                        src={review.userPicture}
+                        /> 
+                    </Box> : null}
+                    <Heading 
+                    as="h4"
+                    fontSize="xs"
+                    fontWeight="400"
+                    >
+                        {review.name}
+                    </Heading>
+                </Flex>
                 <Heading 
                 as="h5"
                 fontSize="md"
@@ -195,8 +210,8 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         <>
         <NextHead 
         currentURL={`http://localhost:3000${router.asPath}`}
-        description="Enter your order details including your shipping address" 
-        title="Shipping Details" 
+        description={`${productDescription}`} 
+        title={`${productName}`} 
         />
         <Layout>
             <Heading 
@@ -217,7 +232,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                 shadow="base"
                 position="relative"
                 >
-                    <Image
+                    <NextImage
                     alt={productName}
                     src={`/${productImage[0].fileName}`}
                     layout="fill"
@@ -282,6 +297,8 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                             mutationLoading={mutationLoading}
                             mutationError={mutationError}
                             submitHandler={handleReviewSubmit}
+                            user={profile?.nickname ?? null}
+                            userPicture={profile?.picture ?? null}
                             />
                         </TabPanel>
                     </TabPanels>

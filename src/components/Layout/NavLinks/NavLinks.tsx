@@ -72,7 +72,6 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled, cartNumber }) => (
                     position="relative"
                     >
                         <IoCartOutline style={{ color: "white" }} />
-                        {console.log(cartNumber)}
                         {cartNumber ? 
                         <Flex
                         align="center"

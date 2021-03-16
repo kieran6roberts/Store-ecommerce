@@ -15,8 +15,10 @@ export const reviewValidation = (inputs: IReviewInputs): IReviewErrors => {
         errors.headline = "Headline must be at least 5 characters!";
     }
 
-    if (typeof inputs.message !== "string") {
+    if (!inputs.message.trim() || typeof inputs.message !== "string") {
         errors.message = "Invalid input!";
+    } else if (inputs.message.length < 5) {
+        errors.message = "You can do better than that. Message should be at least 5 characters!";
     }
 
     return errors;
