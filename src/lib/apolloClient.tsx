@@ -34,7 +34,14 @@ const createApolloClient = () => {
                             merge(existing = [], incoming) {
                                 return [...existing, ...incoming];
                             }
-                        }
+                        },
+                        /*
+                        reviews: {
+                            keyArgs: false,
+                            merge(existing = [], incoming) {
+                                return [...existing, ...incoming];
+                            }
+                        }*/
                     }
                 }
             }

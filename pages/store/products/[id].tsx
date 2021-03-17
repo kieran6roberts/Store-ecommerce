@@ -59,7 +59,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
     } = product;
 
     const { data: reviewData, error, loading } = useQuery<IReviewData>(GET_REVIEWS, {
-        fetchPolicy: "cache-first",
+        fetchPolicy: "network-only",
         variables: {
             id: productId
         }
@@ -91,17 +91,29 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
     const handleReviewSubmit = (mutationVariable: any) => {
         addReview({
             variables: mutationVariable,
-            update: (cache, { data: { reviews } }) => {
-                const data = cache.readQuery({ query: GET_REVIEWS });
-                console.log(data);
-                console.log(cache)
-                //data.reviews = [ ...data.reviews, GetReviews ];
-                cache.writeQuery({ query: GET_REVIEWS }, data);
+            update: (cache, { data: { createReview } }) => {
+                const exisitingReviews = cache.readQuery({ 
+                    query: GET_REVIEWS,
+                    variables: {
+                        id: productId
+                    },
+               
+                });
+
+                if (exisitingReviews && createReview) {
+                    cache.writeQuery({ 
+                        query: GET_REVIEWS,
+                        data: {
+                            reviews: [ ...exisitingReviews.reviews, createReview ]
+                        },
+                        variables: {
+                            id: productId
+                        }
+                    });
+                }
             }
         });
     };
-
-    console.log(reviewData)
 
     const mapReviewsToDom = (input: IReviewInputs[]) => input.map(review => 
             <Box 
