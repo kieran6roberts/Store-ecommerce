@@ -92,7 +92,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         addReview({
             variables: mutationVariable,
             update: (cache, { data: { createReview } }) => {
-                const exisitingReviews = cache.readQuery({ 
+                const exisitingReviews: { reviews: unknown[] } | null = cache.readQuery({ 
                     query: GET_REVIEWS,
                     variables: {
                         id: productId
@@ -337,7 +337,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             spacing="2rem"
             p={4}
             >
-                {reviewData?.reviews ? mapReviewsToDom(reviewData?.reviews) : <Text>No Reviews yet</Text>}
+                {reviewData?.reviews.length ? mapReviewsToDom(reviewData?.reviews) : <Text>No Reviews yet</Text>}
             </SimpleGrid>
             <Heading 
             as="h3"

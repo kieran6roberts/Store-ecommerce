@@ -5,8 +5,6 @@ import { ApolloClient,
     NormalizedCacheObject } from "@apollo/client";
 import * as React from "react";
 
-type InitApollo = (initState?: null) => ApolloClient<NormalizedCacheObject>;
-
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 const productsLink = new HttpLink({
@@ -35,13 +33,6 @@ const createApolloClient = () => {
                                 return [...existing, ...incoming];
                             }
                         },
-                        /*
-                        reviews: {
-                            keyArgs: false,
-                            merge(existing = [], incoming) {
-                                return [...existing, ...incoming];
-                            }
-                        }*/
                     }
                 }
             }

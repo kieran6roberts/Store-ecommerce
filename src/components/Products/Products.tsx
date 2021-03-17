@@ -111,6 +111,16 @@ const Products: React.FC<IProducts> = ({
                         offset: offset,
                         limit: 10
                     },
+                    /*
+                    updateQuery: (prev, { fetchMoreResult }) => {
+                        if (!fetchMoreResult) {
+                            return prev;
+                        }
+
+                        return Object.assign({}, prev, {
+                            products: [...prev.products, ...fetchMoreResult.products]
+                        });
+                    }*/
                 });
 
                 dispatchOffset(10);

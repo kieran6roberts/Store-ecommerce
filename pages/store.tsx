@@ -12,6 +12,7 @@ import Layout from "@/components/Layout/Layout";
 import NextHead from "@/components/NextHead/NextHead";
 import Products, { IProductQuery } from "@/components/Products/Products";
 import Sort from "@/components/Sort/Sort";
+import { initApollo } from "@/lib/apolloClient";
 import { 
   GET_CATEGORY,
   PRODUCT_ALL, 
@@ -20,6 +21,7 @@ import {
 
  
 const Store: NextPage = () => {
+  const cache = initApollo().resetStore().then();
 
   const [ sortProducts, setSortProducts ] = React.useState<IProductQuery[] | []>([]);
 
@@ -82,7 +84,7 @@ const Store: NextPage = () => {
           offset: 0, 
           limit: 10
         }, 
-        fetchPolicy: "cache-first",
+        fetchPolicy: "network-only",
         ssr: false
       }}
       />
