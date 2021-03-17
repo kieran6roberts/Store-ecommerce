@@ -22,11 +22,19 @@ const savedProducts: NextPage = () => {
             <Heading 
             as="h1"
             fontSize="xl"
-            mb={16}
+            mb={4}
             ml={8}
             >
                 Your saved products
             </Heading>
+            <Text 
+            mb={16}
+            ml={8}
+            w={["80%", "80%", "80%", "40%"]}
+            >
+                Any products you save throughout the site will appear here. If your ready 
+                to make a purchase then feel free to add them to the cart.
+            </Text>
             <SimpleGrid 
             as="ul"
             columns={[1, 1, 2, 2, 3, 4]} 

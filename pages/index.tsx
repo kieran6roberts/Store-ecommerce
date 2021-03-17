@@ -55,13 +55,6 @@ const Home: NextPage = () => (
                 fetchPolicy: "no-cache"
             }}
             />
-            <Text   
-            w="60%"
-            textAlign="center"
-            >
-                Want to check out our full range of quality products? Click the link below 
-                and transport yourself into coffee heaven.
-            </Text>
             <NextLink 
             href="/store"
             passHref

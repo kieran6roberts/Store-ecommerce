@@ -128,7 +128,7 @@ const Products: React.FC<IProducts> = ({
                 }>
                 Load More
             </Button> : 
-            <Text>
+            <Text fontSize="xs">
                 End of products.
             </Text>
             }

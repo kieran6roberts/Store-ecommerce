@@ -176,7 +176,7 @@ const Product: React.FC<IProductStorage> = ({
                     {name}
                 </Text>
                 <Text 
-                color={useColorModeValue("gray.500", "gray.200")}
+                color={useColorModeValue("gray.600", "gray.200")}
                 fontSize="xs"
                 mb="auto"
                 >
