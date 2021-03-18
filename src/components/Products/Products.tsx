@@ -66,18 +66,6 @@ const Products: React.FC<IProducts> = ({
     const { products: cacheFirstData } = data;
     const productArr = sortProducts?.length ? sortProducts : cacheFirstData;
 
-    const checkForMoreProducts = () => {
-        const productElements = document.querySelectorAll(".product");
-
-        if (!productElements) {
-            return null;
-        }
-        
-        const products = Array.from(productElements);
-
-        return !(products.length % 10) ? true : false;
-    };
-
     return (
         <VStack spacing={8}>
             <SimpleGrid 
@@ -104,23 +92,13 @@ const Products: React.FC<IProducts> = ({
                     </Box>
                 )}
             </SimpleGrid>
-            {loadMore && checkForMoreProducts() ? 
+            {loadMore && (productArr.length % 10 === 0) ? 
             <Button onClick={() => { 
                 fetchMore({ 
                     variables: { 
                         offset: offset,
                         limit: 10
                     },
-                    /*
-                    updateQuery: (prev, { fetchMoreResult }) => {
-                        if (!fetchMoreResult) {
-                            return prev;
-                        }
-
-                        return Object.assign({}, prev, {
-                            products: [...prev.products, ...fetchMoreResult.products]
-                        });
-                    }*/
                 });
 
                 dispatchOffset(10);

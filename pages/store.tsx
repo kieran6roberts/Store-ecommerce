@@ -4,7 +4,7 @@ import {
   Flex, 
   Heading, 
   Text } from "@chakra-ui/react";
-import { GetServerSideProps, NextPage } from "next";
+import { NextPage } from "next";
 import * as React from "react";
 
 import Filter from "@/components/Filter/Filter";
@@ -35,6 +35,16 @@ const Store: NextPage = () => {
     fetchPolicy: "no-cache",
     onCompleted: data => setSortProducts(data.products)
   });
+
+  React.useEffect(() => {
+    const resetCache = async () => {
+      const apollo = initApollo();
+      await apollo.resetStore();
+      return;
+    };
+
+    resetCache();
+  }, []);
 
 
   return (
@@ -84,20 +94,13 @@ const Store: NextPage = () => {
           offset: 0, 
           limit: 10
         }, 
-        fetchPolicy: "network-only",
-        ssr: false
+        fetchPolicy: "cache-first",
+        ssr: false,
       }}
       />
     </Layout>
     </>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    await initApollo().resetStore();
-    return {
-      props: {}
-    };
 };
 
 export default Store;

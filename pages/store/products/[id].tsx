@@ -49,6 +49,9 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
     const ref = initialApolloState.ROOT_QUERY.products[0].__ref;
     const product = initialApolloState[ref];
 
+    const apollo = initApollo();
+    console.log(apollo);
+
     const { 
         name: productName, 
         price: productPrice, 
@@ -365,7 +368,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const apolloClient = initApollo();
 
     const { data: { products }} = await apolloClient.query({
-        query: PRODUCT_NAMES
+        query: PRODUCT_NAMES,
+        fetchPolicy: "no-cache"
     });
 
     const paths = products.map((product: IProductName) => ({
@@ -384,7 +388,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     if (typeof params?.id === "string") {
             await apolloClient.query({
                 query: PRODUCT_INFO,
-                variables: { name: params?.id?.split("-").join(" ") }
+                variables: { name: params?.id?.split("-").join(" ") },
             });
     }
 
