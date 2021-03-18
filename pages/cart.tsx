@@ -58,15 +58,15 @@ const Cart: NextPage = () => {
         </Heading>
         <Divider mb={2} />
         <Flex 
-        direction={["column-reverse", "column-reverse", "column-reverse", "row"]}
+        direction={["column-reverse", "column-reverse", "column-reverse", "column-reverse", "row"]}
         pt={2}
         >
           <Stack 
           as="ul"
-          divider={<StackDivider borderColor="pink.50" />}
+          divider={<StackDivider borderColor={useColorModeValue("pink.50", "gray.600")} />}
           flex="3"
           listStyleType="none"
-          mr={["0px", "0px", "0px", "0.5rem"]}
+          mr={["0px", "0px", "0px", "0px", "0.5rem"]}
           >
            {cartStorage?.length ? 
            mapCartStorage(cartStorage, false)

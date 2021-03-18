@@ -15,7 +15,7 @@ interface ILayout {
 const Layout: React.FC<ILayout> = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { profile, loading } = useGetUser();
-    const { cartStorage }= useStore()!;
+    const { cartStorage } = useStore()!;
 
     return (
         <Flex 

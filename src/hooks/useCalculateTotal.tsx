@@ -40,16 +40,28 @@ const useCalculateTotal = (price?: number): ICalculationReturn => {
         }
     };
 
+    const getItemSubTotal = (inputAsString: string) => {
+        const convertToNumber = parseInt(inputAsString);
+
+        if (convertToNumber < 0) {
+            return 0;
+        }
+
+        return convertToNumber * price!;
+    };
+
     const handleQtyIncrease = (event: React.MouseEvent<HTMLButtonElement>) => {
         const inputElement = (event.target as HTMLButtonElement).previousElementSibling as HTMLInputElement;
-        console.log(inputElement.value)
-        setItemPrice(parseInt(inputElement.value) * price!);
+        const itemSubTotal = getItemSubTotal(inputElement.value);
+   
+        setItemPrice(itemSubTotal);
       };
   
     const handleQtyDecrease = (event: React.MouseEvent<HTMLButtonElement>) => {
         const inputElement = (event.target as HTMLButtonElement).nextElementSibling as HTMLInputElement;
-        console.log(inputElement.value)
-        setItemPrice(parseInt(inputElement.value) * price!);
+        const itemSubTotal = getItemSubTotal(inputElement.value);
+
+        setItemPrice(itemSubTotal);
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
