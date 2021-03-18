@@ -107,7 +107,7 @@ const CartItem = ({
                 textAlign="center"
                 w="100%"
                 >
-                    Total: €{itemPrice ? (itemPrice / 100).toFixed(2) : null}
+                    Total: €{itemPrice ? (itemPrice / 100).toFixed(2) : 0}
                 </Text>
             </Flex>
             </> : null}

@@ -42,11 +42,13 @@ const useCalculateTotal = (price?: number): ICalculationReturn => {
 
     const handleQtyIncrease = (event: React.MouseEvent<HTMLButtonElement>) => {
         const inputElement = (event.target as HTMLButtonElement).previousElementSibling as HTMLInputElement;
+        console.log(inputElement.value)
         setItemPrice(parseInt(inputElement.value) * price!);
       };
   
     const handleQtyDecrease = (event: React.MouseEvent<HTMLButtonElement>) => {
         const inputElement = (event.target as HTMLButtonElement).nextElementSibling as HTMLInputElement;
+        console.log(inputElement.value)
         setItemPrice(parseInt(inputElement.value) * price!);
     };
 
