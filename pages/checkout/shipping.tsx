@@ -77,7 +77,7 @@ const Shipping: NextPage = () => {
         <Layout>
             <Flex 
             as="section"
-            flexDirection={["column", "column", "column", "row"]}
+            flexDirection={["column", "column", "column", "column", "row"]}
             minHeight="100vh"
             m={4}
             >
@@ -103,6 +103,7 @@ const Shipping: NextPage = () => {
                         <Link 
                         color="pink.400"
                         display="inline-block" 
+                        fontSize="xs"
                         ml={2}
                         >
                             Sign in
@@ -115,9 +116,8 @@ const Shipping: NextPage = () => {
                     color="white"
                     fontSize="sm"
                     justify="space-between"
-                    maxW="800px"
                     p={2}
-                    w="full"
+                    w="100%"
                     >
                         <Text fontWeight={700}>
                             Contact
@@ -136,7 +136,15 @@ const Shipping: NextPage = () => {
                             href="/checkout" 
                             passHref
                             >
-                                <Link>
+                                <Link       
+                                bg="pink.400"
+                                borderRadius="md"
+                                color="white"
+                                p={1}
+                                _hover={{
+                                    bg: "pink.500"
+                                }}
+                                >
                                   Change
                                 </Link>
                             </NextLink>
@@ -148,7 +156,6 @@ const Shipping: NextPage = () => {
                     color="white"
                     fontSize="sm"
                     justify="space-between"
-                    maxW="800px"
                     mb={8}
                     p={2}
                     w="full"
@@ -170,7 +177,15 @@ const Shipping: NextPage = () => {
                             href="/checkout" 
                             passHref
                             >
-                                <Link>
+                                <Link 
+                                bg="pink.400"
+                                borderRadius="md"
+                                color="white"
+                                p={1}
+                                _hover={{
+                                    bg: "pink.500"
+                                }}
+                                >
                                   Change
                                 </Link>
                             </NextLink>
@@ -240,10 +255,10 @@ const Shipping: NextPage = () => {
                 <VStack
                 as="ul"
                 flex="1.5"
-                divider={<StackDivider borderColor="pink.50" />}
+                divider={<StackDivider borderColor={useColorModeValue("pink.50", "gray.600")} />}
                 listStyleType="none"
                 mr={["0px", "0px", "0px", "0.5rem"]}
-                pl={[0, 0, 8]}
+                pl={[0, 0, 0, 0, 8]}
                 >
                     {mapCartStorage(cartStorage, true)}
                 </VStack>

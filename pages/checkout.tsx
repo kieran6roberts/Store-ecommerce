@@ -127,11 +127,11 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
                 </VStack>
                 <VStack
                 as="ul"
-                divider={<StackDivider borderColor="pink.50" />}
+                divider={<StackDivider borderColor={useColorModeValue("pink.50", "gray.600")} />}
                 flex="1.5"
                 listStyleType="none"
                 mr={["0px", "0px", "0px", "0.5rem"]}
-                pl={[0, 0, 0, 8]}
+                pl={[0, 0, 0, 0, 8]}
                 w="100%"
                 >
                     {mapCartStorage(cartStorage, true)}
