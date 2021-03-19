@@ -69,10 +69,9 @@ const CartDrawer: React.FC = () => {
                             </Text>
                                <RemoveButton callback={(event) => removeCartValue(event)} />
                         </Box>
-                
                     </Flex>
                     <Divider 
-                    bg="pink.100"
+                    bg={useColorModeValue("pink.100", "gray.600")}
                     my={8} 
                     variant="solid"
                     />
