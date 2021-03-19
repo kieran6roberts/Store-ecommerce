@@ -117,11 +117,10 @@ const Review: React.FC<IReview> = ({
                     </FormHelperText>
                 </FormControl>
                 <Button 
-                colorScheme="pink"
-                id="review-submit"
                 alignSelf="flex-end"
-                type="submit"
+                colorScheme="pink"
                 isLoading={mutationLoading}
+                type="submit"
                 >
                     Sumbit Review
                 </Button>

@@ -45,16 +45,6 @@ const Product: React.FC<IProductStorage> = ({
 
     const addProductToCart = () => addCartValue(product);
 
-    const updateCartStatus = () => {
-        const btn = document.querySelector(`.btn-${id}`);
-
-        if (cartStorage?.some(item => item.id === id)) {
-            btn && btn.textContent !== "In Cart" ? btn.textContent = "In Cart" : null;
-        } else {
-            btn && btn.textContent === "In Cart" ? btn.textContent = "+ Add To Cart" : null;
-        }
-    };
-
     const updateLikedStatus = () => {
         const saveBtn = document.querySelector(`.save-btn-${id}`)! as HTMLButtonElement;
 
@@ -72,11 +62,6 @@ const Product: React.FC<IProductStorage> = ({
     React.useEffect(() => {
         updateLikedStatus();
     }, []);
-
-    React.useEffect(() => {
-        updateCartStatus();
-    }, [ cartStorage ]);
-
 
     return (
         <Flex
@@ -105,11 +90,11 @@ const Product: React.FC<IProductStorage> = ({
                     aria-label="save item"
                     borderRadius="none"
                     borderBottomLeftRadius="md"
-                    bg={useColorModeValue("gray.100", "gray.700")}
+                    bg="gray.600"
                     className={`save-btn-${id}`}
                     colorScheme="pink"
                     _hover={{
-                        bg: useColorModeValue("gray.100", "gray.900")
+                        bg: "gray.500"
                     }}
                     onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                         const curTarget = event.currentTarget as HTMLButtonElement;
@@ -117,11 +102,11 @@ const Product: React.FC<IProductStorage> = ({
                         setIsSaved(!isSaved);
 
                         if (!isSaved) {
-                            curTarget.firstElementChild?.setAttribute("fill", "white");
+                            //curTarget.firstElementChild?.setAttribute("fill", "white");
                             curTarget.style.backgroundColor = "rgb(184, 50, 128)";
                         } else {
-                            curTarget.firstElementChild?.setAttribute("fill", "rgb(184, 50, 128)");
-                            curTarget.style.backgroundColor = "#EDF2F7";
+                            //curTarget.firstElementChild?.setAttribute("fill", "rgb(184, 50, 128)");
+                            curTarget.style.backgroundColor = "#4A5568";
                         }
 
                         toggleSavedValue("saved-products", product);
@@ -195,7 +180,7 @@ const Product: React.FC<IProductStorage> = ({
                 size="sm"
                 variant="solid"
                 >
-                    + Add to Cart 
+                    {cartStorage?.some(item => item.id === id) ? "In Cart" : "+ Add To Cart"}
                 </Button>
             </VStack>
         </Flex>

@@ -22,12 +22,13 @@ import NextHead from "@/components/NextHead/NextHead";
 import Products from "@/components/Products/Products";
 import Review, { IReviewInputs } from "@/components/Products/Review/Review";
 import UserReview from "@/components/Products/UserReview/UserReview";
-import { useStoreUpdate } from "@/hooks/useStorage";
+import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 import { initApollo } from "@/lib/apolloClient";
 import { useGetUser } from "@/lib/user";
 import { PRODUCT_INFO, PRODUCT_NAMES, PRODUCT_NEW } from "@/queries/products";
 import { CREATE_REVIEW, GET_REVIEWS } from "@/queries/reviews";
 import { formatPrice } from "@/utils/formatPrice";
+import { IProductStorage } from "@/utils/storage";
 
 interface IProductName {
     name: string,
@@ -59,13 +60,18 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         },
     });
 
-    const { addCartValue } = useStoreUpdate()!;
     const router = useRouter();
+    const { cartStorage } = useStore()!;
+    const { addCartValue } = useStoreUpdate()!;
     const { profile } = useGetUser();
 
-    const addProductToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
-        (event.target as HTMLButtonElement).textContent = "Added";
+    const [ addReview, { 
+        data: mutationData,
+        loading: mutationLoading, 
+        error: mutationError
+    }] = useMutation(CREATE_REVIEW);
 
+    const updateCartStatus = () => {
         addCartValue({
             category: productCategory,
             description: productDescription,
@@ -75,12 +81,6 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             price: productPrice
         });
     };
-
-    const [ addReview, { 
-        data: mutationData,
-        loading: mutationLoading, 
-        error: mutationError
-    }] = useMutation(CREATE_REVIEW);
 
     const handleReviewSubmit = (mutationVariable: any) => {
         addReview({
@@ -162,11 +162,12 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                                 alignSelf="flex-end"
                                 colorScheme="pink"
                                 className={`btn-${productId}`}
+                                id={`btn-add-${productId}`}
                                 mt={8}
-                                onClick={addProductToCart}
+                                onClick={updateCartStatus}
                                 variant="solid"
                                 >
-                                    Add To Cart
+                                   {cartStorage?.some(item => item.id === productId) ? "In Cart" : "+ Add To Cart"}
                                 </Button>
                             </Flex>
                         </TabPanel>
