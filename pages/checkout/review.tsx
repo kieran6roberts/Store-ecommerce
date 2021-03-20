@@ -42,7 +42,13 @@ const Review: NextPage<IReview> = ({ query }) => {
     }
 
     if (error) {
-        console.log("error");
+        return (
+            <Box minH="75vh">
+                <Text>
+                    There was a problem fetching your order details.
+                </Text>
+            </Box>
+        );
     }
 
     const [ order ] = orderData.orders;

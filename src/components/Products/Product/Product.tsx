@@ -102,10 +102,8 @@ const Product: React.FC<IProductStorage> = ({
                         setIsSaved(!isSaved);
 
                         if (!isSaved) {
-                            //curTarget.firstElementChild?.setAttribute("fill", "white");
                             curTarget.style.backgroundColor = "rgb(184, 50, 128)";
                         } else {
-                            //curTarget.firstElementChild?.setAttribute("fill", "rgb(184, 50, 128)");
                             curTarget.style.backgroundColor = "#4A5568";
                         }
 
