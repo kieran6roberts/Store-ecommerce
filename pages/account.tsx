@@ -18,6 +18,7 @@ import CurrentUser from "@/components/Layout/CurrentUser/CurrentUser";
 import Layout from "@/components/Layout/Layout";
 import { IUser } from "@/components/Layout/Nav/Nav";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import NextHead from "@/components/NextHead/NextHead";
 import auth0 from "@/lib/auth";
 import { GET_USER_ORDERS} from "@/queries/orders";
 import { USER_DETAILS } from "@/queries/users";
@@ -61,7 +62,9 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
           }
         }).then(res => res.json());
 
-        const { update_users: { returning } } = auth.data;
+        //const { update_users: { returning } } = auth.data;
+
+        //console.log(returning);
 
         setIsUpdated(true);
         setEditDisabled(true);
@@ -73,6 +76,12 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
     }, [ isUpdated ]);
 
     return (
+      <>
+      <NextHead 
+      currentURL="http://localhost:3000/account" 
+      description="Users personal coffee collection account" 
+      title="Account" 
+      />
       <Layout>
         <Heading 
         as="h1"
@@ -85,14 +94,14 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
           mb={4}
           pt={4}
         />
-        <Flex direction={["column", "column", "row"]}>
+        <Flex direction={["column", "column", "column", "row"]}>
           <VStack 
           align="flex-start"
-          flex="2"
+          flex="1"
           pl={4}
           pr={12}
           py={2}
-          mb={[16, 16, 0]}
+          mb={[16, 16, 16, 0]}
           spacing={8}
           >
             <CurrentUser 
@@ -135,6 +144,7 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
             bg={editDisabled ? useColorModeValue("gray.50", "gray.700")  : "none" }
             borderRadius="md"
             p={4}
+            w="100%"
             >
               <CheckoutForm 
               handleDisabled={() => setEditDisabled(!editDisabled)}
@@ -160,7 +170,9 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
             <LoadingSpinner />
             :
             <List w="full">
-                {orderData.orders.map(({ createdAt, name, total }: IPreviousOrders) => (
+                
+                {orderData.orders.length ? 
+                orderData.orders.map(({ createdAt, name, total }: IPreviousOrders) => (
                   <ListItem 
                   bg={useColorModeValue("gray.100", "gray.700")}
                   borderRadius="md"
@@ -181,12 +193,16 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
                       Total: {formatPrice(total)}
                     </Text>
                   </ListItem>
-                ))}
+                )) : 
+                <Text fontSize="xs">
+                    No Previous Orders
+                </Text>}
             </List>
             }
           </VStack>
         </Flex>
       </Layout>
+      </>
     );
 };
 

@@ -15,7 +15,7 @@ import { IUsersValidation,usersValidation } from "@/utils/validation/users";
 interface ICheckoutForm {
     handleDisabled?: (value: React.SetStateAction<boolean>) => void;
     isDisabled: boolean;
-    submit: (values: ICheckoutInputs) => Promise<unknown>;
+    submit: (values: ICheckoutInputs) => void;
     submitText: string;
     userSavedDetails?: IUsersValidation | null;
 }

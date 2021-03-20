@@ -5,12 +5,14 @@ import {
   Heading, 
   Stack,  
   StackDivider,
-  Text } from "@chakra-ui/react";
+  Text, 
+  useColorModeValue} from "@chakra-ui/react";
 import { NextPage } from "next";
 import * as React from "react";
 
 import CheckoutCard from "@/components/Cart/CheckoutCard/CheckoutCard";
 import Layout from "@/components/Layout/Layout";
+import NextHead from "@/components/NextHead/NextHead";
 import { useStore } from "@/hooks/useStorage";
 import { mapCartStorage } from "@/utils/mapCartStorage";
 
@@ -24,6 +26,12 @@ const Cart: NextPage = () => {
   const { cartStorage } = useStore()!;
 
   return (
+    <>
+    <NextHead 
+    currentURL="http://localhost:3000/cart" 
+    description="User coffee cart full of high quality coffee products" 
+    title="Cart" 
+    />
     <Layout>
       <Box 
       as="section"
@@ -48,24 +56,34 @@ const Cart: NextPage = () => {
         >
           Items in Your Bag
         </Heading>
-        <Divider />
+        <Divider mb={2} />
         <Flex 
-        direction={["column-reverse", "column-reverse", "column-reverse", "row"]}
+        direction={["column-reverse", "column-reverse", "column-reverse", "column-reverse", "row"]}
         pt={2}
         >
           <Stack 
           as="ul"
-          divider={<StackDivider borderColor="pink.50" />}
+          divider={<StackDivider borderColor={useColorModeValue("pink.50", "gray.600")} />}
           flex="3"
           listStyleType="none"
-          mr={["0px", "0px", "0px", "0.5rem"]}
+          mr={["0px", "0px", "0px", "0px", "0.5rem"]}
           >
-           {mapCartStorage(cartStorage, false)}
+           {cartStorage?.length ? 
+           mapCartStorage(cartStorage, false)
+          :
+          <Text 
+          borderRadius="md"
+          bg={useColorModeValue("gray.100", "gray.700")}
+          p={4}
+          >
+            Cart is Empty
+          </Text>}
           </Stack>
           <CheckoutCard />
         </Flex>
       </Box>
     </Layout>
+    </>
   );
 };
 

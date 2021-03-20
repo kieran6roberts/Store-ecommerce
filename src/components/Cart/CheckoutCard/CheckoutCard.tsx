@@ -69,7 +69,7 @@ const CheckoutCard = (): React.ReactElement => {
         fontSize="xs"
         maxW="500px"
         maxH="400px"
-        mb={["4rem", "4rem", "4rem", "0px"]}
+        mb={["4rem", "4rem", "4rem", "4rem", "0px"]}
         mx="auto"
         spacing="20px"
         shadow="base"
@@ -116,7 +116,7 @@ const CheckoutCard = (): React.ReactElement => {
                     Total:
                 </Text>
                 <Text>
-                    €{total}
+                    €{total.toFixed(2)}
                 </Text>
             </Flex>
             <Divider />

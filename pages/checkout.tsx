@@ -16,6 +16,8 @@ import { BsArrowLeft } from "react-icons/bs";
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import CheckoutForm, { ICheckoutInputs } from "@/components/Forms/CheckoutForm/CheckoutForm";
 import Layout from "@/components/Layout/Layout";
+import NextHead from "@/components/NextHead/NextHead";
+import { useCheckoutUpdate } from "@/hooks/useCheckoutData";
 import { useStore } from "@/hooks/useStorage";
 import auth0 from "@/lib/auth";
 import { useGetUser } from "@/lib/user";
@@ -31,9 +33,13 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
 
     const { profile } = useGetUser();
     const { cartStorage } = useStore()!;
+    const { handleUpdateDetails } = useCheckoutUpdate()!;
     const router = useRouter();
 
-    const handleSubmit = (values: ICheckoutInputs) => router.push(`/checkout/shipping?data=${JSON.stringify(values)}`);
+    const handleSubmit = (values: ICheckoutInputs) => {
+        handleUpdateDetails(values);
+        router.push("/checkout/shipping");
+    };
 
     React.useEffect(() => {
         const emailElement = document.querySelector("#email") as HTMLButtonElement;
@@ -41,6 +47,12 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
     }, []);
 
     return (
+        <>
+        <NextHead 
+        currentURL="http://localhost:3000/checkout" 
+        description="Enter your order details including your shipping address" 
+        title="Shipping Details" 
+        />
         <Layout>
             <Flex 
             as="section"
@@ -115,16 +127,18 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
                 </VStack>
                 <VStack
                 as="ul"
-                divider={<StackDivider borderColor="blue.200" />}
+                divider={<StackDivider borderColor={useColorModeValue("pink.50", "gray.600")} />}
                 flex="1.5"
                 listStyleType="none"
                 mr={["0px", "0px", "0px", "0.5rem"]}
-                pl={[0, 0, 8]}
+                pl={[0, 0, 0, 0, 8]}
+                w="100%"
                 >
                     {mapCartStorage(cartStorage, true)}
                 </VStack>
             </Flex>
         </Layout>
+        </>
     );
 };
 

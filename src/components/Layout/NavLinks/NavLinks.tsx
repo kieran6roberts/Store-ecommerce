@@ -1,5 +1,5 @@
-import { 
-    Box, 
+import { Box,
+    Flex, 
     Link, 
     ListItem, 
     Text, 
@@ -10,10 +10,11 @@ import { AiOutlineHeart, AiOutlineShop } from "react-icons/ai";
 import { IoCartOutline } from "react-icons/io5";
 
 interface INavLinks {
+    cartNumber: number;
     isStyled: boolean;
 }
 
-const NavLinks: React.FC<INavLinks> = ({ isStyled }) => (
+const NavLinks: React.FC<INavLinks> = ({ isStyled, cartNumber }) => (
     <>
     <ListItem>
         <NextLink 
@@ -41,7 +42,7 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled }) => (
                     </Box>
                 </Tooltip>
                 {isStyled ? 
-                <Text>
+                <Text ml={4}>
                     Store
                 </Text> : null}
             </Link>
@@ -68,12 +69,31 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled }) => (
                     borderRadius="sm"
                     display="inline-flex"
                     p={1}
+                    position="relative"
                     >
                         <IoCartOutline style={{ color: "white" }} />
+                        {cartNumber ? 
+                        <Flex
+                        align="center"
+                        bg="pink.400"
+                        bottom={0}
+                        borderRadius="50%"
+                        color="white"
+                        fontSize="xs"
+                        h="1rem"
+                        justify="center"
+                        left={-2}
+                        right={0}
+                        top={-2}
+                        position="absolute"
+                        w="1rem"
+                        >
+                            {cartNumber}
+                        </Flex> : null}
                     </Box>
                 </Tooltip>
                 {isStyled ? 
-                <Text>
+                <Text ml={4}>
                     Cart
                 </Text> : null}
             </Link>
@@ -105,7 +125,7 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled }) => (
                     </Box>
                 </Tooltip>
                 {isStyled ? 
-                <Text>
+                <Text ml={4}>
                     Saved Items
                 </Text> : null}
             </Link>

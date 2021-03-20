@@ -53,23 +53,25 @@ const CartDrawer: React.FC = () => {
                     justify="space-between"
                     mt={2}
                     >
-                        <Box as="article" mr={4}>
+                        <Box as="article">
                             <Heading 
                             as="h5"
-                            fontSize="sm"
+                            fontSize="xs"
                             mb={2}
                             >
                                 {product.name}
                             </Heading>
-                            <Text fontSize="xs">
+                            <Text 
+                            fontSize="xs"
+                            mb={4}
+                            >
                                 {product.category}
                             </Text>
+                               <RemoveButton callback={(event) => removeCartValue(event)} />
                         </Box>
-                        <RemoveButton 
-                        callback={(event) => removeCartValue(event)}/>
                     </Flex>
                     <Divider 
-                    bg="pink.100"
+                    bg={useColorModeValue("pink.100", "gray.600")}
                     my={8} 
                     variant="solid"
                     />
@@ -100,7 +102,7 @@ const CartDrawer: React.FC = () => {
         onClick={onOpen}
         w="5rem"
         ml="auto"
-        mr={8}
+        mr={[4, 4, 4, 6]}
         variant="ghost"
         _hover={{
             bg: "pink.500"
@@ -110,7 +112,7 @@ const CartDrawer: React.FC = () => {
         </Button> : null}
         <DrawerTemplate
         header="What's in your bag"
-        footer="Next.js e-commerce"
+        footer="Kieran's Coffee Collection @2021"
         isOpen={isOpen}
         onClose={onClose}
         placement="right"
@@ -145,7 +147,9 @@ const CartDrawer: React.FC = () => {
                    To the cart
                 </Link>
             </NextLink>
-            <Divider my={4} />
+            <Divider 
+            bg="pink.100"
+            my={4} />
             <List>
                 {mapProductsToDom()}
             </List>

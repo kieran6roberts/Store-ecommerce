@@ -13,8 +13,8 @@ const Home: NextPage = () => (
     <>
     <NextHead 
     currentURL="http://localhost:3000" 
-    description="home page" 
-    title="Home" 
+    description="Welcome to Kieran's Coffee Collection! We would like to share our delicious range of fresh coffee with you." 
+    title="Kieran's Coffee Collection" 
     />
     <Layout>
         <VStack spacing="16">
@@ -55,13 +55,6 @@ const Home: NextPage = () => (
                 fetchPolicy: "no-cache"
             }}
             />
-            <Text   
-            w="60%"
-            textAlign="center"
-            >
-                Want to check out our full range of quality products? Click the link below 
-                and transport yourself into coffee heaven.
-            </Text>
             <NextLink 
             href="/store"
             passHref

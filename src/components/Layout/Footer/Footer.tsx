@@ -29,7 +29,7 @@ const Footer: React.FC<IFooter> = ({ user }) => {
             fontSize="md" 
             mb={6}
             >
-                YourCoffeeShop @2021
+                Kieran's Coffee Collection @2021
             </Text>
             <List 
             fontSize="sm"
@@ -37,21 +37,27 @@ const Footer: React.FC<IFooter> = ({ user }) => {
                 <HStack spacing={8}>
                     <ListItem>
                         <NextLink href="/store">
-                            <Link>
+                            <Link _hover={{
+                                color: "pink.400"
+                            }}>
                                 Store
                             </Link>
                         </NextLink>
                     </ListItem>
                     <ListItem>
                         <NextLink href="/cart">
-                            <Link>
+                            <Link _hover={{
+                                color: "pink.400"
+                            }}>
                                 Cart
                             </Link>
                         </NextLink>
                     </ListItem>
                     <ListItem>
                         <NextLink href="/saved-products">
-                            <Link>
+                            <Link _hover={{
+                                color: "pink.400"
+                            }}>
                                 Saved Products
                             </Link>
                         </NextLink>
@@ -59,13 +65,17 @@ const Footer: React.FC<IFooter> = ({ user }) => {
                     <ListItem>
                         {user ? 
                         <NextLink href="/account">
-                            <Link>
+                            <Link _hover={{
+                                color: "pink.400"
+                            }}>
                                 Account
                             </Link>
                         </NextLink>
                         :
                         <NextLink href="/api/login">
-                            <Link>
+                            <Link _hover={{
+                                color: "pink.400"
+                            }}>
                                 Login
                             </Link>
                         </NextLink>

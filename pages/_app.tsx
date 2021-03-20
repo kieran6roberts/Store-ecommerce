@@ -3,8 +3,14 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import * as React from "react";
 
+import CheckoutDataProvider from "@/hooks/useCheckoutData";
 import StorageProvider from "@/hooks/useStorage";
 import { useApollo } from "@/lib/apolloClient";
+
+interface IProviders {
+    components: React.JSXElementConstructor<React.PropsWithChildren<any>>[];
+    children: React.ReactNode;
+}
 
 const config = {
     initialColorMode: "light",
@@ -38,15 +44,21 @@ export const theme = extendTheme({
   }
 });
 
+const Providers = ({ components, children }: IProviders) => (
+    <>
+        {components.reduceRight((acc, Comp) => <Comp>{acc}</Comp>, children)}
+    </>
+);
+
 const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => {
   const apolloClient = useApollo(pageProps.initialApolloState);
   
   return (
     <ApolloProvider client={apolloClient}>
       <ChakraProvider resetCSS={true} theme={theme}>
-        <StorageProvider>
-          <Component {...pageProps} />
-        </StorageProvider>
+        <Providers components={[ CheckoutDataProvider, StorageProvider ]}>
+            <Component {...pageProps} />
+        </Providers>
       </ChakraProvider>
     </ApolloProvider>
   );

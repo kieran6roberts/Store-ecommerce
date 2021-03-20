@@ -9,8 +9,10 @@ import * as React from "react";
 
 import Filter from "@/components/Filter/Filter";
 import Layout from "@/components/Layout/Layout";
+import NextHead from "@/components/NextHead/NextHead";
 import Products, { IProductQuery } from "@/components/Products/Products";
 import Sort from "@/components/Sort/Sort";
+import { initApollo } from "@/lib/apolloClient";
 import { 
   GET_CATEGORY,
   PRODUCT_ALL, 
@@ -34,7 +36,24 @@ const Store: NextPage = () => {
     onCompleted: data => setSortProducts(data.products)
   });
 
+  React.useEffect(() => {
+    const resetCache = async () => {
+      const apollo = initApollo();
+      await apollo.resetStore();
+      return;
+    };
+
+    resetCache();
+  }, []);
+
+
   return (
+    <>
+    <NextHead 
+    currentURL="http://localhost:3000/store" 
+    description="Our coffee store housing the freshest and most delicious coffee beans as well as hand crafted mugs & cups" 
+    title="Coffee Beans, Mugs & Cups" 
+    />
     <Layout>
       <Box 
       as="header"
@@ -76,10 +95,11 @@ const Store: NextPage = () => {
           limit: 10
         }, 
         fetchPolicy: "cache-first",
-        ssr: false
+        ssr: false,
       }}
       />
     </Layout>
+    </>
   );
 };
 

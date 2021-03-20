@@ -20,5 +20,5 @@ export const getStorage = (key: string): Array<IProductStorage> | null => {
     
     const storedItems = window.localStorage.getItem(key);
 
-    return storedItems ? JSON.parse(storedItems) : null;
+    return storedItems ? JSON.parse(storedItems) : [];
 };

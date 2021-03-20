@@ -11,33 +11,33 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { GetServerSideProps , NextPage } from "next";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import nookies from "nookies";
-import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
 import { BsArrowLeft } from "react-icons/bs";
 
 import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
+import NextHead from "@/components/NextHead/NextHead";
+import { useCheckout } from "@/hooks/useCheckoutData";
 import { useStore } from "@/hooks/useStorage";
 import { useGetUser } from "@/lib/user";
-import isObjectEmpty from "@/utils/isObjectEmpty";
 import { mapCartStorage } from "@/utils/mapCartStorage";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryData } }) => {
-    const userData = JSON.parse(queryData as string);
+const Shipping: NextPage = () => {
 
     const { cartStorage } = useStore()!;
     const { profile } = useGetUser();
+    const { userDetails } = useCheckout()!;
+    const router = useRouter();
 
     const lineItems = cartStorage?.map(item => ({ 
         id: item.id, 
         quantity: item.quantity,
-        ...userData
+        ...userDetails
     }));
-
-    console.log(lineItems)
 
     const handlePaymentInit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -62,16 +62,22 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
     };
 
     React.useEffect(() => {
-        if (typeof window !== "undefined") {
-            window.history.replaceState(null, "", `${window.location.origin}/checkout/shipping`);
+        if (!userDetails) {
+            router.push("/checkout");
         }
     }, []);
 
     return (
+        <>
+        <NextHead 
+        currentURL="http://localhost:3000/checkout/shipping" 
+        description="Confirm order shipping details" 
+        title="Confirm Shipping" 
+        />
         <Layout>
             <Flex 
             as="section"
-            flexDirection={["column", "column", "column", "row"]}
+            flexDirection={["column", "column", "column", "column", "row"]}
             minHeight="100vh"
             m={4}
             >
@@ -97,6 +103,7 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
                         <Link 
                         color="pink.400"
                         display="inline-block" 
+                        fontSize="xs"
                         ml={2}
                         >
                             Sign in
@@ -109,16 +116,15 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
                     color="white"
                     fontSize="sm"
                     justify="space-between"
-                    maxW="800px"
                     p={2}
-                    w="full"
+                    w="100%"
                     >
-                        <Text>
+                        <Text fontWeight={700}>
                             Contact
                         </Text>
-                        {userData ?
+                        {userDetails ?
                         <Text>
-                            {userData.email} | {userData.phone}
+                            {userDetails.email} | {userDetails.phone}
                         </Text>
                         :
                         <Text>
@@ -130,7 +136,15 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
                             href="/checkout" 
                             passHref
                             >
-                                <Link>
+                                <Link       
+                                bg="pink.400"
+                                borderRadius="md"
+                                color="white"
+                                p={1}
+                                _hover={{
+                                    bg: "pink.500"
+                                }}
+                                >
                                   Change
                                 </Link>
                             </NextLink>
@@ -142,17 +156,16 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
                     color="white"
                     fontSize="sm"
                     justify="space-between"
-                    maxW="800px"
                     mb={8}
                     p={2}
                     w="full"
                     >
-                        <Text>
+                        <Text fontWeight={700}>
                             Shipping To
                         </Text>
-                        {userData ?
+                        {userDetails ?
                         <Text>
-                            {`${userData.address} | ${userData.addressLine2 ? userData.addressLine2 + "|" : ""} ${userData.city}`}
+                            {`${userDetails.address} | ${userDetails.addressLine2 ? userDetails.addressLine2 + "|" : ""} ${userDetails.city}`}
                         </Text>
                         :
                         <Text>
@@ -164,7 +177,15 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
                             href="/checkout" 
                             passHref
                             >
-                                <Link>
+                                <Link 
+                                bg="pink.400"
+                                borderRadius="md"
+                                color="white"
+                                p={1}
+                                _hover={{
+                                    bg: "pink.500"
+                                }}
+                                >
                                   Change
                                 </Link>
                             </NextLink>
@@ -190,7 +211,7 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
                         defaultChecked
                         isDisabled
                         >
-                            Free Shipping for orders over £25
+                            Currently Free Shipping
                         </Checkbox>
                         <Text>
                             Free
@@ -234,37 +255,23 @@ const Shipping: NextPage<{ query: ParsedUrlQuery }> = ({ query: { data: queryDat
                 <VStack
                 as="ul"
                 flex="1.5"
-                divider={<StackDivider borderColor="blue.200" />}
+                divider={<StackDivider borderColor={useColorModeValue("pink.50", "gray.600")} />}
                 listStyleType="none"
                 mr={["0px", "0px", "0px", "0.5rem"]}
-                pl={[0, 0, 8]}
+                pl={[0, 0, 0, 0, 8]}
                 >
                     {mapCartStorage(cartStorage, true)}
                 </VStack>
             </Flex>
         </Layout>
+        </>
     );
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const cookies = nookies.get(ctx);
 
-    if(!cookies["checkout-session"] || (!cookies["checkout-session"] && isObjectEmpty(ctx.query))) {
-        return {
-            redirect: {
-                destination: "/cart",
-                permanent: false
-            }
-        };
-    }
-
-    const queryCheck = ["email", "name", "address", "city", "country", "postcode", "phone"];
-
-    const parsedQuery = ctx.query.data ? JSON.parse(ctx.query.data as string) : null;
-
-    const isValidQuery = queryCheck.every(property => parsedQuery ? parsedQuery[property] : null);
-
-    if (!isValidQuery) {
+    if(!cookies["checkout-session"]) {
         return {
             redirect: {
                 destination: "/cart",
@@ -274,9 +281,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
 
     return {
-        props: {
-            query: ctx.query,
-        }
+        props: {}
     };
 };
 

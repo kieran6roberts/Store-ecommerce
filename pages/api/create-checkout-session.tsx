@@ -2,8 +2,15 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 
+import { ICheckoutInputs } from "@/components/Forms/CheckoutForm/CheckoutForm";
+import { IProductQuery } from "@/components/Products/Products";
 import { PRODUCT_STORAGE } from "@/queries/products";
 import { IProductStorage } from "@/utils/storage";
+
+interface IRequestContent extends ICheckoutInputs {
+    id: string;
+    quantity: string;
+}
 
 const stripe = new Stripe("sk_test_51IP3LTLIxM3ayKtnxOkzYa16G3uIIBhzb0q9LUvcqXg0By4pOVqCtUxwqQRnu5QLtR4h4NauShgjqYbuSWPUVApy00PZZx4mcQ", {
   apiVersion: "2020-08-27",
@@ -22,26 +29,37 @@ async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse)
         }
     });
 
-    const [ data ] = req.body;
+    const mergeProducts = products?.map((product: IProductQuery) => {
+        const match = req.body.find((index: IRequestContent) => index.id === product.id);
+        
+        return ({
+            name: product.name,
+            price: product.price,
+            quantity: match.quantity
+        });
+    });
+
+    
+    const metaData = req.body[0];
     
     try {
         const session = await stripe.checkout.sessions.create({
             billing_address_collection: "required",
             cancel_url: "http://localhost:3000/cart",
-            customer_email: data.email,
+            customer_email: metaData.email,
             metadata: {
-                name: data.name,
-                address: data.address,
-                addressLine2: data.addressLine2,
-                city: data.city,
-                country: data.country,
-                postcode: data.postcode,
-                phone: data.phone
+                name: metaData.name,
+                address: metaData.address,
+                addressLine2: metaData.addressLine2,
+                city: metaData.city,
+                country: metaData.country,
+                postcode: metaData.postcode,
+                phone: metaData.phone
             },
             mode: "payment",
             payment_method_types: ["card", "ideal", "sepa_debit"],
             success_url: "http://localhost:3000/checkout/review?id={CHECKOUT_SESSION_ID}",
-            line_items: products.map((product: IProductStorage, index: number) => ({
+            line_items: mergeProducts.map((product: IProductStorage) => ({
                 price_data: {
                     unit_amount: product.price,
                     currency: "EUR",
@@ -49,7 +67,7 @@ async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse)
                         name: product.name,           
                     },
                 },
-                quantity: req.body[index].quantity
+                quantity: product.quantity
             }))
         });
 

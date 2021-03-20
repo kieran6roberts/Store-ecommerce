@@ -44,7 +44,8 @@ const DrawerTemplate = ({
                         {children}
                     </DrawerBody>
                     <DrawerFooter
-                    bgGradient="linear(90deg, blue.300, pink.300)"
+                  
+                    bg="pink.400"
                     color="white"
                     fontWeight="700"
                     fontSize="xs"

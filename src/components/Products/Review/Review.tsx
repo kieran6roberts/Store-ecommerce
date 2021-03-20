@@ -11,7 +11,6 @@ import * as React from "react";
 
 import Rating from "@/components/Products/Rating/Rating";
 import useForm from "@/hooks/useForm";
-import { useGetUser } from "@/lib/user";
 import { reviewValidation } from "@/utils/validation/reviews";
 
 export interface IReviewInputs {
@@ -23,6 +22,7 @@ export interface IReviewInputs {
     product: {
         id: string;
     }
+    userPicture: string;
     __typename?: string;
 }
 
@@ -31,22 +31,25 @@ interface IReview {
     mutationLoading: boolean;
     productId: string;
     submitHandler: (mutationVariable: IReviewInputs) => void;
+    user: string;
+    userPicture: string;
 }
 
 const Review: React.FC<IReview> = ({ 
     mutationError,
     mutationLoading, 
     productId,
-    submitHandler }) => {
-
-    const { profile } = useGetUser();
+    submitHandler,
+    user,
+    userPicture }) => {
 
     const initReviewInputs = {
-        name: profile?.nickname ?? "Anonymous",
+        name: user ?? "Guest",
         headline: "",
         message: "",
         rating: 0,
-        id: productId
+        id: productId,
+        userPicture: userPicture ?? ""
     };
 
     const { errors,
@@ -89,7 +92,10 @@ const Review: React.FC<IReview> = ({
                     type="text"
                     value={inputValues.headline}
                     />
-                    <FormHelperText fontSize="xs">
+                    <FormHelperText 
+                    color={errors.headline ? "red.500" : "none"}
+                    fontSize="xs"
+                    >
                         {errors.headline ?? "title for your review"}
                     </FormHelperText>
                 </FormControl>
@@ -103,16 +109,18 @@ const Review: React.FC<IReview> = ({
                     onChange={(event) => handleInputChange(event)}
                     value={inputValues.message}
                     />
-                    <FormHelperText fontSize="xs">
+                    <FormHelperText 
+                    color={errors.message ? "red.500" : "none"}
+                    fontSize="xs"
+                    >
                         {errors.message ?? "what would you like to say?"}
                     </FormHelperText>
                 </FormControl>
                 <Button 
-                colorScheme="pink"
-                id="review-submit"
                 alignSelf="flex-end"
-                type="submit"
+                colorScheme="pink"
                 isLoading={mutationLoading}
+                type="submit"
                 >
                     Sumbit Review
                 </Button>

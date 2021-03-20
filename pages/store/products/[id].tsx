@@ -1,13 +1,9 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { 
-    Box,
     Button,
     Center, 
     Flex, 
     Heading,
-    IconButton,
-    List,
-    ListItem,
     SimpleGrid,
     Tab, 
     TabList, 
@@ -17,19 +13,22 @@ import {
     Text, 
     useColorModeValue } from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import Image from "next/image";
+import NextImage from "next/image";
+import { useRouter } from "next/router";
 import * as React from "react";
-import { AiOutlineStar } from "react-icons/ai";
 
 import Layout from "@/components/Layout/Layout";
+import NextHead from "@/components/NextHead/NextHead";
 import Products from "@/components/Products/Products";
 import Review, { IReviewInputs } from "@/components/Products/Review/Review";
-import { useStoreUpdate } from "@/hooks/useStorage";
+import UserReview from "@/components/Products/UserReview/UserReview";
+import { useStore, useStoreUpdate } from "@/hooks/useStorage";
 import { initApollo } from "@/lib/apolloClient";
+import { useGetUser } from "@/lib/user";
 import { PRODUCT_INFO, PRODUCT_NAMES, PRODUCT_NEW } from "@/queries/products";
 import { CREATE_REVIEW, GET_REVIEWS } from "@/queries/reviews";
 import { formatPrice } from "@/utils/formatPrice";
-import { generateItemKey } from "@/utils/generateItemKey";
+import { IProductStorage } from "@/utils/storage";
 
 interface IProductName {
     name: string,
@@ -45,8 +44,6 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
     const ref = initialApolloState.ROOT_QUERY.products[0].__ref;
     const product = initialApolloState[ref];
 
-    const { addCartValue } = useStoreUpdate()!;
-
     const { 
         name: productName, 
         price: productPrice, 
@@ -56,8 +53,25 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         description: { text: productDescription }
     } = product;
 
-    const addProductToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
-        (event.target as HTMLButtonElement).textContent = "Added";
+    const { data: reviewData, error, loading } = useQuery<IReviewData>(GET_REVIEWS, {
+        fetchPolicy: "cache-first",
+        variables: {
+            id: productId
+        },
+    });
+
+    const router = useRouter();
+    const { cartStorage } = useStore()!;
+    const { addCartValue } = useStoreUpdate()!;
+    const { profile } = useGetUser();
+
+    const [ addReview, { 
+        data: mutationData,
+        loading: mutationLoading, 
+        error: mutationError
+    }] = useMutation(CREATE_REVIEW);
+
+    const updateCartStatus = () => {
         addCartValue({
             category: productCategory,
             description: productDescription,
@@ -68,126 +82,21 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         });
     };
 
-    const { data, error, loading } = useQuery<IReviewData>(GET_REVIEWS, {
-        variables: {
-            id: productId
-        },
-    });
-
-    const [ addReview, { 
-        data: mutationData,
-        loading: mutationLoading, 
-        error: mutationError 
-    }] = useMutation(CREATE_REVIEW);
-
-    const [ reviews, setReviews ] = React.useState<IReviewInputs[] | undefined>();
-
     const handleReviewSubmit = (mutationVariable: any) => {
         addReview({
             variables: mutationVariable,
         });
+
+        router.reload();
     };
 
-    React.useEffect(() => {
-        setReviews(mutationData ? reviews?.concat(mutationData.createReview) : data?.reviews);
-    }, [ data, mutationData ]);
-
-    const mapReviewsToDom = (input: IReviewInputs[]) => input.map(review => 
-            <Box 
-            as="li"
-            bg={useColorModeValue("gray.50", "gray.700")}
-            borderRadius="md"
-            key={generateItemKey(review.headline)}
-            mb={4}
-            p={4}
-            >
-                <Heading 
-                as="h4"
-                fontSize="xs"
-                fontWeight="400"
-                mb={2}
-                >
-                    {review.name}
-                </Heading>
-                <Heading 
-                as="h5"
-                fontSize="md"
-                mb={4}
-                >
-                    {review.headline}
-                </Heading>
-                <List
-                as="ul" 
-                display="flex"
-                mb={4}
-                >
-                    <ListItem 
-                    mx={1}>
-                        <IconButton 
-                        aria-label="rate product"
-                        bg={parseInt(review.rating) >= 1 ? "orange.300" : "transparent"}
-                        icon={<AiOutlineStar />} 
-                        isRound={true}
-                        pointerEvents="none"
-                        size="xs"
-                        variant="ghost"
-                        />
-                    </ListItem>
-                    <ListItem mx={1}>
-                        <IconButton 
-                        aria-label="rate product"
-                        bg={parseInt(review.rating) >= 2 ? "orange.300" : "transparent"}
-                        icon={<AiOutlineStar />} 
-                        isRound={true}
-                        pointerEvents="none"
-                        size="xs"
-                        variant="ghost"
-                        />
-                    </ListItem>
-                    <ListItem mx={1}>
-                        <IconButton
-                        aria-label="rate product"
-                        bg={parseInt(review.rating) >= 3 ? "orange.300" : "transparent"}
-                        icon={<AiOutlineStar />} 
-                        isRound={true}
-                        pointerEvents="none"
-                        size="xs"
-                        variant="ghost"
-                        />
-                    </ListItem>
-                    <ListItem mx={1}>
-                        <IconButton 
-                        aria-label="rate product"
-                        bg={parseInt(review.rating) >= 4 ? "orange.300" : "transparent"}
-                        icon={<AiOutlineStar />} 
-                        isRound={true}
-                        pointerEvents="none"
-                        size="xs"
-                        variant="ghost"
-                        />
-                    </ListItem>
-                    <ListItem mx={1}>
-                        <IconButton 
-                        aria-label="rate product"
-                        bg={parseInt(review.rating) >= 5 ? "orange.300" : "transparent"}
-                        icon={<AiOutlineStar />} 
-                        isRound={true}
-                        pointerEvents="none"
-                        size="xs"
-                        variant="ghost"
-                        />
-                    </ListItem>
-                </List>
-                <Text 
-                bg={useColorModeValue("white", "gray.800")}
-                h="full"
-                p={2}
-                >
-                    {review.message}
-                </Text>
-            </Box>);
-
     return (
+        <>
+        <NextHead 
+        currentURL={`http://localhost:3000${router.asPath}`}
+        description={`${productDescription}`} 
+        title={`${productName}`} 
+        />
         <Layout>
             <Heading 
             as="h3"
@@ -207,7 +116,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                 shadow="base"
                 position="relative"
                 >
-                    <Image
+                    <NextImage
                     alt={productName}
                     src={`/${productImage[0].fileName}`}
                     layout="fill"
@@ -223,13 +132,13 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                 variant="enclosed"
                 >
                     <TabList>
-                        <Tab>
+                        <Tab id="review-tab1">
                             Purchase
                         </Tab>
-                        <Tab>
+                        <Tab id="review-tab2">
                             Category
                         </Tab>
-                        <Tab>
+                        <Tab id="review-tab3">
                             Review
                         </Tab>
                     </TabList>
@@ -253,11 +162,12 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                                 alignSelf="flex-end"
                                 colorScheme="pink"
                                 className={`btn-${productId}`}
+                                id={`btn-add-${productId}`}
                                 mt={8}
-                                onClick={addProductToCart}
+                                onClick={updateCartStatus}
                                 variant="solid"
                                 >
-                                    Add To Cart
+                                   {cartStorage?.some(item => item.id === productId) ? "In Cart" : "+ Add To Cart"}
                                 </Button>
                             </Flex>
                         </TabPanel>
@@ -272,6 +182,8 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                             mutationLoading={mutationLoading}
                             mutationError={mutationError}
                             submitHandler={handleReviewSubmit}
+                            user={profile?.nickname ?? null}
+                            userPicture={profile?.picture ?? null}
                             />
                         </TabPanel>
                     </TabPanels>
@@ -293,7 +205,10 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             spacing="2rem"
             p={4}
             >
-                {reviews && reviews.length ? mapReviewsToDom(reviews) : <Text>No Reviews yet</Text>}
+                {reviewData?.reviews.length ? 
+                <UserReview reviews={reviewData.reviews} /> 
+                : 
+                <Text>No Reviews yet</Text>}
             </SimpleGrid>
             <Heading 
             as="h3"
@@ -312,6 +227,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             }}
             />
         </Layout>
+        </>
     );
 };
 
@@ -320,7 +236,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const apolloClient = initApollo();
 
     const { data: { products }} = await apolloClient.query({
-        query: PRODUCT_NAMES
+        query: PRODUCT_NAMES,
+        fetchPolicy: "no-cache"
     });
 
     const paths = products.map((product: IProductName) => ({
@@ -339,7 +256,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     if (typeof params?.id === "string") {
             await apolloClient.query({
                 query: PRODUCT_INFO,
-                variables: { name: params?.id?.split("-").join(" ") }
+                variables: { name: params?.id?.split("-").join(" ") },
             });
     }
 

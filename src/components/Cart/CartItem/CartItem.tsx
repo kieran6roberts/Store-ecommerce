@@ -9,6 +9,7 @@ import * as React from "react";
 
 import RemoveButton from "@/components/Cart/RemoveButton/RemoveButton";
 import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
+import useCalculateTotal from "@/hooks/useCalculateTotal";
 import { useStoreUpdate } from "@/hooks/useStorage";
 
 interface ICartItem {
@@ -30,22 +31,12 @@ const CartItem = ({
     name, 
     price }: ICartItem): React.ReactElement => {
 
-    const [ itemPrice, setItemPrice ] = React.useState(price);
     const { removeCartValue } = useStoreUpdate()!;
-
-    const handleQtyIncrease = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const inputElement = (event.target as HTMLButtonElement).previousElementSibling as HTMLInputElement;
-        setItemPrice(parseInt(inputElement.value) * price);
-      };
-  
-    const handleQtyDecrease = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const inputElement = (event.target as HTMLButtonElement).nextElementSibling as HTMLInputElement;
-        setItemPrice(parseInt(inputElement.value) * price);
-    };
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setItemPrice(parseInt((event.target as HTMLInputElement).value) * price);
-    };
+    const { 
+        handleInputChange,
+        handleQtyIncrease, 
+        handleQtyDecrease,
+        itemPrice } = useCalculateTotal(price);
 
     return (
         <Stack
@@ -54,12 +45,12 @@ const CartItem = ({
         direction={["column", "column", "column", "row"]}
         display="flex"
         fontSize="xs"
-        maxW={[ "500px", "500px", "500px", "none" ]}
+        maxW={[ "500px", "500px", "none" ]}
         mx="auto"
         p={4}
         spacing="0"
         justify="space-between"
-        w="full">
+        w="100%">
             <Box m="auto">
                 <Image 
                 alt="product image"
@@ -109,13 +100,14 @@ const CartItem = ({
             align="center"
             direction="column"
             justify="center"
-            w="15%"
+            w={[ "100%", "100%", "100%", "15%" ]}
             >
                 <Text 
                 className="cart-item__total"
                 textAlign="center"
+                w="100%"
                 >
-                    Total: €{(itemPrice / 100).toFixed(2)}
+                    Total: €{itemPrice ? (itemPrice / 100).toFixed(2) : 0}
                 </Text>
             </Flex>
             </> : null}
