@@ -29,10 +29,10 @@ const Product: React.FC<IProductStorage> = ({
 
     const router = useRouter();
 
-    const [ isSaved, setIsSaved ] = React.useState<boolean>(false);
     const { addCartValue, toggleSavedValue } = useStoreUpdate()!;
     const { cartStorage, savedStorage } = useStore()!;
 
+    const [ isSaved, setIsSaved ] = React.useState<boolean>(() => savedStorage?.some(item => item.id === id) ? true : false);
 
     const product = {
         category,
@@ -45,23 +45,17 @@ const Product: React.FC<IProductStorage> = ({
 
     const addProductToCart = () => addCartValue(product);
 
-    const updateLikedStatus = () => {
-        const saveBtn = document.querySelector(`.save-btn-${id}`)! as HTMLButtonElement;
-
-        let isASavedProduct = false;
-
-        if (savedStorage?.some(item => item.id === id)) {
-            saveBtn.firstElementChild?.setAttribute("fill", "white");
-            saveBtn.style.backgroundColor = "rgb(184, 50, 128)";
-            isASavedProduct = true;
-        }
-
-        setIsSaved(isASavedProduct);
+    const handleSaveClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const curTarget = event.currentTarget as HTMLButtonElement;
+            if (!isSaved) {
+                (curTarget.firstElementChild as HTMLElement).style.color = "#fff";
+            } else {
+                (curTarget.firstElementChild as HTMLElement).style.color = "#ED64A6";
+            }
+            
+            setIsSaved(!isSaved);
+            toggleSavedValue("saved-products", product);
     };
-
-    React.useEffect(() => {
-        updateLikedStatus();
-    }, []);
 
     return (
         <Flex
@@ -90,25 +84,16 @@ const Product: React.FC<IProductStorage> = ({
                     aria-label="save item"
                     borderRadius="none"
                     borderBottomLeftRadius="md"
-                    bg="gray.600"
                     className={`save-btn-${id}`}
-                    colorScheme="pink"
+                    bg={isSaved ? "pink.500" : "white"}
+                    color={isSaved ? "white" : "pink.400"}
                     _hover={{
-                        bg: "gray.500"
+                        bg: isSaved ? "pink.600" : "gray.100"
                     }}
-                    onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-                        const curTarget = event.currentTarget as HTMLButtonElement;
-
-                        setIsSaved(!isSaved);
-
-                        if (!isSaved) {
-                            curTarget.style.backgroundColor = "rgb(184, 50, 128)";
-                        } else {
-                            curTarget.style.backgroundColor = "#4A5568";
-                        }
-
-                        toggleSavedValue("saved-products", product);
+                    _active={{
+                        bg: isSaved ? "pink.600" : "gray.100"
                     }}
+                    onClick={handleSaveClick}
                     icon={router.pathname === "/saved-products" ?
                     <TiDeleteOutline /> 
                     : <AiOutlineHeart /> } 

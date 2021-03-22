@@ -1,4 +1,4 @@
-import { Box, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid, Text, useColorModeValue } from "@chakra-ui/react";
 import { NextPage } from "next";
 import * as React from "react";
 
@@ -28,6 +28,7 @@ const savedProducts: NextPage = () => {
                 Your saved products
             </Heading>
             <Text 
+            fontSize="sm"
             mb={16}
             ml={8}
             w={["80%", "80%", "80%", "40%"]}
@@ -67,7 +68,12 @@ const savedProducts: NextPage = () => {
                     >
                         Empty
                     </Heading>
-                    <Text fontSize="sm">
+                    <Text 
+                    bg={useColorModeValue("gray.100", "gray.600")}
+                    borderRadius="md"
+                    fontSize="sm"
+                    p={4}
+                    >
                         Saved products will appear here
                     </Text>
                 </Box>
