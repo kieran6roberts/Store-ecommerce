@@ -18,7 +18,7 @@ function findURL<T>(local: T, prod: T, branch: T): T {
 }
 
 if (typeof window === "undefined") {
-    const baseURLForEnv = findURL("http://localhost:3000", "http://localhost:3000", "https://VERCEL_URL");
+    const baseURLForEnv = findURL("http://localhost:3000", "https://coffee-ecommerce.vercel.app/", "https://coffee-ecommerce.vercel.app/");
     
     module.exports = {
         AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
