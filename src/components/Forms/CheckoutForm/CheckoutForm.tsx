@@ -72,7 +72,10 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
     style={{ width: "100%" }}
     >
         <VStack spacing={4}>
-            <Text fontSize="xs">
+            <Text 
+            color="pink.400"
+            fontSize="xs"
+            >
               Please Fill out all required fields
             </Text>
             <CustomInput

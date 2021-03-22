@@ -28,7 +28,6 @@ import { useGetUser } from "@/lib/user";
 import { PRODUCT_INFO, PRODUCT_NAMES, PRODUCT_NEW } from "@/queries/products";
 import { CREATE_REVIEW, GET_REVIEWS } from "@/queries/reviews";
 import { formatPrice } from "@/utils/formatPrice";
-import { IProductStorage } from "@/utils/storage";
 
 interface IProductName {
     name: string,
@@ -105,14 +104,13 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                 {productName}
             </Heading>
             <Flex 
-            direction={["column", "column", "row"]}
-            h="400px"
+            direction={["column", "column", "column", "row"]}
+            h={["800px", "800px", "800px", "400px"]}
             >
                 <Center 
                 borderRadius="sm"
                 flex="1"
-                mb={[12, 12, 0]}
-                mr={[0, 0, 2]}
+                mb={[12, 12, 12, 0]}
                 shadow="base"
                 position="relative"
                 >
@@ -120,7 +118,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                     alt={productName}
                     src={`/${productImage[0].fileName}`}
                     layout="fill"
-                    objectFit="cover"
+                    objectFit="contain"
                     />
                 </Center>
                 <Tabs 
@@ -132,14 +130,14 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                 variant="enclosed"
                 >
                     <TabList>
-                        <Tab id="review-tab1">
+                        <Tab>
                             Purchase
                         </Tab>
-                        <Tab id="review-tab2">
+                        <Tab>
                             Category
                         </Tab>
-                        <Tab id="review-tab3">
-                            Review
+                        <Tab>
+                            Write Review
                         </Tab>
                     </TabList>
                     <TabPanels fontSize="sm">
@@ -147,20 +145,21 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                             <Flex 
                             flexDirection="column"
                             justify="flex-start"
-                            h="320px"
+                            h="360px"
                             >
                                 <Text>
                                     {productDescription}
                                 </Text>
                                 <Text 
                                 alignSelf="flex-end"
+                                fontWeight="700"
                                 mt="auto"
                                 >
                                     {formatPrice(productPrice)}
                                 </Text>
                                 <Button 
                                 alignSelf="flex-end"
-                                colorScheme="pink"
+                                bg="pink.400"
                                 className={`btn-${productId}`}
                                 id={`btn-add-${productId}`}
                                 mt={8}
@@ -172,9 +171,11 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                             </Flex>
                         </TabPanel>
                         <TabPanel>
-                            <Text>
-                                {productCategory}
-                            </Text>
+                            <Flex h="360px">
+                                <Text>
+                                    {productCategory}
+                                </Text>
+                            </Flex>
                         </TabPanel>
                         <TabPanel>
                             <Review 

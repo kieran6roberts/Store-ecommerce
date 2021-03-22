@@ -17,46 +17,53 @@ import CartHeader from "@/components/Cart/CartHeader/CartHeader";
 import Layout from "@/components/Layout/Layout";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import NextHead from "@/components/NextHead/NextHead";
+import { useStoreUpdate } from "@/hooks/useStorage";
 import { USER_ORDER } from "@/queries/orders";
 import { formatPrice } from "@/utils/formatPrice";
 import { nowDate } from "@/utils/nowDate";
-import { setStorage } from "@/utils/storage";
 
 interface IReview {
     query: ParsedUrlQuery
 }
 
 const Review: NextPage<IReview> = ({ query }) => {
+    const { setCartStorage } = useStoreUpdate()!;
+
     const { data: orderData, loading, error } = useQuery(USER_ORDER, {
         variables: {
             id: query.id
         }
     });
 
+    React.useEffect(() => {
+        if (typeof window !== "undefined") {
+            window.history.replaceState(null, "", `${window.location.origin}/checkout/review`);
+        }
+
+        setCartStorage([]);
+    }, []);
+
+    
     if (loading) {
         return (
-            <Box minH="75vh">
-                <LoadingSpinner/>
+            <Box h="75vh">
+                <LoadingSpinner />
             </Box>
         );
     }
 
     if (error) {
         return (
-            <Box minH="75vh">
+           <Box minH="75vh">
                 <Text>
-                    There was a problem fetching your order details.
+                    Unable to fetch order details at this time. Don't worry the order is still
+                    on its way.
                 </Text>
             </Box>
         );
     }
 
     const [ order ] = orderData.orders;
-    
-    if (typeof window !== "undefined") {
-        window.history.replaceState(null, "", `${window.location.origin}/checkout/review`);
-        setStorage("cart-products", []);
-    }
 
     return (
         <>
@@ -95,10 +102,18 @@ const Review: NextPage<IReview> = ({ query }) => {
                             <VStack 
                             as="article"
                             bg={useColorModeValue("gray.50", "gray.700")}
-                            borderRadius="sm"
+                            borderRadius="md"
                             fontSize="sm"
                             p={12}
                             >
+                                <Text
+                                fontSize="xs"
+                                mb={6}
+                                textAlign="center"
+                                >
+                                    Thank you for placing your order with us. We'll get 
+                                    to work on sending your order as soon as possible
+                                </Text>
                                 <Heading 
                                 as="h3"
                                 fontSize="lg"
@@ -110,7 +125,7 @@ const Review: NextPage<IReview> = ({ query }) => {
                                 <Flex 
                                 bg={useColorModeValue("gray.100", "gray.600")}
                                 borderRadius="sm"
-                                justify="flex-start"
+                                justify={["space-between", "space-between", "flex-start"]}
                                 py={4}
                                 px={2}
                                 w="100%"
@@ -128,7 +143,7 @@ const Review: NextPage<IReview> = ({ query }) => {
                                 <Flex 
                                 bg={useColorModeValue("gray.100", "gray.600")}
                                 borderRadius="sm"
-                                justify="flex-start"
+                                justify={["space-between", "space-between", "flex-start"]}
                                 py={4}
                                 px={2}
                                 w="100%"
@@ -140,13 +155,13 @@ const Review: NextPage<IReview> = ({ query }) => {
                                         Email: 
                                     </Text>
                                     <Text mx={4}>
-                                        {order.email}
+                                        {order?.email}
                                     </Text>
                                 </Flex>
                                 <Flex 
                                 bg={useColorModeValue("gray.100", "gray.600")}
                                 borderRadius="sm"
-                                justify="flex-start"
+                                justify={["space-between", "space-between", "flex-start"]}
                                 py={4}
                                 px={2}
                                 w="100%"
@@ -158,13 +173,13 @@ const Review: NextPage<IReview> = ({ query }) => {
                                         Total:
                                     </Text>
                                     <Text mx={4}>
-                                        {formatPrice(order.total)}
+                                        {formatPrice(order?.total)}
                                     </Text>
                                 </Flex>
                                 <Flex 
                                 bg={useColorModeValue("gray.100", "gray.600")}
                                 borderRadius="sm"
-                                justify="flex-start"
+                                justify={["space-between", "space-between", "flex-start"]}
                                 py={4}
                                 px={2}
                                 w="100%"
@@ -176,17 +191,17 @@ const Review: NextPage<IReview> = ({ query }) => {
                                         Shipping Address: 
                                     </Text>
                                     <Text mx={4}>
-                                        {`${order.shippingAddress.address1},  
-                                        ${order.shippingAddress.city}, 
-                                        ${order.shippingAddress.country}, 
-                                        ${order.shippingAddress.zip}
+                                        {`${order?.shippingAddress.address1},  
+                                        ${order?.shippingAddress.city}, 
+                                        ${order?.shippingAddress.country}, 
+                                        ${order?.shippingAddress.zip}
                                         `}
                                     </Text>
                                 </Flex>
                                 <Flex 
                                 bg={useColorModeValue("gray.100", "gray.600")}
                                 borderRadius="sm"
-                                justify="flex-start"
+                                justify={["space-between", "space-between", "flex-start"]}
                                 mb={16}
                                 py={4}
                                 px={2}
@@ -199,10 +214,10 @@ const Review: NextPage<IReview> = ({ query }) => {
                                         Billing Address:
                                     </Text>
                                     <Text mx={4}>
-                                        {`${order.billingAddress.address1},  
-                                        ${order.billingAddress.city}, 
-                                        ${order.billingAddress.country}, 
-                                        ${order.billingAddress.zip}
+                                        {`${order?.billingAddress.address1},  
+                                        ${order?.billingAddress.city}, 
+                                        ${order?.billingAddress.country}, 
+                                        ${order?.billingAddress.zip}
                                         `}
                                     </Text>
                                 </Flex>

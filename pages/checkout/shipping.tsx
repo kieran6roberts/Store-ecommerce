@@ -114,12 +114,16 @@ const Shipping: NextPage = () => {
                     bg="blue.300"
                     borderRadius="sm"
                     color="white"
+                    flexDirection={["column", "row"]}
                     fontSize="sm"
                     justify="space-between"
                     p={2}
                     w="100%"
                     >
-                        <Text fontWeight={700}>
+                        <Text 
+                        fontWeight={700}
+                        mb={[2, 0]}
+                        >
                             Contact
                         </Text>
                         {userDetails ?
@@ -131,7 +135,7 @@ const Shipping: NextPage = () => {
                             Not Available
                         </Text>
                         }
-                        <Text>
+                        <Text mt={[4, 0]}>
                             <NextLink 
                             href="/checkout" 
                             passHref
@@ -154,25 +158,29 @@ const Shipping: NextPage = () => {
                     bg="blue.300"
                     borderRadius="sm"
                     color="white"
+                    flexDirection={["column", "row"]}
                     fontSize="sm"
                     justify="space-between"
                     mb={8}
                     p={2}
                     w="full"
                     >
-                        <Text fontWeight={700}>
+                        <Text 
+                        fontWeight={700}
+                        mb={[2, 0]}
+                        >
                             Shipping To
                         </Text>
                         {userDetails ?
                         <Text>
-                            {`${userDetails.address} | ${userDetails.addressLine2 ? userDetails.addressLine2 + "|" : ""} ${userDetails.city}`}
+                            {`${userDetails.address} |  ${userDetails.city}`}
                         </Text>
                         :
                         <Text>
                             Not available
                         </Text>
                         }
-                        <Text>
+                        <Text mt={[4, 0]}>
                             <NextLink 
                             href="/checkout" 
                             passHref

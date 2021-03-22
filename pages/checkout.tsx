@@ -82,6 +82,7 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
                         >
                             <Link 
                             color="pink.400"
+                            fontSize="xs"
                             display="inline-block" 
                             ml={2}
                             >
@@ -89,6 +90,12 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
                             </Link>
                         </NextLink>
                     </Text> : null}
+                    <Text 
+                    fontSize="sm"
+                    textAlign="center"
+                    >
+                        The following fields will be used as the shipping details for your order 
+                    </Text>
                     {userInfo ? 
                     <Text 
                     color="pink.400"

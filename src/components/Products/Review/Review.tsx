@@ -93,7 +93,7 @@ const Review: React.FC<IReview> = ({
                     value={inputValues.headline}
                     />
                     <FormHelperText 
-                    color={errors.headline ? "red.500" : "none"}
+                    color={errors.headline ? "red.500" : "pink.400"}
                     fontSize="xs"
                     >
                         {errors.headline ?? "title for your review"}
@@ -110,7 +110,7 @@ const Review: React.FC<IReview> = ({
                     value={inputValues.message}
                     />
                     <FormHelperText 
-                    color={errors.message ? "red.500" : "none"}
+                    color={errors.message ? "red.500" : "pink.400"}
                     fontSize="xs"
                     >
                         {errors.message ?? "what would you like to say?"}
@@ -118,7 +118,7 @@ const Review: React.FC<IReview> = ({
                 </FormControl>
                 <Button 
                 alignSelf="flex-end"
-                colorScheme="pink"
+                bg="pink.400"
                 isLoading={mutationLoading}
                 type="submit"
                 >
