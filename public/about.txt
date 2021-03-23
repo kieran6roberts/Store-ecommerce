@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Kumbh Sans
+- Font Author: Copyright 2020 The KumbhSans Project Authors (https://github.com/xconsau/KumbhSans)
+- Font Source: http://fonts.gstatic.com/s/kumbhsans/v4/c4ml1n92AsfhuCq6tVsauodX-Kq-QUI.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL)

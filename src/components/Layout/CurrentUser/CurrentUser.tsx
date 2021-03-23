@@ -20,7 +20,7 @@ const CurrentUser: React.FC<ICurrentUser> = ({ justify, user, userLoading }) => 
         >
             {userLoading ? 
             <Box>
-                One moment
+                Loading user
             </Box>
             :
             <>
