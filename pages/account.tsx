@@ -19,7 +19,6 @@ import Layout from "@/components/Layout/Layout";
 import { IUser } from "@/components/Layout/Nav/Nav";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import NextHead from "@/components/NextHead/NextHead";
-import { initApollo } from "@/lib/apolloClient";
 import auth0 from "@/lib/auth";
 import { GET_USER_ORDERS} from "@/queries/orders";
 import { USER_DETAILS } from "@/queries/users";

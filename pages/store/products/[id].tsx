@@ -43,6 +43,11 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
     const ref = initialApolloState.ROOT_QUERY.products[0].__ref;
     const product = initialApolloState[ref];
 
+    const router = useRouter();
+    const { cartStorage } = useStore()!;
+    const { addCartValue } = useStoreUpdate()!;
+    const { profile } = useGetUser();
+
     const { 
         name: productName, 
         price: productPrice, 
@@ -53,19 +58,14 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
     } = product;
 
     const { data: reviewData, error, loading } = useQuery<IReviewData>(GET_REVIEWS, {
-        fetchPolicy: "cache-first",
+        fetchPolicy: "network-only",
+        nextFetchPolicy: "cache-only",
         variables: {
             id: productId
         },
     });
 
-    const router = useRouter();
-    const { cartStorage } = useStore()!;
-    const { addCartValue } = useStoreUpdate()!;
-    const { profile } = useGetUser();
-
     const [ addReview, { 
-        data: mutationData,
         loading: mutationLoading, 
         error: mutationError
     }] = useMutation(CREATE_REVIEW);
@@ -84,9 +84,28 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
     const handleReviewSubmit = (mutationVariable: any) => {
         addReview({
             variables: mutationVariable,
+            update: (cache, { data: { createReview }}) => {
+                console.log(cache);
+
+                const existingReviews = cache.readQuery({ query: GET_REVIEWS });
+                console.log(existingReviews);
+
+                
+                cache.writeQuery({
+                    query: GET_REVIEWS,
+                    data: {
+                        reviews: [ createReview ]
+                    },
+                    variables: {
+                        id: productId
+                    },
+                });
+
+                console.log(cache)
+            }
         });
 
-        router.reload();
+        //router.reload();
     };
 
     return (
@@ -145,7 +164,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                             <Flex 
                             flexDirection="column"
                             justify="flex-start"
-                            h="360px"
+                            h="340px"
                             >
                                 <Text>
                                     {productDescription}
@@ -160,6 +179,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                                 <Button 
                                 alignSelf="flex-end"
                                 bg="pink.400"
+                                color="white"
                                 className={`btn-${productId}`}
                                 id={`btn-add-${productId}`}
                                 mt={8}
@@ -171,7 +191,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                             </Flex>
                         </TabPanel>
                         <TabPanel>
-                            <Flex h="360px">
+                            <Flex h="340px">
                                 <Text>
                                     {productCategory}
                                 </Text>

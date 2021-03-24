@@ -1,13 +1,9 @@
 import * as React from "react";
 
-import { ICheckoutInputs } from "@/components/Forms/CheckoutForm/CheckoutForm";
-import { IReviewInputs } from "@/components/Products/Review/Review";
-import { IAccountInput } from "@/pages/account";
 import isObjectEmpty from "@/utils/isObjectEmpty";
-import { IReviewErrors, reviewValidation } from "@/utils/validation/reviews";
 
 type InputType = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
-type SubmitProp = (values: { [key:string]: string | number }) => Promise<unknown>;
+type Submit = (input: { [key: string]: string | number }) => any;
 
 interface IUseFormOutput {
     errors: { [key: string]: string };
@@ -18,8 +14,8 @@ interface IUseFormOutput {
 }
 
 const useForm = (initInputs: { [key: string]: string | number }, 
-    customSubmit: any,
-    customValidation: any
+    customSubmit: Submit,
+    customValidation: Submit
     ): IUseFormOutput => {
     const [ inputValues, setInputValues ] = React.useState(initInputs);
     const [ errors, setErrors ] = React.useState<{ [key: string]: string }>({ errors: "" });

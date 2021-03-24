@@ -36,7 +36,6 @@ interface IReview {
 }
 
 const Review: React.FC<IReview> = ({ 
-    mutationError,
     mutationLoading, 
     productId,
     submitHandler,
@@ -71,6 +70,7 @@ const Review: React.FC<IReview> = ({
     return (
         <VStack 
         fontSize="xs"
+        h="340px"
         spacing={2}
         >
             <form 
@@ -119,6 +119,7 @@ const Review: React.FC<IReview> = ({
                 <Button 
                 alignSelf="flex-end"
                 bg="pink.400"
+                color="white"
                 isLoading={mutationLoading}
                 type="submit"
                 >
