@@ -1,4 +1,3 @@
-import { IReviewInputs } from "@/components/Products/Review/Review";
 
 export interface IReviewErrors {
     errors?: string;
@@ -6,7 +5,7 @@ export interface IReviewErrors {
     message?: string;
 }
 
-export const reviewValidation = (inputs: IReviewInputs): IReviewErrors => {
+export const reviewValidation = (inputs: { [key: string]: string }): IReviewErrors => {
     const errors: IReviewErrors = {};
 
     if (!inputs.headline.trim() || typeof inputs.headline !== "string") {

@@ -19,7 +19,7 @@ export interface IReviewInputs {
     name: string;
     message: string;
     rating: string;
-    product: {
+    product?: {
         id: string;
     }
     userPicture: string;
@@ -30,7 +30,7 @@ interface IReview {
     mutationError: ApolloError | undefined;
     mutationLoading: boolean;
     productId: string;
-    submitHandler: (mutationVariable: IReviewInputs) => void;
+    submitHandler: (mutationVariable: { [key:string]: string | number }) => void;
     user: string;
     userPicture: string;
 }

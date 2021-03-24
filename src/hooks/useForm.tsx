@@ -3,19 +3,19 @@ import * as React from "react";
 import isObjectEmpty from "@/utils/isObjectEmpty";
 
 type InputType = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
-type Submit = (input: { [key: string]: string | number }) => any;
+type Submit = (input: { [key: string]: any }) => any;
 
 interface IUseFormOutput {
     errors: { [key: string]: string };
     handleInputChange: <T extends InputType>(event: React.ChangeEvent<T>) => void;
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void; 
-    inputValues: { [key: string]: string | number };
+    inputValues: { [key: string]: string };
     setInputValues: React.Dispatch<React.SetStateAction<any>>
 }
 
-const useForm = (initInputs: { [key: string]: string | number }, 
+const useForm = (initInputs: { [key: string]: any },    
     customSubmit: Submit,
-    customValidation: Submit
+    customValidation: (input: { [key: string]: string }) => any
     ): IUseFormOutput => {
     const [ inputValues, setInputValues ] = React.useState(initInputs);
     const [ errors, setErrors ] = React.useState<{ [key: string]: string }>({ errors: "" });

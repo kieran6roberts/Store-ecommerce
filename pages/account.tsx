@@ -27,7 +27,7 @@ import { generateItemKey } from "@/utils/generateItemKey";
 import { IUsersValidation } from "@/utils/validation/users";
 
 export interface IAccountInput {
-    [key: string]: string;
+    [key: string]: string | number;
 }
 
 interface IAccount {
@@ -42,7 +42,7 @@ interface IPreviousOrders {
 }
 
 interface IAccountEdit {
-  handleUpdateUserSubmission: (inputs: { [key: string]: string}) => Promise<void>;
+  handleUpdateUserSubmission: (inputs: { [key: string]: string | number }) => Promise<void>;
   userDetails: any; 
 }
 
@@ -51,7 +51,7 @@ const AccountEdit = ({ userDetails, handleUpdateUserSubmission }: IAccountEdit) 
   const [ editDisabled, setEditDisabled ] = React.useState<boolean>(true);
   const [ isUpdated, setIsUpdated ] = React.useState<boolean>(false);
 
-  const handleSubmission = (inputs: { [key: string]: string}) => {
+  const handleSubmission = (inputs: { [key: string]: string | number}) => {
     handleUpdateUserSubmission(inputs);
 
     setEditDisabled(!editDisabled);
@@ -125,7 +125,7 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
 
     const [ userDetails ] = userInfo;
 
-    const handleUpdateUserSubmission = async (inputs: { [key:string]: string }) => {
+    const handleUpdateUserSubmission = async (inputs: { [key:string]: string | number }) => {
         const auth = await fetch("/api/session", {
           method: "POST",
           body: JSON.stringify(inputs),

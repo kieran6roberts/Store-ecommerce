@@ -21,7 +21,7 @@ interface ICheckoutForm {
 }
 
 export interface ICheckoutInputs {
-  [key: string]: string;
+  [key: string]: string | number;
 }
 
 export const allowedShippingCountries: any = ["GB", "FR", "DE", "IE", "NL"];

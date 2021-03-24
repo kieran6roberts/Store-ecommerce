@@ -1,5 +1,3 @@
-import { ICheckoutInputs } from "@/components/Forms/CheckoutForm/CheckoutForm";
-
 export interface IUsersValidation {
     email?: string;
     name?: string;
@@ -11,7 +9,7 @@ export interface IUsersValidation {
     phone?: string;
 }
 
-export const usersValidation = (inputs: ICheckoutInputs): IUsersValidation => {
+export const usersValidation = (inputs: { [key: string]: string }): IUsersValidation => {
     const errors: IUsersValidation = {};
     const emailCheck = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     const numberCheck = /^[0-9]+$/;

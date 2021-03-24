@@ -64,7 +64,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             if (!reviews[0]) {
                 return;
             }
-            if (reviews[0].product.id !== productId) {
+            if (reviews[0]?.product?.id !== productId) {
                 await client.resetStore();
                 return;
             }
