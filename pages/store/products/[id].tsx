@@ -57,9 +57,18 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         description: { text: productDescription }
     } = product;
 
-    const { data: reviewData, error, loading } = useQuery<IReviewData>(GET_REVIEWS, {
+    const { data: reviewData, error, loading, client } = useQuery<IReviewData>(GET_REVIEWS, {
         fetchPolicy: "network-only",
         nextFetchPolicy: "cache-only",
+        onCompleted: async ({ reviews }) => {
+            if (!reviews[0]) {
+                return;
+            }
+            if (reviews[0].product.id !== productId) {
+                await client.resetStore();
+                return;
+            }
+        },
         variables: {
             id: productId
         },
@@ -100,13 +109,10 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                         id: productId
                     },
                 });
-
-                console.log(cache)
             }
         });
-
-        //router.reload();
     };
+
 
     return (
         <>
