@@ -5,13 +5,15 @@ import { Box,
     List, 
     ListItem, 
     SimpleGrid,
-    Text,
+    useColorMode,    
     useColorModeValue } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import * as React from "react";
 
 const Hero = (): React.ReactElement => {
+    const { colorMode } = useColorMode();
+    console.log(colorMode)
  return (
     <Box 
     as="header" 
@@ -29,7 +31,6 @@ const Hero = (): React.ReactElement => {
         left="0"
         position="absolute"
         right="0"
-        spacing={8}
         top="0"
         zIndex="-10"
         >
@@ -39,11 +40,11 @@ const Hero = (): React.ReactElement => {
             <Box 
             bg={useColorModeValue("pink.50", "gray.700")}
             position="relative"
-            opacity="0.3"
+            opacity="0.2"
             >
                 <NextImage
-                alt=""
-                src="/coffee-product-8.webp"
+                alt={colorMode === "light" ? "coffee shop coffee in a white mug on white background" : "Black bags of coffee beans sitting on shelf"}
+                src={colorMode === "light" ? "/coffee-product-8.webp" : "/coffee-product-14.webp"}
                 layout="fill"
                 objectFit="cover"
                 objectPosition="bottom"
@@ -53,11 +54,11 @@ const Hero = (): React.ReactElement => {
             <Box 
             bg={useColorModeValue("pink.50", "gray.700")} 
             position="relative"
-            opacity="0.3"
+            opacity="0.2"
             >
                 <NextImage
-                alt=""
-                src="/coffee-product-4.webp"
+                alt={colorMode === "light" ? "white bag of coffee beans against a white background" : "coffee shop coffee on brown table in a dark room"}
+                src={colorMode === "light" ? "/coffee-product-4.webp" : "/coffee-home.webp"}
                 layout="fill"
                 objectFit="cover"
                 />
@@ -65,7 +66,7 @@ const Hero = (): React.ReactElement => {
         </SimpleGrid>
         <Heading 
         as="h1"
-        fontWeight="400"
+        fontWeight="500"
         mx="auto"
         mb={8}
         textAlign="center"

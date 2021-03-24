@@ -9,6 +9,7 @@ import { Box,
     Text,    
     useColorMode,    
     useColorModeValue } from "@chakra-ui/react";
+import NextImage from "next/image";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
@@ -79,13 +80,23 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     href="/" 
                     passHref>
                         <Link 
+                        display="flex"
+                        alignItems="center"
                         fontSize="md"
                         textTransform="uppercase"
                         _hover={{
                             color: "pink.200"
                         }}
                         >
-                            Kieran's Coffee Collection
+                            <NextImage 
+                            src="/favicon-16x16.png" 
+                            alt="Kieran's Coffee Collection logo in pink with white brand name text" 
+                            height="16px"
+                            width="16px"
+                            />
+                            <span style={{ marginLeft: "6px" }}>
+                                Kieran's Coffee Collection
+                            </span>
                         </Link>
                     </NextLink>
                 </Heading>
