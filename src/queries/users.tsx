@@ -17,7 +17,7 @@ export const UPDATE_USER = gql`
 `;
 
 export const USER_DETAILS = gql`
-    query GetUserDetails($id: String) {
+    query GetUserDetails($id: String, $email: String) {
         users(where: {auth0_id: {_eq: $id}}) {
             email
             address

@@ -19,6 +19,7 @@ import Layout from "@/components/Layout/Layout";
 import { IUser } from "@/components/Layout/Nav/Nav";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import NextHead from "@/components/NextHead/NextHead";
+import { initApollo } from "@/lib/apolloClient";
 import auth0 from "@/lib/auth";
 import { GET_USER_ORDERS} from "@/queries/orders";
 import { USER_DETAILS } from "@/queries/users";
@@ -41,14 +42,86 @@ interface IPreviousOrders {
     total: number;
 }
 
-const Account: NextPage<IAccount> = ({ user, userInfo }) => {
-    const [ editDisabled, setEditDisabled ] = React.useState<boolean>(true);
-    const [ isUpdated, setIsUpdated ] = React.useState<boolean>(false);
+interface IAccountEdit {
+  handleUpdateUserSubmission: (inputs: { [key: string]: string}) => Promise<void>;
+  userDetails: any; 
+}
 
-    const { data: orderData, loading: orderLoading } = useQuery(GET_USER_ORDERS, {
+const AccountEdit = ({ userDetails, handleUpdateUserSubmission }: IAccountEdit) => {
+
+  const [ editDisabled, setEditDisabled ] = React.useState<boolean>(true);
+  const [ isUpdated, setIsUpdated ] = React.useState<boolean>(false);
+
+  const handleSubmission = (inputs: { [key: string]: string}) => {
+    handleUpdateUserSubmission(inputs);
+
+    setEditDisabled(!editDisabled);
+    setIsUpdated(!isUpdated);
+  };
+
+  React.useEffect(() => {
+    const editBtn = document.querySelector("#details-toggle") as HTMLButtonElement;
+    editBtn?.focus();
+  }, [ isUpdated ]);
+
+  return (
+    <>
+    <Heading 
+    as="h2"
+    fontSize="md"
+    >
+      Save details for later
+    </Heading>
+    <Text 
+    fontSize="xs"
+    >
+      For quick and easy future purchases with us you can save
+      your details such as delivery address allowing us to speed up the
+      time before they arrrive with you. 
+    </Text>
+    {isUpdated ? 
+    <Text 
+    borderRadius="md"
+    border="1px solid pink"
+    color="pink.400"
+    p={4}
+    >
+        Your account details were successfully updated!
+    </Text> : null
+    }
+    <Button
+    colorScheme="pink"
+    id="details-toggle"
+    onClick={() => setEditDisabled(!editDisabled)} 
+    size="sm"
+    variant="outline"
+    >
+      {editDisabled ? "Edit Details" : "Cancel Edit"}
+    </Button>
+    <Box 
+    bg={editDisabled ? useColorModeValue("gray.50", "gray.700")  : "none" }
+    borderRadius="md"
+    p={4}
+    w="100%"
+    >
+      <CheckoutForm 
+      handleDisabled={() => setEditDisabled(!editDisabled)}
+      isDisabled={editDisabled}
+      submit={handleSubmission}
+      submitText="Submit Details"
+      userSavedDetails={userDetails}
+      />
+    </Box>
+    </>
+  );
+};
+
+const Account: NextPage<IAccount> = ({ user, userInfo }) => {
+
+    const { data: orderData, loading: orderLoading, error: orderError } = useQuery(GET_USER_ORDERS, {
       variables: {
         email: user.email
-      }
+      },
     });
 
     const [ userDetails ] = userInfo;
@@ -61,19 +134,7 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
             "Content-Type": "application/json"
           }
         }).then(res => res.json());
-
-        //const { update_users: { returning } } = auth.data;
-
-        //console.log(returning);
-
-        setIsUpdated(true);
-        setEditDisabled(true);
     };
-
-    React.useEffect(() => {
-      const editBtn = document.querySelector("#details-toggle") as HTMLButtonElement;
-      editBtn?.focus();
-    }, [ isUpdated ]);
 
     return (
       <>
@@ -108,52 +169,10 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
             justify="flex-start"
             user={user}
             />
-            <Heading 
-            as="h2"
-            fontSize="md"
-            >
-              Save details for later
-            </Heading>
-            <Text 
-            fontSize="xs"
-            >
-              For quick and easy future purchases with us you can save
-              your details such as delivery address allowing us to speed up the
-              time before they arrrive with you. 
-            </Text>
-            {isUpdated ? 
-            <Text 
-            borderRadius="md"
-            border="1px solid pink"
-            color="pink.400"
-            p={4}
-            >
-                Your account details were successfully updated!
-            </Text> : null
-            }
-            <Button
-            colorScheme="pink"
-            id="details-toggle"
-            onClick={() => setEditDisabled(!editDisabled)} 
-            size="sm"
-            variant="outline"
-            >
-              {editDisabled ? "Edit Details" : "Cancel Edit"}
-            </Button>
-            <Box 
-            bg={editDisabled ? useColorModeValue("gray.50", "gray.700")  : "none" }
-            borderRadius="md"
-            p={4}
-            w="100%"
-            >
-              <CheckoutForm 
-              handleDisabled={() => setEditDisabled(!editDisabled)}
-              isDisabled={editDisabled}
-              submit={handleUpdateUserSubmission}
-              submitText="Submit Details"
-              userSavedDetails={userDetails}
-              />
-            </Box>
+            <AccountEdit 
+            userDetails={userDetails} 
+            handleUpdateUserSubmission={handleUpdateUserSubmission} 
+            />
           </VStack>
           <VStack 
           align="flex-start"
@@ -170,13 +189,13 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
             <LoadingSpinner />
             :
             <List w="full">
-                
-                {orderData.orders.length ? 
-                orderData.orders.map(({ createdAt, name, total }: IPreviousOrders) => (
+                {orderData?.orders?.length ? orderData.orders.map(({ createdAt, name, total }: IPreviousOrders) => (
                   <ListItem 
-                  bg={useColorModeValue("gray.100", "gray.700")}
+                  bg="pink.400"
+                  color="white"
                   borderRadius="md"
-                  key={generateItemKey(name)}
+                  mb={2}
+                  key={generateItemKey(createdAt)}
                   p={4}
                   >
                     <Text 
@@ -194,9 +213,9 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
                     </Text>
                   </ListItem>
                 )) : 
-                <Text fontSize="xs">
+                <ListItem fontSize="xs">
                     No Previous Orders
-                </Text>}
+                </ListItem>}
             </List>
             }
           </VStack>
@@ -217,8 +236,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     };
   }
-
-  console.log(session)
 
   const client = new ApolloClient({
       uri: process.env.NEXT_PUBLIC_HASURA_API!,
