@@ -20,7 +20,7 @@ interface IFilter {
 
 const Filter: React.FC<IFilter> = ({ categories: { categories }, handleCategoryFilter }) => (
     <Flex justify="center">
-        <CustomMenuButton title="Product Type" p={{xl: 8}}>
+        <CustomMenuButton title="Product Type">
             {categories.map(({ name }: ICategories) => 
                 <MenuItem 
                 fontSize="sm"
