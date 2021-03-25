@@ -14,10 +14,12 @@ const CustomMenuButton: React.FC<IMenuButton> = ({ title, children}) =>
     <Menu>
         <MenuButton 
         as={Button}
+        fontSize="sm"
         mr={4}
         rightIcon={<BsArrowDownShort />}
         size="sm"
-        w="10rem"
+        p={{xl: 8}}
+        w={{base: "10rem", xl: "15rem"}}
         >
             {title}
         </MenuButton>

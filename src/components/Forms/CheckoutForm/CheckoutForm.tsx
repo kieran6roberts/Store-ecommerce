@@ -71,10 +71,13 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
     onSubmit={(event) => handleSubmit(event)}
     style={{ width: "100%" }}
     >
-        <VStack spacing={4}>
+        <VStack 
+        fontSize="md"
+        spacing={{base: 4, xl: 8}}
+        >
             <Text 
             color="pink.400"
-            fontSize="xs"
+            fontSize="sm"
             >
               Please Fill out all required fields
             </Text>
@@ -161,8 +164,8 @@ const CheckoutForm: React.FC<ICheckoutForm> = ({
             borderRadius="md"
             color="white"
             isDisabled={isDisabled}
-            mt={8}
-            p={6}
+            my={{base: 8, xl: 16}}
+            p={{base: 6, xl: 8}}
             size="sm"
             type="submit"
             _hover={{

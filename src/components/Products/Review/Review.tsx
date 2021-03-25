@@ -70,7 +70,7 @@ const Review: React.FC<IReview> = ({
     return (
         <VStack 
         fontSize="xs"
-        h="340px"
+        h="380px"
         spacing={2}
         >
             <form 
@@ -81,7 +81,7 @@ const Review: React.FC<IReview> = ({
                     <Rating updateRating={handleUpdateRating} />
                     <FormLabel 
                     fontSize="sm"
-                    mt={4}
+                    mt={{base: "0.8rem", xl: "2rem"}}
                     >
                         Review Headline
                     </FormLabel>
@@ -100,7 +100,10 @@ const Review: React.FC<IReview> = ({
                     </FormHelperText>
                 </FormControl>
                 <FormControl mb={2}>
-                    <FormLabel fontSize="sm">
+                    <FormLabel 
+                    fontSize="sm"
+                    mt={{base: "0.8rem", xl: "2rem"}}
+                    >
                         Review content
                     </FormLabel>
                     <Textarea 
@@ -119,8 +122,11 @@ const Review: React.FC<IReview> = ({
                 <Button 
                 alignSelf="flex-end"
                 bg="pink.400"
+                fontSize="sm"
                 color="white"
                 isLoading={mutationLoading}
+                py={[1, 1, 2, 3, 8]}
+                px={[1, 1, 2, 6, 16]}
                 type="submit"
                 >
                     Sumbit Review

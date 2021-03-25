@@ -53,8 +53,11 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
             align="center"
             bgGradient="linear(45deg, blue.300, blue.400)"
             color="white"
+            h="1vh"
             justify="center"
-            h="2rem" 
+            maxH="4rem"
+            minH="2rem"
+            p={{base: 2, xl: 6}}
             >
                 <Text 
                 fontSize="sm"
@@ -68,7 +71,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
             as="nav"
             align="center"
             justify="space-between"
-            pt={[2, 3, 4, 6]}
+            py={[2, 3, 4, 6]}
             px={[2, 3, 4, 6]}
             >
                 <Heading 
@@ -94,9 +97,13 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                             height="16px"
                             width="16px"
                             />
-                            <span style={{ marginLeft: "6px" }}>
+                            <Text 
+                            display={["none", "inline-block"]}
+                            fontSize="sm"
+                            ml={6}
+                            >
                                 Kieran's Coffee Collection
-                            </span>
+                            </Text>
                         </Link>
                     </NextLink>
                 </Heading>
@@ -140,7 +147,6 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
             bgGradient={useColorModeValue("linear(90deg, gray.50, gray.50)", "linear(90deg, gray.700, gray.700)")}
             fontSize="sm"
             justify="space-between"
-            mt={4}
             pb={6}
             py={4}
             px={[2, 3, 4, 6]}
@@ -149,7 +155,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                 display={["none", "none", "block"]}
                 flex="1"
                 >
-                    <Text>
+                    <Text fontSize="sm">
                         <NextLink 
                         href="/" 
                         passHref>
@@ -174,6 +180,7 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     icon={colorMode === "light" ? <FiSun /> : <FiMoon />}
                     onClick={toggleColorMode}
                     size="md"
+                    p={{base: 2, xl: 10}}
                     variant="outline"
                     
                     />

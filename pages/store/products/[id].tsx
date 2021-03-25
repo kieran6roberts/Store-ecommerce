@@ -94,12 +94,6 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         addReview({
             variables: mutationVariable,
             update: (cache, { data: { createReview }}) => {
-                console.log(cache);
-
-                const existingReviews = cache.readQuery({ query: GET_REVIEWS });
-                console.log(existingReviews);
-
-                
                 cache.writeQuery({
                     query: GET_REVIEWS,
                     data: {
@@ -124,13 +118,13 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         <Layout>
             <Heading 
             as="h3"
-            mb={4}
+            mb={{ base: "1rem", xl: "4rem"}}
             >
                 {productName}
             </Heading>
             <Flex 
             direction={["column", "column", "column", "row"]}
-            h={["800px", "800px", "800px", "400px"]}
+            h={{ base: "800px", lg: "400px", xl: "600px"}}
             >
                 <Center 
                 borderRadius="sm"
@@ -143,7 +137,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                     alt={productName}
                     src={`/${productImage[0].fileName}`}
                     layout="fill"
-                    objectFit="contain"
+                    objectFit="cover"
                     />
                 </Center>
                 <Tabs 
@@ -155,7 +149,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                 variant="enclosed"
                 >
                     <TabList>
-                        <Tab>
+                        <Tab p={{ base: "0px", xl: "1.5rem"}}>
                             Purchase
                         </Tab>
                         <Tab>
@@ -170,9 +164,9 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                             <Flex 
                             flexDirection="column"
                             justify="flex-start"
-                            h="340px"
+                            h="380px"
                             >
-                                <Text>
+                                <Text mt={{base: "0", xl: "1rem"}}>
                                     {productDescription}
                                 </Text>
                                 <Text 
@@ -186,9 +180,12 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                                 alignSelf="flex-end"
                                 bg="pink.400"
                                 color="white"
+                                fontSize="sm"
                                 className={`btn-${productId}`}
                                 id={`btn-add-${productId}`}
                                 mt={8}
+                                py={[1, 1, 2, 3, 8]}
+                                px={[1, 1, 2, 6, 16]}
                                 onClick={updateCartStatus}
                                 variant="solid"
                                 >
@@ -197,7 +194,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                             </Flex>
                         </TabPanel>
                         <TabPanel>
-                            <Flex h="340px">
+                            <Flex h="380px">
                                 <Text>
                                     {productCategory}
                                 </Text>
@@ -230,7 +227,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             fontSize="sm"
             listStyleType="none"
             spacing="2rem"
-            p={4}
+            p={{base: 4, xl: 8}}
             >
                 {reviewData?.reviews.length ? 
                 <UserReview reviews={reviewData.reviews} /> 

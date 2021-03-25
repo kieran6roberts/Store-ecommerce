@@ -28,6 +28,7 @@ const CartProcessIndicator: React.FC = () => {
             return (
                 <ListItem 
                 display="inline-block"
+                fontSize="sm"
                 key={generateItemKey(path)} 
                 >
                     <Text
@@ -52,7 +53,7 @@ const CartProcessIndicator: React.FC = () => {
         as="header"
         mb={4}
         textAlign="center"
-        w="full"
+        w="100%"
         >
             <Heading 
             as="h2"
@@ -61,13 +62,12 @@ const CartProcessIndicator: React.FC = () => {
                 {getParam().charAt(0).toUpperCase() + getParam().slice(1)}
             </Heading>
             <Divider 
-            mt={4} 
-            mb={2}
+            my={{base: 4, xl: 8}}
             />
             <Heading 
             as="h3"
             fontSize="sm"
-            mb={8}
+            mb={{base: 8, xl: 16}}
             >
                 Next.js e-commerce
             </Heading>

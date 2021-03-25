@@ -24,6 +24,7 @@ const AccountMenu: React.FC<IAccountMenu> = ({ display, user, variant = "outline
             display={display}
             fontSize="xs"
             rightIcon={<IoChevronDownOutline />}
+            p={{base: 2, xl: 8}}
             transition="all 200ms"
             variant={variant}
             >

@@ -1,4 +1,10 @@
-import { Box, Heading, SimpleGrid, Text, useColorModeValue } from "@chakra-ui/react";
+import { 
+    Box, 
+    Divider, 
+    Heading, 
+    SimpleGrid, 
+    Text, 
+    useColorModeValue } from "@chakra-ui/react";
 import { NextPage } from "next";
 import * as React from "react";
 
@@ -21,21 +27,13 @@ const savedProducts: NextPage = () => {
         <Layout>
             <Heading 
             as="h1"
-            fontSize="xl"
-            mb={4}
+            fontSize="lg"
+            mb={{ base: 4, xl: 16}}
             ml={8}
             >
                 Your saved products
             </Heading>
-            <Text 
-            fontSize="sm"
-            mb={16}
-            ml={8}
-            w={["80%", "80%", "80%", "40%"]}
-            >
-                Any products you save throughout the site will appear here. If your ready 
-                to make a purchase then feel free to add them to the cart.
-            </Text>
+            <Divider my={{base: 4, xl: 12}} />
             <SimpleGrid 
             as="ul"
             columns={[1, 1, 2, 2, 3, 4]} 
@@ -61,18 +59,11 @@ const savedProducts: NextPage = () => {
                 as="header"
                 h="250px"
                 >
-                    <Heading 
-                    as="h3"
-                    fontSize="lg"
-                    mb={12}
-                    >
-                        Empty
-                    </Heading>
                     <Text 
-                    bg={useColorModeValue("gray.100", "gray.600")}
+                    bg={useColorModeValue("gray.100", "gray.900")}
                     borderRadius="md"
                     fontSize="sm"
-                    p={4}
+                    p={{ base: 4, xl: 8}}
                     >
                         Saved products will appear here
                     </Text>

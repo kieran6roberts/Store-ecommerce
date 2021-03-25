@@ -68,8 +68,9 @@ const Hero = (): React.ReactElement => {
             <Heading 
             as="h1"
             fontWeight="500"
+            fontSize="lg"
             mx="auto"
-            mb={8}
+            mb={{base: 8, xl: 24}}
             textAlign="center"
             textTransform="uppercase"
             w="90vw"
@@ -79,42 +80,43 @@ const Hero = (): React.ReactElement => {
                 <List 
                 alignItems="center"
                 display={["none", "none", "flex"]}
+                fontSize="sm"
                 flexDirection="row"
                 justifyContent="space-evenly"
                 textAlign="center"
-                my={8}
+                my={{base: 8, xl: 16}}
                 w="75vw"
                 >
                     <ListItem
-                    bg={useColorModeValue("white", "gray.700")}
+                    bg={useColorModeValue("gray.50", "gray.500")}
                     borderRadius="sm"
                     fontWeight="700"
-                    py={1}
-                    px={2}
+                    py={{base: 1, xl: 4}}
+                    px={{base: 2, xl: 4}}
                     textTransform="uppercase"
-                    w="10rem"
+                    w={{base: "10rem", xl: "18rem"}}
                     >
                         Coffee Beans
                     </ListItem>
                     <ListItem
-                    bg={useColorModeValue("white", "gray.700")}
+                    bg={useColorModeValue("gray.50", "gray.500")}
                     borderRadius="sm"
                     fontWeight="700"
-                    py={1}
-                    px={2}
+                    py={{base: 1, xl: 4}}
+                    px={{base: 2, xl: 4}}
                     textTransform="uppercase"
-                    w="10rem"
+                    w={{base: "10rem", xl: "18rem"}}
                     >
                         Ground Coffee
                     </ListItem>
                     <ListItem
-                    bg={useColorModeValue("white", "gray.700")}
+                    bg={useColorModeValue("gray.50", "gray.500")}
                     borderRadius="sm"
                     fontWeight="700"
-                    py={1}
-                    px={2}
+                    py={{base: 1, xl: 4}}
+                    px={{base: 2, xl: 4}}
                     textTransform="uppercase"
-                    w="10rem"
+                    w={{base: "10rem", xl: "18rem"}}
                     >
                         Mugs & Cups
                     </ListItem>
@@ -128,11 +130,12 @@ const Hero = (): React.ReactElement => {
                     color="white"
                     borderRadius="md"
                     fontWeight="700"
+                    fontSize="md"
                     py={3}
                     px={6}
                     textAlign="center"
                     textTransform="uppercase"
-                    w="12rem"
+                    w={{base: "12rem", xl: "20rem"}}
                     _hover={{
                         bg: "pink.500"
                     }}

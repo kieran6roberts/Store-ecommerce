@@ -72,7 +72,7 @@ const AccountEdit = ({ userDetails, handleUpdateUserSubmission }: IAccountEdit) 
       Save details for later
     </Heading>
     <Text 
-    fontSize="xs"
+    fontSize="sm"
     >
       For quick and easy future purchases with us you can save
       your details such as delivery address allowing us to speed up the
@@ -83,7 +83,8 @@ const AccountEdit = ({ userDetails, handleUpdateUserSubmission }: IAccountEdit) 
     borderRadius="md"
     border="1px solid pink"
     color="pink.400"
-    p={4}
+    fontSize="sm"
+    p={{base: 4, xl: 8}}
     >
         Your account details were successfully updated!
     </Text> : null
@@ -93,6 +94,8 @@ const AccountEdit = ({ userDetails, handleUpdateUserSubmission }: IAccountEdit) 
     id="details-toggle"
     onClick={() => setEditDisabled(!editDisabled)} 
     size="sm"
+    p={{base:2, xl: 8}}
+    my={{xl: 12}}
     variant="outline"
     >
       {editDisabled ? "Edit Details" : "Cancel Edit"}
@@ -117,7 +120,7 @@ const AccountEdit = ({ userDetails, handleUpdateUserSubmission }: IAccountEdit) 
 
 const Account: NextPage<IAccount> = ({ user, userInfo }) => {
 
-    const { data: orderData, loading: orderLoading, error: orderError } = useQuery(GET_USER_ORDERS, {
+    const { data: orderData, loading: orderLoading } = useQuery(GET_USER_ORDERS, {
       variables: {
         email: user.email
       },
@@ -145,19 +148,16 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
       <Layout>
         <Heading 
         as="h1"
-        fontSize="xl"
+        fontSize="lg"
         pl={4}
         >
           Welcome to your user account
         </Heading>
-        <Divider 
-          mb={4}
-          pt={4}
-        />
+        <Divider my={{base: 4, xl: 12}} />
         <Flex direction={["column", "column", "column", "row"]}>
           <VStack 
           align="flex-start"
-          flex="1"
+          flex="2"
           pl={4}
           pr={12}
           py={2}
@@ -187,7 +187,10 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
             {orderLoading ? 
             <LoadingSpinner />
             :
-            <List w="full">
+            <List 
+            bg={useColorModeValue("gray.50", "gray.900")}
+            w="full"
+            >
                 {orderData?.orders?.length ? orderData.orders.map(({ createdAt, name, total }: IPreviousOrders) => (
                   <ListItem 
                   bg="pink.400"
@@ -204,15 +207,15 @@ const Account: NextPage<IAccount> = ({ user, userInfo }) => {
                       Order placed on {createdAt.slice(0, 10)}
                     </Text>
                     <Divider my={2} />
-                    <Text fontSize="xs">
+                    <Text fontSize="sm">
                       By: {name}
                     </Text>
-                    <Text fontSize="xs">
+                    <Text fontSize="sm">
                       Total: {formatPrice(total)}
                     </Text>
                   </ListItem>
                 )) : 
-                <ListItem fontSize="xs">
+                <ListItem fontSize="sm">
                     No Previous Orders
                 </ListItem>}
             </List>

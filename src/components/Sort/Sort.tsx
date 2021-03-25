@@ -17,36 +17,53 @@ const Sort: React.FC<ISort> = ({ handleAscPrice }): React.ReactElement => {
         <Menu>
             <MenuButton 
             as={Button}
+            fontSize="sm"
             mr={4}
             rightIcon={<BsArrowDownShort />}
             size="sm"
-            w="10rem"
+            p={{xl: 8}}
+            w={{base: "10rem", xl: "15rem"}}
             >
                 Sort
             </MenuButton>
             <MenuList>
-                <MenuItem onClick={() => 
+                <MenuItem 
+                fontSize="sm"
+                onClick={() => 
                     handleAscPrice({
                         variables: {
                             sort: "publishedAt_DESC",
                         }
-                })}>
+                })}
+                px={{base: 2, xl: 20}}
+                py={{base: 2, xl: 8}}
+                >
                     New
                 </MenuItem>
-                <MenuItem onClick={() => 
+                <MenuItem 
+                fontSize="sm"
+                onClick={() => 
                     handleAscPrice({
                         variables: {
                             sort: "price_DESC",
                         },
-                })}>
+                })}
+                px={{base: 2, xl: 20}}
+                py={{base: 2, xl: 8}}
+                >
                     All: Price: High to Low
                 </MenuItem>
-                <MenuItem onClick={() => 
+                <MenuItem 
+                fontSize="sm"
+                onClick={() => 
                     handleAscPrice({
                         variables: {
                             sort: "price_ASC",
                         },
-                })}>
+                })}
+                px={{base: 2, xl: 20}}
+                py={{base: 2, xl: 8}}
+                >
                     All: Price: Low to High
                 </MenuItem>
             </MenuList>

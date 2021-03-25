@@ -35,14 +35,18 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled, cartNumber }) => (
                     alignSelf="center"
                     bgGradient="linear(45deg, orange.300, teal.300)"
                     borderRadius="sm"
+                    fontSize="sm"
                     display="inline-flex"
-                    p={1}
+                    p={[1, 1, 2, 2, 2, 4]}
                     >
                         <AiOutlineShop style={{ color: "white" }} />
                     </Box>
                 </Tooltip>
                 {isStyled ? 
-                <Text ml={4}>
+                <Text 
+                fontSize="sm"
+                ml={4}
+                >
                     Store
                 </Text> : null}
             </Link>
@@ -68,7 +72,8 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled, cartNumber }) => (
                     bgGradient="linear(45deg, blue.300, green.300)"
                     borderRadius="sm"
                     display="inline-flex"
-                    p={1}
+                    fontSize="sm"
+                    p={[1, 1, 2, 2, 2, 4]}
                     position="relative"
                     >
                         <IoCartOutline style={{ color: "white" }} />
@@ -93,7 +98,10 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled, cartNumber }) => (
                     </Box>
                 </Tooltip>
                 {isStyled ? 
-                <Text ml={4}>
+                <Text 
+                fontSize="sm"
+                ml={4}
+                >
                     Cart
                 </Text> : null}
             </Link>
@@ -118,14 +126,18 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled, cartNumber }) => (
                     alignSelf="center"
                     bgGradient="linear(45deg, pink.300, purple.300)"
                     borderRadius="sm"
+                    fontSize="sm"
                     display="inline-flex"
-                    p={1}
+                    p={[1, 1, 2, 2, 2, 4]}
                     >
                         <AiOutlineHeart style={{ color: "white" }} />
                     </Box>
                 </Tooltip>
                 {isStyled ? 
-                <Text ml={4}>
+                <Text 
+                fontSize="sm"
+                ml={4}
+                >
                     Saved Items
                 </Text> : null}
             </Link>

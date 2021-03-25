@@ -3,6 +3,7 @@ import { Button,
     Flex,
     Heading, 
     Text, 
+    useColorModeValue, 
     VStack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { setCookie } from "nookies";
@@ -66,9 +67,9 @@ const CheckoutCard = (): React.ReactElement => {
         as="article"
         borderRadius="md"
         flex="1"
-        fontSize="xs"
-        maxW="500px"
-        maxH="400px"
+        fontSize="sm"
+        maxW="1000px"
+        maxH="600px"
         mb={["4rem", "4rem", "4rem", "4rem", "0px"]}
         mx="auto"
         spacing="20px"
@@ -119,12 +120,14 @@ const CheckoutCard = (): React.ReactElement => {
                     €{total.toFixed(2)}
                 </Text>
             </Flex>
-            <Divider />
+            <Divider my={{xl: 6}}/>
             <Button 
             colorScheme="blue"
             leftIcon={<BiLockAlt />}
             isDisabled={isDisabled}
             onClick={handleCheckoutProceed}
+            mb={{xl: 6}}
+            p={{xl: 8}}
             variant="solid"
             >
                 Proceed To Checkout

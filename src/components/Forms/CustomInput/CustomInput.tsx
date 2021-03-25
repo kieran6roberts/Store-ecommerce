@@ -31,7 +31,7 @@ const CustomInput: React.FC<ICustomInput> = ({
         <FormControl id={name}>
             <FormLabel 
             display="inline-block"
-            fontSize="sm"
+            fontSize="md"
             textTransform="capitalize"
             >
               {name} <span style={{ color: "red" }}>{isRequired ? "*" : null}</span>
@@ -39,23 +39,24 @@ const CustomInput: React.FC<ICustomInput> = ({
             <Text 
             color="red.400"
             display="inline-block"
-            fontSize="xs"
+            fontSize="sm"
             >
                   {error}
             </Text>
             <Input
+            fontSize="md"
             errorBorderColor="red.400"
             isInvalid={error ? true : false}
             isDisabled={isDisabled}
             onChange={(event) => handleInputChange(event)}
             name={name} 
             placeholder={error ?? null}
-            size="sm"
+            size="md"
             type={type} 
             value={value}
             />
             {helperText ? 
-            <FormHelperText fontSize="xs">
+            <FormHelperText fontSize="sm">
                 {helperText}
             </FormHelperText>
             : null}

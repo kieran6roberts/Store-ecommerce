@@ -56,8 +56,8 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
         <Layout>
             <Flex 
             as="section"
-            flexDirection={["column", "column", "column", "column", "row"]}
-            minHeight="100vh"
+            alignItems="flex-start"
+            flexDirection={["column", "column", "column", "row"]}
             m={4}
             >
                 <VStack 
@@ -70,7 +70,7 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
                     <CartHeader />
                     {!profile ? 
                     <Text 
-                    fontSize="xs"
+                    fontSize="sm"
                     mb={6}
                     textAlign="right"
                     w="full"
@@ -82,7 +82,7 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
                         >
                             <Link 
                             color="pink.400"
-                            fontSize="xs"
+                            fontSize="sm"
                             display="inline-block" 
                             ml={2}
                             >
@@ -93,13 +93,16 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
                     <Text 
                     fontSize="sm"
                     textAlign="center"
+                    mb={{xl: 6}}
+                    w="100%"
                     >
                         The following fields will be used as the shipping details for your order 
                     </Text>
                     {userInfo ? 
                     <Text 
                     color="pink.400"
-                    fontSize="xs"
+                    fontSize="sm"
+                    mb={{xl: 12}}
                     textAlign="center"
                     w="full"
                     >
@@ -123,7 +126,7 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
                         display="block"
                         fontSize="sm"
                         ml="auto"
-                        p={2}
+                        p={{base: 2, xl: 6}}
                         _hover={{
                             bg: useColorModeValue("gray.200","gray.800")
                         }}
@@ -134,11 +137,16 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
                 </VStack>
                 <VStack
                 as="ul"
+                bg={useColorModeValue("gray.50", "gray.900")}
+                border="2px solid pink"
+                borderRadius="md"
                 divider={<StackDivider borderColor={useColorModeValue("pink.50", "gray.600")} />}
                 flex="1.5"
                 listStyleType="none"
                 mr={["0px", "0px", "0px", "0.5rem"]}
                 pl={[0, 0, 0, 0, 8]}
+                position="sticky"
+                top="16"
                 w="100%"
                 >
                     {mapCartStorage(cartStorage, true)}

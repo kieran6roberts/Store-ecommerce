@@ -65,12 +65,12 @@ const Product: React.FC<IProductStorage> = ({
         color={useColorModeValue("gray.800", "gray.50")}
         flexDirection="column"
         fontSize="sm"
-        h="420px"
+        h={{ base: "440px", xl: "575px"}}
         m="auto"
         overflow="hidden"
         position="relative"
         shadow="base"
-        w="300px"
+        w={{base: "310px", xl: "400px"}}
         zIndex={0}
         >
             <Tooltip
@@ -124,8 +124,8 @@ const Product: React.FC<IProductStorage> = ({
                         <Image
                         alt={name}
                         src={`/${image}`}
-                        height={200}
-                        width={300}
+                        height={300}
+                        width={400}
                         />
                     </Box>
                 </Link>
@@ -140,6 +140,7 @@ const Product: React.FC<IProductStorage> = ({
                 <Text 
                 fontSize="md"
                 textTransform="uppercase"
+                mt={{base: "0", xl: "1rem"}}
                 >
                     {name}
                 </Text>

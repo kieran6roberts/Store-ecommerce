@@ -77,8 +77,8 @@ const Shipping: NextPage = () => {
         <Layout>
             <Flex 
             as="section"
-            flexDirection={["column", "column", "column", "column", "row"]}
-            minHeight="100vh"
+            alignItems="flex-start"
+            flexDirection={["column", "column", "column", "row"]}
             m={4}
             >
                 <VStack 
@@ -86,12 +86,13 @@ const Shipping: NextPage = () => {
                 flex="2"
                 mb={12}
                 pr={[0, 0, 8]}
+                w="100%"
                 >
                    <CartHeader />
                     {!profile ? 
                     <Text 
-                    fontSize="xs"
-                    mb={6}
+                    fontSize="sm"
+                    mb={{base: 6, xl: 12}}
                     textAlign="right"
                     w="full"
                     >
@@ -103,7 +104,7 @@ const Shipping: NextPage = () => {
                         <Link 
                         color="pink.400"
                         display="inline-block" 
-                        fontSize="xs"
+                        fontSize="sm"
                         ml={2}
                         >
                             Sign in
@@ -115,9 +116,9 @@ const Shipping: NextPage = () => {
                     borderRadius="sm"
                     color="white"
                     flexDirection={["column", "row"]}
-                    fontSize="sm"
+                    fontSize="md"
                     justify="space-between"
-                    p={2}
+                    p={{base: 2, xl: 6}}
                     w="100%"
                     >
                         <Text 
@@ -144,7 +145,7 @@ const Shipping: NextPage = () => {
                                 bg="pink.400"
                                 borderRadius="md"
                                 color="white"
-                                p={1}
+                                p={{base: 1, xl: 4}}
                                 _hover={{
                                     bg: "pink.500"
                                 }}
@@ -159,10 +160,10 @@ const Shipping: NextPage = () => {
                     borderRadius="sm"
                     color="white"
                     flexDirection={["column", "row"]}
-                    fontSize="sm"
+                    fontSize="md"
                     justify="space-between"
                     mb={8}
-                    p={2}
+                    p={{base: 2, xl: 6}}
                     w="full"
                     >
                         <Text 
@@ -189,7 +190,7 @@ const Shipping: NextPage = () => {
                                 bg="pink.400"
                                 borderRadius="md"
                                 color="white"
-                                p={1}
+                                p={{base: 1, xl: 4}}
                                 _hover={{
                                     bg: "pink.500"
                                 }}
@@ -202,6 +203,7 @@ const Shipping: NextPage = () => {
                     <Heading 
                     as="h3"
                     fontSize="md"
+                    mb={{base: 2, xl: 8}}
                     >
                         Shipping Method
                     </Heading>
@@ -212,7 +214,7 @@ const Shipping: NextPage = () => {
                     justify="space-between"
                     maxW="800px"
                     mb={8}
-                    p={2}
+                    p={{base: 2, xl: 6}}
                     w="full"
                     >
                         <Checkbox 
@@ -251,7 +253,7 @@ const Shipping: NextPage = () => {
                         display="block"
                         fontSize="sm"
                         ml="auto"
-                        p={2}
+                        p={{base: 2, xl: 6}}
                         _hover={{
                             bg: useColorModeValue("gray.200","gray.800")
                         }}
@@ -262,11 +264,16 @@ const Shipping: NextPage = () => {
                 </VStack>
                 <VStack
                 as="ul"
+                bg={useColorModeValue("gray.50", "gray.900")}
+                border="2px solid pink"
+                borderRadius="md"
                 flex="1.5"
                 divider={<StackDivider borderColor={useColorModeValue("pink.50", "gray.600")} />}
                 listStyleType="none"
                 mr={["0px", "0px", "0px", "0.5rem"]}
                 pl={[0, 0, 0, 0, 8]}
+                position="sticky"
+                top="16"
                 >
                     {mapCartStorage(cartStorage, true)}
                 </VStack>

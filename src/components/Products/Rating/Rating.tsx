@@ -42,6 +42,7 @@ const Rating = ({ updateRating }: { updateRating: () => void }): React.ReactElem
         as="h3" 
         fontSize="sm"
         fontWeight="500"
+        mt={{base: "0.8rem", xl: "2rem"}}
         mb={2}
         w="full"
         >

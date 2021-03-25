@@ -23,8 +23,9 @@ export const theme = extendTheme({
     global: {
       a: {
         fontSize: "sm",
-      }
+      },
     },
+    
   },
   components: {
     Button: {
@@ -41,6 +42,20 @@ export const theme = extendTheme({
         border: "1px solid pink"
       }
     },
+  },
+  breakpoints: {
+    sm: "30em",
+    md: "50em",
+    lg: "74em",
+    xl: "100em",
+    xxl: "140em",
+  },
+  fontSizes: {
+    xs: "clamp(0.7rem, 1vw, 1rem)",
+    sm: "clamp(0.85rem, 1.1vw, 1.3rem)",
+    md: "clamp(1.1rem, 1.4vw, 1.6rem)",
+    lg: "clamp(2rem, 3vw, 3rem)",
+    xl: "clamp(2.4rem, 3.2vw, 3.3rem)"
   }
 });
 

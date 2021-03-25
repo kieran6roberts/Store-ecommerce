@@ -15,8 +15,9 @@ const CurrentUser: React.FC<ICurrentUser> = ({ justify, user, userLoading }) => 
     return (
         <Flex 
         alignItems="center"
-        justify={justify}
         flex="1"
+        fontSize="sm"
+        justify={justify}
         >
             {userLoading ? 
             <Box>

@@ -20,15 +20,18 @@ interface IFilter {
 
 const Filter: React.FC<IFilter> = ({ categories: { categories }, handleCategoryFilter }) => (
     <Flex justify="center">
-        <CustomMenuButton title="Product Type">
+        <CustomMenuButton title="Product Type" p={{xl: 8}}>
             {categories.map(({ name }: ICategories) => 
                 <MenuItem 
+                fontSize="sm"
                 key={generateItemKey(name)}
                 onClick={() => handleCategoryFilter({
                     variables: {
                         name: name
                     }
                 })}
+                px={{base: 2, xl: 20}}
+                py={{base: 2, xl: 8}}
                 >
                     {name}
                 </MenuItem>

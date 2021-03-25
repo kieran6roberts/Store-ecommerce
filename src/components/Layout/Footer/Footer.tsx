@@ -23,7 +23,7 @@ const Footer: React.FC<IFooter> = ({ user }) => {
         direction="column"
         justifyContent="center"
         mt={12}
-        p={[6, 6, 8, 12]}
+        p={[6, 6, 8, 12, 20]}
         >
             <Text 
             fontSize="md" 
@@ -33,8 +33,9 @@ const Footer: React.FC<IFooter> = ({ user }) => {
             </Text>
             <List 
             fontSize="sm"
+            mt={{base: 2, xl: 8}}
             >
-                <HStack spacing={8}>
+                <HStack spacing={{base: 8, xl: 24}}>
                     <ListItem>
                         <NextLink href="/store">
                             <Link _hover={{

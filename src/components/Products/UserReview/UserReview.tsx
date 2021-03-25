@@ -23,8 +23,8 @@ const UserReview = ({ reviews }: { reviews: IReviewInputs[] }): React.ReactEleme
             bg={useColorModeValue("gray.50", "gray.700")}
             borderRadius="md"
             key={generateItemKey(review.headline)}
-            mb={4}
-            p={4}
+            mb={{ base: 4, xl: 8}}
+            p={{base: 4, xl: 8}}
             >
                 <Flex 
                 align="center"
@@ -41,7 +41,7 @@ const UserReview = ({ reviews }: { reviews: IReviewInputs[] }): React.ReactEleme
                     </Box> : null}
                     <Heading 
                     as="h4"
-                    fontSize="xs"
+                    fontSize="sm"
                     fontWeight="400"
                     >
                         {review.name}
@@ -118,8 +118,9 @@ const UserReview = ({ reviews }: { reviews: IReviewInputs[] }): React.ReactEleme
                 </List>
                 <Text 
                 bg={useColorModeValue("white", "gray.800")}
+                fontSize="sm"
                 h="full"
-                p={2}
+                p={{ base: 2, xl: 6}}
                 >
                     {review.message}
                 </Text>

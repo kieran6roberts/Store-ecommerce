@@ -3,8 +3,11 @@ import { Box,
     Button, 
     SimpleGrid, 
     Text,
+    useColorMode,
+    useColorModeValue,
     VStack } from "@chakra-ui/react";
 import * as React from "react";
+import { AiOutlineArrowDown } from "react-icons/ai";
 
 import Product from "@/components/Products/Product/Product";
 import { generateItemKey } from "@/utils/generateItemKey";
@@ -67,12 +70,18 @@ const Products: React.FC<IProducts> = ({
     const productArr = sortProducts?.length ? sortProducts : cacheFirstData;
 
     return (
-        <VStack spacing={8}>
+        <VStack 
+        spacing={8}
+        m="auto"
+        w="100%"
+
+        >
             <SimpleGrid 
             as="ul"
-            columns={[1, 1, 2, 2, 3, 4]} 
+            columns={[1, 1, 2, 3, 3, 4, 5]} 
             listStyleType="none"
             spacing="3rem"
+            w={["none", "none", "none", "none", "100%"]}
             >
                 {productArr.map(({id, category, description, images, name, price }: IProductQuery) => 
                     <Box 
@@ -93,7 +102,10 @@ const Products: React.FC<IProducts> = ({
                 )}
             </SimpleGrid>
             {loadMore && (productArr.length % 10 === 0) ? 
-            <Button onClick={() => { 
+            <Button 
+            fontSize="sm"
+            leftIcon={<AiOutlineArrowDown />}
+            onClick={() => { 
                 fetchMore({ 
                     variables: { 
                         offset: offset,
@@ -102,11 +114,17 @@ const Products: React.FC<IProducts> = ({
                 });
 
                 dispatchOffset(10);
-            }
-                }>
-                Load More
+            }}
+            px={{base: 4, xl: 20}}
+            py={{base: 2, xl: 8}}
+            >
+                Load more
             </Button> : 
-            <Text fontSize="xs">
+            <Text 
+            color={useColorModeValue("gray.500", "gray.200")}
+            fontSize="xs"
+            mt={4}
+            >
                 End of products.
             </Text>
             }

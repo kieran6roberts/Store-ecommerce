@@ -40,23 +40,22 @@ const CartItem = ({
 
     return (
         <Stack
-        bg={useColorModeValue("gray.100", "gray.700")}
+        bg={useColorModeValue("gray.100", "gray.900")}
         borderRadius="md"
         direction={["column", "column", "column", "row"]}
         display="flex"
-        fontSize="xs"
         maxW={[ "500px", "500px", "none" ]}
         mx="auto"
-        p={4}
+        p={{base: 2, xl: 8}}
         spacing="0"
         justify="space-between"
         w="100%">
             <Box m="auto">
                 <Image 
                 alt="product image"
-                height={130}
+                height={150}
                 src={`/${image}`}
-                width={170}
+                width={200}
                 />
             </Box>
             <VStack 
@@ -65,15 +64,15 @@ const CartItem = ({
             px="1rem"
             >
                 <Text 
-                fontSize="sm"
+                fontSize="md"
                 fontWeight="700"
                 >
                     {name}
                 </Text>
-                <Text fontSize="xs">
-                    {category}
-                </Text>
-                <Text fontSize="xs">
+                <Text 
+                fontSize="sm"
+                mb={{base: 4}}
+                >
                     {description}
                 </Text>
             </VStack>

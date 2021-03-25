@@ -78,12 +78,21 @@ const useStorage = (key: string) => {
 
     const updateItemsQuantities = (quantities: number[]) => {
         const items = getStorage(key)!;
-        let updatedItems = items;
+        let updatedItems: any = items;
 
         if (items) {
-            updatedItems = items.map((item, index) => ({ ...item, quantity: quantities[index] }));
-            setStorage(key, updatedItems);
-            
+            updatedItems = items.flatMap((item, index) => {
+                if (quantities[index] < 1) {
+                    return [];
+                }
+                
+                return { 
+                    ...item, 
+                    quantity: quantities[index] 
+                };
+            });
+
+                setStorage(key, updatedItems);
         }
 
         setCartStorage(updatedItems);

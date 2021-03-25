@@ -37,15 +37,17 @@ const DrawerTemplate = ({
             <DrawerOverlay>
                 <DrawerContent>
                     <DrawerCloseButton />
-                    <DrawerHeader>
+                    <DrawerHeader 
+                    fontSize="md"
+                    mb={4}
+                    >
                         {header}
                     </DrawerHeader>
                     <DrawerBody>
                         {children}
                     </DrawerBody>
                     <DrawerFooter
-                  
-                    bg="pink.400"
+                    bg="gray.900"
                     color="white"
                     fontWeight="700"
                     fontSize="xs"

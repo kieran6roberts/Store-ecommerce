@@ -62,13 +62,16 @@ const Store: NextPage = () => {
       >
         <Heading 
         as="h1"
-        mb={6}
+        fontSize="lg"
+        mb={{base: 6, xl: 20}}
         >
           Welcome to our store!
         </Heading>
         <Text 
-        maxW="800px"
+        fontSize="sm"
+        maxW="1200px"
         mx="auto"
+        mb={{base: 6, xl: 20}}
         >
           Our focus is to bring you the very best in the world of coffee. Everything from
           fresh coffee beans, the best coffee powders and capsules as well as other miscellaneous
@@ -77,7 +80,7 @@ const Store: NextPage = () => {
       </Box>
       <Flex 
       justify="center"
-      mb={12}
+      mb={{base: 12, xl: 24}}
       >
         <Sort handleAscPrice={handleAscPrice} />
         <Filter 

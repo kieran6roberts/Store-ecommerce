@@ -56,24 +56,25 @@ const Cart: NextPage = () => {
         >
           Items in Your Bag
         </Heading>
-        <Divider mb={2} />
+        <Divider my={{base: 2, xl: 8}} />
         <Flex 
-        direction={["column-reverse", "column-reverse", "column-reverse", "column-reverse", "row"]}
+        direction={["column-reverse", "column-reverse", "column-reverse", "row"]}
         pt={2}
         >
           <Stack 
           as="ul"
           divider={<StackDivider borderColor={useColorModeValue("pink.50", "gray.600")} />}
           flex="3"
+          maxW="2000px"
           listStyleType="none"
-          mr={["0px", "0px", "0px", "0px", "0.5rem"]}
+          mr={["0px", "0px", "0px", "0.5rem"]}
           >
            {cartStorage?.length ? 
            mapCartStorage(cartStorage, false)
           :
           <Text 
           borderRadius="md"
-          bg={useColorModeValue("gray.100", "gray.700")}
+          bg={useColorModeValue("gray.100", "gray.900")}
           p={4}
           >
             Cart is Empty

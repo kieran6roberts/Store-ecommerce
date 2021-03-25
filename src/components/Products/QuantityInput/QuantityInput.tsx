@@ -36,15 +36,19 @@ const QuantityInput = ({
 
     return (
         <>
-            <Box 
-            as="p"
-            textAlign="center"
-            >
-                Quantity
-            </Box>
+        <Box 
+        as="p"
+        fontSize="sm"
+        textAlign="center"
+        >
+            Quantity
+        </Box>
         <HStack 
         display="flex"
+        fontSize="sm"
         maxW="250px" 
+        my={{xl: 2}}
+        spacing={{base: 2, xl: 6}}
         >
             <Button 
             aria-label="decrease quantity"

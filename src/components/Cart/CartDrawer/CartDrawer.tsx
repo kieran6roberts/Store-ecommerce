@@ -35,8 +35,11 @@ const CartDrawer: React.FC = () => {
         if (cartStorage?.length) {
             return cartStorage.map((product) => 
                 <ListItem 
+                bg={useColorModeValue("gray.100", "gray.900")}
                 id={product.id}
+                mb={2}
                 key={generateItemKey(product.id)}
+                p={4}
                 >
                     <Box 
                     m="auto"
@@ -44,9 +47,9 @@ const CartDrawer: React.FC = () => {
                     >
                         <Image 
                         alt={product.name}
-                        height={100}
+                        height={140}
                         src={`/${product.image}`}
-                        width={130} 
+                        width={200} 
                         />
                     </Box>
                     <Flex 
@@ -56,13 +59,13 @@ const CartDrawer: React.FC = () => {
                         <Box as="article">
                             <Heading 
                             as="h5"
-                            fontSize="xs"
+                            fontSize="sm"
                             mb={2}
                             >
                                 {product.name}
                             </Heading>
                             <Text 
-                            fontSize="xs"
+                            fontSize="sm"
                             mb={4}
                             >
                                 {product.category}
@@ -70,15 +73,10 @@ const CartDrawer: React.FC = () => {
                                <RemoveButton callback={(event) => removeCartValue(event)} />
                         </Box>
                     </Flex>
-                    <Divider 
-                    bg={useColorModeValue("pink.100", "gray.600")}
-                    my={8} 
-                    variant="solid"
-                    />
                 </ListItem>
             );
         } else {
-            return <Text fontSize="sm" color="pink.200">Empty Cart</Text>;
+            return <Text fontSize="sm" color="pink.200">Your cart is currently empty</Text>;
         }
     };
 
@@ -98,12 +96,16 @@ const CartDrawer: React.FC = () => {
         <Button 
         bg="pink.400"
         color="white"
+        fontSize="sm"
         leftIcon={<BsArrowBarLeft />}
         onClick={onOpen}
-        w="5rem"
         ml="auto"
+        mt={{xl: 12}}
         mr={[4, 4, 4, 6]}
+        py={[1, 1, 2, 3, 8]}
+        px={[1, 1, 2, 6, 16]}
         variant="ghost"
+        w={{base: "5rem", xl: "10rem"}}
         _hover={{
             bg: "pink.500"
         }}
@@ -116,7 +118,7 @@ const CartDrawer: React.FC = () => {
         isOpen={isOpen}
         onClose={onClose}
         placement="right"
-        size="xs"
+        size="sm"
         >
             <NextLink 
             href="/cart"
@@ -127,8 +129,8 @@ const CartDrawer: React.FC = () => {
                 bg={useColorModeValue("gray.100", "gray.800")}
                 borderRadius="md"
                 display="flex"
-                py={2}
-                px={4}
+                py={{base: 2, xl: 6}}
+                px={{base: 2, xl: 6}}
                 w="max-content"
                 _hover={{
                     bg: useColorModeValue("gray.200", "gray.900"),
@@ -149,7 +151,7 @@ const CartDrawer: React.FC = () => {
             </NextLink>
             <Divider 
             bg="pink.100"
-            my={4} />
+            my={{base: 4, xl: 12}} />
             <List>
                 {mapProductsToDom()}
             </List>

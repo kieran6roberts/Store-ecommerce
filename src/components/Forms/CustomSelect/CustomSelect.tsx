@@ -41,7 +41,7 @@ const CustomSelect: React.FC<ICustomSelect> = ({
         <FormControl id={name}>
             <FormLabel 
             display="inline-block"
-            fontSize="sm"
+            fontSize="md"
             textTransform="capitalize"
             >
                 {name} <span style={{ color: "red" }}>{isRequired ? "*" : null}</span>
@@ -49,20 +49,21 @@ const CustomSelect: React.FC<ICustomSelect> = ({
             <Text 
             color="red.400"
             display="inline-block"
-            fontSize="xs"
+            fontSize="sm"
             >
                   {error}
             </Text>
             <Select 
-            fontSize="sm"
+            fontSize="md"
             onChange={(event) => handleInputChange(event)}
             errorBorderColor="red.400"
             isInvalid={error ? true : false}
             isDisabled={isDisabled}
             name={name}
             placeholder={name}
-            size="sm"
+            size="md"
             value={value}
+            w="100%"
             >
                {mapOptionsToDOM()}
             </Select>
