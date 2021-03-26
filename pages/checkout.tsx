@@ -20,7 +20,6 @@ import NextHead from "@/components/NextHead/NextHead";
 import { useCheckoutUpdate } from "@/hooks/useCheckoutData";
 import { useStore } from "@/hooks/useStorage";
 import auth0 from "@/lib/auth";
-import { useGetUser } from "@/lib/user";
 import { USER_DETAILS } from "@/queries/users";
 import { mapCartStorage } from "@/utils/mapCartStorage";
 import { IUsersValidation } from "@/utils/validation/users";
@@ -31,7 +30,6 @@ interface ICheckout {
 
 const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
 
-    const { profile } = useGetUser();
     const { cartStorage } = useStore()!;
     const { handleUpdateDetails } = useCheckoutUpdate()!;
     const router = useRouter();
@@ -66,30 +64,9 @@ const Checkout: NextPage<ICheckout> = ({ userInfo }) => {
                 mb={12}
                 pr={[0, 0, 8]}
                 spacing={4}
+                w="100%"
                 >
                     <CartHeader />
-                    {!profile ? 
-                    <Text 
-                    fontSize="sm"
-                    mb={6}
-                    textAlign="right"
-                    w="full"
-                    >
-                        Already have an account?
-                        <NextLink 
-                        href="/api/login" 
-                        passHref
-                        >
-                            <Link 
-                            color="pink.400"
-                            fontSize="sm"
-                            display="inline-block" 
-                            ml={2}
-                            >
-                                Sign in
-                            </Link>
-                        </NextLink>
-                    </Text> : null}
                     <Text 
                     fontSize="sm"
                     textAlign="center"

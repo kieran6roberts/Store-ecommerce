@@ -27,7 +27,8 @@ interface IReview {
 }
 
 const Review: NextPage<IReview> = ({ query }) => {
-    const { setCartStorage } = useStoreUpdate()!;
+
+    const { clearCart } = useStoreUpdate()!;
 
     const { data: orderData, loading, error } = useQuery(USER_ORDER, {
         variables: {
@@ -40,7 +41,12 @@ const Review: NextPage<IReview> = ({ query }) => {
             window.history.replaceState(null, "", `${window.location.origin}/checkout/review`);
         }
 
-        setCartStorage([]);
+        clearCart();
+
+        nookies.destroy(null, "checkout-session", {
+            path: "/"
+        });
+
     }, []);
 
     
@@ -195,29 +201,6 @@ const Review: NextPage<IReview> = ({ query }) => {
                                         ${order?.shippingAddress.city}, 
                                         ${order?.shippingAddress.country}, 
                                         ${order?.shippingAddress.zip}
-                                        `}
-                                    </Text>
-                                </Flex>
-                                <Flex 
-                                bg={useColorModeValue("gray.100", "gray.600")}
-                                borderRadius="sm"
-                                justify={["space-between", "space-between", "flex-start"]}
-                                mb={16}
-                                py={4}
-                                px={2}
-                                w="100%"
-                                >
-                                    <Text 
-                                    fontWeight="700"
-                                    mx={4}
-                                    >
-                                        Billing Address:
-                                    </Text>
-                                    <Text mx={4}>
-                                        {`${order?.billingAddress.address1},  
-                                        ${order?.billingAddress.city}, 
-                                        ${order?.billingAddress.country}, 
-                                        ${order?.billingAddress.zip}
                                         `}
                                     </Text>
                                 </Flex>

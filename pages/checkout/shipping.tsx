@@ -21,7 +21,6 @@ import Layout from "@/components/Layout/Layout";
 import NextHead from "@/components/NextHead/NextHead";
 import { useCheckout } from "@/hooks/useCheckoutData";
 import { useStore } from "@/hooks/useStorage";
-import { useGetUser } from "@/lib/user";
 import { mapCartStorage } from "@/utils/mapCartStorage";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -29,7 +28,6 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 const Shipping: NextPage = () => {
 
     const { cartStorage } = useStore()!;
-    const { profile } = useGetUser();
     const { userDetails } = useCheckout()!;
     const router = useRouter();
 
@@ -88,29 +86,7 @@ const Shipping: NextPage = () => {
                 pr={[0, 0, 8]}
                 w="100%"
                 >
-                   <CartHeader />
-                    {!profile ? 
-                    <Text 
-                    fontSize="sm"
-                    mb={{base: 6, xl: 12}}
-                    textAlign="right"
-                    w="full"
-                    >
-                        Already have an account?
-                        <NextLink 
-                        href="/api/login" 
-                        passHref
-                        >
-                        <Link 
-                        color="pink.400"
-                        display="inline-block" 
-                        fontSize="sm"
-                        ml={2}
-                        >
-                            Sign in
-                        </Link>
-                    </NextLink>
-                    </Text> : null}
+                    <CartHeader />
                     <Flex 
                     bg="blue.300"
                     borderRadius="sm"
@@ -274,6 +250,7 @@ const Shipping: NextPage = () => {
                 pl={[0, 0, 0, 0, 8]}
                 position="sticky"
                 top="16"
+                w="100%"
                 >
                     {mapCartStorage(cartStorage, true)}
                 </VStack>

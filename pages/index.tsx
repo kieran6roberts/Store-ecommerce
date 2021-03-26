@@ -1,5 +1,14 @@
-import { Heading, Link, Text, VStack } from "@chakra-ui/react";
+import { 
+    Box, 
+    Divider, 
+    Flex, 
+    Heading, 
+    Link, 
+    Text, 
+    useColorModeValue, 
+    VStack } from "@chakra-ui/react";
 import { NextPage } from "next";
+import NextImage from "next/image";
 import NextLink from "next/link";
 import * as React from "react";
 
@@ -37,6 +46,76 @@ const Home: NextPage = () => (
                 fetchPolicy: "no-cache"
             }}
             />
+            <Flex 
+            bg={useColorModeValue("gray.100", "gray.700")}
+            flexDirection={{base: "column", lg: "row"}}
+            p={{base: 2, xl: 20}}
+            w="100%"
+            >
+                <VStack
+                flex="1"
+                px={20}
+                py={12}
+                >
+                    <Heading 
+                    as="h3"
+                    color="pink.400"
+                    fontSize="lg"
+                    textAlign="center"
+                    >
+                        The finest ingredients
+                    </Heading>
+                    <Divider 
+                    bg="pink.400"
+                    my={{base: 8, xl: 16}}
+                    />
+                    <Text 
+                    fontSize="md"
+                    mb={4}>
+                        We love our coffee here at Kieran's Coffee Collection. In order to bring
+                        you the best products we have scoured the globe the finest beans 
+                        available. Our store includes products from four different continents.
+                    </Text>
+                    <Text 
+                    fontSize="md"
+                    mb={4}
+                    >
+                        This means we are certain that you'll find something suitable to your tastes.
+                        We have everything from rich to sweet to delectably moreish.
+                    </Text>
+                </VStack>
+                <VStack
+                flex="1"
+                px={20}
+                py={12}
+                >
+                    <Heading 
+                    as="h3"
+                    color="pink.400"
+                    fontSize="lg"
+                    textAlign="center"
+                    >
+                        At the right prices
+                    </Heading>
+                    <Divider 
+                    bg="pink.400"
+                    my={{base: 8, xl: 16}}
+                    />
+                    <Text 
+                    fontSize="md"
+                    mb={4}>
+                        We also offer these delicious brews at affordable prices so you can 
+                        get more for less. We believe quality products should be available
+                        to as many people as possible.
+                    </Text>
+                    <Text 
+                    fontSize="md"
+                    w="full"
+                    >
+                        Come and see for yourself.
+                    </Text>
+                </VStack>
+            </Flex>
             <Heading as="h3">
               Limited Time Specials
             </Heading>

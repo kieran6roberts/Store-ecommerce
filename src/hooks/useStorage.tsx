@@ -8,10 +8,11 @@ type StorageContextType = {
 }
 
 type StorageUpdateContextType = {
-    toggleSavedValue: (key: string, value: IProductStorage) => void;
     addCartValue: (value: IProductStorage) => void;
+    clearCart: () => void;
     removeCartValue: (event: React.MouseEvent<HTMLButtonElement>) => void;
     setCartStorage: React.Dispatch<React.SetStateAction<IProductStorage[] | null>>;
+    toggleSavedValue: (key: string, value: IProductStorage) => void;
     updateItemsQuantities: (cartQuantities: number[]) => void;
 }
 
@@ -98,6 +99,11 @@ const useStorage = (key: string) => {
         setCartStorage(updatedItems);
     };
 
+    const clearCart = () => {
+        setStorage(CART_KEY, []);
+        setCartStorage([]);
+    };
+
     const removeCartValue = (event: React.MouseEvent<HTMLButtonElement>) => {
         const items = getStorage(key)!;
 
@@ -112,6 +118,7 @@ const useStorage = (key: string) => {
     return {
         addCartValue,
         cartStorage,
+        clearCart,
         removeCartValue,
         savedStorage,
         setCartStorage,
@@ -123,6 +130,7 @@ const useStorage = (key: string) => {
 const StorageProvider = ({ children }: { children: React.ReactNode}): React.ReactElement  => {
     const { cartStorage, 
         addCartValue, 
+        clearCart,
         removeCartValue,
         updateItemsQuantities } = useStorage("cart-products");
 
@@ -132,12 +140,14 @@ const StorageProvider = ({ children }: { children: React.ReactNode}): React.Reac
 
     return (
         <StorageContext.Provider value={{ cartStorage, savedStorage }} >
-            <StorageDispatchContext.Provider value={{ addCartValue, 
+            <StorageDispatchContext.Provider value={{ addCartValue,
+                clearCart, 
                 removeCartValue, 
                 setCartStorage,
                 toggleSavedValue,
                 updateItemsQuantities
-                }}>
+                }}
+                >
                 {children} 
             </StorageDispatchContext.Provider>
         </StorageContext.Provider>

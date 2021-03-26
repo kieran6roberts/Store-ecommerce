@@ -1,62 +1,157 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Hero /> snapshot 1`] = `
-<div
-  className="css-0"
+<header
+  className="css-79elbk"
 >
   <article
-    className="css-1fksumk"
+    className="css-wj5z2j"
   >
+    <div
+      className="css-q776w9"
+    >
+      <div
+        className="css-1h1x9ph"
+      />
+      <div
+        className="css-1h1x9ph"
+      />
+      <div
+        className="css-1h1x9ph"
+      />
+      <div
+        className="css-11afxbn"
+      >
+        <div
+          style={
+            Object {
+              "bottom": 0,
+              "boxSizing": "border-box",
+              "display": "block",
+              "left": 0,
+              "margin": 0,
+              "overflow": "hidden",
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <img
+            alt="Black bags of coffee beans sitting on shelf"
+            decoding="async"
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            style={
+              Object {
+                "border": "none",
+                "bottom": 0,
+                "boxSizing": "border-box",
+                "display": "block",
+                "height": 0,
+                "left": 0,
+                "margin": "auto",
+                "maxHeight": "100%",
+                "maxWidth": "100%",
+                "minHeight": "100%",
+                "minWidth": "100%",
+                "objectFit": "cover",
+                "objectPosition": "bottom",
+                "padding": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "visibility": "hidden",
+                "width": 0,
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="css-1h1x9ph"
+      />
+      <div
+        className="css-11afxbn"
+      >
+        <div
+          style={
+            Object {
+              "bottom": 0,
+              "boxSizing": "border-box",
+              "display": "block",
+              "left": 0,
+              "margin": 0,
+              "overflow": "hidden",
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <img
+            alt="coffee shop coffee on brown table in a dark room"
+            decoding="async"
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            style={
+              Object {
+                "border": "none",
+                "bottom": 0,
+                "boxSizing": "border-box",
+                "display": "block",
+                "height": 0,
+                "left": 0,
+                "margin": "auto",
+                "maxHeight": "100%",
+                "maxWidth": "100%",
+                "minHeight": "100%",
+                "minWidth": "100%",
+                "objectFit": "cover",
+                "objectPosition": undefined,
+                "padding": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "visibility": "hidden",
+                "width": 0,
+              }
+            }
+          />
+        </div>
+      </div>
+    </div>
     <h1
-      className="chakra-heading css-1ghmqg6"
+      className="chakra-heading css-9k0ef5"
     >
       Bringing you the best coffee from all over the world
     </h1>
     <ul
-      className="css-1imb5xo"
+      className="css-1qtgydt"
       role="list"
     >
       <li
-        className="css-1m90wc1"
+        className="css-8etb3i"
       >
-        <a
-          className="chakra-link css-0"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
-        >
-          Coffee Beans
-        </a>
+        Coffee Beans
       </li>
       <li
-        className="css-1m90wc1"
+        className="css-8etb3i"
       >
-        <a
-          className="chakra-link css-0"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
-        >
-          Ground Coffee
-        </a>
+        Ground Coffee
       </li>
       <li
-        className="css-1m90wc1"
+        className="css-8etb3i"
       >
-        <a
-          className="chakra-link css-0"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
-        >
-          Mugs & Cups
-        </a>
+        Mugs & Cups
       </li>
     </ul>
     <a
-      className="chakra-link css-yjd4r4"
+      className="chakra-link css-1tcmjri"
+      href="/store"
       onClick={[Function]}
       onMouseEnter={[Function]}
     >
       Shop All Items
     </a>
   </article>
-</div>
+</header>
 `;

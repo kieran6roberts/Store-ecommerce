@@ -121,7 +121,10 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                     spacing={12}
                     mr={16}
                     >
-                        <NavLinks isStyled={false} cartNumber={cartStorage?.length ?? 0} />
+                        <NavLinks 
+                        isStyled={false} 
+                        cartNumber={cartStorage?.length ?? 0} 
+                        />
                     </HStack>
                     <AccountMenu 
                     display={["none", "none", "flex"]}

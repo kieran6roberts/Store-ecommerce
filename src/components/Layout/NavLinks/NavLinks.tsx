@@ -83,6 +83,7 @@ const NavLinks: React.FC<INavLinks> = ({ isStyled, cartNumber }) => (
                         bg="pink.400"
                         bottom={0}
                         borderRadius="50%"
+                        className="cart-number"
                         color="white"
                         fontSize="xs"
                         h="1rem"

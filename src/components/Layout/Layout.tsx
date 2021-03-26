@@ -40,7 +40,6 @@ const Layout: React.FC<ILayout> = ({ children }) => {
             <Box 
             as="main"
             flex="1"
-            p="1rem"
             >
                 {children}
             </Box>

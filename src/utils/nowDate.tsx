@@ -5,5 +5,5 @@ export const nowDate = (): string => {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
-    return `${day < 10 ? "0" + day : day}/${month < 10 ? "0" + month : month}/${year} ${date.getSeconds()}:${date.getMinutes()}`;
+    return `${day < 10 ? "0" + day : day}/${month < 10 ? "0" + month : month}/${year}`;
 };
