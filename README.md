@@ -2,7 +2,7 @@
 
 This is a full stack ecommerce store built for a fictional coffee company that require a new online presence to be able to sell their coffee related products such as coffee beans and cups/mugs.
 
-![home full page in light mode](/public/images/home-page.jpg?raw=true "desktop landing page screenshot")
+![home full page in light mode](/public/home-page.jpg?raw=true "desktop landing page screenshot")
 
 ## Table of contents
 
