@@ -35,7 +35,11 @@ const Footer: React.FC<IFooter> = ({ user }) => {
             fontSize="sm"
             mt={{base: 2, xl: 8}}
             >
-                <HStack spacing={{base: 8, xl: 24}}>
+                <HStack 
+                as="ul" 
+                listStyleType="none"
+                spacing={{base: 8, xl: 24}}
+                >
                     <ListItem>
                         <NextLink href="/store">
                             <Link _hover={{

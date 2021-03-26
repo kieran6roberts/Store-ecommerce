@@ -110,6 +110,7 @@ const Product: React.FC<IProductStorage> = ({
             passHref
             >
                 <Link 
+                aria-label={`${name} page`}
                 height="55%"
                 w="100%"
                 >

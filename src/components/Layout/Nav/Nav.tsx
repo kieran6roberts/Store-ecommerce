@@ -92,10 +92,10 @@ const Nav: React.FC<INav> = ({ onOpen, user, userLoading }) => {
                         }}
                         >
                             <NextImage 
-                            src="/favicon-16x16.png" 
+                            src="/android-chrome-512x512.png" 
                             alt="Kieran's Coffee Collection logo in pink with white brand name text" 
-                            height="16px"
-                            width="16px"
+                            height="28px"
+                            width="28px"
                             />
                             <Text 
                             display={["none", "inline-block"]}

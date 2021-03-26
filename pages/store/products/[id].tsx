@@ -125,7 +125,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         <Layout>
             <Heading 
             as="h3"
-            mb={{ base: "1rem", xl: "4rem"}}
+            my={{ base: "1rem", xl: "4rem"}}
             >
                 {productName}
             </Heading>

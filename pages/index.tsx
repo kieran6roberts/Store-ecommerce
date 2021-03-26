@@ -8,7 +8,6 @@ import {
     useColorModeValue, 
     VStack } from "@chakra-ui/react";
 import { NextPage } from "next";
-import NextImage from "next/image";
 import NextLink from "next/link";
 import * as React from "react";
 
@@ -28,11 +27,11 @@ const Home: NextPage = () => (
     <Layout>
         <VStack spacing="16">
             <Hero />
-            <Heading as="h3">
+            <Heading as="h2">
                 Newest Products
             </Heading>
             <Text         
-            w="60%"
+            w="80%"
             textAlign="center"
             >
                 These products are brand new to our store! The finest quality ingredients sourced
@@ -54,11 +53,11 @@ const Home: NextPage = () => (
             >
                 <VStack
                 flex="1"
-                px={20}
-                py={12}
+                px={{base: 6, lg: 8, xl: 20}}
+                py={{base: 8, lg: 12, xl: 20}}
                 >
                     <Heading 
-                    as="h3"
+                    as="h2"
                     color="pink.400"
                     fontSize="lg"
                     textAlign="center"
@@ -86,8 +85,8 @@ const Home: NextPage = () => (
                 </VStack>
                 <VStack
                 flex="1"
-                px={20}
-                py={12}
+                px={{base: 6, lg: 8, xl: 20}}
+                py={{base: 8, lg: 12, xl: 20}}
                 >
                     <Heading 
                     as="h3"
@@ -116,11 +115,11 @@ const Home: NextPage = () => (
                     </Text>
                 </VStack>
             </Flex>
-            <Heading as="h3">
+            <Heading as="h2">
               Limited Time Specials
             </Heading>
             <Text 
-            w="60%"
+            w="80%"
             textAlign="center"
             >
                 These products are sourced worldwide featuring some of the best qualtity beans that we can get our hands on. 

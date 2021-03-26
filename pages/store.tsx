@@ -63,7 +63,7 @@ const Store: NextPage = () => {
         <Heading 
         as="h1"
         fontSize="lg"
-        mb={{base: 6, xl: 20}}
+        my={{base: 6, xl: 20}}
         >
           Welcome to our store!
         </Heading>
