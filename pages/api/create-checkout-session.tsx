@@ -45,7 +45,7 @@ async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse)
     try {
         const session = await stripe.checkout.sessions.create({
             billing_address_collection: "required",
-            cancel_url: "http://localhost:3000/cart",
+            cancel_url: "https://coffee-ecommerce.vercel.app/cart",
             customer_email: metaData.email,
             metadata: {
                 name: metaData.name,
@@ -58,7 +58,7 @@ async function createCheckoutSession (req: NextApiRequest, res: NextApiResponse)
             },
             mode: "payment",
             payment_method_types: ["card", "ideal", "sepa_debit"],
-            success_url: "http://localhost:3000/checkout/review?id={CHECKOUT_SESSION_ID}",
+            success_url: "https://coffee-ecommerce.vercel.app/checkout/review?id={CHECKOUT_SESSION_ID}",
             line_items: mergeProducts.map((product: IProductStorage) => ({
                 price_data: {
                     unit_amount: product.price,
