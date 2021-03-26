@@ -61,10 +61,10 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         fetchPolicy: "network-only",
         nextFetchPolicy: "cache-only",
         onCompleted: async ({ reviews }) => {
-            if (!reviews[0]) {
+            if (!reviews.length) {
                 return;
             }
-            if (reviews[0]?.product?.id !== productId) {
+            if (reviews[0].product?.id !== productId) {
                 await client.resetStore();
                 return;
             }
@@ -105,6 +105,13 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                 });
             }
         });
+
+        focusAfterSubmission();
+    };
+
+    const focusAfterSubmission = () => {
+        const purchaseTabBtn = document.querySelector(".purchase-tab") as HTMLElement;
+        purchaseTabBtn?.focus();
     };
 
 
@@ -149,7 +156,10 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
                 variant="enclosed"
                 >
                     <TabList>
-                        <Tab p={{ base: "0px", xl: "1.5rem"}}>
+                        <Tab 
+                        className="purchase-tab"
+                        p={{ base: "0px", xl: "1.5rem"}}
+                        >
                             Purchase
                         </Tab>
                         <Tab>
@@ -224,7 +234,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             </Heading>
             <SimpleGrid
             as="ul"
-            columns={[1, 1, 2, 2, 3, 4]} 
+            columns={[1, 1, 2, 3, 4]} 
             fontSize="sm"
             listStyleType="none"
             spacing="2rem"

@@ -86,6 +86,7 @@ const Review: React.FC<IReview> = ({
                         Review Headline
                     </FormLabel>
                     <Input 
+                    className="input-review"
                     isRequired 
                     name="headline"
                     onChange={(event) => handleInputChange(event)}
@@ -107,6 +108,7 @@ const Review: React.FC<IReview> = ({
                         Review content
                     </FormLabel>
                     <Textarea 
+                    className="input-review"
                     isRequired 
                     name="message"
                     onChange={(event) => handleInputChange(event)}
