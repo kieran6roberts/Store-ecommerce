@@ -20,7 +20,7 @@
     "@stripe/stripe-js": "^1.11.0",
     "@types/js-cookie": "^2.2.6",
     "@types/react-select": "^4.0.13",
-    "framer-motion": "^3.2.0",
+    "framer-motion": "^3.2",
     "graphql": "^15.4.0",
     "next": "10.0.5",
     "nookies": "^2.5.2",

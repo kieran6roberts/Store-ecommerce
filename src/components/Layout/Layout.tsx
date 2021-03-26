@@ -1,4 +1,5 @@
 import { Box, Flex, useDisclosure } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import * as React from "react";
 
 import CartDrawer from "@/components/Cart/CartDrawer/CartDrawer";
@@ -16,6 +17,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { profile, loading } = useGetUser();
     const { cartStorage } = useStore()!;
+    const router = useRouter();
 
     return (
         <Flex 
@@ -40,6 +42,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
             <Box 
             as="main"
             flex="1"
+            px={router.pathname !== "/" ? "2vw" : 0}
             >
                 {children}
             </Box>

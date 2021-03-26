@@ -216,6 +216,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             <Heading 
             as="h3"
             color={useColorModeValue("gray.600", "gray.200")}
+            fontSize="lg"
             size="md"
             my={12}
             >
@@ -236,6 +237,7 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
             </SimpleGrid>
             <Heading 
             as="h3"
+            fontSize="lg"
             color={useColorModeValue("gray.600", "gray.200")}
             size="md"
             my={12}
