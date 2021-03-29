@@ -1,5 +1,9 @@
 # YourCoffeeShop-ecommerce
 
+![GitHub top language](https://img.shields.io/github/languages/top/kieran6roberts/Store-ecommerce)
+![GitHub last commit](https://img.shields.io/github/last-commit/kieran6roberts/Store-ecommerce)
+![Twitter Follow](https://img.shields.io/twitter/follow/kieran6dev?style=social)
+
 This is a full stack serverless ecommerce site built for a fictional coffee company that require a new online presence to be able to sell their coffee related products such as coffee beans and cups/mugs. This project was to built as part of my web-developer portfolio.
 
 ![home full page in light mode](/public/home-page.jpg?raw=true "desktop landing page screenshot")
