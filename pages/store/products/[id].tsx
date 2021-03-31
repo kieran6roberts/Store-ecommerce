@@ -4,6 +4,7 @@ import {
     Center, 
     Flex, 
     Heading,
+    Link,
     SimpleGrid,
     Tab, 
     TabList, 
@@ -14,8 +15,10 @@ import {
     useColorModeValue } from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import NextImage from "next/image";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
+import  { BsArrowLeft } from "react-icons/bs";
 
 import Layout from "@/components/Layout/Layout";
 import NextHead from "@/components/NextHead/NextHead";
@@ -28,7 +31,6 @@ import { useGetUser } from "@/lib/user";
 import { PRODUCT_INFO, PRODUCT_NAMES, PRODUCT_NEW } from "@/queries/products";
 import { CREATE_REVIEW, GET_REVIEWS } from "@/queries/reviews";
 import { formatPrice } from "@/utils/formatPrice";
-
 interface IProductName {
     name: string,
     __typename: string
@@ -123,6 +125,25 @@ const Product: NextPage<any> = ({ initialApolloState }) => {
         title={`${productName}`} 
         />
         <Layout>
+            <NextLink 
+            href="/store" 
+            passHref
+            >
+                <Link 
+                bg="pink.400"
+                borderRadius="sm"
+                color="white"
+                fontSize="sm"
+                fontWeight="700"
+                p={{base: 2, xl: 6}}
+                _hover={{
+                    bg: "pink.500"
+                }}
+                >
+                    <BsArrowLeft style={{ display: "inline-block", marginRight: "0.6rem" }} />
+                    Back to Store
+                </Link>
+            </NextLink>
             <Heading 
             as="h3"
             my={{ base: "1rem", xl: "4rem"}}
