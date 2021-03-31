@@ -6,17 +6,12 @@ import CustomMenuButton from "@/components/CustomMenuButton/CustomMenuButton";
 let documentBody: RenderResult;
 
 describe("<CustomMenuButton {...props}/>", () => {
-    const props = {
-        title: "Product Type",
-        listItems: ["Beans", "Powder"]
-    };
+    const props = "Product Type";
 
     test("renders", () => {
-        documentBody = render(<CustomMenuButton {...props} />);
+        documentBody = render(<CustomMenuButton title={props} ></CustomMenuButton>);
 
         expect(documentBody.getByRole("button")).toHaveTextContent("Product Type");
-        expect(documentBody.getByText("Beans")).toBeInTheDocument();
-        expect(documentBody.getByText("Powder")).toBeInTheDocument();
     });
 
     test("renders without props", () => {

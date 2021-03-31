@@ -34,7 +34,7 @@ describe("<Nav />", () => {
             />);
 
         expect(documentBody.getByRole("navigation")).toBeInTheDocument();
-        expect(documentBody.getByRole("heading", { name: /next.js e-commerce/i})).toBeInTheDocument();
+        expect(documentBody.getByRole("heading", { name: /kieran's coffee collection/i})).toBeInTheDocument();
         expect(documentBody.getAllByRole("list")[0]).toBeInTheDocument();
         expect(documentBody.getAllByRole("list")[1]).toBeInTheDocument();
     });

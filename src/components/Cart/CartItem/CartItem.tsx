@@ -23,7 +23,6 @@ interface ICartItem {
 }
 
 const CartItem = ({ 
-    category,
     description, 
     hideEdit,
     id,

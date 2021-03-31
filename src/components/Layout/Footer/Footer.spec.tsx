@@ -7,9 +7,10 @@ let documentBody: RenderResult;
 
 describe("<Nav />", () => {
     test("renders", () => {
-        documentBody = render(<Footer />);
+        documentBody = render(<Footer user={null} />);
 
-        expect(documentBody.getByText(/YourCoffeeShop/i)).toBeInTheDocument();
+        expect(documentBody.getByText(/kieran's coffee collection @2021/i)).toBeInTheDocument();
+        expect(documentBody.getByText("Login")).toBeInTheDocument();
         expect(documentBody.getAllByRole("list")[0]).toBeInTheDocument();
         expect(documentBody.getAllByRole("list")[1]).toBeInTheDocument();
         expect(documentBody.getAllByRole("listitem")[0]).toBeInTheDocument();

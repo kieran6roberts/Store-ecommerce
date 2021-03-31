@@ -6,11 +6,11 @@ import * as React from "react";
 import { BsArrowDownShort } from "react-icons/bs";
 
 interface IMenuButton {
-    title: string,
+    title?: string,
     children: React.ReactNode;
 }
 
-const CustomMenuButton: React.FC<IMenuButton> = ({ title, children}) => 
+const CustomMenuButton: React.FC<IMenuButton> = ({ title = "No title", children}) => 
     <Menu>
         <MenuButton 
         as={Button}

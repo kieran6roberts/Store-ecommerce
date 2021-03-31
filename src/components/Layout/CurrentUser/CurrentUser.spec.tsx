@@ -7,20 +7,24 @@ let documentBody: RenderResult;
 
 describe("<CurrentUser {...props} />", () => {
     const props = {
-        nickname: "Kieran",
-        picture: "user image"
+        justify: "center",
+        user: {
+            nickname: "Kieran",
+            picture: "picture.png"
+        },
+        userLoading: false
     };
 
     test("renders with user prop", () => {
-        documentBody = render(<CurrentUser user={props} />);
+        documentBody = render(<CurrentUser {...props} />);
 
         expect(documentBody.getByText("Kieran")).toBeInTheDocument();
         expect(documentBody.getByRole("img")).toBeInTheDocument();
     });
     test("renders without as guest", () => {
-        documentBody = render(<CurrentUser user={null} />);
+        documentBody = render(<CurrentUser justify="flex-start" userLoading={false} />);
         
-        expect(documentBody.getByText(/Logged in as: Guest/i)).toBeInTheDocument();
+        expect(documentBody.getByText(/guest/i)).toBeInTheDocument();
         expect(documentBody.queryByRole("img")).not.toBeInTheDocument();
     });
 });

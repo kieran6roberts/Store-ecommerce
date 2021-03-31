@@ -10,8 +10,11 @@ describe("<CartItem {...props} />", () => {
     const props = {
         category: "Beans",
         description: "Really nice coffee beans",
+        hideEdit: false,
+        id: "1",
+        image: "image.png",
         name: "Blue Beans",
-        price: 19.99
+        price: 1999
     };
 
     test("renders with props", () => {
@@ -21,7 +24,7 @@ describe("<CartItem {...props} />", () => {
         expect(screen.getByText(/really nice coffee beans/i)).toBeInTheDocument();
         expect(screen.getByText(/blue beans/i)).toBeInTheDocument();
         expect(screen.getByText(/19.99/i)).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: /remove cart item/i })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: /remove/i })).toBeInTheDocument();
         expect(screen.getByAltText("product image")).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "decrease quantity" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "increase quantity" })).toBeInTheDocument();
