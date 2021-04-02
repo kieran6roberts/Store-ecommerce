@@ -7,14 +7,18 @@ import QuantityInput from "@/components/Products/QuantityInput/QuantityInput";
 let documentBody: RenderResult;
 
 describe("<QuantityInput {...props} />", () => {
-    const mockUpdate = jest.fn();
+    
+    const props = {
+        id: "1",
+        handleQtyIncrease: jest.fn(),
+        handleQtyDecrease: jest.fn(),
+    };
 
     beforeEach(() => {
-        documentBody = render(<QuantityInput updatePrice={mockUpdate}/>);
+        documentBody = render(<QuantityInput {...props}/>);
     });
 
     test("renders", () => {
-        expect(documentBody.getByText(/qty/i)).toBeInTheDocument();
         expect(documentBody.getByRole("button", { name: "decrease quantity" })).toBeInTheDocument();
         expect(documentBody.getByRole("button", { name: "increase quantity" })).toBeInTheDocument();
 

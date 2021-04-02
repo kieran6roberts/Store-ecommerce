@@ -8,7 +8,6 @@ import * as React from "react";
 type handlerFunction = (event: React.MouseEvent<HTMLButtonElement>) => void;
 
 interface IQuantityInput {
-    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleQtyDecrease: handlerFunction;
     handleQtyIncrease: handlerFunction;
     id: string;

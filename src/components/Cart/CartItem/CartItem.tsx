@@ -32,7 +32,6 @@ const CartItem = ({
 
     const { removeCartValue } = useStoreUpdate()!;
     const { 
-        handleInputChange,
         handleQtyIncrease, 
         handleQtyDecrease,
         itemPrice } = useCalculateTotal(price);
@@ -88,7 +87,6 @@ const CartItem = ({
             >
                 <QuantityInput 
                 id={id}
-                handleInputChange={handleInputChange}
                 handleQtyDecrease={handleQtyDecrease}
                 handleQtyIncrease={handleQtyIncrease}
                 />  

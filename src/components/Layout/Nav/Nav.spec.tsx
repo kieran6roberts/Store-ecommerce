@@ -1,20 +1,22 @@
-import { render, RenderResult } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import { useRouter } from "next/router";
 import * as React from "react";
 
 import Nav from "@/components/Layout/Nav/Nav";
 
-let documentBody: RenderResult;
+import { render } from "../../../../test-utils";
 
 jest.mock("next/router");
 
 describe("<Nav />", () => {
-    let expectedAsPath;
+    let expectedAsPath, expectedPathname;
 
     beforeEach(() => {
         expectedAsPath = "Home/store";
+        expectedPathname = "/";
         (useRouter as jest.Mock).mockReturnValue({
-            asPath: expectedAsPath
+            asPath: expectedAsPath,
+            pathname: expectedPathname
         });
     });
 
@@ -27,15 +29,16 @@ describe("<Nav />", () => {
     test("renders", () => {
         const mockOpen = jest.fn();
         
-        documentBody = render(<Nav 
+        render(<Nav 
             onOpen={mockOpen} 
             user={user} 
             userLoading={false}
-            />);
+            />, null);
 
-        expect(documentBody.getByRole("navigation")).toBeInTheDocument();
-        expect(documentBody.getByRole("heading", { name: /kieran's coffee collection/i})).toBeInTheDocument();
-        expect(documentBody.getAllByRole("list")[0]).toBeInTheDocument();
-        expect(documentBody.getAllByRole("list")[1]).toBeInTheDocument();
+        expect(screen.getByRole("navigation")).toBeInTheDocument();
+        expect(screen.getByText(/kieran's coffee collection/i)).toBeInTheDocument();
+        expect(screen.getAllByRole("list")[0]).toBeInTheDocument();
+        expect(screen.getAllByRole("list")[1]).toBeInTheDocument();
+        expect(screen.getByAltText("Kieran's Coffee Collection logo in pink with white brand name text")).toBeInTheDocument();
     });
 });
